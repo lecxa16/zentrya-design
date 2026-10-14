@@ -119,7 +119,7 @@ Cada una costó una sesión encontrarla. Están medidas, no supuestas.
 | Texto o estados con el azul de Camper | MUI arrastra el tema de la app anfitriona | Sobrescribir en `design/mui/estilo.js` (único sitio con `!important`) |
 | Un bloque de carga se ve como un agujero | `surface-sunk` en oscuro es más oscuro que el lienzo | `--ds-esqueleto` |
 | Un panel se ve frío sobre una página con color | Un blanco al 90 % no deja pasar el lienzo | Temperatura escrita en el color (`--ds-panel`, `--ds-frame`) |
-| Un texto teñido no se lee con la marca de Nykza | Se usó `--ds-accent` (el relleno, amarillo) como color de texto | `--ds-accent-tinta` para texto, `--ds-accent-trazo` para líneas; `--ds-accent` sólo de fondo |
+| Un texto teñido no se lee con una marca de acento claro | Se usó `--ds-accent` (el relleno) como color de texto | `--ds-accent-tinta` para texto, `--ds-accent-trazo` para líneas; `--ds-accent` sólo de fondo |
 | Un color de identidad desaparece en oscuro | | `color-mix(in oklab, <color>, var(--ds-mezcla-tono))` |
 | Al animar una vista, una barra `fixed` se va al fondo del documento y vuelve de golpe | Un `transform` en un ancestro convierte a sus `fixed` en `absolute` respecto a él | Animar `top`/`left` sobre un contenedor `relative` (lo que hace `Transicion`): no crea bloque contenedor |
 | Un `Select` de MUI avisa «out-of-range value» y el campo se ve vacío | Se pintó con su valor puesto y la lista de opciones todavía vacía | Esperar al catálogo antes de pintar el formulario |

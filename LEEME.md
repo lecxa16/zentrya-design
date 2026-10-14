@@ -303,13 +303,12 @@ cabían en un solo color:
 | `--ds-accent-tinta` | texto teñido: navegación activa, pastillas, chips, cifras de acento | ≥ 4.5 sobre lienzo |
 | `--ds-accent-trazo` | líneas, bordes, barras, anillos, interruptores, foco | ≥ 3 sobre lienzo |
 
-En Zentrya los tres valen lo mismo. **Un componente nuevo elige el oficio**, nunca
-`--ds-accent` para un texto: con el amarillo de Nykza daría 1.35:1.
+En Zentrya y en Nykza (blanco y negro) los tres valen lo mismo. **Un componente nuevo elige el oficio**,
+nunca `--ds-accent` para un texto: una marca de acento claro lo volvería ilegible.
 
 El héroe también tiene su propia tinta (`--ds-ink-on-hero`) y su velo (`--ds-velo`,
-`--ds-velo-fuerte`, para `Vidrio` y `Boton claro`). Con una marca de héroe claro, dentro
-de `.ds-heroe` (la pone `Heroe`) se redefinen tinta y superficies, como hace
-`.ds-sobre-foto` con una foto.
+`--ds-velo-fuerte`, para `Vidrio` y `Boton claro`). `Heroe` pone la clase `.ds-heroe`, para que una marca de héroe claro pueda
+redefinir ahí la tinta y las superficies (como `.ds-sobre-foto` con una foto).
 
 ## Temas
 
@@ -481,7 +480,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v1.2.0`
+   `npm install github:lecxa16/zentrya-design#v1.2.1`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.
