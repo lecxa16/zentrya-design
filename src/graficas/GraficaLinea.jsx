@@ -87,6 +87,22 @@ export default function GraficaLinea({
   const maxMarcasX = Math.max(2, Math.min(ancho < 420 ? 4 : Infinity, Math.floor(anchoPlot / anchoEtiquetaX)));
   const pasoX = Math.max(1, Math.ceil(n / maxMarcasX));
 
+  /* El paso solo no basta: la primera etiqueta va anclada a la izquierda (se
+     extiende entera hacia la derecha) y la última a la derecha, así que sus
+     vecinas necesitan más aire que dos etiquetas centradas. Cada candidata
+     calcula su caja y se omite si invadiría a la anterior. */
+  const marcasEjeX = [];
+  let finPrevio = -Infinity;
+  for (let i = 0; i < n; i += pasoX) {
+    const largo = String(etiquetas[i] ?? i + 1).length * ANCHO_CARACTER;
+    const ancla = n > 1 && i === 0 ? "start" : (n > 1 && i >= n - 1 ? "end" : "middle");
+    const ini = ancla === "start" ? x(i) : ancla === "end" ? x(i) - largo : x(i) - largo / 2;
+    if (ini >= finPrevio + 8) {
+      marcasEjeX.push({ i, ancla });
+      finPrevio = ini + largo;
+    }
+  }
+
   const tramos = (vals) => {
     const out = [];
     let t = [];
@@ -140,9 +156,8 @@ export default function GraficaLinea({
                 </text>
               </g>
             ))}
-            {Array.from({ length: n }, (_, i) => i).filter((i) => i % pasoX === 0).map((i) => (
-              <text key={i} x={x(i)} y={alto - 6} textAnchor={n > 1 && i === 0 ? "start" : "middle"}
-                style={TEXTO_EJE}>
+            {marcasEjeX.map(({ i, ancla }) => (
+              <text key={i} x={x(i)} y={alto - 6} textAnchor={ancla} style={TEXTO_EJE}>
                 {etiquetas[i] ?? i + 1}
               </text>
             ))}
