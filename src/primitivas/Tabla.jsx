@@ -7,13 +7,19 @@
  * Tres cosas que una tabla de producto necesita y casi nunca trae: el
  * encabezado se queda pegado al hacer scroll, las columnas numéricas se
  * alinean a la derecha con numerales de ancho fijo, y el vacío dice algo.
+ *
+ * `seleccion` (opcional) agrega una columna de casillas para actuar sobre varios renglones (junto con
+ * `BarraSeleccion`). Exige `claveFila`. La casilla del encabezado elige TODOS los renglones filtrados, no sólo la
+ * página visible: quien filtró «inactivos» y pulsa «todos» espera los 40, no los 20 de esta página.
+ *   seleccion={{ elegidos: [claves], onCambio: (claves) => …, etiqueta: (fila) => "Elegir a Ana" }}
  */
 import React, { useEffect, useMemo, useState } from "react";
 import Esqueleto from "./Esqueleto";
+import { Casilla } from "./Seleccion";
 
 export default function Tabla({
   columnas = [], filas = [], claveFila, onFila, vacio = "No hay nada que mostrar.",
-  cargando = false, porPagina = 0, estilo,
+  cargando = false, porPagina = 0, seleccion, estilo,
 }) {
   const [pagina, setPagina] = useState(1);
   const total = filas.length;
@@ -30,6 +36,17 @@ export default function Tabla({
     ? filas.slice((pagina - 1) * porPagina, pagina * porPagina)
     : filas), [filas, pagina, porPagina, paginado]);
 
+  const conSeleccion = !!(seleccion && claveFila);
+  const elegidos = useMemo(() => new Set((seleccion?.elegidos || []).map(String)), [seleccion?.elegidos]);
+  const claves = useMemo(() => (conSeleccion ? filas.map((f) => String(claveFila(f))) : []),
+    [conSeleccion, filas, claveFila]);
+  const cuantos = claves.filter((k) => elegidos.has(k)).length;
+  const estadoTodos = cuantos === 0 ? false : cuantos === claves.length ? true : "mixta";
+  const alternarTodos = () => seleccion.onCambio(estadoTodos === true ? [] : claves);
+  const alternar = (k) => seleccion.onCambio(elegidos.has(k)
+    ? [...elegidos].filter((x) => x !== k) : [...elegidos, k]);
+  const columnasTotales = columnas.length + (conSeleccion ? 1 : 0);
+
   const desde = total === 0 ? 0 : (pagina - 1) * porPagina + 1;
   const hasta = paginado ? Math.min(pagina * porPagina, total) : total;
 
@@ -40,6 +57,14 @@ export default function Tabla({
         fontFamily: "var(--ds-font)" }}>
         <thead>
           <tr>
+            {conSeleccion && (
+              <th scope="col" style={{ position: "sticky", top: 0, zIndex: 1, width: 36,
+                padding: "0 var(--ds-2) var(--ds-3) var(--ds-3)", background: "var(--ds-surface-solid)",
+                borderBottom: "1px solid var(--ds-line)" }}>
+                <Casilla marcada={estadoTodos} onCambio={alternarTodos} deshabilitado={claves.length === 0}
+                  etiqueta={estadoTodos === true ? "Quitar todos" : "Elegir todos"} />
+              </th>
+            )}
             {columnas.map((c) => (
               <th key={c.clave} scope="col" style={{
                 position: "sticky", top: 0, zIndex: 1,
@@ -59,6 +84,7 @@ export default function Tabla({
           {cargando && Array.from({ length: Math.max(3, Math.min(porPagina || 6, 8)) },
             (_, i) => (
             <tr key={`esq-${i}`} style={{ opacity: 1 - i * 0.1 }}>
+              {conSeleccion && <td style={{ borderBottom: "1px solid var(--ds-line)" }} />}
               {columnas.map((c, j) => (
                 <td key={c.clave} style={{ padding: "var(--ds-3)",
                   borderBottom: "1px solid var(--ds-line)" }}>
@@ -72,21 +98,32 @@ export default function Tabla({
             </tr>
           ))}
           {!cargando && total === 0 && (
-            <tr><td colSpan={columnas.length} style={{ padding: "var(--ds-8) 0",
+            <tr><td colSpan={columnasTotales} style={{ padding: "var(--ds-8) 0",
               textAlign: "center", color: "var(--ds-ink-3)",
               fontSize: "var(--ds-t-body)" }}>{vacio}</td></tr>
           )}
           {!cargando && visibles.map((f, i) => {
             const clicable = !!onFila;
+            const k = conSeleccion ? String(claveFila(f)) : null;
+            const elegida = conSeleccion && elegidos.has(k);
+            const fondo = elegida ? "var(--ds-accent-soft)" : "transparent";
             return (
               <tr key={claveFila ? claveFila(f) : i}
+                aria-selected={conSeleccion ? elegida : undefined}
                 onClick={clicable ? () => onFila(f) : undefined}
-                style={{ cursor: clicable ? "pointer" : undefined,
+                style={{ cursor: clicable ? "pointer" : undefined, background: fondo,
                   transition: "background var(--ds-t-state) var(--ds-ease)" }}
                 onMouseEnter={clicable ? (e) => {
                   e.currentTarget.style.background = "var(--ds-surface-2)"; } : undefined}
                 onMouseLeave={clicable ? (e) => {
-                  e.currentTarget.style.background = "transparent"; } : undefined}>
+                  e.currentTarget.style.background = fondo; } : undefined}>
+                {conSeleccion && (
+                  <td style={{ padding: "var(--ds-3) var(--ds-2) var(--ds-3) var(--ds-3)", width: 36,
+                    verticalAlign: "middle", borderBottom: "1px solid var(--ds-line)" }}>
+                    <Casilla marcada={elegida} onCambio={() => alternar(k)}
+                      etiqueta={seleccion.etiqueta ? seleccion.etiqueta(f) : "Elegir renglón"} />
+                  </td>
+                )}
                 {columnas.map((c) => (
                   <td key={c.clave}
                     className={c.numerica ? "ds-num" : undefined}

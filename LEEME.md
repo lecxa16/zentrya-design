@@ -410,6 +410,7 @@ ensamblada. Todo esto vive bajo `.ds-root`, así que no se filtra al resto de la
 | `Modal` / `Aviso` | lo que interrumpe | `Escape`, clic fuera, devuelve el foco. El aviso no se cierra solo |
 | `Medidor` | barra lineal | acompaña a una cifra; nunca va sola |
 | `Interruptor` | encender/apagar un renglón | `role="switch"`; la etiqueta accesible es obligatoria |
+| `Tabla seleccion` + `BarraSeleccion` + `Casilla` | elegir varios renglones y actuar por lote (v1.3) | la casilla del encabezado elige TODOS los filtrados; la barra sólo existe con algo elegido y respeta el dock |
 | `Esqueleto` | la espera con forma | sólo cuando la forma se conoce; si no, `Cargando` |
 | `Seccion` | encabezado de bloque | **toda tarjeta titula con esto**: misma escala, misma regla, mismo sitio para la acción. `nota` es la línea secundaria |
 | `Transicion` | la entrada de una vista o de un panel | la dirección la dice la RUTA; el armazón ya la aplica a todo el producto |
@@ -480,7 +481,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v1.2.1`
+   `npm install github:lecxa16/zentrya-design#v1.3.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

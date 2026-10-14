@@ -37,6 +37,7 @@ puede diseñar.
 | Estado | `Pastilla` | texto de color |
 | Entrada de texto | `Campo` | `<input>` pelón |
 | Encender o apagar un renglón | `Interruptor` | **nunca** `<input type="checkbox">` ni un botón «Desactivar» por fila |
+| Actuar sobre varios renglones a la vez | `Tabla seleccion` + `BarraSeleccion` (la `Casilla` junta un conjunto, no enciende nada) | un `Interruptor` por fila para «elegir» |
 | Fecha | `CampoFecha` de `design/mui` | **nunca** `<input type="date">` |
 | Elegir de una lista | `Selector` de `design/mui` | **nunca** `<select>` |
 | Elegir de una lista larga (cientos o miles) | `Buscable` de `design/mui`: se escribe para filtrar, sin acentos | un `Selector` de 2,000 renglones |

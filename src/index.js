@@ -25,6 +25,7 @@ export { default as Azulejo } from "./primitivas/Azulejo";
 export { default as Campo, Selector, Buscador } from "./primitivas/Campo";
 export { default as Interruptor } from "./primitivas/Interruptor";
 export { default as Tabla } from "./primitivas/Tabla";
+export { Casilla, BarraSeleccion } from "./primitivas/Seleccion";
 export { default as Modal, Aviso } from "./primitivas/Modal";
 export { default as Formulario, Campos } from "./primitivas/Formulario";
 export { default as Transicion } from "./primitivas/Transicion";

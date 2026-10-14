@@ -4,7 +4,7 @@
  * Todos los datos de esta página son de EJEMPLO.
  */
 import React, { useState } from "react";
-import { Bento, Celda, Superficie, Seccion, Pastilla, Boton, Buscador } from "../../src/index.js";
+import { Bento, Celda, Superficie, Seccion, Pastilla, Boton, Buscador, Tabla, BarraSeleccion } from "../../src/index.js";
 import { Selector } from "../../src/mui/index.js";
 import EncabezadoPagina from "../../src/primitivas/EncabezadoPagina.jsx";
 import Segmentado from "../../src/primitivas/Segmentado.jsx";
@@ -31,6 +31,7 @@ export default function Estructura() {
   const [estatus, setEstatus] = useState("vencida");
   const [sucursal, setSucursal] = useState("");
   const [busca, setBusca] = useState("");
+  const [elegidos, setElegidos] = useState([]);
 
   const activos = [
     estatus && { clave: "estatus", texto: "Estatus", valor: ESTATUS.find((e) => e.valor === estatus)?.texto },
@@ -109,6 +110,24 @@ export default function Estructura() {
           </div>
         </Seccion>
       </Superficie></Celda>
+      <Celda ancho={12}><Superficie>
+        <Seccion titulo="Selección de renglones" nota="Casillas + barra de acciones por lote (datos de ejemplo)">
+          <Tabla claveFila={(f) => f.id} filas={FACTURAS}
+            seleccion={{ elegidos, onCambio: setElegidos, etiqueta: (f) => `Elegir ${f.folio}` }}
+            columnas={[{ clave: "folio", titulo: "Folio", fuerte: true }, { clave: "cliente", titulo: "Cliente" },
+              { clave: "saldo", titulo: "Saldo", numerica: true }]} />
+        </Seccion>
+      </Superficie></Celda>
+      <BarraSeleccion cantidad={elegidos.length} onQuitar={() => setElegidos([])}>
+        <Boton variante="contorno">Exportar</Boton>
+        <Boton variante="solido">Marcar como cobradas</Boton>
+      </BarraSeleccion>
     </Bento>
   );
 }
+
+const FACTURAS = [
+  { id: 1, folio: "A-1021", cliente: "Transportes del Norte", saldo: "$12,400.00" },
+  { id: 2, folio: "A-1022", cliente: "Abarrotes La Paz", saldo: "$3,180.00" },
+  { id: 3, folio: "A-1023", cliente: "Constructora Sierra", saldo: "$48,900.00" },
+];
