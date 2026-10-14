@@ -36,7 +36,7 @@ export { useFiltros } from "./filtros";
 export { useAngosto } from "./ancho";
 export { default as Pestanas, Cargando } from "./primitivas/Pestanas";
 export { default as PanelInicio } from "./PanelInicio";
-export { default as Armazon, SelectorArmazon, useArmazon } from "./Armazon";
+export { default as Armazon, SelectorArmazon, useArmazon, ALTO_DOCK } from "./Armazon";
 
 /* ---------- v1.1: formato, tarjetas, gráficas, operación y estructura ---------- */
 /* `numero` ya es una regla de validación (useFormulario): el formateador de
