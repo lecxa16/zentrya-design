@@ -1,0 +1,448 @@
+# Sistema de diseño
+
+Lenguaje visual compartido, empaquetado como `@zentrya/design` para cualquier proyecto de
+React. La fuente viaja dentro del paquete y los estilos se cargan solos al importar.
+
+```jsx
+import { ProveedorTema, Bento, Celda, Heroe, Superficie, Cifra, Boton } from "@zentrya/design";
+
+<ProveedorTema>
+  <Bento>
+    <Celda ancho={12} anchoMd={7}><Heroe>…</Heroe></Celda>
+    <Celda ancho={12} anchoMd={5}><Superficie><Cifra valor={68} etiqueta="Personas" /></Superficie></Celda>
+  </Bento>
+</ProveedorTema>
+```
+
+Pantalla de referencia construida al 100% con el sistema: `/zentrya/rh`.
+
+📐 **Para agregar algo nuevo, lee [`GUIA.md`](GUIA.md) primero.** Este archivo dice qué
+existe; la guía dice qué hacer, con las trampas que ya se pagaron y la lista de lo que hay
+que comprobar antes de dar algo por terminado.
+
+## Los tres modos de navegación
+
+`Armazon` es el esqueleto de la aplicación y viene en tres formas. **El modo es una
+preferencia de quien usa la app, no una decisión de cada pantalla**: se guarda igual que el
+tema y todas lo respetan. Una pantalla escribe su contenido una sola vez y sirve para los
+tres.
+
+| Modo | Forma | Cuándo |
+|---|---|---|
+| `topbar` | barra de píldoras arriba, contenido a todo lo ancho | tableros y pantallas de lectura |
+| `sidebar` | riel a la izquierda, contenido a la derecha | secciones profundas; se contrae a iconos |
+| `dock` | barra flotante abajo, estilo escritorio | pantallas donde el contenido manda |
+
+El `dock` acepta además un **lanzador** (`PanelInicio`) que se abre desde el botón de la
+izquierda, como el menú de inicio de un escritorio: quién eres arriba, lo reciente a la
+izquierda, los destinos en mosaicos a la derecha y un buscador abajo que atraviesa las tres
+cosas. Escribir sustituye las columnas por resultados — quien ya sabe a dónde va teclea,
+quien no, mira. `Escape` y un clic fuera lo cierran, y el foco entra al buscador al abrir.
+
+```jsx
+<Armazon marca={…} secciones={…} activa="tablero" onIr={…} derecha={<SelectorArmazon />}>
+  {contenido}
+</Armazon>
+```
+
+Debajo de 760 px los tres se comprimen — la barra pasa a dos filas, el riel se queda en
+iconos — pero **ninguno se sustituye por otro**: la elección se respeta a cualquier tamaño, y
+`SelectorArmazon` se vuelve un botón que rota entre los tres para no quedar fuera de alcance.
+`modo="…"` fija uno y desactiva la preferencia, para una pantalla que sólo tenga sentido de
+una forma.
+
+---
+
+## Las cinco reglas que lo sostienen
+
+1. **Un héroe por pantalla.** El gradiente pertenece a la pieza protagonista y sólo a ella.
+   Si aparece dos veces deja de señalar qué importa y pasa a ser decoración.
+2. **El vidrio existe únicamente sobre el héroe.** `Vidrio` necesita algo que difuminar;
+   sobre blanco se ve como un rectángulo gris sucio.
+3. **El color significa estado, nunca adorna.** Un tono en una `Pastilla`, una `Cifra` o una
+   barra dice algo (correcto, atención, riesgo). Para categorías sin estado está `neutro`.
+   **La única excepción es `Azulejo`**, y es deliberada: un lanzador es un mapa, no una
+   lectura de datos, y ahí el color es la identidad del destino —igual que el icono de una
+   app en un escritorio—. Fuera del lanzador la regla no se dobla.
+4. **La cifra manda.** Cada dato se lee primero como número y después como etiqueta. Todo
+   número lleva `className="ds-num"` para alinearse en columna.
+5. **Todo sale de los tokens.** Ningún color, radio, sombra, duración o curva se escribe a
+   mano en una pantalla. Si algo falta, se agrega al sistema — no se improvisa en el sitio.
+
+## Validación: el botón no se apaga
+
+Regla de Carlos (2026-09-26): **un botón gris no explica nada.** Quien captura se queda
+mirándolo sin saber si el sistema se trabó o si le falta algo. Aquí el botón siempre se
+puede pulsar; al pulsarlo con algo incompleto pasan tres cosas a la vez:
+
+1. cada campo que no cumple se marca y **dice su regla debajo** —el patrón `error` +
+   `helperText` de Material UI, con las piezas del sistema—;
+2. arriba aparece el resumen: «Faltan 2 datos: Asunto y Categoría»;
+3. el foco se va al primer campo con problema, y la pantalla lo trae a la vista.
+
+```jsx
+const f = useFormulario({
+  titulo: { etiqueta: "Asunto", reglas: [requerido("Sin asunto no se distingue de los demás."), maximo(200)] },
+  imei:   { etiqueta: "IMEI", ayuda: "De 14 a 16 dígitos. En el celular se marca *#06#.",
+            reglas: [digitos(14, 16)] },
+});
+
+<Formulario problemas={f.problemas} refCuerpo={f.cuerpo}
+  accion={<Boton variante="solido" onClick={() => f.intentar(guardar)}>Crear</Boton>}>
+  <Campo {...f.campo("titulo")} marcador="…" />
+  <Campo {...f.campo("imei")} />
+</Formulario>
+```
+
+La etiqueta, la ayuda y las reglas se declaran **juntas**: separarlas es la forma más fácil
+de que la etiqueta diga una cosa y la regla exija otra. El asterisco de obligatorio no se
+pone a mano — se le pregunta a la regla.
+
+Reglas incluidas: `requerido`, `maximo`, `minimo`, `numero({desde, hasta})`, `digitos`,
+`soloDigitos`, `correo`, `patron`, `condicion`. Una regla es cualquier función
+`(valor, valores) => mensaje | null`, así que una que dependa de otro campo se escribe en
+línea. Salvo `requerido`, **todas ignoran el vacío**: un campo opcional en blanco no tiene
+nada que reclamar.
+
+⚠️ **`digitos` y `soloDigitos` no son lo mismo, y confundirlos hace mentir al formulario.**
+`digitos(14, 16)` limpia los separadores antes de contar, así que «81-1234-5678» le parece
+bien: sirve para un IMEI, donde lo que importa es cuántos dígitos hay. `soloDigitos(10)`
+exige exactamente diez y **nada más** — ni espacios, ni guiones, ni paréntesis. Cuando el
+servidor guarda el dato crudo y lo compara entre registros (un teléfono, un NSS, una
+CLABE), la regla del formulario tiene que ser la del servidor: si no, la pantalla acepta lo
+que el servidor va a rechazar, y quien captura se entera después del viaje.
+
+**El error aparece al SALIR del campo, o al intentar guardar — nunca mientras se escribe.**
+Marcar en rojo un teléfono de diez dígitos durante las nueve primeras pulsaciones no
+corrige a nadie, sólo regaña. Ya marcado, sí se actualiza en vivo: quien está corrigiendo
+quiere ver cuándo quedó bien.
+
+Eso lo resuelve `onSalir`, que `f.campo(nombre)` incluye junto a `valor` y `onCambio`. En
+un campo de texto se dispara al perder el foco; en un **selector o una fecha, al elegir** —
+ahí no hay un «después» en el que juzgar, elegir ES terminar. Un componente propio que
+reciba `{...f.campo(x)}` tiene que **desestructurar `onSalir`**: si lo deja caer en el
+`...resto` de un elemento del DOM, React se queja de un atributo desconocido.
+
+**Lo único que sí se deshabilita** es lo que quien captura no puede arreglar escribiendo:
+un permiso que no tiene, o una acción en vuelo (`esperando`). Y aun ahí, el porqué está
+escrito en la pantalla, no escondido en un tooltip.
+
+## Filtros que se quedan puestos
+
+Una lista con filtros puestos es trabajo: alguien eligió empresa, área y estatus para
+encontrar a diez personas entre trescientas. Si al abrir una de esas diez y volver la lista
+aparece en blanco, ese trabajo se tira — y se rehace cada vez, todo el día.
+
+```jsx
+const [f, ponerF, limpiarF, hayFiltro] = useFiltros("rh-empleados", {
+  empresa: "", area: "", estatus: "Activo",
+});
+<Selector valor={f.area} onCambio={(v) => ponerF("area", v)} />
+{hayFiltro && <Boton variante="fantasma" onClick={limpiarF}>Limpiar filtros</Boton>}
+```
+
+Guarda en **`sessionStorage`**, y las dos alternativas se descartaron por algo concreto:
+
+- La **URL** obligaría a que cada camino de regreso —la miga de pan, el botón «Volver», el
+  atrás del navegador, un enlace desde otra pantalla— cargara los filtros consigo. El que
+  lo olvidara volvería a vaciar la lista, y el olvido sería invisible hasta la queja.
+- **`localStorage`** los dejaría puestos mañana y tras cerrar el navegador. Un filtro
+  olvidado que esconde media plantilla es peor que no tener filtros: nadie sospecha de lo
+  que no ve.
+
+`limpiar` devuelve a los valores por omisión **declarados**, no a vacío: si la lista nace
+enseñando sólo a los activos, limpiar la deja así otra vez. El botón sólo se pinta cuando
+hay algo que limpiar, y cuando hay filtros puestos **la pantalla lo dice** — para que nadie
+concluya que falta gente.
+
+## Cuando lo angosto pide otra forma, no otro estilo
+
+`useAngosto(px)` es para lo que el CSS no puede decidir. Achicar la letra de una cuadrícula
+de mes no la arregla: siete columnas en un teléfono dan celdas de 38px, y un nombre en 38px
+no es un nombre. Ahí no se cambia el estilo, se cambia el **árbol**: la misma información
+como lista por día. Eso se decide en React.
+
+Todo lo que sí pueda resolver una media query en CSS, que la resuelva ahí — este hook
+re-renderiza, el CSS no.
+
+Y la versión angosta **no es la versión pobre**: para «¿quién falta el jueves?» una lista
+contesta antes que una cuadrícula.
+
+## El cambio de vista
+
+Lo pone el armazón: se le pasa `vista` (la ruta) y él anima la entrada del contenido —con
+las migas— y lleva la pantalla nueva al principio. Ninguna pantalla tiene que acordarse.
+
+**La dirección cuenta a dónde fuiste**, no decora: más escalones en la ruta = entra desde la
+derecha; menos —un «volver»— desde la izquierda; los mismos, dos secciones hermanas, sube.
+Dura `--ds-t-vista` (320 ms): más largo estorba, porque se cruza con el clic siguiente.
+
+Dentro de una pantalla, `Transicion` sirve igual para un panel de pestañas con `eje="y"`
+(entre pestañas no hay profundidad) y su propio `ambito`, para que las dos memorias —la de
+la ruta y la del panel— no se pisen.
+
+Sólo hay animación de **entrada**. Cruzar dos vistas exige mantener viva la anterior, y eso
+duplica consultas y foco por un efecto: lo que entra se anuncia, lo que se fue ya se fue.
+Con `prefers-reduced-motion` no anima nada: aparece.
+
+## El lienzo no es blanco
+
+`--ds-canvas` es un blanco con temperatura menta en claro y un casi negro neutro en
+oscuro. El teal no es el color del suelo: vive en el **acento** y en la floración. Esa temperatura es lo que hace que las tarjetas **floten** en
+vez de fundirse con la página. Un fondo blanco o gris neutro rompe el sistema entero.
+
+Los dos temas son el mismo mundo: **una sola floración teal arriba a la derecha** y acento
+teal. Una floración concentrada da profundidad; tres repartidas dan discoteca. Lo único
+que cambia entre temas es la oscuridad del acento —`#0B7D75` en claro, `#3FD3C7` en
+oscuro— porque un teal que se lee sobre negro no se lee sobre blanco.
+
+El gradiente de marca (`--ds-hero`) es **idéntico en los dos temas**: una marca que cambia
+de tono al cambiar de tema deja de ser una marca.
+
+### Contraste
+
+Los cuatro niveles de tinta pasan AA (≥4.5:1) sobre tarjeta, **en los dos temas**. Medido,
+no estimado. `--ds-ink-3` es texto —etiquetas y notas—, no decoración: si al repintar un
+tema queda por debajo, es un defecto, no una elección estética.
+
+| | claro | oscuro |
+|---|---|---|
+| `--ds-ink` | 18.9 | 14.7 |
+| `--ds-ink-2` | 8.1 | 7.7 |
+| `--ds-ink-3` | 4.6 | 5.8 |
+| `--ds-accent` | 5.0 | 9.8 |
+
+**Un blanco al 90 % no deja pasar el lienzo.** `--ds-panel` y `--ds-frame` llevan la
+temperatura escrita en el color; las superficies muy translúcidas no la necesitan porque
+el lienzo se cuela solo. Si un panel se ve frío sobre una página con color, es esto.
+
+## Fotografía
+
+`Lamina` es la pieza que lleva imagen: la foto arriba con un velo de degradado que garantiza
+que el texto se lea sobre cualquier foto —clara u oscura—, y el contenido encima o en el pie.
+Acepta `imagen` + `imagenChica` (dos anchos, con `sizes`), `encuadre` (`object-position`) y
+`alt`; carga diferida por omisión. **Sin imagen no finge una**: cae al gradiente del sistema.
+
+Con `fondo`, la foto deja de ser una banda y **es la tarjeta entera**: velo sobre todo —más
+denso abajo, donde vive el texto— y el contenido dentro de `.ds-sobre-foto`. Bajo un velo
+denso los colores se apagan, así que la imagen se satura por debajo: la escena se reconoce
+sin aclarar el velo, que es lo que sostiene la lectura.
+
+### Fotografía en el héroe
+
+Con `soloFoto`, el héroe **deja el gradiente** y es la fotografía: dos velos —uno vertical y
+uno lateral, porque el contenido se alinea a la izquierda y ahí es donde hace falta el
+apoyo— sostienen el texto blanco sin oscurecer la imagen entera. Si la foto no carga, vuelve
+al gradiente: la pieza protagonista de una pantalla no puede quedarse en un rectángulo negro.
+
+Sin `soloFoto`, `Heroe` acepta `imagen` y la coloca en modo `luminosity`: toma su luz y el color lo sigue
+poniendo el gradiente. El héroe gana materia sin dejar de ser la pieza de marca, y el texto
+blanco encima nunca se pelea con una zona clara de la foto. `intensidad` (0.26 por omisión)
+regula cuánto se ve. Ojo con el encuadre: en una tarjeta alta y angosta, `cover` amplía una
+foto apaisada y un rostro se vuelve enorme — `encuadre` es lo que lo resuelve.
+
+## Volver y ruta
+
+`Migas` da las dos cosas a la vez, porque son la misma: el «volver» es el escalón anterior
+de la ruta.
+
+**El volver apunta al PADRE en la jerarquía, no a `history.back()`.** Parece menos listo y
+es mejor: quien llegó por un enlace directo, desde un buscador o desde otro producto
+termina fuera de la aplicación si el volver es el historial. El padre siempre existe y
+siempre es el mismo, así que el destino es predecible — y por eso se puede **nombrar**:
+«Volver al padrón» dice a dónde va; una flecha sola, no.
+
+Debajo de 760 px la ruta completa no cabe, y apretarla no la hace legible: se queda sólo el
+volver. **La ruta informa; el volver resuelve.**
+
+El armazón la coloca en los tres modos, así que ninguna pantalla puede olvidarse de decir
+dónde está. Una pantalla profunda aporta sólo sus escalones extra —nunca el tronco— para
+que no haya dos sitios donde escribir mal la misma jerarquía.
+
+### `.ds-sobre-foto`
+
+No existe una variante «clara» de cada pieza. En ese subárbol se **redefinen los tokens** de
+tinta y superficie, y cualquier componente del sistema —`Fila`, `Pastilla`, `Insignia`,
+`Boton`— se lee correctamente sin enterarse de que está encima de una imagen. Es la misma
+mecánica del tema, aplicada a un trozo de pantalla. Los colores de estado (`ok`, `aviso`,
+`riesgo`) **no** se tocan: siguen significando lo mismo ahí dentro.
+
+Dónde va y dónde no, en un producto que administra personas reales:
+
+| Sí | No |
+|---|---|
+| Portada de una sección | Foto de perfil de alguien |
+| Estado vacío | Retrato en una fila con nombre |
+| Ambiente de una pantalla «blanda» | Cualquier sitio donde se lea como una persona del padrón |
+
+Una foto de archivo junto a un nombre real es el mismo error que un dato inventado en el
+expediente, en imagen. La foto de una persona sale de su registro o no sale.
+
+## Identidad legible en los dos temas
+
+Un color de marca no sobrevive el cambio de tema: el índigo de un producto, sobre fondo de
+medianoche, deja de leerse. Por eso el texto teñido nunca usa el color crudo sino
+`color-mix(in oklab, <color>, var(--ds-mezcla-tono))` — en claro la mezcla es nula y el
+color queda tal cual; en oscuro lo aclara un 46%. El fondo sí usa el color crudo, porque
+ahí el contraste no está en juego.
+
+## Temas
+
+Los dos se definen en `tokens.css` como variables CSS. Cada color tiene su par; **ninguno
+se define sólo en un tema** — al repintar un tema completo es fácil perder uno por el
+camino, así que la comprobación es mecánica: todo token de color del bloque claro tiene que
+aparecer en el oscuro. Cambiar de tema altera un atributo en el elemento raíz: no hay
+re-render. `ProveedorTema` recuerda la elección y, si nadie eligió, sigue al sistema
+operativo.
+
+## Tipografía
+
+**Manrope** variable, auto-hospedada (40 KB, pesos 400–800). Se eligió por sus numerales
+tabulares: este sistema muestra cifras en columna todo el día, y ahí una geométrica bonita
+de números anchos estorba más de lo que aporta.
+
+| Uso | Token |
+|---|---|
+| Cifra protagonista | `--ds-num-xl` · 800 |
+| Cifra de tarjeta | `--ds-num-l` / `--ds-num-m` · 800 |
+| Título de pantalla | `--ds-t-display` · 800 |
+| Título de sección | `--ds-t-title` · 800 |
+| Cuerpo | `--ds-t-body` · 500 |
+| Etiqueta | `--ds-t-micro` · 600, versalitas |
+
+**Sin eyebrows.** El título carga su propio peso; `Seccion` lo acompaña con una regla que se
+desvanece.
+
+## ⚠️ `position: sticky` no siempre pega
+
+`sticky` se ancla al **contenedor de scroll más cercano**. Si un ancestro tiene
+`overflow: auto` —el `body` de esta aplicación lo tiene— ese ancestro pasa a ser el
+contenedor, aunque quien scrollee de verdad sea `html`. El elemento queda anclado a algo
+que nunca se mueve y se va con el contenido, sin ningún error que lo delate.
+
+Por eso **ni la barra superior ni el menú lateral usan `sticky`**: los dos son
+`position: fixed` y el contenido reserva su sitio — la barra con un alto medido por
+`ResizeObserver` (en angosto pasa a dos filas) y el riel con un margen que sigue su ancho
+al contraerse.
+
+## ⚠️ Menús flotantes: portal, siempre
+
+Un menú `position: absolute` dentro de su botón se **recorta** en cuanto un ancestro tiene
+`overflow` — y el menú lateral lo tiene. Van en un portal a `body` con posición fija, y se
+anclan al lado donde HAY sitio: alinear siempre a la derecha del botón manda el menú fuera
+de la pantalla cuando el botón vive a la izquierda. Se mide dos veces: la primera con un
+tamaño estimado, la segunda con el real.
+
+## ⚠️ La trampa de `transform: none`
+
+`ds-rise` termina en `transform: none`, y con `fill-mode: both` ese valor **manda** cuando
+la animación acaba. En un elemento centrado con `translate(-50%, -50%)` eso le borra el
+centrado y lo deja corrido media caja a la derecha y hacia abajo — y sólo **después** de
+que termina la animación, así que al mirarlo aparecer parece correcto.
+
+Todo lo que se posicione con `transform` necesita su propia animación que arrastre ese
+transform en las dos paradas: `ds-modal` para el diálogo centrado, `ds-inicio` para el
+lanzador. No reutilizar `ds-rise` ahí.
+
+## Movimiento
+
+Una sola curva de llegada: `--ds-ease`. Nunca rebote.
+
+| Token | Para |
+|---|---|
+| `--ds-t-tap` 120ms | respuesta al dedo |
+| `--ds-t-state` 220ms | cambio de estado, hover |
+| `--ds-t-move` 380ms | algo que aparece o se desplaza |
+| `--ds-t-scene` 620ms | **la entrada con autoría, una por pantalla** |
+
+La entrada escalonada (`entrada={i}`) corta su retraso total a 240 ms: son pantallas de
+trabajo, nadie debe esperar a que la información termine de presentarse. `prefers-reduced-motion`
+está resuelto de forma global en `tokens.css`.
+
+## Superficies del navegador
+
+`tokens.css` reclama selección, cursor, barra de scroll y anillo de foco. No pertenecen a
+ningún sistema por omisión, y son la diferencia entre una página construida y una
+ensamblada. Todo esto vive bajo `.ds-root`, así que no se filtra al resto de la app.
+
+## Componentes
+
+| | Para qué | Nota |
+|---|---|---|
+| `Bento` / `Celda` | retícula de 12 con marco opcional | en móvil todo pasa a ancho completo |
+| `Superficie` | la tarjeta | `interactiva` sólo si la tarjeta entera lleva a algún lado |
+| `Heroe` / `Vidrio` | la pieza protagonista | uno por pantalla |
+| `Cifra` | número + etiqueta | el tono pinta el número, jamás el fondo |
+| `Anillo` | progreso cuando ES la información | si es secundario, usa `Barras` |
+| `Barras` | serie con pista y eje propio | el eje lo dibuja el componente, alineado |
+| `Pastilla` / `Insignia` | estado y icono en círculo | |
+| `Boton` | sólido · contorno · fantasma · claro | un `solido` por pantalla; `claro` sólo sobre el héroe |
+| `Fila` / `Retrato` | lista de personas o documentos | para matrices de números sigue siendo mejor una tabla |
+| `Migas` | ruta + volver | el volver apunta al PADRE, nunca al historial |
+| `useFormulario` + reglas | validación de una captura | el botón NUNCA se deshabilita; cada campo dice su regla |
+| `useFiltros(nombre, porOmisión)` | filtros de una lista que sobreviven a salir de la pantalla | `sessionStorage`, no URL ni `localStorage` — ver abajo |
+| `useAngosto(px)` | cambiar de **forma** en pantallas angostas | sólo cuando el CSS no basta: otro árbol de elementos, no otro estilo |
+| `Formulario` / `Campos` | el chasis de una captura | **toda captura es una vista**, nunca un modal; la barra de acciones va fija abajo |
+| `Modal` / `Aviso` | lo que interrumpe | `Escape`, clic fuera, devuelve el foco. El aviso no se cierra solo |
+| `Medidor` | barra lineal | acompaña a una cifra; nunca va sola |
+| `Interruptor` | encender/apagar un renglón | `role="switch"`; la etiqueta accesible es obligatoria |
+| `Esqueleto` | la espera con forma | sólo cuando la forma se conoce; si no, `Cargando` |
+| `Seccion` | encabezado de bloque | **toda tarjeta titula con esto**: misma escala, misma regla, mismo sitio para la acción. `nota` es la línea secundaria |
+| `Transicion` | la entrada de una vista o de un panel | la dirección la dice la RUTA; el armazón ya la aplica a todo el producto |
+| `Armazon` | el esqueleto, en tres modos | uno por aplicación, no por pantalla; también anima el cambio de vista y lleva la pantalla nueva arriba |
+| `Lamina` | tarjeta con imagen y velo | ver «Fotografía»; nunca junto a un nombre real |
+| `Azulejo` | mosaico de lanzador | el único sitio donde el color es identidad, no estado |
+| `PanelInicio` | el lanzador del `dock` | no sabe nada del producto: todo entra por props |
+
+## La capa de MUI (`design/mui/`)
+
+El núcleo no importa nada más que React — ésa es la razón por la que se puede copiar. Pero
+**dos controles del navegador no se pueden estilar por dentro** y hay que sustituirlos:
+
+| Control | Por qué no sirve el nativo |
+|---|---|
+| `<input type="date">` | Distinto en cada navegador, no respeta es-MX (enseña MM/DD en algunos entornos) y dispara `onChange` en **cada segmento**, así que ligar una consulta al campo lanza peticiones con fechas a medio escribir |
+| `<select>` | Su lista la dibuja el sistema operativo: en tema oscuro sale un menú blanco |
+
+Por eso `CampoFecha` y `Selector` viven **aparte**, en `design/mui/`. Quien se lleve el
+sistema a un proyecto importa esta capa desde `@zentrya/design/mui`. Se ven idénticos a los
+propios porque salen de los mismos tokens.
+
+⚠️ **La raíz del `sx` no es la misma en `Select` que en `TextField`.** En el `Select`, la
+raíz YA es el `OutlinedInput`; en el `TextField` viene envuelto en un `FormControl`. Un
+`sx` que sólo apunta a `& .MuiOutlinedInput-root` llega a uno y **no al otro**, sin avisar:
+el que se queda fuera hereda el tema de la aplicación. Por eso las reglas van a
+`"&.MuiOutlinedInput-root, & .MuiOutlinedInput-root"`.
+
+⚠️ **Un campo enfocado lleva UN anillo, no dos.** El borde del campo cambia a acento y se
+acompaña de un halo (`--ds-accent-ring`); el anillo global de `:focus-visible` se apaga en
+`input`, `textarea`, `select` y `combobox`, porque encima del borde eran dos. En botones y
+enlaces se queda: ésos no tienen borde que cambiar.
+
+⚠️ **MUI trae el tema de la aplicación anfitriona.** Dentro de Camper, ese tema pinta el
+texto del `Select` en su gris casi negro y el elemento elegido en su azul — ilegible sobre
+un fondo oscuro, y fuera de la familia. `design/mui/estilo.js` lo sobrescribe, y es el
+único sitio del sistema donde hay `!important`: los estados que MUI pinta desde su tema no
+se ganan de otra forma.
+
+## Para llevarlo a otro proyecto
+
+1. Instalar el paquete con la versión fija (el tag):
+   `npm install github:lecxa16/zentrya-design#v1.0.0`
+2. Instalar lo que el paquete pide y no trae:
+   `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
+3. Envolver la app en `<ProveedorTema>`.
+4. Importar el núcleo desde `@zentrya/design` y el selector y la fecha desde
+   `@zentrya/design/mui`. No hay paso 5.
+
+Para actualizar, se cambia el tag en `package.json` y se vuelve a instalar. Una versión
+nueva se publica así: cambiar `src/`, subir `version` en `package.json`, `npm run build`,
+commitear **también `dist/`** (los proyectos instalan lo compilado, no compilan nada) y
+crear el tag `vX.Y.Z`.
+
+## Lo que este sistema rechaza
+
+Tarjetas idénticas como estructura de página · el gradiente repartido por toda la pantalla ·
+vidrio sobre fondo claro · color sin significado · sombras sin desplazamiento · grises
+planos sobre superficies de color (se tiñen del tono) · eyebrows · una fuente de sistema
+haciendo de voz de display.

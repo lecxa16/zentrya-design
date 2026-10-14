@@ -1,0 +1,290 @@
+/**
+ * NÚCLEO DEL SISTEMA — todo lo visual sale de aquí.
+ *
+ * Los dos temas se definen como variables CSS, no como objetos de JavaScript:
+ * así el cambio de tema no re-renderiza nada, y un proyecto que no use React
+ * puede consumir el mismo sistema.
+ *
+ * Cada color tiene su par en oscuro. Ninguno se define sólo en un tema.
+ */
+
+:root {
+  /* ---------- Lienzo y superficies ---------- */
+  /* El lienzo NO es un color: es un degradado. De ahí viene la profundidad —
+     una superficie translúcida encima de un plano tiene nada que difuminar. */
+  --ds-canvas:        #F4F9F8;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #D8EEE9 0%, rgba(216,238,233,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #DFEEF1 0%, rgba(223,238,241,0) 54%),
+      radial-gradient(900px 700px at 40% 112%, #E4F2EC 0%, rgba(228,242,236,0) 58%),
+      linear-gradient(160deg, #F7FBFA 0%, #F2F8F7 52%, #F6FBF9 100%);
+
+  /* Las superficies son vidrio: dejan ver el degradado y lo difuminan. */
+  --ds-surface:       rgba(255,255,255,0.72);
+  --ds-surface-solid: #FFFFFF;
+  --ds-surface-2:     rgba(255,255,255,0.52);
+  --ds-surface-sunk:  rgba(255,255,255,0.40);
+  --ds-blur:          saturate(180%) blur(22px);
+  --ds-frame:         rgba(250,254,252,0.62);   /* el marco también es vidrio */
+  --ds-panel:         rgba(241,250,247,0.94);   /* lo que se superpone al trabajo */
+
+  /* ---------- Tinta ---------- */
+  --ds-ink:           #0B1211;
+  --ds-ink-2:         #46524F;
+  /* 4.62 sobre el lienzo (#F4F9F8). Estuvo en #6B7876, que pasa AA contra
+     blanco puro (4.59) pero NO contra el lienzo de la app, que lleva tinte
+     verde: ahí daba 4.32. Medir contra blanco es la forma fácil de creer que
+     un texto secundario cumple cuando no cumple — se mide contra el fondo que
+     de verdad hay debajo. El del tema oscuro da 6.37 y no se toca. */
+  --ds-ink-3:         #677372;
+  --ds-ink-on-dark:   #FFFFFF;
+  --ds-ink-on-accent: #FFFFFF;
+
+  /* ---------- Acento: uno solo, y su gradiente ---------- */
+  --ds-accent:        #0B7D75;
+  --ds-accent-press:  #095F59;
+  --ds-accent-soft:   #D6EFEA;   /* fondo de insignias e iconos */
+  --ds-accent-ring:   rgba(11,125,117,0.28);
+
+  /* El gradiente es de la pieza protagonista de cada pantalla. Si aparece en
+     dos lugares a la vez, deja de señalar cuál importa. */
+  /* El MISMO en los dos temas: una marca que cambia de tono al cambiar de
+     tema deja de ser una marca. */
+  --ds-hero: linear-gradient(135deg, #1B5FA8 0%, #148C93 50%, #2FC9A6 100%);
+  --ds-hero-glow: radial-gradient(120% 140% at 12% 8%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0) 46%),
+                  radial-gradient(90% 120% at 92% 100%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 52%);
+
+  /* ---------- Estados ---------- */
+  --ds-ok:    #3E8E2B;  --ds-ok-soft:    #E6F3DF;
+  --ds-warn:  #D97706;  --ds-warn-soft:  #FDF0DC;
+  --ds-risk:  #DC2626;  --ds-risk-soft:  #FCE8E8;
+  --ds-info:  #0B7D75;  --ds-info-soft:  #D6EFEA;
+
+  /* ---------- Bordes ---------- */
+  /* El esqueleto necesita su propio par: con `surface-sunk` en oscuro
+     queda MÁS oscuro que el lienzo y se lee como un agujero, no como
+     un bloque que reserva sitio. */
+  --ds-esqueleto:        rgba(11,18,17,0.075);
+  --ds-esqueleto-brillo: rgba(11,18,17,0.135);
+
+  --ds-line:      rgba(11,18,17,0.07);
+  --ds-line-firm: rgba(11,18,17,0.14);
+  --ds-line-glass: rgba(255,255,255,0.28);
+
+  /* ---------- Radios: tres escalas, no más ---------- */
+  --ds-r-frame: 28px;   /* el marco del bento */
+  --ds-r-card:  20px;   /* las tarjetas */
+  --ds-r-item:  13px;   /* lo que vive dentro de una tarjeta */
+  --ds-r-pill:  999px;
+
+  /* ---------- Elevación: sombra con desplazamiento Y difuminado ---------- */
+  --ds-lift-1: 0 1px 2px rgba(11,18,17,0.04), 0 2px 8px rgba(11,18,17,0.04);
+  --ds-lift-2: 0 2px 4px rgba(11,18,17,0.05), 0 10px 24px -8px rgba(11,18,17,0.10);
+  --ds-lift-3: 0 4px 8px rgba(11,18,17,0.06), 0 22px 48px -16px rgba(11,18,17,0.18);
+  --ds-lift-accent: 0 8px 22px -8px rgba(11,125,117,0.50);
+
+  /* ---------- Espaciado: escala de 4 ---------- */
+  --ds-1: 4px;   --ds-2: 8px;   --ds-3: 12px;  --ds-4: 16px;
+  --ds-5: 20px;  --ds-6: 24px;  --ds-8: 32px;  --ds-10: 40px;  --ds-12: 48px;
+
+  /* ---------- Tipografía ---------- */
+  --ds-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* La cifra es la protagonista de este sistema: tiene su propia escala. */
+  --ds-num-xl: 3.4rem;  --ds-num-l: 2.3rem;  --ds-num-m: 1.6rem;
+  --ds-t-display: 2.9rem; --ds-t-title: 1.3rem; --ds-t-body: 0.94rem;
+  --ds-t-small: 0.82rem;  --ds-t-micro: 0.72rem;
+
+  /* ---------- Movimiento ---------- */
+  /* Una sola curva de llegada en todo el sistema. Nunca rebote. */
+  /* Mezcla que vuelve legible un color de identidad sobre el fondo del
+     tema. En claro es la identidad tal cual; en oscuro se aclara. */
+  --ds-mezcla-tono: white 0%;
+
+  --ds-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ds-ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ds-t-tap:   120ms;  /* respuesta inmediata */
+  --ds-t-state: 220ms;  /* cambio de estado */
+  --ds-t-move:  380ms;  /* algo que se desplaza o aparece */
+  --ds-t-vista: 320ms;  /* el cambio de una vista a otra: corto, o estorba */
+  --ds-t-scene: 620ms;  /* la entrada con autoría, una por pantalla */
+}
+
+/* ---------- Oscuro ---------- */
+/* El lienzo deja de ser lavanda y pasa a azul de medianoche: la misma idea
+   —un fondo con temperatura, no un gris— resuelta al revés. */
+[data-ds-theme="dark"] {
+  /* El lienzo oscuro no es azul de medianoche: es casi negro con una
+     temperatura verde-teal, y una sola floración de color arriba. Una
+     floración concentrada da profundidad; tres repartidas dan discoteca. */
+  --ds-canvas:        #06080A;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #0F2F36 0%, rgba(15,47,54,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #0A1D24 0%, rgba(10,29,36,0) 54%),
+      radial-gradient(900px 700px at 40% 112%, #08171B 0%, rgba(8,23,27,0) 58%),
+      linear-gradient(160deg, #07090C 0%, #050708 52%, #06090B 100%);
+
+  /* Las tarjetas son apenas más claras que el lienzo, con un canto casi
+     invisible: en la referencia lo que separa una tarjeta del fondo es un
+     escalón de luz, no una línea. */
+  --ds-surface:       rgba(255,255,255,0.062);
+  --ds-surface-solid: #11161A;
+  --ds-surface-2:     rgba(255,255,255,0.042);
+  --ds-surface-sunk:  rgba(0,0,0,0.32);
+  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-panel:         rgba(14,18,22,0.94);
+
+  /* La tinta secundaria arrastra la misma temperatura: un gris neutro sobre
+     un fondo con verde se ve sucio. */
+  --ds-ink:           #E7ECEF;
+  --ds-ink-2:         #A1ACB3;
+  --ds-ink-3:         #87939A;
+  --ds-ink-on-dark:   #E7ECEF;
+
+  --ds-accent:        #3FD3C7;
+  --ds-accent-press:  #6BE2D8;
+  --ds-accent-soft:   #12302E;
+  --ds-accent-ring:   rgba(63,211,199,0.32);
+
+  --ds-hero: linear-gradient(135deg, #1B5FA8 0%, #148C93 50%, #2FC9A6 100%);
+
+  --ds-ok:    #6FD154;  --ds-ok-soft:    #182A12;
+  --ds-warn:  #F0B24B;  --ds-warn-soft:  #2C2413;
+  --ds-risk:  #FF6B6B;  --ds-risk-soft:  #2E1618;
+  --ds-info:  #3FD3C7;  --ds-info-soft:  #12302E;
+
+  --ds-esqueleto:        rgba(255,255,255,0.07);
+  --ds-esqueleto-brillo: rgba(255,255,255,0.145);
+
+  --ds-line:      rgba(255,255,255,0.07);
+  --ds-line-firm: rgba(255,255,255,0.16);
+
+  --ds-lift-1: 0 1px 2px rgba(0,0,0,0.44), 0 2px 8px rgba(0,0,0,0.34);
+  --ds-lift-2: 0 2px 4px rgba(0,0,0,0.48), 0 10px 24px -8px rgba(0,0,0,0.56);
+  --ds-lift-3: 0 4px 8px rgba(0,0,0,0.54), 0 22px 48px -16px rgba(0,0,0,0.70);
+  --ds-lift-accent: 0 8px 22px -8px rgba(63,211,199,0.45);
+
+  /* Sin esto, un color de identidad sobre fondo de medianoche deja de
+     leerse: los azulejos del lanzador volverían a ser ilegibles. */
+  --ds-mezcla-tono: white 46%;
+}
+
+
+/* ---------- Superficies que el navegador dibuja ---------- */
+/* Selección, cursor, scroll y foco no pertenecen a ningún sistema de diseño
+   por omisión. Reclamarlas es la diferencia entre una página construida y
+   una ensamblada. */
+.ds-root {
+  /* El lienzo NO se pinta sobre este elemento. Va en una capa fija detrás,
+     porque `background-attachment: fixed` sobre el elemento sólo cubre lo
+     que mide el elemento: si algo desborda —una barra con `100vw` y una
+     barra de scroll clásica, por ejemplo— queda una franja del color plano,
+     sin degradado, al borde de la página. Una capa fija cubre siempre toda
+     la ventana, a cualquier tamaño y en cualquier posición de scroll. */
+  position: relative;
+  z-index: 0;
+  background-color: var(--ds-canvas);
+  color: var(--ds-ink);
+  font-family: var(--ds-font);
+  font-size: var(--ds-t-body);
+  -webkit-font-smoothing: antialiased;
+  /* Crece con su contenido y nunca impone la altura del viewport: la raíz
+     puede estar dentro de un contenedor que ya administra su propio scroll,
+     y ahí un 100vh corta lo que sobra en lugar de dejarlo fluir. */
+  min-height: 100%;
+  /* Nada de esta pantalla provoca scroll horizontal. */
+  overflow-x: clip;
+}
+
+.ds-root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--ds-canvas);
+  background-image: var(--ds-canvas-grad);
+}
+.ds-root ::selection { background: var(--ds-accent); color: var(--ds-ink-on-accent); }
+.ds-root :focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; border-radius: 8px; }
+/* Un campo enseña su foco con su propio borde y halo. El anillo de arriba
+   encima de eso son DOS anillos, y eso es lo que se ve mal. El de botones y
+   enlaces se queda: ésos no tienen borde que cambiar. */
+.ds-root :is(input, textarea, select, [role="combobox"]):focus-visible { outline: none; }
+.ds-root * { caret-color: var(--ds-accent); }
+.ds-root ::-webkit-scrollbar { width: 11px; height: 11px; }
+.ds-root ::-webkit-scrollbar-track { background: transparent; }
+.ds-root ::-webkit-scrollbar-thumb {
+  background: var(--ds-line-firm); border-radius: 99px;
+  border: 3px solid transparent; background-clip: content-box;
+}
+.ds-root ::-webkit-scrollbar-thumb:hover { background: var(--ds-ink-3); background-clip: content-box; }
+
+/* ---------- Contenido sobre una fotografía ---------- */
+/* No hay una variante «clara» de cada pieza: se redefinen los tokens de
+   tinta y superficie en el subárbol, y cualquier componente del sistema se
+   lee correctamente sin enterarse de que está encima de una imagen. Es la
+   misma mecánica del tema, aplicada a un trozo de pantalla. */
+.ds-sobre-foto {
+  --ds-ink:           #FFFFFF;
+  --ds-ink-2:         rgba(255,255,255,0.88);
+  --ds-ink-3:         rgba(255,255,255,0.70);
+  --ds-line:          rgba(255,255,255,0.16);
+  --ds-line-firm:     rgba(255,255,255,0.32);
+  --ds-surface:       rgba(255,255,255,0.14);
+  --ds-surface-2:     rgba(255,255,255,0.12);
+  --ds-surface-solid: rgba(255,255,255,0.18);
+  --ds-surface-sunk:  rgba(0,0,0,0.30);
+  --ds-accent:        #FFFFFF;
+  --ds-accent-soft:   rgba(255,255,255,0.20);
+  color: var(--ds-ink);
+}
+
+/* Toda cifra del sistema se alinea en columna. */
+.ds-num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+/* ---------- Movimiento base ---------- */
+@keyframes ds-rise  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes ds-fade  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-grow  { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ds-sweep { from { stroke-dashoffset: var(--ds-dash); } }
+@keyframes ds-girar { to { transform: rotate(360deg); } }
+/* El brillo del esqueleto. Con `prefers-reduced-motion` se apaga solo por
+   la regla global de más abajo y queda un bloque quieto, que sigue
+   reservando el sitio: que es lo que de verdad hace el esqueleto. */
+@keyframes ds-brillo { to { background-position-x: -220%; } }
+/* Menús que nacen de su botón: hacia arriba cuando está pegado al borde
+   inferior, hacia abajo cuando está arriba. */
+@keyframes ds-sube { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes ds-baja { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+/* ⚠️ TRAMPA DEL SISTEMA: `ds-rise` termina en `transform: none`, y con
+   `fill-mode: both` ese valor MANDA cuando la animación acaba. En un
+   elemento que se centra con `translate(-50%, -50%)`, eso le borra el
+   centrado y lo deja corrido media caja a la derecha y hacia abajo.
+   Todo lo que se posicione con transform necesita su propia animación que
+   arrastre ese transform en las dos paradas — como estas dos. */
+
+/* El diálogo centrado: el translate de centrado viaja en los keyframes. */
+@keyframes ds-modal {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.985); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+/* El modal anclado a la derecha (`Modal lado="derecha"`): entra desde su
+   borde y arrastra su propio translateY, por la misma razón que `ds-modal`. */
+@keyframes ds-modal-lado {
+  from { opacity: 0; transform: translate(16px, -50%); }
+  to   { opacity: 1; transform: translate(0, -50%); }
+}
+
+/* El panel de inicio crece desde el dock que lo abrió. */
+@keyframes ds-inicio {
+  from { opacity: 0; transform: translateX(-50%) translateY(18px) scale(0.965); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-root *, .ds-root *::before, .ds-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
