@@ -29,6 +29,9 @@ export default function Superficie({
         border: "1px solid var(--ds-line)",
         borderRadius: radio,
         padding: relleno,
+        /* border-box: con `height: 100%` (llenar la celda del Bento) el relleno se sumaba a la altura y la
+           tarjeta se montaba sobre la fila de abajo. */
+        boxSizing: "border-box",
         boxShadow: hundida ? "none" : NIVEL[nivel],
         transition: `transform var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease)`,
         cursor: interactiva ? "pointer" : undefined,

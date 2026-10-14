@@ -65,6 +65,9 @@ function we({
         border: "1px solid var(--ds-line)",
         borderRadius: d,
         padding: o,
+        /* border-box: con `height: 100%` (llenar la celda del Bento) el relleno se sumaba a la altura y la
+           tarjeta se montaba sobre la fila de abajo. */
+        boxSizing: "border-box",
         boxShadow: a ? "none" : kt[r],
         transition: "transform var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease)",
         cursor: n ? "pointer" : void 0,
@@ -148,6 +151,9 @@ function Nn({
         background: y ? "#0B0C12" : "var(--ds-hero)",
         borderRadius: s,
         padding: c,
+        /* border-box: con `height: 100%` (llenar la celda del Bento) el relleno se sumaba a la altura y la
+           tarjeta se montaba sobre la fila de abajo. */
+        boxSizing: "border-box",
         color: "var(--ds-ink-on-hero)",
         boxShadow: y ? "var(--ds-lift-3)" : "var(--ds-lift-accent), var(--ds-lift-2)",
         ...h !== void 0 ? {

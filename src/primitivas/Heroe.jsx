@@ -32,6 +32,9 @@ export default function Heroe({
         background: puraFoto ? "#0B0C12" : "var(--ds-hero)",
         borderRadius: radio,
         padding: relleno,
+        /* border-box: con `height: 100%` (llenar la celda del Bento) el relleno se sumaba a la altura y la
+           tarjeta se montaba sobre la fila de abajo. */
+        boxSizing: "border-box",
         color: "var(--ds-ink-on-hero)",
         boxShadow: puraFoto ? "var(--ds-lift-3)" : "var(--ds-lift-accent), var(--ds-lift-2)",
         ...(entrada !== undefined

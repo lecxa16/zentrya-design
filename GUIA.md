@@ -129,6 +129,7 @@ Cada una costó una sesión encontrarla. Están medidas, no supuestas.
 | Un campo se pinta en rojo mientras todavía se escribe | El error se enseñaba al primer cambio, no al terminar | El error espera a `onSalir` (blur en texto, elegir en selector o fecha) o al intento de guardar. Un componente propio que reciba `{...f.campo(x)}` **desestructura `onSalir`** |
 | Un selector se queda en blanco tras elegir | Se puso «Todas» como opción con `valor: ""`, y `""` es justo el caso que el componente reserva para «sin elegir» | Pasar `vacio="Todas"` y sacarla de `opciones` |
 | Una cuadrícula «cabe» en el teléfono pero no se lee | No desbordar no es ser legible: siete columnas en 375 px dan celdas de 38 px y el texto se recorta en silencio | `useAngosto` y **otra forma** (lista por día), no la misma con letra más chica. Medir el ancho del contenido, no sólo el del documento |
+| Una tarjeta con `height: 100%` se monta sobre la fila de abajo | `Superficie`/`Heroe` eran `content-box`: el relleno se sumaba a la altura de la celda | Desde v1.3.1 son `border-box`; en una pieza propia, `boxSizing: "border-box"` |
 | Una lista pierde sus filtros al volver de un detalle | El estado vive en `useState` y la pantalla se desmonta | `useFiltros(nombre, porOmisión)` |
 
 ## 4.1 Reglas de las gráficas
