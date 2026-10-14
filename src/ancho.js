@@ -34,3 +34,18 @@ export function useAngosto(px = 760) {
 
   return angosto;
 }
+
+/**
+ * Tamaño de una cifra que nunca se parte en dos renglones.
+ *
+ * «$38,400,000» / «.00» en dos líneas ya no es una cifra. En vez de dejarla
+ * envolver, la letra baja lo necesario para caber en su columna: el tamaño
+ * del token es el techo y el ancho del contenedor el límite (unidades `cqi`).
+ * Quien la usa envuelve la cifra en un elemento con `CONTENEDOR_CIFRA`.
+ * 0.62 em es el ancho medio de un numeral tabular de Manrope a peso 800.
+ */
+export const CONTENEDOR_CIFRA = { containerType: "inline-size", minWidth: 0 };
+export function cabe(token, texto) {
+  const n = Math.max(4, String(texto ?? "").length);
+  return `min(${token}, calc(100cqi / ${(n * 0.62).toFixed(2)}))`;
+}

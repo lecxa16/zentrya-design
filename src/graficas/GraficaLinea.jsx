@@ -1,0 +1,212 @@
+/**
+ * GraficaLinea — cómo se mueve una cifra en el tiempo.
+ *
+ * Es la gráfica de «¿vamos mejor o peor que antes?»: ventas por mes, litros
+ * por semana, cartera vencida por día. Por eso el eje X es el tiempo y el eje
+ * Y uno solo: dos medidas de distinta escala no se pintan aquí juntas —se
+ * hacen dos gráficas—, porque un segundo eje deja que cualquier par de líneas
+ * parezca cruzarse donde uno quiera.
+ *
+ * Decisiones que sostiene:
+ *   · Un hueco (null) corta la línea. Unir por encima de un día sin dato
+ *     inventa los valores intermedios.
+ *   · Con cuatro series o menos, cada línea lleva su nombre al final: el ojo
+ *     no tiene que ir y volver a la leyenda.
+ *   · `apilada` sólo tiene sentido con área (partes de un todo); apilar
+ *     líneas sueltas hace que la de arriba parezca más grande de lo que es.
+ *   · En angosto se dejan menos marcas en el eje X, nunca texto girado.
+ */
+import React, { useMemo, useState } from "react";
+import {
+  MarcoGrafica, Globo, useMedida, marcasBonitas, escala, TEXTO_EJE, colorSerie, SinDatos, fmt,
+} from "./base";
+
+const ANCHO_CARACTER = 6.6;
+
+export default function GraficaLinea({
+  series = [], etiquetas = [], alto = 240, formato = "numero", area = false, apilada = false,
+  meta, titulo, cero = true, estilo,
+}) {
+  const [ref, ancho] = useMedida();
+  const [activo, setActivo] = useState(null);
+
+  const n = Math.max(etiquetas.length, ...series.map((s) => (s.valores || []).length), 0);
+  const apilar = apilada && area;
+  const metaValor = meta === undefined || meta === null ? null
+    : typeof meta === "object" ? meta.valor : meta;
+  const metaTexto = meta && typeof meta === "object" && meta.texto ? meta.texto : "Meta";
+
+  /* Valores a pintar: en apilada, cada serie trae su base (la suma de las de
+     abajo). Un null en apilada cuenta como 0: un hueco en una pila la rompe. */
+  const capas = useMemo(() => {
+    const acumulado = Array(n).fill(0);
+    return series.map((s) => {
+      const v = Array.from({ length: n }, (_, i) => {
+        const x = s.valores?.[i];
+        return x === null || x === undefined || !Number.isFinite(Number(x)) ? null : Number(x);
+      });
+      if (!apilar) return { abajo: null, arriba: v, crudo: v };
+      const abajo = acumulado.slice();
+      const arriba = v.map((x, i) => (acumulado[i] += x ?? 0));
+      return { abajo, arriba: arriba.slice(), crudo: v };
+    });
+  }, [series, n, apilar]);
+
+  const todos = capas.flatMap((c) => c.arriba.filter((v) => v !== null));
+  if (metaValor !== null) todos.push(Number(metaValor));
+  const hayDatos = todos.length > 0 && n > 0;
+
+  const minDato = hayDatos ? Math.min(...todos) : 0;
+  const maxDato = hayDatos ? Math.max(...todos) : 1;
+  const { marcas, min, max } = marcasBonitas(cero ? Math.min(0, minDato) : minDato,
+    cero ? Math.max(0, maxDato) : maxDato, alto < 200 ? 3 : 4);
+
+  /* El eje habla en compacto ($1.2 M, 48 mil): las cifras completas van en el
+     globo y en la tabla. */
+  const formatoEje = formato === "moneda" ? "monedaCompacta" : formato === "numero" ? "compacto" : formato;
+  const etiquetaDirecta = series.length > 1 && series.length <= 4 && ancho >= 420 && !apilar;
+  const izq = Math.max(...marcas.map((m) => String(fmt(m, formatoEje)).length))
+    * ANCHO_CARACTER + 12;
+  const der = etiquetaDirecta
+    ? Math.min(110, Math.max(...series.map((s) => String(s.nombre || "").length)) * ANCHO_CARACTER + 14)
+    : 10;
+  const arriba = 10;
+  const abajo = 24;
+  const anchoPlot = Math.max(10, ancho - izq - der);
+  const altoPlot = alto - arriba - abajo;
+
+  const x = (i) => izq + (n <= 1 ? anchoPlot / 2 : (i / (n - 1)) * anchoPlot);
+  const y = escala(min, max, arriba + altoPlot, arriba);
+
+  /* Marcas del eje X: las que caben a ~70 px; en angosto, cuatro como mucho. */
+  const maxMarcasX = ancho < 420 ? 4 : Math.max(2, Math.floor(anchoPlot / 70));
+  const pasoX = Math.max(1, Math.ceil(n / maxMarcasX));
+
+  const tramos = (vals) => {
+    const out = [];
+    let t = [];
+    vals.forEach((v, i) => {
+      if (v === null) { if (t.length) out.push(t); t = []; } else t.push(i);
+    });
+    if (t.length) out.push(t);
+    return out;
+  };
+
+  const tabla = {
+    columnas: ["", ...series.map((s) => s.nombre)],
+    filas: Array.from({ length: n }, (_, i) => [
+      etiquetas[i] ?? i + 1, ...capas.map((c) => fmt(c.crudo[i], formato)),
+    ]),
+  };
+
+  const alMover = (e) => {
+    if (!hayDatos) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = e.clientX - r.left;
+    const i = n <= 1 ? 0 : Math.round(((px - izq) / anchoPlot) * (n - 1));
+    setActivo(Math.max(0, Math.min(n - 1, i)));
+  };
+  const alTeclear = (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); setActivo((a) => Math.min(n - 1, (a ?? -1) + 1)); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); setActivo((a) => Math.max(0, (a ?? n) - 1)); }
+    if (e.key === "Escape") setActivo(null);
+  };
+
+  const yGlobo = activo === null ? 0
+    : Math.min(...capas.map((c) => (c.arriba[activo] === null ? arriba + altoPlot : y(c.arriba[activo]))));
+
+  return (
+    <MarcoGrafica titulo={titulo} series={series} formaLeyenda="linea" tabla={hayDatos ? tabla : null}
+      estilo={estilo} alto={alto}>
+      <div ref={ref} style={{ position: "relative", minWidth: 0 }}>
+        {!hayDatos ? <SinDatos alto={alto} /> : ancho > 0 && (
+          <svg width={ancho} height={alto} role="img" tabIndex={0}
+            aria-label={`${titulo ? `${titulo}: ` : ""}${series.length} serie(s), ${n} puntos. Flechas para recorrer.`}
+            style={{ display: "block", overflow: "visible", outline: "none" }}
+            onMouseMove={alMover} onMouseLeave={() => setActivo(null)}
+            onFocus={() => setActivo((a) => (a === null ? n - 1 : a))} onBlur={() => setActivo(null)}
+            onKeyDown={alTeclear}>
+            {marcas.map((m) => (
+              <g key={m}>
+                <line x1={izq} x2={izq + anchoPlot} y1={y(m)} y2={y(m)}
+                  stroke={m === 0 ? "var(--ds-eje)" : "var(--ds-grid)"} strokeWidth="1" />
+                <text x={izq - 8} y={y(m)} dy="0.32em" textAnchor="end" style={TEXTO_EJE}>
+                  {fmt(m, formatoEje)}
+                </text>
+              </g>
+            ))}
+            {Array.from({ length: n }, (_, i) => i).filter((i) => i % pasoX === 0).map((i) => (
+              <text key={i} x={x(i)} y={alto - 6} textAnchor={n > 1 && i === 0 ? "start" : "middle"}
+                style={TEXTO_EJE}>
+                {etiquetas[i] ?? i + 1}
+              </text>
+            ))}
+
+            {area && capas.map((c, si) => tramos(c.arriba).map((t, ti) => {
+              const base = (i) => (c.abajo ? y(c.abajo[i]) : y(Math.max(min, Math.min(0, max))));
+              const d = `M${x(t[0])},${base(t[0])} `
+                + t.map((i) => `L${x(i)},${y(c.arriba[i])}`).join(" ")
+                + ` ${[...t].reverse().map((i) => `L${x(i)},${base(i)}`).join(" ")} Z`;
+              return <path key={`a${si}-${ti}`} d={d} fill={colorSerie(series[si], si)}
+                fillOpacity={apilar ? 0.55 : 0.12} stroke="none" />;
+            }))}
+
+            {capas.map((c, si) => tramos(c.arriba).map((t, ti) => (
+              t.length === 1
+                ? <circle key={`p${si}-${ti}`} cx={x(t[0])} cy={y(c.arriba[t[0]])} r="3"
+                    fill={colorSerie(series[si], si)} />
+                : <path key={`l${si}-${ti}`} fill="none" stroke={colorSerie(series[si], si)}
+                    strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"
+                    d={t.map((i, j) => `${j ? "L" : "M"}${x(i)},${y(c.arriba[i])}`).join(" ")} />
+            )))}
+
+            {metaValor !== null && (
+              <g>
+                <line x1={izq} x2={izq + anchoPlot} y1={y(metaValor)} y2={y(metaValor)}
+                  stroke="var(--ds-ink-2)" strokeWidth="1.5" strokeDasharray="5 4" />
+                <text x={izq + 6} y={y(metaValor) - 6}
+                  style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 700 }}>
+                  {metaTexto} · {fmt(metaValor, formato)}
+                </text>
+              </g>
+            )}
+
+            {etiquetaDirecta && (() => {
+              /* Las etiquetas al final se separan si se enciman: 14 px mínimo. */
+              const pos = capas.map((c, si) => {
+                const iUlt = c.arriba.map((v, i) => (v === null ? -1 : i)).filter((i) => i >= 0).pop();
+                return iUlt === undefined ? null : { si, yv: y(c.arriba[iUlt]), xv: x(iUlt) };
+              }).filter(Boolean).sort((a, b) => a.yv - b.yv);
+              for (let k = 1; k < pos.length; k++) {
+                if (pos[k].yv - pos[k - 1].yv < 14) pos[k].yv = pos[k - 1].yv + 14;
+              }
+              return pos.map((p) => (
+                <text key={p.si} x={izq + anchoPlot + 8} y={p.yv} dy="0.32em"
+                  style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 700 }}>
+                  {series[p.si].nombre}
+                </text>
+              ));
+            })()}
+
+            {activo !== null && (
+              <g pointerEvents="none">
+                <line x1={x(activo)} x2={x(activo)} y1={arriba} y2={arriba + altoPlot}
+                  stroke="var(--ds-eje)" strokeWidth="1" />
+                {capas.map((c, si) => c.arriba[activo] !== null && (
+                  <circle key={si} cx={x(activo)} cy={y(c.arriba[activo])} r="4.5"
+                    fill={colorSerie(series[si], si)} stroke="var(--ds-surface-solid)" strokeWidth="2" />
+                ))}
+              </g>
+            )}
+            <rect x={izq} y={arriba} width={anchoPlot} height={altoPlot} fill="transparent" />
+          </svg>
+        )}
+        <Globo visible={activo !== null} x={activo === null ? 0 : x(activo)} y={yGlobo} ancho={ancho}
+          titulo={activo === null ? "" : etiquetas[activo]}
+          renglones={activo === null ? [] : series.map((s, si) => ({
+            color: colorSerie(s, si), nombre: s.nombre, valor: fmt(capas[si].crudo[activo], formato),
+          }))} />
+      </div>
+    </MarcoGrafica>
+  );
+}

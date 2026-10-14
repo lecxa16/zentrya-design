@@ -76,6 +76,7 @@
   --ds-r-card:  20px;   /* las tarjetas */
   --ds-r-item:  13px;   /* lo que vive dentro de una tarjeta */
   --ds-r-pill:  999px;
+  --ds-r-mini:  4px;    /* marcas de gráficas: extremo de barra, celda, muestra */
 
   /* ---------- Elevación: sombra con desplazamiento Y difuminado ---------- */
   --ds-lift-1: 0 1px 2px rgba(11,18,17,0.04), 0 2px 8px rgba(11,18,17,0.04);
@@ -90,7 +91,7 @@
   /* ---------- Tipografía ---------- */
   --ds-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   /* La cifra es la protagonista de este sistema: tiene su propia escala. */
-  --ds-num-xl: 3.4rem;  --ds-num-l: 2.3rem;  --ds-num-m: 1.6rem;
+  --ds-num-xl: 3.4rem;  --ds-num-l: 2.3rem;  --ds-num-m: 1.6rem;  --ds-num-s: 1.15rem;
   --ds-t-display: 2.9rem; --ds-t-title: 1.3rem; --ds-t-body: 0.94rem;
   --ds-t-small: 0.82rem;  --ds-t-micro: 0.72rem;
 
@@ -107,6 +108,25 @@
   --ds-t-move:  380ms;  /* algo que se desplaza o aparece */
   --ds-t-vista: 320ms;  /* el cambio de una vista a otra: corto, o estorba */
   --ds-t-scene: 620ms;  /* la entrada con autoría, una por pantalla */
+
+  /* ---------- Series de gráficas ---------- */
+  /* El color significa estado… salvo aquí, y por eso está escrito: en una
+     gráfica con varias series el color dice QUIÉN es cada una, no cómo va.
+     Orden fijo y validado (separación para daltonismo ΔE ≥ 8 entre vecinos,
+     visión normal ≥ 15). No se reordena ni se genera un séptimo: lo que pase
+     de seis se agrupa en «Otros». Dispersión y mapas: sólo las tres primeras.
+     Tres de estos tonos quedan bajo 3:1 sobre el lienzo claro: por eso toda
+     gráfica lleva etiquetas visibles o su vista de tabla. */
+  --ds-serie-1: #2A78D6;  --ds-serie-2: #EB6834;  --ds-serie-3: #1BAF7A;
+  --ds-serie-4: #EDA100;  --ds-serie-5: #E87BA4;  --ds-serie-6: #4A3AA7;
+  /* Rampa de magnitud (mapas de calor): un solo tono, de poco a mucho.
+     El 0 es «sin dato», no «poco». */
+  --ds-sec-0: rgba(11,18,17,0.05);
+  --ds-sec-1: #B7D3F6;  --ds-sec-2: #86B6EF;  --ds-sec-3: #5598E7;
+  --ds-sec-4: #2A78D6;  --ds-sec-5: #1C5CAB;
+  /* Lo que sostiene una gráfica se queda atrás: líneas de pelo. */
+  --ds-grid: rgba(11,18,17,0.06);
+  --ds-eje:  rgba(11,18,17,0.18);
 }
 
 /* ---------- Oscuro ---------- */
@@ -166,6 +186,16 @@
   /* Sin esto, un color de identidad sobre fondo de medianoche deja de
      leerse: los azulejos del lanzador volverían a ser ilegibles. */
   --ds-mezcla-tono: white 46%;
+
+  /* Los mismos seis tonos, escalonados para el fondo oscuro (validados aparte). */
+  --ds-serie-1: #3987E5;  --ds-serie-2: #D95926;  --ds-serie-3: #199E70;
+  --ds-serie-4: #C98500;  --ds-serie-5: #D55181;  --ds-serie-6: #9085E9;
+  /* En oscuro la magnitud crece hacia la luz: lo poco se hunde en el lienzo. */
+  --ds-sec-0: rgba(255,255,255,0.05);
+  --ds-sec-1: #184F95;  --ds-sec-2: #1C5CAB;  --ds-sec-3: #2A78D6;
+  --ds-sec-4: #5598E7;  --ds-sec-5: #86B6EF;
+  --ds-grid: rgba(255,255,255,0.06);
+  --ds-eje:  rgba(255,255,255,0.20);
 }
 
 

@@ -48,6 +48,35 @@ puede diseñar.
 | Detalle que se lee junto a lo que queda detrás (la ruta en un mapa) | `Modal lado="derecha"`: anclado al borde, sin fondo — lo de atrás sigue con scroll y clics; trae su botón de cerrar | un modal centrado que tape lo que explica el detalle |
 | Resultado de una acción | `Aviso` | un toast que se va solo |
 | Imagen | `Lamina` | un `<img>` suelto |
+| Un indicador con su tendencia | `TarjetaKpi` (`variacion`, `sentido`, `serie`) | una `Superficie` con una `Cifra` y una flecha a mano |
+| Varios indicadores en fila | `FilaKpis`: una sola tarjeta con divisores | cuatro tarjetas idénticas |
+| Avance contra meta, con proyección | `TarjetaMeta` (`diaActual`, `diasPeriodo`) | un `Medidor` suelto sin decir a dónde llega |
+| Real contra presupuesto o año anterior | `TarjetaComparativa` | dos cifras y una resta de cabeza |
+| Lo mejor o lo peor de una lista | `TarjetaRanking` (participación sobre el total, no sobre el top) | una tabla de cinco renglones |
+| Ficha de cliente, proveedor, unidad, empleado | `TarjetaEntidad` | |
+| Datos de un expediente | `Detalles`: el faltante sale «Sin capturar» | un vacío o un guion que parece dato |
+| Aviso que se queda en la página | `Llamado` | un `Aviso` (ése es modal) o un toast |
+| Pantalla o tarjeta sin nada | `EstadoVacio` | un lienzo en blanco |
+| Subió o bajó | `Variacion` con `sentido` (`"baja"` cuando bajar es bueno: costos, días de cartera) | flecha verde siempre que sube |
+| Formatear dinero, porcentajes, fechas | `moneda`, `porcentaje`, `fecha`, `formato.numero`, `formatear(v, "moneda")` | `toFixed` o `toLocaleString` en la pantalla |
+| Tendencia sin ejes | `Sparkline` | |
+| Serie en el tiempo | `GraficaLinea` (≤ 6 series, `meta`, `area`) | dos ejes verticales: **nunca**; dos gráficas |
+| Comparar categorías | `GraficaBarras` (`horizontal` para nombres largos, `apiladas`, `resaltar`) | |
+| Partes de un todo | `Dona` (≤ 6 + «Otros») o `BarraDistribucion` (una barra 100 %) | pastel con 12 rebanadas |
+| Conversión por etapas | `Embudo` | |
+| Del ingreso a la utilidad | `Cascada` | barras sueltas que no suman |
+| Intensidad por día y hora | `MapaCalor`; por día del año, `CalendarioCalor` | |
+| Real contra meta en renglones | `Bala` (`menorEsMejor` para costos y días) | velocímetros |
+| Historial de un pedido o expediente | `LineaTiempo` | |
+| Un proceso con etapas y estado | `Pasos` | barra de progreso sin nombres |
+| Flujo por columnas (pipeline, órdenes) | `Kanban` con `onMover`: arrastra **y** «Mover a…» con teclado | sólo arrastrar |
+| Quién hizo qué, reciente | `Actividad` | |
+| Fechas en un mes | `Calendario` (en angosto cambia a lista por día) | la misma cuadrícula más chica |
+| Encabezado de pantalla | `EncabezadoPagina` | un `h1` suelto |
+| Dos a cinco vistas excluyentes | `Segmentado` | pestañas para un filtro |
+| Periodo de consulta | `SelectorPeriodo` (`rangoPeriodo` para calcularlo fuera) | dos `CampoFecha` cuando basta un atajo |
+| Filtros aplicados | `BarraFiltros` + `Chip` | |
+| Menú propio | `Flotante` + `OpcionFlotante` (portal, Escape, flechas) | un `div` absoluto |
 
 **¿No está en la tabla?** Se agrega una primitiva, con su comentario de por qué existe. No
 se resuelve dentro de la pantalla.
@@ -99,6 +128,20 @@ Cada una costó una sesión encontrarla. Están medidas, no supuestas.
 | Un selector se queda en blanco tras elegir | Se puso «Todas» como opción con `valor: ""`, y `""` es justo el caso que el componente reserva para «sin elegir» | Pasar `vacio="Todas"` y sacarla de `opciones` |
 | Una cuadrícula «cabe» en el teléfono pero no se lee | No desbordar no es ser legible: siete columnas en 375 px dan celdas de 38 px y el texto se recorta en silencio | `useAngosto` y **otra forma** (lista por día), no la misma con letra más chica. Medir el ancho del contenido, no sólo el del documento |
 | Una lista pierde sus filtros al volver de un detalle | El estado vive en `useState` y la pantalla se desmonta | `useFiltros(nombre, porOmisión)` |
+
+## 4.1 Reglas de las gráficas
+
+- **Un solo eje vertical.** Dos medidas de distinta escala van en dos gráficas.
+- **El color sigue a la serie**, en el orden de `--ds-serie-1…6`, validado para daltonismo.
+  No se reordena para «verse mejor» ni se inventa un séptimo: lo que pase de seis va a «Otros».
+- **El texto nunca va del color de la serie**: tinta, y una muestra de color al lado.
+- **Toda gráfica trae su «Ver tabla».** No es un extra: es la única lectura exacta y la que
+  sirve a quien no distingue colores. Tres tonos de serie quedan bajo 3:1 en claro, y por
+  eso es obligatoria.
+- **Las cifras dentro de la gráfica van compactas** («$1.2 M»); la completa vive en el globo
+  y en la tabla.
+- **Una cifra no se parte en dos renglones.** `cabe()` + `CONTENEDOR_CIFRA` (en `ancho.js`)
+  le bajan la letra hasta caber en su columna.
 
 ## 5. Antes de decir «terminado»
 

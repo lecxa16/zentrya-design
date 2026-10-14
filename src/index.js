@@ -37,3 +37,47 @@ export { useAngosto } from "./ancho";
 export { default as Pestanas, Cargando } from "./primitivas/Pestanas";
 export { default as PanelInicio } from "./PanelInicio";
 export { default as Armazon, SelectorArmazon, useArmazon } from "./Armazon";
+
+/* ---------- v1.1: formato, tarjetas, gráficas, operación y estructura ---------- */
+/* `numero` ya es una regla de validación (useFormulario): el formateador de
+   números se usa como `formato.numero(…)` o vía `formatear(v, "numero")`. */
+export * as formato from "./formato";
+export {
+  configurarFormato, formatear, moneda, compacto, porcentaje, fecha, fechaRelativa,
+  variacion, SIN_DATO,
+} from "./formato";
+
+export { default as Variacion } from "./primitivas/Variacion";
+export { default as TarjetaKpi, CuerpoKpi } from "./primitivas/TarjetaKpi";
+export { default as FilaKpis } from "./primitivas/FilaKpis";
+export { default as TarjetaMeta } from "./primitivas/TarjetaMeta";
+export { default as TarjetaComparativa } from "./primitivas/TarjetaComparativa";
+export { default as TarjetaRanking } from "./primitivas/TarjetaRanking";
+export { default as TarjetaEntidad } from "./primitivas/TarjetaEntidad";
+export { default as Detalles } from "./primitivas/Detalles";
+export { default as Llamado } from "./primitivas/Llamado";
+export { default as EstadoVacio } from "./primitivas/EstadoVacio";
+export { default as GrupoRetratos } from "./primitivas/GrupoRetratos";
+
+export { default as Flotante, OpcionFlotante } from "./primitivas/Flotante";
+export { default as LineaTiempo } from "./primitivas/LineaTiempo";
+export { default as Pasos } from "./primitivas/Pasos";
+export { default as Kanban } from "./primitivas/Kanban";
+export { default as Actividad } from "./primitivas/Actividad";
+export { default as Calendario } from "./primitivas/Calendario";
+export { default as EncabezadoPagina } from "./primitivas/EncabezadoPagina";
+export { default as Segmentado } from "./primitivas/Segmentado";
+export { default as SelectorPeriodo, PERIODOS, rangoPeriodo, textoRango } from "./primitivas/SelectorPeriodo";
+export { default as Chip, BarraFiltros } from "./primitivas/Chip";
+
+export { default as Sparkline } from "./graficas/Sparkline";
+export { default as GraficaLinea } from "./graficas/GraficaLinea";
+export { default as GraficaBarras } from "./graficas/GraficaBarras";
+export { default as Dona } from "./graficas/Dona";
+export { default as Embudo } from "./graficas/Embudo";
+export { default as Cascada } from "./graficas/Cascada";
+export { default as MapaCalor } from "./graficas/MapaCalor";
+export { default as CalendarioCalor } from "./graficas/CalendarioCalor";
+export { default as Bala } from "./graficas/Bala";
+export { default as BarraDistribucion } from "./graficas/BarraDistribucion";
+export { SERIES, Leyenda, Globo, MarcoGrafica, SinDatos, useMedida } from "./graficas/base";

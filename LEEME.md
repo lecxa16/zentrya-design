@@ -425,10 +425,38 @@ un fondo oscuro, y fuera de la familia. `design/mui/estilo.js` lo sobrescribe, y
 único sitio del sistema donde hay `!important`: los estados que MUI pinta desde su tema no
 se ganan de otra forma.
 
+## Piezas de negocio (v1.1)
+
+Pensadas para que el mismo paquete arme el tablero de finanzas, logística, ventas, compras,
+contabilidad, inventario o RH sin escribir estilos. El catálogo (`npm run dev`) trae cada
+pieza con datos de ejemplo de varios giros y seis tableros completos armados sólo con ellas.
+
+| Familia | Piezas |
+|---|---|
+| Formato | `moneda`, `porcentaje`, `compacto`, `fecha`, `fechaRelativa`, `variacion`, `formatear`, `formato.numero`, `configurarFormato` (es-MX y MXN por omisión) |
+| Tarjetas | `TarjetaKpi`, `FilaKpis`, `TarjetaMeta`, `TarjetaComparativa`, `TarjetaRanking`, `TarjetaEntidad`, `Variacion` |
+| Datos | `Detalles`, `Llamado`, `EstadoVacio`, `GrupoRetratos` |
+| Gráficas | `Sparkline`, `GraficaLinea`, `GraficaBarras`, `Dona`, `Embudo`, `Cascada`, `MapaCalor`, `CalendarioCalor`, `Bala`, `BarraDistribucion` |
+| Operación | `LineaTiempo`, `Pasos`, `Kanban`, `Actividad`, `Calendario` |
+| Estructura | `EncabezadoPagina`, `Segmentado`, `SelectorPeriodo`, `BarraFiltros`, `Chip`, `Flotante` |
+
+```jsx
+import { TarjetaKpi, GraficaLinea, Superficie, Seccion } from "@zentrya/design";
+
+<TarjetaKpi etiqueta="Costo por entrega" valor={1840} formato="moneda"
+  variacion={0.042} sentido="baja" contra="vs semana pasada" serie={[1720, 1790, 1840]} />
+```
+
+`sentido="baja"` dice que bajar es bueno: el +4.2 % sale en rojo. Cada pieza explica sus
+props en el comentario de cabecera de su archivo.
+
+Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de magnitud),
+`--ds-grid`, `--ds-eje`, `--ds-num-s`, `--ds-r-mini`.
+
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v1.0.0`
+   `npm install github:lecxa16/zentrya-design#v1.1.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.
