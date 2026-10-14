@@ -23,6 +23,22 @@ import {
 
 const ANCHO_CARACTER = 6.6;
 
+/* Ancho estimado de un texto del eje a 11 px y peso 700: las mayúsculas miden
+   más que el promedio, y «VALERO NUSTAR NLD» se salía de la reserva. */
+const anchoTexto = (t) => [...String(t ?? "")]
+  .reduce((a, c) => a + (c >= "A" && c <= "Z" ? 8 : c === " " ? 3.4 : ANCHO_CARACTER), 0);
+
+/** La etiqueta final de una serie: completa si cabe, si no con «…». El nombre
+ *  entero sigue en la leyenda y en el globo. */
+const RESERVA_DIRECTA = 140;
+const recortarA = (t, max) => {
+  const s = String(t ?? "");
+  if (anchoTexto(s) <= max) return s;
+  let r = s;
+  while (r.length > 1 && anchoTexto(r + "…") > max) r = r.slice(0, -1);
+  return r.trimEnd() + "…";
+};
+
 export default function GraficaLinea({
   series = [], etiquetas = [], alto = 240, formato = "numero", area = false, apilada = false,
   meta, titulo, cero = true, estilo,
@@ -68,7 +84,7 @@ export default function GraficaLinea({
   const izq = Math.max(...marcas.map((m) => String(fmt(m, formatoEje)).length))
     * ANCHO_CARACTER + 12;
   const der = etiquetaDirecta
-    ? Math.min(110, Math.max(...series.map((s) => String(s.nombre || "").length)) * ANCHO_CARACTER + 14)
+    ? Math.min(RESERVA_DIRECTA, Math.max(...series.map((s) => anchoTexto(s.nombre))) + 14)
     : 10;
   const arriba = 10;
   const abajo = 24;
@@ -203,7 +219,8 @@ export default function GraficaLinea({
               return pos.map((p) => (
                 <text key={p.si} x={izq + anchoPlot + 8} y={p.yv} dy="0.32em"
                   style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 700 }}>
-                  {series[p.si].nombre}
+                  <title>{series[p.si].nombre}</title>
+                  {recortarA(series[p.si].nombre, der - 12)}
                 </text>
               ));
             })()}
