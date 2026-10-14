@@ -47,7 +47,7 @@ export default function TarjetaMeta({
   }
   const textos = invertida ? TEXTO_TONO_TOPE : TEXTO_TONO;
   const color = { ok: "var(--ds-ok)", aviso: "var(--ds-warn)", riesgo: "var(--ds-risk)",
-    acento: "var(--ds-accent)" }[tono];
+    acento: "var(--ds-accent-trazo)" }[tono];
 
   return (
     <Superficie entrada={entrada} estilo={{ height: "100%", ...estilo }}>

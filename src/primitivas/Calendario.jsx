@@ -26,7 +26,7 @@ import { fecha as fFecha } from "../formato";
 const DIAS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 const TONOS = {
   neutro: ["var(--ds-surface-sunk)", "var(--ds-ink-3)"],
-  acento: ["var(--ds-accent-soft)", "var(--ds-accent)"],
+  acento: ["var(--ds-accent-soft)", "var(--ds-accent-tinta)"],
   ok:     ["var(--ds-ok-soft)", "var(--ds-ok)"],
   aviso:  ["var(--ds-warn-soft)", "var(--ds-warn)"],
   riesgo: ["var(--ds-risk-soft)", "var(--ds-risk)"],
@@ -70,7 +70,7 @@ function MasEventos({ resto, dia, onEvento }) {
         onClick={(ev) => { ev.stopPropagation(); setAbierto((v) => !v); }}
         style={{ background: "transparent", border: "none", padding: "1px 4px", cursor: "pointer",
           fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 800,
-          color: "var(--ds-accent)", textAlign: "left", borderRadius: 6 }}>
+          color: "var(--ds-accent-tinta)", textAlign: "left", borderRadius: 6 }}>
         +{resto.length} más
       </button>
       <Flotante ancla={ref} abierto={abierto} onCerrar={() => setAbierto(false)} rol="dialog"
@@ -168,11 +168,11 @@ export default function Calendario({
                   style={{ border: "none", background: "transparent", padding: 0, textAlign: "center",
                     cursor: onDia ? "pointer" : "default", fontFamily: "var(--ds-font)" }}>
                   <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, textTransform: "uppercase",
-                    color: esHoy ? "var(--ds-accent)" : "var(--ds-ink-3)" }}>
+                    color: esHoy ? "var(--ds-accent-tinta)" : "var(--ds-ink-3)" }}>
                     {DIAS[(d.getDay() + 6) % 7]}
                   </div>
                   <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 800, lineHeight: 1.1,
-                    color: esHoy ? "var(--ds-accent)" : "var(--ds-ink)" }}>
+                    color: esHoy ? "var(--ds-accent-tinta)" : "var(--ds-ink)" }}>
                     {d.getDate()}
                   </div>
                 </button>

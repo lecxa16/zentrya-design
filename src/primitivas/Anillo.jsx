@@ -10,7 +10,7 @@
 import React from "react";
 
 export default function Anillo({
-  valor = 0, tamano = 132, grosor = 10, tono = "var(--ds-accent)",
+  valor = 0, tamano = 132, grosor = 10, tono = "var(--ds-accent-trazo)",
   pista = "var(--ds-surface-sunk)", children, animar = true,
 }) {
   const pct = Math.max(0, Math.min(100, valor));

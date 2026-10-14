@@ -1,0 +1,109 @@
+/**
+ * MARCAS — el mismo sistema con la identidad de otro producto.
+ *
+ * Una marca no es un tema: claro y oscuro siguen existiendo dentro de ella.
+ * `<ProveedorTema marca="nykza">` pone `data-ds-marca` en el elemento raíz y
+ * aquí se redefinen sólo los tokens de identidad (lienzo, tinta, acento y
+ * héroe). Estados, series, radios, espacios y movimiento no se tocan: siguen
+ * significando lo mismo en cualquier producto.
+ *
+ * Especificidad: la marca clara (0,1,0) va DESPUÉS del bloque oscuro de
+ * tokens.css y le ganaría; por eso la marca oscura lleva los dos atributos
+ * (0,2,0). No reordenar.
+ *
+ * Cada color tiene su par en oscuro, igual que en tokens.css.
+ */
+
+/* ---------- Nykza ---------- */
+/* El amarillo de Nykza (#EDD95C) no se lee como texto sobre claro (1.35:1)
+   ni con tinta blanca encima (1.43:1). Se queda como RELLENO, con tinta
+   oscura (12.1:1); el texto teñido pasa a ocre (5.4:1) y el trazo a dorado
+   (3.25:1). El héroe SÍ es amarillo, con tinta oscura: dentro de
+   `.ds-heroe` se redefinen tinta, superficie y velo, igual que hace
+   `.ds-sobre-foto` sobre una fotografía. */
+[data-ds-marca="nykza"] {
+  --ds-canvas:        #FAF8F2;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #F6EDC4 0%, rgba(246,237,196,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #F2F0EA 0%, rgba(242,240,234,0) 54%),
+      radial-gradient(900px 700px at 40% 112%, #F5F1E3 0%, rgba(245,241,227,0) 58%),
+      linear-gradient(160deg, #FBFAF6 0%, #F9F7F0 52%, #FBF9F3 100%);
+  --ds-frame:         rgba(255,253,246,0.62);
+  --ds-panel:         rgba(251,248,238,0.94);
+
+  /* Medidos contra el lienzo: 17.2 · 8.3 · 5.3 */
+  --ds-ink:           #17150F;
+  --ds-ink-2:         #4D4A42;
+  --ds-ink-3:         #6B675D;
+  --ds-ink-on-accent: #1F1B00;
+
+  --ds-accent:        #EDD95C;
+  --ds-accent-press:  #E3CB3F;
+  --ds-accent-soft:   #FBF3CF;
+  --ds-accent-ring:   rgba(168,134,0,0.30);
+  --ds-accent-tinta:  #7D6300;
+  --ds-accent-trazo:  #A88600;
+
+  --ds-hero: linear-gradient(135deg, #F7E992 0%, #EDD95C 52%, #E6CC45 100%);
+  --ds-ink-on-hero:   #1F1B00;
+  --ds-lift-accent: 0 8px 22px -8px rgba(168,134,0,0.42);
+
+  --ds-info:  #7D6300;  --ds-info-soft:  #FBF3CF;
+}
+
+[data-ds-theme="dark"][data-ds-marca="nykza"] {
+  --ds-canvas:        #0A0906;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #2B2610 0%, rgba(43,38,16,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #17150D 0%, rgba(23,21,13,0) 54%),
+      radial-gradient(900px 700px at 40% 112%, #13110A 0%, rgba(19,17,10,0) 58%),
+      linear-gradient(160deg, #0B0A07 0%, #090805 52%, #0B0A07 100%);
+  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-panel:         rgba(22,20,14,0.94);
+  --ds-surface-solid: #17150F;
+
+  /* Medidos contra la tarjeta (#17150F): 15.3 · 8.0 · 6.1 */
+  --ds-ink:           #EEEBE3;
+  --ds-ink-2:         #B0AB9F;
+  --ds-ink-3:         #9A9588;
+  --ds-ink-on-accent: #1F1B00;
+
+  --ds-accent:        #EDD95C;
+  --ds-accent-press:  #F4E58A;
+  --ds-accent-soft:   #2E2A12;
+  --ds-accent-ring:   rgba(237,217,92,0.32);
+  --ds-accent-tinta:  #EDD95C;
+  --ds-accent-trazo:  #EDD95C;
+
+  --ds-hero: linear-gradient(135deg, #F7E992 0%, #EDD95C 52%, #E6CC45 100%);
+  --ds-ink-on-hero:   #1F1B00;
+  --ds-lift-accent: 0 8px 22px -8px rgba(237,217,92,0.28);
+
+  --ds-info:  #EDD95C;  --ds-info-soft:  #2E2A12;
+}
+
+/* Dentro del héroe amarillo (el mismo en los dos temas, como toda marca).
+   Medidos contra el tono más oscuro del gradiente (#E6CC45): tinta 10.6,
+   secundaria 7.4, etiqueta 5.6. También cubre `.ds-sobre-foto` dentro del
+   héroe, que es como lo escriben las pantallas de Zentrya. */
+[data-ds-marca="nykza"] .ds-heroe,
+[data-ds-marca="nykza"] .ds-heroe .ds-sobre-foto {
+  --ds-ink:           #1F1B00;
+  --ds-ink-2:         #3F3608;
+  --ds-ink-3:         #544810;
+  --ds-line:          rgba(31,27,0,0.12);
+  --ds-line-firm:     rgba(31,27,0,0.24);
+  --ds-line-glass:    rgba(255,255,255,0.55);
+  --ds-surface:       rgba(255,255,255,0.40);
+  --ds-surface-2:     rgba(255,255,255,0.30);
+  --ds-surface-solid: rgba(255,255,255,0.55);
+  --ds-surface-sunk:  rgba(31,27,0,0.08);
+  --ds-velo:          rgba(255,255,255,0.42);
+  --ds-velo-fuerte:   rgba(255,255,255,0.62);
+  --ds-accent:        #1F1B00;
+  --ds-accent-tinta:  #1F1B00;
+  --ds-accent-trazo:  #1F1B00;
+  --ds-accent-soft:   rgba(31,27,0,0.10);
+  --ds-ink-on-accent: #EDD95C;
+  color: var(--ds-ink);
+}

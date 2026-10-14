@@ -129,7 +129,7 @@ export default function Kanban({
             style={{
               flex: "0 0 auto", width: ancho, scrollSnapAlign: "start",
               background: esDestino ? "var(--ds-accent-soft)" : "var(--ds-surface-sunk)",
-              border: `1px ${esDestino ? "dashed" : "solid"} ${esDestino ? "var(--ds-accent)" : "var(--ds-line)"}`,
+              border: `1px ${esDestino ? "dashed" : "solid"} ${esDestino ? "var(--ds-accent-trazo)" : "var(--ds-line)"}`,
               borderRadius: "var(--ds-r-card)", padding: "var(--ds-3)",
               transition: "background var(--ds-t-state) var(--ds-ease), border-color var(--ds-t-state) var(--ds-ease)",
             }}>

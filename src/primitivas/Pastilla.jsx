@@ -8,7 +8,7 @@ import React from "react";
 
 const TONOS = {
   neutro: ["var(--ds-surface-sunk)", "var(--ds-ink-2)"],
-  acento: ["var(--ds-accent-soft)", "var(--ds-accent)"],
+  acento: ["var(--ds-accent-soft)", "var(--ds-accent-tinta)"],
   ok:     ["var(--ds-ok-soft)", "var(--ds-ok)"],
   aviso:  ["var(--ds-warn-soft)", "var(--ds-warn)"],
   riesgo: ["var(--ds-risk-soft)", "var(--ds-risk)"],

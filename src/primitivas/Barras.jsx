@@ -12,7 +12,7 @@
 import React from "react";
 
 export default function Barras({
-  datos = [], alto = 132, tono = "var(--ds-accent)",
+  datos = [], alto = 132, tono = "var(--ds-accent-trazo)",
   pista = "var(--ds-surface-sunk)", ancho = 7, hueco = 5, animar = true, ejeX = false,
 }) {
   const llena = alto === "auto";

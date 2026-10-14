@@ -115,7 +115,7 @@ const SEVERIDAD = {
             d: "M12 8v5M12 16h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" },
   aviso:  { tono: "var(--ds-warn)", suave: "var(--ds-warn-soft)", titulo: "Atención",
             d: "M12 8v5M12 16h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" },
-  info:   { tono: "var(--ds-accent)", suave: "var(--ds-accent-soft)", titulo: "Aviso",
+  info:   { tono: "var(--ds-accent-tinta)", suave: "var(--ds-accent-soft)", titulo: "Aviso",
             d: "M12 16v-5M12 8h.01" },
 };
 

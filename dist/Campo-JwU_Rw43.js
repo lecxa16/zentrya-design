@@ -94,7 +94,7 @@ function W({
             fontFamily: "var(--ds-font)"
           },
           onFocus: (i) => {
-            d || (i.target.style.borderColor = "var(--ds-accent)"), i.target.style.boxShadow = d ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)";
+            d || (i.target.style.borderColor = "var(--ds-accent-trazo)"), i.target.style.boxShadow = d ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)";
           },
           onBlur: (i) => {
             i.target.style.borderColor = d ? "var(--ds-risk)" : "var(--ds-line)", i.target.style.boxShadow = "none", e == null || e();
@@ -197,7 +197,7 @@ function E({ valor: o, onCambio: n, marcador: t = "Buscar…", estilo: e }) {
         "aria-label": t,
         style: { ...f, paddingLeft: 36, borderRadius: "var(--ds-r-pill)" },
         onFocus: (r) => {
-          r.target.style.borderColor = "var(--ds-accent)", r.target.style.boxShadow = "0 0 0 3px var(--ds-accent-ring)";
+          r.target.style.borderColor = "var(--ds-accent-trazo)", r.target.style.boxShadow = "0 0 0 3px var(--ds-accent-ring)";
         },
         onBlur: (r) => {
           r.target.style.borderColor = "var(--ds-line)", r.target.style.boxShadow = "none";

@@ -1,12 +1,12 @@
 import { jsx as u, jsxs as w } from "react/jsx-runtime";
-import { useState as C, useEffect as Y, useId as y, useMemo as F } from "react";
-import { DatePicker as A } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider as B } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs as W } from "@mui/x-date-pickers/AdapterDayjs";
+import { useState as z, useEffect as C, useId as y, useMemo as F } from "react";
+import { DatePicker as Y } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider as A } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs as B } from "@mui/x-date-pickers/AdapterDayjs";
 import b from "dayjs";
 import "dayjs/locale/es";
-import { E as P } from "./Campo-DLzlcfA_.js";
-import z from "@mui/material/Select";
+import { E as P } from "./Campo-JwU_Rw43.js";
+import W from "@mui/material/Select";
 import I from "@mui/material/MenuItem";
 import S, { createFilterOptions as T } from "@mui/material/Autocomplete";
 import L from "@mui/material/TextField";
@@ -36,7 +36,7 @@ const D = (i) => ({
        apilaban dos anillos —el azul de MUI y el del navegador— y eso es lo
        que se veía mal. */
     "&.Mui-focused": { boxShadow: i ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)" },
-    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: i ? "var(--ds-risk)" : "var(--ds-accent)" },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: i ? "var(--ds-risk)" : "var(--ds-accent-trazo)" },
     "&.Mui-disabled": { opacity: 0.55 }
   },
   "& .MuiOutlinedInput-input, & .MuiSelect-select": {
@@ -77,7 +77,7 @@ const D = (i) => ({
     },
     "&.Mui-selected, &.Mui-selected.Mui-focusVisible": {
       backgroundColor: "var(--ds-accent-soft) !important",
-      color: "var(--ds-accent)",
+      color: "var(--ds-accent-tinta)",
       "&:hover": { backgroundColor: "var(--ds-accent-soft) !important" }
     }
   }
@@ -87,31 +87,31 @@ function Q({
   valor: s,
   onCambio: r,
   onSalir: o,
-  requerido: n,
-  error: d,
+  requerido: d,
+  error: n,
   ayuda: M,
   deshabilitado: c,
   minimo: v,
   maximo: f,
   estilo: m
 }) {
-  const [k, l] = C(() => s ? b(s, g) : null);
-  Y(() => {
+  const [k, l] = z(() => s ? b(s, g) : null);
+  C(() => {
     const a = s ? b(s, g) : null;
-    l((e) => !e && !a || e && a && e.isSame(a, "day") ? e : a);
+    l((t) => !t && !a || t && a && t.isSame(a, "day") ? t : a);
   }, [s]);
-  const t = y();
+  const e = y();
   return /* @__PURE__ */ u(
     P,
     {
-      id: t,
+      id: e,
       etiqueta: i,
-      requerido: n,
-      error: d,
+      requerido: d,
+      error: n,
       ayuda: M,
       estilo: m,
-      children: /* @__PURE__ */ u(B, { dateAdapter: W, adapterLocale: "es", children: /* @__PURE__ */ u(
-        A,
+      children: /* @__PURE__ */ u(A, { dateAdapter: B, adapterLocale: "es", children: /* @__PURE__ */ u(
+        Y,
         {
           value: k,
           disabled: c,
@@ -127,12 +127,12 @@ function Q({
           },
           slotProps: {
             textField: {
-              id: t,
+              id: e,
               size: "small",
               fullWidth: !0,
-              error: !!d,
+              error: !!n,
               placeholder: "dd/mm/aaaa",
-              sx: D(!!d)
+              sx: D(!!n)
             },
             popper: { sx: x },
             desktopPaper: { sx: x },
@@ -159,7 +159,7 @@ const x = {
   },
   "& .MuiDayCalendar-weekDayLabel": { color: "var(--ds-ink-3)", fontWeight: 700 },
   "& .MuiPickersDay-root:hover": { backgroundColor: "var(--ds-surface-2)" },
-  "& .MuiPickersDay-today": { borderColor: "var(--ds-accent)" },
+  "& .MuiPickersDay-today": { borderColor: "var(--ds-accent-trazo)" },
   "& .MuiPickersDay-root.Mui-selected, & .MuiPickersYear-yearButton.Mui-selected, & .MuiPickersMonth-monthButton.Mui-selected": {
     backgroundColor: "var(--ds-accent) !important",
     color: "var(--ds-ink-on-accent) !important"
@@ -173,8 +173,8 @@ function U({
   valor: s,
   onCambio: r,
   onSalir: o,
-  opciones: n = [],
-  vacio: d,
+  opciones: d = [],
+  vacio: n,
   requerido: M,
   error: c,
   ayuda: v,
@@ -193,31 +193,31 @@ function U({
       ayuda: v,
       estilo: m,
       children: /* @__PURE__ */ w(
-        z,
+        W,
         {
           id: l,
           labelId: i ? `${l}-etiqueta` : void 0,
           value: s ?? "",
-          onChange: (t) => {
-            r == null || r(t.target.value), o == null || o();
+          onChange: (e) => {
+            r == null || r(e.target.value), o == null || o();
           },
           disabled: f,
           error: !!c,
-          displayEmpty: d !== void 0,
+          displayEmpty: n !== void 0,
           size: "small",
           fullWidth: !0,
           MenuProps: { sx: h },
           sx: D(!!c),
-          renderValue: (t) => {
-            if (t === "" || t === null || t === void 0)
-              return /* @__PURE__ */ u("span", { style: { color: "var(--ds-ink-3)" }, children: d ?? "" });
-            const a = n.find((e) => String(e.valor) === String(t));
-            return a ? a.texto : t;
+          renderValue: (e) => {
+            if (e === "" || e === null || e === void 0)
+              return /* @__PURE__ */ u("span", { style: { color: "var(--ds-ink-3)" }, children: n ?? "" });
+            const a = d.find((t) => String(t.valor) === String(e));
+            return a ? a.texto : e;
           },
           ...k,
           children: [
-            d !== void 0 && /* @__PURE__ */ u(I, { value: "", children: d }),
-            n.map((t) => /* @__PURE__ */ u(I, { value: t.valor, children: t.texto }, t.valor))
+            n !== void 0 && /* @__PURE__ */ u(I, { value: "", children: n }),
+            d.map((e) => /* @__PURE__ */ u(I, { value: e.valor, children: e.texto }, e.valor))
           ]
         }
       )
@@ -230,8 +230,8 @@ function X({
   valor: s,
   onCambio: r,
   onSalir: o,
-  opciones: n = [],
-  marcador: d = "Escribe para buscar…",
+  opciones: d = [],
+  marcador: n = "Escribe para buscar…",
   requerido: M,
   error: c,
   ayuda: v,
@@ -239,12 +239,12 @@ function X({
   limite: m = 60,
   estilo: k
 }) {
-  const l = y(), t = F(
-    () => n.find((e) => String(e.valor) === String(s)) || null,
-    [n, s]
+  const l = y(), e = F(
+    () => d.find((t) => String(t.valor) === String(s)) || null,
+    [d, s]
   ), a = F(() => T({
     limit: m,
-    stringify: (e) => O(e.texto)
+    stringify: (t) => O(t.texto)
   }), [m]);
   return /* @__PURE__ */ u(
     P,
@@ -260,14 +260,14 @@ function X({
         {
           id: l,
           size: "small",
-          options: n,
-          value: t,
+          options: d,
+          value: e,
           disabled: f,
-          getOptionLabel: (e) => (e == null ? void 0 : e.texto) ?? "",
-          isOptionEqualToValue: (e, p) => String(e.valor) === String(p.valor),
-          groupBy: n.some((e) => e.grupo) ? (e) => e.grupo || "" : void 0,
-          filterOptions: (e, p) => a(e, { ...p, inputValue: O(p.inputValue) }),
-          onChange: (e, p) => {
+          getOptionLabel: (t) => (t == null ? void 0 : t.texto) ?? "",
+          isOptionEqualToValue: (t, p) => String(t.valor) === String(p.valor),
+          groupBy: d.some((t) => t.grupo) ? (t) => t.grupo || "" : void 0,
+          filterOptions: (t, p) => a(t, { ...p, inputValue: O(p.inputValue) }),
+          onChange: (t, p) => {
             r == null || r(p ? p.valor : ""), o == null || o();
           },
           noOptionsText: "Nada coincide",
@@ -279,7 +279,7 @@ function X({
             "& .MuiAutocomplete-option": { ...h["& .MuiMenuItem-root"] },
             "& .MuiAutocomplete-option[aria-selected='true']": {
               backgroundColor: "var(--ds-accent-soft) !important",
-              color: "var(--ds-accent)"
+              color: "var(--ds-accent-tinta)"
             },
             "& .MuiAutocomplete-groupLabel": {
               fontFamily: "var(--ds-font)",
@@ -293,13 +293,13 @@ function X({
             },
             "& .MuiAutocomplete-noOptions": { fontFamily: "var(--ds-font)", color: "var(--ds-ink-3)" }
           } } },
-          renderInput: (e) => /* @__PURE__ */ u(
+          renderInput: (t) => /* @__PURE__ */ u(
             L,
             {
-              ...e,
-              placeholder: d,
+              ...t,
+              placeholder: n,
               error: !!c,
-              inputProps: { ...e.inputProps, "aria-labelledby": i ? `${l}-etiqueta` : void 0 },
+              inputProps: { ...t.inputProps, "aria-labelledby": i ? `${l}-etiqueta` : void 0 },
               sx: D(!!c)
             }
           )

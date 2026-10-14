@@ -71,7 +71,7 @@ export default function Campo({
           fontFamily: "var(--ds-font)",
         }}
         onFocus={(e) => {
-          if (!error) e.target.style.borderColor = "var(--ds-accent)";
+          if (!error) e.target.style.borderColor = "var(--ds-accent-trazo)";
           e.target.style.boxShadow = error
             ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)";
         }}
@@ -138,7 +138,7 @@ export function Buscador({ valor, onCambio, marcador = "Buscar…", estilo }) {
         placeholder={marcador} aria-label={marcador}
         style={{ ...CAJA, paddingLeft: 36, borderRadius: "var(--ds-r-pill)" }}
         onFocus={(e) => {
-          e.target.style.borderColor = "var(--ds-accent)";
+          e.target.style.borderColor = "var(--ds-accent-trazo)";
           e.target.style.boxShadow = "0 0 0 3px var(--ds-accent-ring)";
         }}
         onBlur={(e) => {

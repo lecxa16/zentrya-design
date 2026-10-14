@@ -21,7 +21,7 @@ import { fecha as fFecha, fechaRelativa } from "../formato";
 
 const TONOS = {
   neutro: ["var(--ds-surface-solid)", "var(--ds-ink-3)", "var(--ds-line-firm)"],
-  acento: ["var(--ds-accent-soft)", "var(--ds-accent)", "var(--ds-accent)"],
+  acento: ["var(--ds-accent-soft)", "var(--ds-accent-tinta)", "var(--ds-accent-trazo)"],
   ok:     ["var(--ds-ok-soft)", "var(--ds-ok)", "var(--ds-ok)"],
   aviso:  ["var(--ds-warn-soft)", "var(--ds-warn)", "var(--ds-warn)"],
   riesgo: ["var(--ds-risk-soft)", "var(--ds-risk)", "var(--ds-risk)"],

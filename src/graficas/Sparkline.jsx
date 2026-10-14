@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { useMedida, fmt } from "./base";
 
 export default function Sparkline({
-  datos = [], alto = 40, color = "var(--ds-accent)", area = true, formato = "numero",
+  datos = [], alto = 40, color = "var(--ds-accent-trazo)", area = true, formato = "numero",
   etiquetas, estilo,
 }) {
   const [ref, ancho] = useMedida();

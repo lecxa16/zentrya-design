@@ -56,7 +56,7 @@ export function Retrato({ src, nombre = "", tamano = 40, tono = "acento" }) {
   const [roto, setRoto] = React.useState(false);
   const iniciales = nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
   const fondo = tono === "acento" ? "var(--ds-accent-soft)" : "var(--ds-surface-sunk)";
-  const tinta = tono === "acento" ? "var(--ds-accent)" : "var(--ds-ink-2)";
+  const tinta = tono === "acento" ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)";
   return (
     <div style={{
       width: tamano, height: tamano, flexShrink: 0, borderRadius: "var(--ds-r-pill)",

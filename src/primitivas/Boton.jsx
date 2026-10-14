@@ -33,7 +33,7 @@ const VARIANTES = {
   },
   fantasma: { background: "transparent", color: "var(--ds-ink-2)" },
   claro: {
-    background: "rgba(255,255,255,0.16)", color: "#FFFFFF",
+    background: "var(--ds-velo)", color: "var(--ds-ink-on-hero)",
     borderColor: "var(--ds-line-glass)",
     backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
   },

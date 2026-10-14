@@ -95,7 +95,7 @@ export default function TarjetaRanking({
                     <div aria-hidden style={{ gridColumn: "2 / 4", height: 4, borderRadius: 99,
                       background: "var(--ds-surface-sunk)", overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${max > 0 ? (v / max) * 100 : 0}%`,
-                        background: "var(--ds-accent)", borderRadius: 99,
+                        background: "var(--ds-accent-trazo)", borderRadius: 99,
                         transition: "width var(--ds-t-move) var(--ds-ease)" }} />
                     </div>
                   </div>

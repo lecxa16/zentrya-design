@@ -89,7 +89,7 @@ const sxCalendario = {
   },
   "& .MuiDayCalendar-weekDayLabel": { color: "var(--ds-ink-3)", fontWeight: 700 },
   "& .MuiPickersDay-root:hover": { backgroundColor: "var(--ds-surface-2)" },
-  "& .MuiPickersDay-today": { borderColor: "var(--ds-accent)" },
+  "& .MuiPickersDay-today": { borderColor: "var(--ds-accent-trazo)" },
   "& .MuiPickersDay-root.Mui-selected, & .MuiPickersYear-yearButton.Mui-selected, & .MuiPickersMonth-monthButton.Mui-selected": {
     backgroundColor: "var(--ds-accent) !important",
     color: "var(--ds-ink-on-accent) !important",

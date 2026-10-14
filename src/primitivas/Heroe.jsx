@@ -23,13 +23,16 @@ export default function Heroe({
   return (
     <div
       {...resto}
+      /* `ds-heroe` deja que una marca de héroe claro (Nykza) redefina la
+         tinta de todo lo que va dentro; en Zentrya no tiene reglas. */
+      className={[puraFoto ? null : "ds-heroe", resto.className].filter(Boolean).join(" ") || undefined}
       style={{
         position: "relative",
         overflow: "hidden",
         background: puraFoto ? "#0B0C12" : "var(--ds-hero)",
         borderRadius: radio,
         padding: relleno,
-        color: "var(--ds-ink-on-accent)",
+        color: "var(--ds-ink-on-hero)",
         boxShadow: puraFoto ? "var(--ds-lift-3)" : "var(--ds-lift-accent), var(--ds-lift-2)",
         ...(entrada !== undefined
           ? { animation: `ds-rise var(--ds-t-scene) var(--ds-ease) both`,
@@ -97,23 +100,23 @@ export function Vidrio({ children, interactivo = false, estilo, ...resto }) {
     <div
       {...resto}
       style={{
-        background: "rgba(255,255,255,0.15)",
+        background: "var(--ds-velo)",
         border: "1px solid var(--ds-line-glass)",
         backdropFilter: "blur(14px) saturate(150%)",
         WebkitBackdropFilter: "blur(14px) saturate(150%)",
         borderRadius: "var(--ds-r-item)",
         padding: "var(--ds-3) var(--ds-4)",
-        color: "var(--ds-ink-on-accent)",
+        color: "var(--ds-ink-on-hero)",
         transition: `background var(--ds-t-state) var(--ds-ease), transform var(--ds-t-state) var(--ds-ease)`,
         cursor: interactivo ? "pointer" : undefined,
         ...estilo,
       }}
       onMouseEnter={interactivo ? (e) => {
-        e.currentTarget.style.background = "rgba(255,255,255,0.24)";
+        e.currentTarget.style.background = "var(--ds-velo-fuerte)";
         e.currentTarget.style.transform = "translateY(-2px)";
       } : undefined}
       onMouseLeave={interactivo ? (e) => {
-        e.currentTarget.style.background = "rgba(255,255,255,0.15)";
+        e.currentTarget.style.background = "var(--ds-velo)";
         e.currentTarget.style.transform = "none";
       } : undefined}
     >

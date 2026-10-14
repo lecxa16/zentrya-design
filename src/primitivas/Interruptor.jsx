@@ -25,7 +25,7 @@ export default function Interruptor({
         position: "relative", flexShrink: 0, width: 42, height: 25,
         borderRadius: "var(--ds-r-pill)", cursor: deshabilitado ? "not-allowed" : "pointer",
         border: `1px solid ${encendido ? "transparent" : "var(--ds-line-firm)"}`,
-        background: encendido ? "var(--ds-accent)" : "var(--ds-surface-sunk)",
+        background: encendido ? "var(--ds-accent-trazo)" : "var(--ds-surface-sunk)",
         opacity: deshabilitado ? 0.5 : 1,
         transition: "background var(--ds-t-state) var(--ds-ease)",
         padding: 0,

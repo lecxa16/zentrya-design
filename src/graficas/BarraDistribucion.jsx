@@ -19,7 +19,7 @@ import { porcentaje } from "../formato";
 
 const TONOS = {
   ok: "var(--ds-ok)", aviso: "var(--ds-warn)", riesgo: "var(--ds-risk)", neutro: "var(--ds-ink-3)",
-  acento: "var(--ds-accent)",
+  acento: "var(--ds-accent-trazo)",
 };
 
 export default function BarraDistribucion({

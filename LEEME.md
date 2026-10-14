@@ -286,6 +286,31 @@ medianoche, deja de leerse. Por eso el texto teñido nunca usa el color crudo si
 color queda tal cual; en oscuro lo aclara un 46%. El fondo sí usa el color crudo, porque
 ahí el contraste no está en juego.
 
+## Marcas (v1.2)
+
+El mismo sistema puede vestir a otro producto. `<ProveedorTema marca="nykza">` pone
+`data-ds-marca` en el elemento raíz y `marcas.css` redefine **sólo** los tokens de
+identidad: lienzo, tinta, acento y héroe. Estados, series, radios, espacios y movimiento no
+cambian. Claro y oscuro siguen existiendo dentro de cada marca. Sin `marca` se ve Zentrya.
+En el catálogo: `?marca=nykza`.
+
+Una marca clara obligó a separar los **tres oficios del acento**, que con un teal oscuro
+cabían en un solo color:
+
+| Token | Oficio | Mínimo |
+|---|---|---|
+| `--ds-accent` | relleno: botón sólido, selección, día de hoy; encima va `--ds-ink-on-accent` | texto encima ≥ 4.5 |
+| `--ds-accent-tinta` | texto teñido: navegación activa, pastillas, chips, cifras de acento | ≥ 4.5 sobre lienzo |
+| `--ds-accent-trazo` | líneas, bordes, barras, anillos, interruptores, foco | ≥ 3 sobre lienzo |
+
+En Zentrya los tres valen lo mismo. **Un componente nuevo elige el oficio**, nunca
+`--ds-accent` para un texto: con el amarillo de Nykza daría 1.35:1.
+
+El héroe también tiene su propia tinta (`--ds-ink-on-hero`) y su velo (`--ds-velo`,
+`--ds-velo-fuerte`, para `Vidrio` y `Boton claro`). Con una marca de héroe claro, dentro
+de `.ds-heroe` (la pone `Heroe`) se redefinen tinta y superficies, como hace
+`.ds-sobre-foto` con una foto.
+
 ## Temas
 
 Los dos se definen en `tokens.css` como variables CSS. Cada color tiene su par; **ninguno
@@ -456,7 +481,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v1.1.4`
+   `npm install github:lecxa16/zentrya-design#v1.2.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

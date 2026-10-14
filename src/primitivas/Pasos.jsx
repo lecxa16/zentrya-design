@@ -20,7 +20,7 @@ import { fecha as fFecha } from "../formato";
 
 const ESTADOS = {
   hecho:     { palabra: "Hecho", fondo: "var(--ds-ok)", tinta: "var(--ds-ink-on-accent)", borde: "var(--ds-ok)", texto: "var(--ds-ink-2)" },
-  actual:    { palabra: "En curso", fondo: "var(--ds-accent)", tinta: "var(--ds-ink-on-accent)", borde: "var(--ds-accent)", texto: "var(--ds-accent)" },
+  actual:    { palabra: "En curso", fondo: "var(--ds-accent)", tinta: "var(--ds-ink-on-accent)", borde: "var(--ds-accent-trazo)", texto: "var(--ds-accent-tinta)" },
   pendiente: { palabra: "Pendiente", fondo: "var(--ds-surface-solid)", tinta: "var(--ds-ink-3)", borde: "var(--ds-line-firm)", texto: "var(--ds-ink-3)" },
   error:     { palabra: "Con problema", fondo: "var(--ds-risk)", tinta: "var(--ds-ink-on-accent)", borde: "var(--ds-risk)", texto: "var(--ds-ink)" },
   omitido:   { palabra: "Omitido", fondo: "var(--ds-surface-sunk)", tinta: "var(--ds-ink-3)", borde: "var(--ds-line-firm)", texto: "var(--ds-ink-3)" },

@@ -32,7 +32,7 @@ export default function Chip({ texto, valor, onQuitar, estilo }) {
         <button type="button" onClick={onQuitar} aria-label={`Quitar filtro ${nombre}`}
           style={{ width: 22, height: 22, flexShrink: 0, display: "grid", placeItems: "center",
             border: "none", borderRadius: "var(--ds-r-pill)", cursor: "pointer",
-            background: "transparent", color: "var(--ds-accent)",
+            background: "transparent", color: "var(--ds-accent-tinta)",
             transition: "background var(--ds-t-state) var(--ds-ease)" }}
           onMouseEnter={(e) => { e.currentTarget.style.background = "var(--ds-surface)"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}>
@@ -71,7 +71,7 @@ export function BarraFiltros({ children, activos = [], onQuitar, onLimpiar, resu
             <button type="button" onClick={onLimpiar}
               style={{ border: "none", background: "transparent", cursor: "pointer", padding: "4px 8px",
                 fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
-                color: "var(--ds-accent)", borderRadius: 8 }}>
+                color: "var(--ds-accent-tinta)", borderRadius: 8 }}>
               Limpiar todo
             </button>
           )}

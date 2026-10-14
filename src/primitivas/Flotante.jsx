@@ -138,7 +138,7 @@ export function OpcionFlotante({ children, elegida, onClick, rol = "menuitemradi
         padding: "9px 10px", borderRadius: "var(--ds-r-item)", border: "none",
         cursor: "pointer", textAlign: "left",
         background: elegida ? "var(--ds-accent-soft)" : "transparent",
-        color: peligro ? "var(--ds-risk)" : elegida ? "var(--ds-accent)" : "var(--ds-ink-2)",
+        color: peligro ? "var(--ds-risk)" : elegida ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)",
         transition: "background var(--ds-t-state) var(--ds-ease)",
       }}
       onMouseEnter={(e) => { if (!elegida) e.currentTarget.style.background = "var(--ds-surface-2)"; }}

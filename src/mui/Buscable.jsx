@@ -52,7 +52,7 @@ export default function Buscable({
         componentsProps={{ popper: { sx: {
           "& .MuiAutocomplete-option": { ...sxMenu["& .MuiMenuItem-root"] },
           "& .MuiAutocomplete-option[aria-selected='true']": {
-            backgroundColor: "var(--ds-accent-soft) !important", color: "var(--ds-accent)",
+            backgroundColor: "var(--ds-accent-soft) !important", color: "var(--ds-accent-tinta)",
           },
           "& .MuiAutocomplete-groupLabel": {
             fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 700,

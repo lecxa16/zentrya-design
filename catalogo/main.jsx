@@ -25,6 +25,21 @@ function BotonTema() {
   );
 }
 
+/* La marca viaja en la URL (`?marca=nykza`) para poder revisar cada producto
+   sin tocar el código; sin ella se ve Zentrya. */
+const MARCA = new URLSearchParams(location.search).get("marca") || undefined;
+
+function BotonMarca() {
+  const otra = MARCA ? "" : "?marca=nykza";
+  return (
+    <a href={`${location.pathname}${otra}${location.hash}`} style={{ border: "1px solid var(--ds-line-firm)",
+      color: "var(--ds-ink-2)", borderRadius: 99, textDecoration: "none",
+      padding: "6px 12px", fontWeight: 700, fontSize: "var(--ds-t-micro)" }}>
+      {MARCA ? "Ver Zentrya" : "Ver Nykza"}
+    </a>
+  );
+}
+
 function Catalogo() {
   const inicial = (location.hash || "").replace("#", "") || SECCIONES[0]?.id;
   const [activa, setActiva] = useState(inicial);
@@ -33,10 +48,10 @@ function Catalogo() {
   return (
     <Armazon marca="Zentrya · catálogo" secciones={SECCIONES} activa={actual?.id} vista={actual?.id}
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
-      derecha={<div style={{ display: "flex", gap: 8 }}><BotonTema /><SelectorArmazon /></div>}>
+      derecha={<div style={{ display: "flex", gap: 8 }}><BotonMarca /><BotonTema /><SelectorArmazon /></div>}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>
     </Armazon>
   );
 }
 
-createRoot(document.getElementById("root")).render(<ProveedorTema><Catalogo /></ProveedorTema>);
+createRoot(document.getElementById("root")).render(<ProveedorTema marca={MARCA}><Catalogo /></ProveedorTema>);

@@ -8,6 +8,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import "./fuentes.css";
 import "./tokens.css";
+import "./marcas.css";
 
 const LLAVE = "ds-theme";
 const TemaCtx = createContext({ tema: "light", alternar: () => {}, fijar: () => {} });
@@ -23,7 +24,12 @@ function preferenciaInicial() {
   return "light";
 }
 
-export function ProveedorTema({ children, forzar }) {
+/**
+ * `marca`: identidad de otro producto (ver marcas.css), p. ej. "nykza".
+ * Sin ella se ve Zentrya. Va en el elemento raíz, junto al tema, para que
+ * los portales (Modal, Aviso, Flotante) la hereden igual que el tema.
+ */
+export function ProveedorTema({ children, forzar, marca }) {
   const [tema, setTema] = useState(() => forzar || preferenciaInicial());
 
   useEffect(() => {
@@ -32,6 +38,14 @@ export function ProveedorTema({ children, forzar }) {
     raiz.style.colorScheme = tema;
     try { localStorage.setItem(LLAVE, tema); } catch (e) { /* sin persistencia */ }
   }, [tema]);
+
+  useEffect(() => {
+    if (!marca) return undefined;
+    const raiz = document.documentElement;
+    raiz.setAttribute("data-ds-marca", marca);
+    // Al salir de una pantalla con marca no se queda pegada en las demás.
+    return () => raiz.removeAttribute("data-ds-marca");
+  }, [marca]);
 
   // Si nunca eligió a mano, sigue al sistema cuando éste cambie.
   useEffect(() => {

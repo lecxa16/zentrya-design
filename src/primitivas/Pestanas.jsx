@@ -66,7 +66,7 @@ export function Cargando({ texto = "Cargando…", alto = 200 }) {
       minHeight: alto, color: "var(--ds-ink-3)", fontSize: "var(--ds-t-small)" }}>
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
         strokeWidth="2.4" strokeLinecap="round" aria-hidden
-        style={{ animation: "ds-girar 900ms linear infinite", color: "var(--ds-accent)" }}>
+        style={{ animation: "ds-girar 900ms linear infinite", color: "var(--ds-accent-trazo)" }}>
         <path d="M12 3a9 9 0 019 9" />
       </svg>
       {texto}

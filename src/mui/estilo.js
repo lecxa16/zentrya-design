@@ -13,7 +13,7 @@
 export const sxCampo = (hayError) => {
   const borde = hayError ? "var(--ds-risk)" : "var(--ds-line)";
   const bordeEncima = hayError ? "var(--ds-risk)" : "var(--ds-line-firm)";
-  const bordeFoco = hayError ? "var(--ds-risk)" : "var(--ds-accent)";
+  const bordeFoco = hayError ? "var(--ds-risk)" : "var(--ds-accent-trazo)";
   const halo = hayError
     ? "0 0 0 3px rgba(220,38,38,0.22)"
     : "0 0 0 3px var(--ds-accent-ring)";
@@ -95,7 +95,7 @@ export const sxMenu = {
     },
     "&.Mui-selected, &.Mui-selected.Mui-focusVisible": {
       backgroundColor: "var(--ds-accent-soft) !important",
-      color: "var(--ds-accent)",
+      color: "var(--ds-accent-tinta)",
       "&:hover": { backgroundColor: "var(--ds-accent-soft) !important" },
     },
   },

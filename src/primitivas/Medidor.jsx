@@ -8,7 +8,7 @@
 import React from "react";
 
 const TONOS = {
-  acento: "var(--ds-accent)",
+  acento: "var(--ds-accent-trazo)",
   ok:     "var(--ds-ok)",
   aviso:  "var(--ds-warn)",
   riesgo: "var(--ds-risk)",

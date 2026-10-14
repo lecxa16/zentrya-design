@@ -204,7 +204,7 @@ function ModoSidebar({ marca, secciones, activa, onIr, derecha, migas, children 
               onMouseLeave={(e) => { if (!esta) e.currentTarget.style.background = "transparent"; }}
             >
               <span style={{ display: "grid", placeItems: "center", width: 18, height: 18,
-                flexShrink: 0, color: esta ? "var(--ds-accent)" : "inherit" }}>
+                flexShrink: 0, color: esta ? "var(--ds-accent-tinta)" : "inherit" }}>
                 {s.icono || "•"}
               </span>
               {abierto && s.texto}
@@ -509,7 +509,7 @@ export function SelectorArmazon() {
                   padding: "9px 10px", borderRadius: "var(--ds-r-item)", border: "none",
                   cursor: "pointer", textAlign: "left", whiteSpace: "nowrap",
                   background: esta ? "var(--ds-accent-soft)" : "transparent",
-                  color: esta ? "var(--ds-accent)" : "var(--ds-ink-2)",
+                  color: esta ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)",
                   transition: "background var(--ds-t-state) var(--ds-ease)",
                 }}
                 onMouseEnter={(ev) => { if (!esta) ev.currentTarget.style.background = "var(--ds-surface-2)"; }}

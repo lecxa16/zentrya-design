@@ -13,7 +13,7 @@ import React from "react";
 
 const TONO = {
   neutro: "var(--ds-ink)",
-  acento: "var(--ds-accent)",
+  acento: "var(--ds-accent-tinta)",
   ok:     "var(--ds-ok)",
   aviso:  "var(--ds-warn)",
   riesgo: "var(--ds-risk)",

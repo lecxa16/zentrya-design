@@ -37,7 +37,7 @@ function Renglon({ item, formato, angosto, anchoEtiqueta }) {
       ))}
       {!sinDato && (
         <div style={{ position: "absolute", left: 0, top: "32%", height: "36%", width: pct(v),
-          background: "var(--ds-accent)", borderRadius: "0 var(--ds-r-mini) var(--ds-r-mini) 0",
+          background: "var(--ds-accent-trazo)", borderRadius: "0 var(--ds-r-mini) var(--ds-r-mini) 0",
           transition: "width var(--ds-t-move) var(--ds-ease)" }} />
       )}
       {Number.isFinite(Number(meta)) && (
