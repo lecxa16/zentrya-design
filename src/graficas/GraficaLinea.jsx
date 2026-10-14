@@ -79,7 +79,12 @@ export default function GraficaLinea({
   const y = escala(min, max, arriba + altoPlot, arriba);
 
   /* Marcas del eje X: las que caben a ~70 px; en angosto, cuatro como mucho. */
-  const maxMarcasX = ancho < 420 ? 4 : Math.max(2, Math.floor(anchoPlot / 70));
+  /* Cuántas etiquetas caben depende de cuánto mide la MÁS LARGA: «Ene» cabe
+     cada 40 px, «2026-07-16» necesita ~75. Con un tope fijo, las fechas
+     completas se enciman en un teléfono. */
+  const largoX = Math.max(3, ...Array.from({ length: n }, (_, i) => String(etiquetas[i] ?? i + 1).length));
+  const anchoEtiquetaX = largoX * ANCHO_CARACTER + 12;
+  const maxMarcasX = Math.max(2, Math.min(ancho < 420 ? 4 : Infinity, Math.floor(anchoPlot / anchoEtiquetaX)));
   const pasoX = Math.max(1, Math.ceil(n / maxMarcasX));
 
   const tramos = (vals) => {
