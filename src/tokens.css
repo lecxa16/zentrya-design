@@ -52,7 +52,7 @@
        --ds-accent        relleno: botón sólido, selección, día de hoy
        --ds-accent-tinta  texto teñido (≥ 4.5:1 sobre lienzo y tarjeta)
        --ds-accent-trazo  líneas, bordes, barras e interruptores (≥ 3:1) */
-  --ds-accent-tinta:  #0B7D75;
+  --ds-accent-tinta:  #0A746C;   /* v1.4.1: #0B7D75 daba 4.14 sobre accent-soft (chips, pastilla acento) */
   --ds-accent-trazo:  #0B7D75;
 
   /* El gradiente es de la pieza protagonista de cada pantalla. Si aparece en
@@ -67,9 +67,11 @@
                   radial-gradient(90% 120% at 92% 100%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 52%);
 
   /* ---------- Estados ---------- */
-  --ds-ok:    #3E8E2B;  --ds-ok-soft:    #E6F3DF;
-  --ds-warn:  #D97706;  --ds-warn-soft:  #FDF0DC;
-  --ds-risk:  #DC2626;  --ds-risk-soft:  #FCE8E8;
+  /* v1.4.1: los tres estados se oscurecieron lo justo para leerse como TEXTO (Pastilla, Calendario,
+     Formulario…) con ≥ 4.5:1 sobre su -soft, la tarjeta y el lienzo. Antes: ok 3.57, warn 2.83, risk 4.10. */
+  --ds-ok:    #357A25;  --ds-ok-soft:    #E6F3DF;
+  --ds-warn:  #A25904;  --ds-warn-soft:  #FDF0DC;
+  --ds-risk:  #CD2121;  --ds-risk-soft:  #FCE8E8;
   --ds-info:  #0B7D75;  --ds-info-soft:  #D6EFEA;
 
   /* Fondo del retrato neutro: OPACO (un retrato encima de otro no se
@@ -180,6 +182,8 @@
   --ds-ink-3:         #87939A;
   --ds-ink-on-dark:   #E7ECEF;
 
+  /* v1.4.1: faltaba aquí — heredaba #FFFFFF del claro y el botón sólido quedaba a 1.85:1 sobre este acento. */
+  --ds-ink-on-accent: #04302C;
   --ds-accent:        #3FD3C7;
   --ds-accent-press:  #6BE2D8;
   --ds-accent-soft:   #12302E;

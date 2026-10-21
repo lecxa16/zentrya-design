@@ -1,6 +1,6 @@
 {
   "name": "@zentrya/design",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Sistema de diseño de Zentrya para proyectos React: tokens claro/oscuro, primitivas, armazón de navegación y formularios.",
   "private": true,
   "type": "module",
@@ -16,7 +16,8 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite --config vite.catalogo.config.js",
-    "build:catalogo": "vite build --config vite.catalogo.config.js"
+    "build:catalogo": "vite build --config vite.catalogo.config.js",
+    "contraste": "node scripts/contraste.mjs"
   },
   "peerDependencies": {
     "react": ">=18",

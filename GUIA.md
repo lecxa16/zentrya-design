@@ -156,6 +156,7 @@ Cada una costó una sesión encontrarla. Están medidas, no supuestas.
 - [ ] ¿El **vacío** dice algo útil y la **carga** tiene forma?
 - [ ] ¿Se recorre con **teclado**, y `Escape` cierra lo que se abre?
 - [ ] ¿Los cuatro niveles de tinta pasan **AA** donde los puse? Medido, no estimado.
+- [ ] Si toqué `tokens.css` o `marcas.css`: ¿`npm run contraste` en verde? (texto sobre acento y sobre cada `-soft`)
 - [ ] ¿**Cero errores** de consola?
 - [ ] ¿Algún color, radio o sombra escrito a mano? Si sí, va al sistema.
 

@@ -3,7 +3,12 @@
  * no re-renderiza el árbol, así que alternar claro/oscuro es instantáneo.
  *
  * Recuerda la preferencia de quien usa la app y, si nunca eligió, sigue la
- * del sistema operativo.
+ * del sistema operativo — también cuando éste cambia con la app abierta.
+ *
+ * Solo se guarda lo que la persona ELIGE (`alternar`, `fijar`). Hasta la v1.4.0
+ * se guardaba también el tema inicial, y desde la primera visita la app dejaba
+ * de seguir al sistema; con `forzar`, una pantalla además contaminaba la
+ * preferencia de todas las demás.
  */
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import "./fuentes.css";
@@ -12,6 +17,14 @@ import "./marcas.css";
 
 const LLAVE = "ds-theme";
 const TemaCtx = createContext({ tema: "light", alternar: () => {}, fijar: () => {} });
+
+function eligio() {
+  try { return !!localStorage.getItem(LLAVE); } catch (e) { return false; }
+}
+
+function guardar(t) {
+  try { localStorage.setItem(LLAVE, t); } catch (e) { /* sin persistencia: dura lo que la pestaña */ }
+}
 
 function preferenciaInicial() {
   try {
@@ -36,7 +49,6 @@ export function ProveedorTema({ children, forzar, marca }) {
     const raiz = document.documentElement;
     raiz.setAttribute("data-ds-theme", tema);
     raiz.style.colorScheme = tema;
-    try { localStorage.setItem(LLAVE, tema); } catch (e) { /* sin persistencia */ }
   }, [tema]);
 
   useEffect(() => {
@@ -47,22 +59,22 @@ export function ProveedorTema({ children, forzar, marca }) {
     return () => raiz.removeAttribute("data-ds-marca");
   }, [marca]);
 
-  // Si nunca eligió a mano, sigue al sistema cuando éste cambie.
+  // Mientras no haya elegido a mano, sigue al sistema cuando éste cambie. Se
+  // pregunta en cada cambio (no una vez al montar): si elige a media sesión,
+  // su elección manda desde ese momento.
   useEffect(() => {
-    if (forzar) return undefined;
-    let eligió = false;
-    try { eligió = !!localStorage.getItem(LLAVE); } catch (e) { /* ignorar */ }
-    if (eligió) return undefined;
+    if (forzar || typeof window === "undefined" || !window.matchMedia) return undefined;
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const alCambiar = (e) => setTema(e.matches ? "dark" : "light");
+    const alCambiar = (e) => { if (!eligio()) setTema(e.matches ? "dark" : "light"); };
     mq.addEventListener("change", alCambiar);
     return () => mq.removeEventListener("change", alCambiar);
   }, [forzar]);
 
-  const alternar = useCallback(() => setTema((t) => (t === "dark" ? "light" : "dark")), []);
+  const fijar = useCallback((t) => { guardar(t); setTema(t); }, []);
+  const alternar = useCallback(() => fijar(tema === "dark" ? "light" : "dark"), [tema, fijar]);
 
   return (
-    <TemaCtx.Provider value={{ tema, alternar, fijar: setTema }}>
+    <TemaCtx.Provider value={{ tema, alternar, fijar }}>
       <div className="ds-root">{children}</div>
     </TemaCtx.Provider>
   );

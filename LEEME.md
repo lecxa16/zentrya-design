@@ -262,6 +262,23 @@ tema queda por debajo, es un defecto, no una elección estética.
 | `--ds-ink-3` | 4.6 | 5.8 |
 | `--ds-accent` | 5.0 | 9.8 |
 
+**Texto sobre color (v1.4.1).** Además de las tintas, todo par que se lee como texto pasa AA en las tres marcas y
+los dos temas: tinta sobre acento (botón sólido), cada estado sobre su `-soft` (`Pastilla`, `Calendario`, el resumen
+del `Formulario`) y `--ds-accent-tinta` sobre `--ds-accent-soft`. **La comprobación es mecánica: `npm run contraste`**
+antes de publicar una versión; falla si un par baja de 4.5:1.
+
+En la v1.4.0 no se cumplía y una captura no lo enseñaba: en oscuro `--ds-ink-on-accent` no existía y el botón sólido
+quedaba blanco sobre teal claro (1.85:1); en claro los estados daban 2.83 (aviso), 3.57 (ok) y 4.10 (riesgo). Se
+oscurecieron lo justo, sin cambiar de tono:
+
+| Token (claro) | v1.4.0 | v1.4.1 |
+|---|---|---|
+| `--ds-ok` | `#3E8E2B` | `#357A25` |
+| `--ds-warn` | `#D97706` | `#A25904` |
+| `--ds-risk` | `#DC2626` | `#CD2121` |
+| `--ds-accent-tinta` | `#0B7D75` | `#0A746C` |
+| `--ds-ink-on-accent` (oscuro) | — (heredaba `#FFFFFF`) | `#04302C` |
+
 **Un blanco al 90 % no deja pasar el lienzo.** `--ds-panel` y `--ds-frame` llevan la
 temperatura escrita en el color; las superficies muy translúcidas no la necesitan porque
 el lienzo se cuela solo. Si un panel se ve frío sobre una página con color, es esto.
@@ -372,7 +389,12 @@ se define sólo en un tema** — al repintar un tema completo es fácil perder u
 camino, así que la comprobación es mecánica: todo token de color del bloque claro tiene que
 aparecer en el oscuro. Cambiar de tema altera un atributo en el elemento raíz: no hay
 re-render. `ProveedorTema` recuerda la elección y, si nadie eligió, sigue al sistema
-operativo.
+operativo — también si éste cambia con la app abierta.
+
+**Solo se guarda lo que la persona elige** (`alternar`, `fijar`), en `localStorage` bajo `ds-theme`. Hasta la v1.4.0
+se guardaba también el tema inicial: desde la primera visita la app dejaba de seguir al sistema, y una pantalla con
+`forzar` le cambiaba la preferencia a todas las demás. (Quien ya tenía un valor guardado por esa versión lo conserva:
+no se distingue de una elección. Para volver a seguir al sistema basta borrar `ds-theme`.)
 
 ## Tipografía
 
