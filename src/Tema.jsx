@@ -25,7 +25,7 @@ function preferenciaInicial() {
 }
 
 /**
- * `marca`: identidad de otro producto (ver marcas.css), p. ej. "nykza".
+ * `marca`: identidad de otro producto (ver marcas.css), p. ej. "nykza" o "workos".
  * Sin ella se ve Zentrya. Va en el elemento raíz, junto al tema, para que
  * los portales (Modal, Aviso, Flotante) la hereden igual que el tema.
  */

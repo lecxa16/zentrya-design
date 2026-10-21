@@ -72,6 +72,11 @@
   --ds-risk:  #DC2626;  --ds-risk-soft:  #FCE8E8;
   --ds-info:  #0B7D75;  --ds-info-soft:  #D6EFEA;
 
+  /* Fondo del retrato neutro: OPACO (un retrato encima de otro no se
+     transparenta) y derivado de la tinta y la tarjeta, así que sigue al tema
+     y a la marca sin definirse dos veces. */
+  --ds-retrato-neutro: color-mix(in oklab, var(--ds-ink) 9%, var(--ds-surface-solid));
+
   /* ---------- Bordes ---------- */
   /* El esqueleto necesita su propio par: con `surface-sunk` en oscuro
      queda MÁS oscuro que el lienzo y se lee como un agujero, no como
@@ -261,6 +266,17 @@
    enlaces se queda: ésos no tienen borde que cambiar. */
 .ds-root :is(input, textarea, select, [role="combobox"]):focus-visible { outline: none; }
 .ds-root * { caret-color: var(--ds-accent-tinta); }
+
+/* ---------- El teléfono ---------- */
+/* Safari de iPhone hace zoom a la página entera al enfocar un campo con letra
+   menor de 16 px —y no regresa solo—. El cuerpo del sistema mide 15 px, así
+   que en angosto los campos suben a 16. */
+@media (max-width: 760px) {
+  .ds-root :is(input, textarea, select) { font-size: max(16px, 1em); }
+}
+/* El destello gris que pone el navegador al tocar algo no es del sistema:
+   cada pieza enseña su propio estado presionado. */
+.ds-root { -webkit-tap-highlight-color: transparent; }
 .ds-root ::-webkit-scrollbar { width: 11px; height: 11px; }
 .ds-root ::-webkit-scrollbar-track { background: transparent; }
 .ds-root ::-webkit-scrollbar-thumb {
@@ -325,6 +341,12 @@
 @keyframes ds-modal-lado {
   from { opacity: 0; transform: translate(16px, -50%); }
   to   { opacity: 1; transform: translate(0, -50%); }
+}
+
+/* La hoja del teléfono sube desde el borde de abajo. */
+@keyframes ds-hoja {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
 }
 
 /* El panel de inicio crece desde el dock que lo abrió. */

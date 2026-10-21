@@ -14,6 +14,23 @@ const SECCIONES = Object.values(modulos)
   .sort((a, b) => a.meta.orden - b.meta.orden)
   .map((m) => ({ id: m.meta.id, texto: m.meta.titulo, Vista: m.default }));
 
+/* `?secciones=11` repite las secciones hasta llegar a N, con un contador de
+   pendientes en algunas: así se prueba el chasis con un producto grande
+   (Nykza tiene once) sin tener que construirlo. */
+const PEDIDAS = parseInt(new URLSearchParams(location.search).get("secciones"), 10) || 0;
+const PUNTO = (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="1.9" strokeLinecap="round"><circle cx="12" cy="12" r="7" /></svg>
+);
+const NAVEGACION = PEDIDAS > SECCIONES.length
+  ? Array.from({ length: PEDIDAS }, (_, i) => {
+    const base = SECCIONES[i % SECCIONES.length];
+    return { ...base, id: i < SECCIONES.length ? base.id : `${base.id}-${i}`,
+      texto: i < SECCIONES.length ? base.texto : `${base.texto} ${Math.floor(i / SECCIONES.length) + 1}`,
+      icono: PUNTO, insignia: i % 4 === 1 ? i * 3 : 0 };
+  })
+  : SECCIONES;
+
 function BotonTema() {
   const { tema, alternar } = useTema();
   return (
@@ -29,13 +46,22 @@ function BotonTema() {
    sin tocar el código; sin ella se ve Zentrya. */
 const MARCA = new URLSearchParams(location.search).get("marca") || undefined;
 
+/* Las marcas se recorren en orden: Zentrya → Nykza → Work OS → Zentrya. */
+const MARCAS = [
+  { id: undefined, texto: "Zentrya" },
+  { id: "nykza", texto: "Nykza" },
+  { id: "workos", texto: "Work OS" },
+];
+
 function BotonMarca() {
-  const otra = MARCA ? "" : "?marca=nykza";
+  const i = Math.max(0, MARCAS.findIndex((m) => m.id === MARCA));
+  const sig = MARCAS[(i + 1) % MARCAS.length];
+  const otra = sig.id ? `?marca=${sig.id}` : "";
   return (
     <a href={`${location.pathname}${otra}${location.hash}`} style={{ border: "1px solid var(--ds-line-firm)",
       color: "var(--ds-ink-2)", borderRadius: 99, textDecoration: "none",
       padding: "6px 12px", fontWeight: 700, fontSize: "var(--ds-t-micro)" }}>
-      {MARCA ? "Ver Zentrya" : "Ver Nykza"}
+      Ver {sig.texto}
     </a>
   );
 }
@@ -43,10 +69,11 @@ function BotonMarca() {
 function Catalogo() {
   const inicial = (location.hash || "").replace("#", "") || SECCIONES[0]?.id;
   const [activa, setActiva] = useState(inicial);
-  const actual = SECCIONES.find((s) => s.id === activa) || SECCIONES[0];
+  const actual = SECCIONES.find((s) => s.id === activa)
+    || SECCIONES.find((s) => activa?.startsWith(`${s.id}-`)) || SECCIONES[0];
   const Vista = actual?.Vista;
   return (
-    <Armazon marca="Zentrya · catálogo" secciones={SECCIONES} activa={actual?.id} vista={actual?.id}
+    <Armazon marca="Zentrya · catálogo" secciones={NAVEGACION} activa={activa} vista={actual?.id}
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
       derecha={<div style={{ display: "flex", gap: 8 }}><BotonMarca /><BotonTema /><SelectorArmazon /></div>}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>

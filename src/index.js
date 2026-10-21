@@ -22,7 +22,7 @@ export { default as Migas } from "./primitivas/Migas";
 export { default as Barra } from "./primitivas/Barra";
 export { default as Lamina } from "./primitivas/Lamina";
 export { default as Azulejo } from "./primitivas/Azulejo";
-export { default as Campo, Selector, Buscador } from "./primitivas/Campo";
+export { default as Campo, Selector, Buscador, Envoltura, CAJA } from "./primitivas/Campo";
 export { default as Interruptor } from "./primitivas/Interruptor";
 export { default as Tabla } from "./primitivas/Tabla";
 export { Casilla, BarraSeleccion } from "./primitivas/Seleccion";
@@ -34,10 +34,10 @@ export {
   patron, condicion,
 } from "./validacion";
 export { useFiltros } from "./filtros";
-export { useAngosto } from "./ancho";
+export { useAngosto, useMedia } from "./ancho";
 export { default as Pestanas, Cargando } from "./primitivas/Pestanas";
 export { default as PanelInicio } from "./PanelInicio";
-export { default as Armazon, SelectorArmazon, useArmazon, ALTO_DOCK } from "./Armazon";
+export { default as Armazon, SelectorArmazon, useArmazon, ALTO_DOCK, ALTO_CABECERA_MOVIL } from "./Armazon";
 
 /* ---------- v1.1: formato, tarjetas, gráficas, operación y estructura ---------- */
 /* `numero` ya es una regla de validación (useFormulario): el formateador de

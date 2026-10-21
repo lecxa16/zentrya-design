@@ -51,12 +51,24 @@ export default function Fila({
   );
 }
 
-/** Retrato: avatar con iniciales de respaldo, en el tono del sistema. */
-export function Retrato({ src, nombre = "", tamano = 40, tono = "acento" }) {
+/**
+ * Retrato: la foto de la persona; sin foto, sus iniciales.
+ *
+ * `generico`: sin foto (o si la foto no carga) dibuja la silueta de una
+ * persona en lugar de iniciales. Para productos donde casi nadie tiene foto y
+ * un muro de iniciales se lee como una lista de siglas.
+ */
+export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generico = false }) {
   const [roto, setRoto] = React.useState(false);
+  React.useEffect(() => { setRoto(false); }, [src]);
   const iniciales = nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
-  const fondo = tono === "acento" ? "var(--ds-accent-soft)" : "var(--ds-surface-sunk)";
-  const tinta = tono === "acento" ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)";
+  const conFoto = src && !roto;
+  /* Opaco a propósito: `--ds-surface-sunk` es translúcido, y en un grupo
+     encimado (GrupoRetratos) el retrato de abajo se transparentaba y sobre
+     una tarjeta blanca el círculo desaparecía. */
+  const fondo = generico && !conFoto ? "var(--ds-retrato-neutro)"
+    : tono === "acento" ? "var(--ds-accent-soft)" : "var(--ds-retrato-neutro)";
+  const tinta = tono === "acento" && !generico ? "var(--ds-accent-tinta)" : "var(--ds-ink-3)";
   return (
     <div style={{
       width: tamano, height: tamano, flexShrink: 0, borderRadius: "var(--ds-r-pill)",
@@ -64,10 +76,17 @@ export function Retrato({ src, nombre = "", tamano = 40, tono = "acento" }) {
       display: "flex", alignItems: "center", justifyContent: "center",
       fontSize: tamano * 0.34, fontWeight: 800, letterSpacing: "-0.02em",
     }}>
-      {src && !roto
+      {conFoto
         ? <img src={src} alt="" onError={() => setRoto(true)}
             style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        : iniciales}
+        : generico ? (
+          /* La silueta llena el círculo hasta abajo, como un retrato de verdad:
+             cabeza arriba, hombros cortados por el borde. */
+          <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden style={{ display: "block" }}>
+            <circle cx="20" cy="15.5" r="7.2" fill="currentColor" opacity="0.55" />
+            <path d="M5.5 40c0-8.6 6.5-14.2 14.5-14.2S34.5 31.4 34.5 40z" fill="currentColor" opacity="0.55" />
+          </svg>
+        ) : iniciales}
     </div>
   );
 }

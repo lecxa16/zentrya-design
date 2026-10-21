@@ -77,3 +77,70 @@
 
   --ds-info:  #F2F2F2;  --ds-info-soft:  #262626;
 }
+
+/* ---------- Work OS ---------- */
+/* Violeta (Carlos, 2026-10-21): el producto de comunicación y trabajo de Zentrya. El morado del lanzador de
+   Reportes (#AF52DE) no sirve como tinta —3.6:1 sobre el lienzo—, así que el acento baja a un violeta
+   profundo que cumple los tres oficios: 5.8:1 sobre el lienzo, 6.2:1 blanco encima. El lienzo lleva la misma
+   temperatura lavanda, con una sola floración arriba. El héroe va del índigo al violeta; el blanco encima da
+   5.3:1 en su tono más claro. IDÉNTICO en los dos temas, como toda marca. */
+[data-ds-marca="workos"] {
+  --ds-canvas:        #F7F5FC;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #E6DDFA 0%, rgba(230,221,250,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #EEEAF8 0%, rgba(238,234,248,0) 54%),
+      linear-gradient(160deg, #F9F8FD 0%, #F5F3FB 52%, #F8F6FC 100%);
+  --ds-frame:         rgba(252,251,255,0.64);
+  --ds-panel:         rgba(246,243,253,0.95);
+
+  /* Medidos contra el lienzo: 17.0 · 8.3 · 5.2 */
+  --ds-ink:           #16121F;
+  --ds-ink-2:         #4C4660;
+  --ds-ink-3:         #6A6480;
+  --ds-ink-on-accent: #FFFFFF;
+
+  --ds-accent:        #6D3FD9;
+  --ds-accent-press:  #5730B8;
+  --ds-accent-soft:   #ECE4FC;
+  --ds-accent-ring:   rgba(109,63,217,0.28);
+  --ds-accent-tinta:  #6D3FD9;
+  --ds-accent-trazo:  #6D3FD9;
+
+  --ds-hero: linear-gradient(135deg, #3A1E8C 0%, #5B33C9 52%, #7A4BE6 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(109,63,217,0.45);
+
+  --ds-info:  #6D3FD9;  --ds-info-soft:  #ECE4FC;
+}
+
+[data-ds-theme="dark"][data-ds-marca="workos"] {
+  --ds-canvas:        #09070E;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #251A45 0%, rgba(37,26,69,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #16102A 0%, rgba(22,16,42,0) 54%),
+      linear-gradient(160deg, #0A0810 0%, #08060D 52%, #0A0810 100%);
+  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-panel:         rgba(20,16,31,0.95);
+  --ds-surface-solid: #16121F;
+
+  /* Medidos contra la tarjeta (#16121F): 15.3 · 7.5 · 5.5 */
+  --ds-ink:           #ECE8F4;
+  --ds-ink-2:         #A9A2BA;
+  --ds-ink-3:         #9089A3;
+  --ds-ink-on-dark:   #ECE8F4;
+  --ds-ink-on-accent: #140C2B;
+
+  /* 8.1:1 sobre la tarjeta; la tinta oscura encima da 8.3:1. */
+  --ds-accent:        #B79CFF;
+  --ds-accent-press:  #CDB9FF;
+  --ds-accent-soft:   #261C42;
+  --ds-accent-ring:   rgba(183,156,255,0.32);
+  --ds-accent-tinta:  #B79CFF;
+  --ds-accent-trazo:  #B79CFF;
+
+  --ds-hero: linear-gradient(135deg, #3A1E8C 0%, #5B33C9 52%, #7A4BE6 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(183,156,255,0.40);
+
+  --ds-info:  #B79CFF;  --ds-info-soft:  #261C42;
+}

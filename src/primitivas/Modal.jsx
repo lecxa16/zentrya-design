@@ -5,12 +5,17 @@
  * estaba: un diálogo que deja el foco perdido obliga a volver al principio
  * de la página con el teclado.
  *
+ * En el teléfono deja de ser un cuadro flotante y sube como HOJA desde abajo:
+ * a todo lo ancho, al alcance del pulgar y con la acción donde cae la mano.
+ * Un cuadro centrado a 390 px es un cuadro angosto con márgenes que no sirven.
+ *
  * `Aviso` es su variante de notificación: centrada, con icono de severidad
  * y **sin cierre automático**. Un resultado que se va solo antes de que
  * alguien lo lea no informó de nada.
  */
 import React, { useCallback, useEffect, useRef } from "react";
 import Boton from "./Boton";
+import { useAngosto } from "../ancho";
 
 /**
  * `lado="derecha"`: el cuadro se ancla al borde derecho y NO lleva fondo. Existe
@@ -23,7 +28,9 @@ import Boton from "./Boton";
 export default function Modal({
   abierto, onCerrar, titulo, nota, children, acciones, ancho = 560, estilo, lado,
 }) {
-  const derecha = lado === "derecha";
+  /* En el teléfono no hay «lo de atrás sigue vivo»: no cabe al lado. */
+  const hoja = useAngosto();
+  const derecha = lado === "derecha" && !hoja;
   const caja = useRef(null);
   const focoPrevio = useRef(null);
   /* `onCerrar` suele llegar como función nueva en cada render de quien abre
@@ -58,21 +65,35 @@ export default function Modal({
       <div ref={caja} role="dialog" aria-modal={derecha ? "false" : "true"} aria-label={titulo} tabIndex={-1}
         style={{
           position: "fixed", zIndex: 61, outline: "none",
-          ...(derecha
-            ? { right: "var(--ds-4)", top: "50%", transform: "translateY(-50%)" }
-            : { left: "50%", top: "50%", transform: "translate(-50%, -50%)" }),
-          width: `min(${ancho}px, calc(100% - var(--ds-8)))`,
-          maxHeight: "calc(100dvh - var(--ds-12))",
-          display: "flex", flexDirection: "column",
-          borderRadius: "var(--ds-r-frame)", overflow: "hidden",
+          display: "flex", flexDirection: "column", overflow: "hidden",
           background: "var(--ds-panel)", border: "1px solid var(--ds-line)",
           backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
           boxShadow: "var(--ds-lift-3)",
-          /* `ds-modal`, no `ds-rise`: ésa termina en `transform: none` y le
-             borraría el centrado al acabar. */
-          animation: `${derecha ? "ds-modal-lado" : "ds-modal"} var(--ds-t-move) var(--ds-ease) both`,
+          ...(hoja
+            ? {
+              left: 0, right: 0, bottom: 0, width: "100%", boxSizing: "border-box",
+              maxHeight: "calc(100dvh - var(--ds-8))",
+              borderRadius: "var(--ds-r-frame) var(--ds-r-frame) 0 0", borderBottom: "none",
+              paddingBottom: "env(safe-area-inset-bottom, 0px)",
+              animation: "ds-hoja var(--ds-t-move) var(--ds-ease) both",
+            }
+            : {
+              ...(derecha
+                ? { right: "var(--ds-4)", top: "50%", transform: "translateY(-50%)" }
+                : { left: "50%", top: "50%", transform: "translate(-50%, -50%)" }),
+              width: `min(${ancho}px, calc(100% - var(--ds-8)))`,
+              maxHeight: "calc(100dvh - var(--ds-12))",
+              borderRadius: "var(--ds-r-frame)",
+              /* `ds-modal`, no `ds-rise`: ésa termina en `transform: none` y le
+                 borraría el centrado al acabar. */
+              animation: `${derecha ? "ds-modal-lado" : "ds-modal"} var(--ds-t-move) var(--ds-ease) both`,
+            }),
           ...estilo,
         }}>
+        {hoja && (
+          <div aria-hidden style={{ width: 38, height: 5, borderRadius: 3, flexShrink: 0,
+            margin: "var(--ds-2) auto 0", background: "var(--ds-line-firm)" }} />
+        )}
         {derecha && (
           <button type="button" onClick={onCerrar} aria-label="Cerrar" title="Cerrar (Esc)"
             style={{ position: "absolute", top: "var(--ds-4)", right: "var(--ds-4)", zIndex: 1,

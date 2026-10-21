@@ -208,7 +208,8 @@ function E({ valor: o, onCambio: n, marcador: t = "Buscar…", estilo: e }) {
 }
 export {
   E as B,
-  W as C,
+  f as C,
   b as E,
-  F as S
+  F as S,
+  W as a
 };

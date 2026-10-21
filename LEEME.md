@@ -45,11 +45,61 @@ quien no, mira. `Escape` y un clic fuera lo cierran, y el foco entra al buscador
 </Armazon>
 ```
 
-Debajo de 760 px los tres se comprimen — la barra pasa a dos filas, el riel se queda en
-iconos — pero **ninguno se sustituye por otro**: la elección se respeta a cualquier tamaño, y
-`SelectorArmazon` se vuelve un botón que rota entre los tres para no quedar fuera de alcance.
 `modo="…"` fija uno y desactiva la preferencia, para una pantalla que sólo tenga sentido de
 una forma.
+
+### En el teléfono, un solo chasis (v1.4)
+
+Debajo de 760 px los tres modos se vuelven **uno**: cabecera compacta de borde a borde (la
+marca abre el lanzador) y **pestañas abajo**, al alcance del pulgar — hasta cinco; con más,
+cuatro y «Más», que abre una hoja con el resto. La preferencia no se borra: vuelve en cuanto
+hay ancho. `SelectorArmazon` desaparece, porque ahí no hay nada que elegir. (Hasta la v1.3
+cada modo se comprimía por su cuenta; en la práctica eran tres formas de quitarle sitio al
+contenido. Decisión de Carlos, 2026-10-21.)
+
+`useArmazon()` devuelve `modo: "dock"` en el teléfono —la barra de abajo mide `ALTO_DOCK`,
+igual que el dock—, así que lo que ya sube sus piezas flotantes cuando `modo === "dock"`
+sigue funcionando. Para distinguirlo está `movil`; la elección guardada, en `preferencia`.
+
+### Ningún modo depende de cuántas secciones haya (v1.4)
+
+Con once secciones (Nykza) el riel lateral escondía sus controles de abajo y el dock se
+cortaba: la franja del centro se deslizaba de lado —nadie desliza de lado con un trackpad— y
+los botones de la derecha, apretados, bajaban a una segunda fila fuera de la barra.
+
+- **Riel lateral**: tres pisos. Marca arriba y controles abajo quedan fijos; sólo la lista de
+  en medio se desliza. Con poca altura (≤ 760 px) los renglones se aprietan.
+- **Dock**: se acomoda en escalones — icono y nombre → sólo icono → sólo icono y «Más». El
+  escalón se CALCULA con una fila de medida invisible; los lados nunca se encogen por debajo
+  de lo que traen, quien cede es el centro.
+
+Para probarlo sin construir un producto grande: `?secciones=16` en el catálogo.
+
+### Pendientes en una sección (v1.4)
+
+`{ id, texto, icono, insignia: 3 }` dibuja un contador en los cuatro chasis (en «Más», la
+suma de lo que quedó dentro). Es un estado —algo espera—, por eso va en el tono de riesgo.
+
+### Lo que ocupa el chasis (v1.4)
+
+Cada modo publica su sitio en `--ds-reserva-arriba` y `--ds-reserva-abajo` (en el elemento
+raíz). Una pantalla que tiene que llenar exactamente lo que queda —un chat, con la caja de
+escribir pegada abajo— se mide con eso, en cualquier modo:
+
+```jsx
+<div style={{ height: "calc(100dvh - var(--ds-reserva-arriba) - var(--ds-reserva-abajo))" }}>
+```
+
+### Avatar genérico (v1.4)
+
+`<Retrato generico />` (y `<GrupoRetratos generico />`): sin foto, o si la foto no carga,
+dibuja la silueta de una persona en lugar de las iniciales. Opcional: quien no lo pide sigue
+viendo iniciales.
+
+### Modal en el teléfono (v1.4)
+
+En angosto `Modal` sube como **hoja desde abajo**, a todo lo ancho y con su asa. Los campos
+pasan a 16 px: Safari de iPhone hace zoom a la página al enfocar uno más chico, y no regresa.
 
 ---
 
@@ -292,7 +342,12 @@ El mismo sistema puede vestir a otro producto. `<ProveedorTema marca="nykza">` p
 `data-ds-marca` en el elemento raíz y `marcas.css` redefine **sólo** los tokens de
 identidad: lienzo, tinta, acento y héroe. Estados, series, radios, espacios y movimiento no
 cambian. Claro y oscuro siguen existiendo dentro de cada marca. Sin `marca` se ve Zentrya.
-En el catálogo: `?marca=nykza`.
+En el catálogo: `?marca=nykza` o `?marca=workos`.
+
+| Marca | Producto | Acento claro / oscuro |
+|---|---|---|
+| `nykza` (v1.2) | Nykza | negro / blanco |
+| `workos` (v1.4) | Zentrya Work OS | violeta `#6D3FD9` / `#B79CFF` |
 
 Una marca clara obligó a separar los **tres oficios del acento**, que con un teal oscuro
 cabían en un solo color:
@@ -346,7 +401,7 @@ que nunca se mueve y se va con el contenido, sin ningún error que lo delate.
 
 Por eso **ni la barra superior ni el menú lateral usan `sticky`**: los dos son
 `position: fixed` y el contenido reserva su sitio — la barra con un alto medido por
-`ResizeObserver` (en angosto pasa a dos filas) y el riel con un margen que sigue su ancho
+`ResizeObserver` (con muchas secciones pasa a dos filas) y el riel con un margen que sigue su ancho
 al contraerse.
 
 ## ⚠️ Menús flotantes: portal, siempre

@@ -18,21 +18,30 @@
 import { useEffect, useState } from "react";
 
 export function useAngosto(px = 760) {
-  const [angosto, setAngosto] = useState(
-    () => typeof window !== "undefined" && window.innerWidth <= px);
+  return useMedia(`(max-width: ${px}px)`);
+}
+
+/**
+ * ¿Se cumple esta media query? El mismo hook para cualquier eje: el chasis lo
+ * usa también con la ALTURA (`(max-height: 760px)`), porque en una laptop con
+ * barra de marcadores lo que se acaba primero no es el ancho, es el alto.
+ */
+export function useMedia(consulta) {
+  const [cumple, setCumple] = useState(
+    () => typeof window !== "undefined" && !!window.matchMedia && window.matchMedia(consulta).matches);
 
   useEffect(() => {
     /* En un entorno sin `matchMedia` —una prueba, un render en servidor— no
        se rompe: se queda con lo que se calculó al iniciar. */
     if (typeof window === "undefined" || !window.matchMedia) return undefined;
-    const mq = window.matchMedia(`(max-width: ${px}px)`);
-    const alCambiar = (e) => setAngosto(e.matches);
-    setAngosto(mq.matches);
+    const mq = window.matchMedia(consulta);
+    const alCambiar = (e) => setCumple(e.matches);
+    setCumple(mq.matches);
     mq.addEventListener("change", alCambiar);
     return () => mq.removeEventListener("change", alCambiar);
-  }, [px]);
+  }, [consulta]);
 
-  return angosto;
+  return cumple;
 }
 
 /**
