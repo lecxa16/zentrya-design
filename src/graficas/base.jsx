@@ -227,6 +227,12 @@ export function MarcoGrafica({ titulo, series, formaLeyenda, tabla, children, es
 }
 
 /** Formatea con la convención del sistema (nombre o función). */
+/** Texto que lee el lector de pantalla y no se ve (anuncios de la celda activa). */
+export const SOLO_LECTOR = {
+  position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden",
+  clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0,
+};
+
 export const fmt = (v, formato, opciones) => formatear(v, formato, opciones);
 
 /** Vacío de una gráfica: dice qué falta, no un lienzo en blanco. */

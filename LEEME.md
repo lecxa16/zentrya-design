@@ -389,6 +389,15 @@ para quedarse pegado al hacer scroll, pero el contenedor con scroll horizontal (
 un `sticky` se pegue: nunca funcionó, y sobre una `Superficie` translúcida se veía como una franja de otro tono, sobre
 todo en oscuro (reportado por Carlos en Traceon, 2026-10-22).
 
+## Mapas de calor accesibles (v1.4.3)
+
+`MapaCalor` es una cuadrícula ARIA completa: filas (`display: contents`, no cambian el dibujo), encabezados de fila y
+columna, y cada celda dice «fila · columna: valor». El foco se queda en la cuadrícula y la celda activa se anuncia con
+`aria-activedescendant`. Hasta la v1.4.2 eran `gridcell` sueltas dentro de un `grid` sin filas: axe lo marcaba
+(`aria-required-children`/`aria-required-parent`) y un lector de pantalla no podía leerlas (Traceon, 2026-10-22).
+`CalendarioCalor` es un dibujo SVG, no una tabla: pasa a `role="group"` con un aviso (`aria-live`) del día activo; los
+datos completos siguen en la vista de tabla del marco.
+
 ## Temas
 
 Los dos se definen en `tokens.css` como variables CSS. Cada color tiene su par; **ninguno

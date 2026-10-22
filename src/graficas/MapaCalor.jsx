@@ -12,8 +12,11 @@
  *     matriz no cabe, se desplaza DENTRO de su tarjeta, nunca la página.
  *   · Se recorre con el teclado (flechas) desde la propia cuadrícula: una
  *     matriz de 7×24 con 168 paradas de tabulador no se puede usar.
+ *   · Es una cuadrícula ARIA de verdad: filas, encabezados de fila y columna, y
+ *     cada celda dice su valor. El foco se queda en la cuadrícula y la celda
+ *     activa se anuncia con aria-activedescendant.
  */
-import React, { useRef, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import { MarcoGrafica, Globo, SinDatos, fmt } from "./base";
 import { rangoDe, cubeta, colorCubeta, LeyendaRampa } from "./rampa";
 
@@ -22,6 +25,7 @@ export default function MapaCalor({
   titulo, estilo,
 }) {
   const caja = useRef(null);
+  const id = useId().replace(/:/g, "");
   const [activo, setActivo] = useState(null); // [f, c]
   const plano = valores.flat();
   const rango = rangoDe(plano);
@@ -56,38 +60,45 @@ export default function MapaCalor({
         <>
           <div ref={caja} tabIndex={0} role="grid"
             aria-label={`${titulo ? `${titulo}: ` : ""}${filas.length} por ${columnas.length}. Flechas para recorrer.`}
+            aria-activedescendant={activo ? `${id}-${activo[0]}-${activo[1]}` : undefined}
             onKeyDown={alTeclear} onFocus={() => setActivo((a) => a || [0, 0])} onBlur={() => setActivo(null)}
             onMouseLeave={() => setActivo(null)}
             style={{ position: "relative", overflowX: "auto", paddingBottom: 4, outlineOffset: 2 }}>
             <div style={{ display: "grid", minWidth: anchoEtiqueta + columnas.length * celdaMinima,
               gridTemplateColumns: `${anchoEtiqueta}px repeat(${columnas.length}, minmax(${celdaMinima}px, 1fr))`,
               gap: 3 }}>
-              <div />
-              {columnas.map((c, j) => (
-                <div key={j} style={{ fontSize: 11, fontWeight: 600, color: "var(--ds-ink-3)", textAlign: "center",
-                  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", height: 19 }}
-                  title={String(c)}>
-                  {columnas.length > 16 && j % 2 ? "" : c}
-                </div>
-              ))}
+              {/* Las filas no dibujan nada (display: contents): solo le dan la forma de tabla al lector de pantalla. */}
+              <div role="row" style={{ display: "contents" }}>
+                <div role="columnheader" />
+                {columnas.map((c, j) => (
+                  <div key={j} role="columnheader" aria-label={String(c)}
+                    style={{ fontSize: 11, fontWeight: 600, color: "var(--ds-ink-3)", textAlign: "center",
+                    whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", height: 19 }}
+                    title={String(c)}>
+                    {columnas.length > 16 && j % 2 ? "" : c}
+                  </div>
+                ))}
+              </div>
               {filas.map((f, i) => (
-                <React.Fragment key={i}>
-                  <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-ink-2)",
+                <div key={i} role="row" style={{ display: "contents" }}>
+                  <div role="rowheader" style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-ink-2)",
                     display: "flex", alignItems: "center", whiteSpace: "nowrap", overflow: "hidden",
                     textOverflow: "ellipsis", paddingRight: 6 }} title={String(f)}>
                     {f}
                   </div>
-                  {columnas.map((_, j) => {
+                  {columnas.map((c, j) => {
                     const es = activo && activo[0] === i && activo[1] === j;
+                    const v = valor(i, j);
                     return (
-                      <div key={j} role="gridcell" aria-selected={!!es}
+                      <div key={j} id={`${id}-${i}-${j}`} role="gridcell" aria-selected={!!es}
+                        aria-label={`${f} · ${c}: ${v === undefined || v === null ? "sin dato" : fmt(v, formato)}`}
                         onMouseEnter={() => setActivo([i, j])}
-                        style={{ height: altoCelda, borderRadius: "var(--ds-r-mini)", background: colorCubeta(cubeta(valor(i, j), rango)),
+                        style={{ height: altoCelda, borderRadius: "var(--ds-r-mini)", background: colorCubeta(cubeta(v, rango)),
                           boxShadow: es ? "0 0 0 2px var(--ds-ink)" : "none",
                           transition: "box-shadow var(--ds-t-tap) var(--ds-ease-out)" }} />
                     );
                   })}
-                </React.Fragment>
+                </div>
               ))}
             </div>
             <Globo visible={!!activo} x={p.x} y={p.y} ancho={caja.current?.scrollWidth || 0}

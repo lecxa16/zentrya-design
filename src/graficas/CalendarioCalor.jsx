@@ -13,10 +13,12 @@
  *     calendario se desplaza dentro de su tarjeta y arranca mostrando lo más
  *     reciente.
  *   · Teclado con flechas sobre la cuadrícula (un año son 365 celdas: no
- *     pueden ser 365 paradas de tabulador).
+ *     pueden ser 365 paradas de tabulador). Es un dibujo, no una tabla: el
+ *     lector de pantalla oye el día activo por un aviso, y la vista de tabla
+ *     del marco tiene todos los datos.
  */
 import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { MarcoGrafica, Globo, SinDatos, fmt } from "./base";
+import { MarcoGrafica, Globo, SinDatos, SOLO_LECTOR, fmt } from "./base";
 import { rangoDe, cubeta, colorCubeta, LeyendaRampa } from "./rampa";
 import { fecha as formatoFecha } from "../formato";
 
@@ -103,12 +105,15 @@ export default function CalendarioCalor({ datos = [], desde, hasta, formato = "n
     <MarcoGrafica titulo={titulo} tabla={rango ? tabla : null} estilo={estilo}>
       {!rango ? <SinDatos /> : (
         <>
-          <div ref={caja} tabIndex={0} role="grid"
+          <div ref={caja} tabIndex={0} role="group" aria-roledescription="calendario"
             aria-label={`${titulo ? `${titulo}: ` : ""}calendario de ${semanas} semanas. Flechas para recorrer.`}
             onKeyDown={alTeclear} onFocus={() => setActivo((x) => x ?? dias.length - 1)} onBlur={() => setActivo(null)}
             onMouseLeave={() => setActivo(null)}
             style={{ position: "relative", overflowX: "auto", paddingBottom: 4, outlineOffset: 2 }}>
-            <svg width={anchoTotal} height={altoTotal} style={{ display: "block" }}>
+            <span aria-live="polite" style={SOLO_LECTOR}>
+              {a ? `${formatoFecha(a.fecha, "larga")}: ${a.valor === undefined ? "sin dato" : fmt(a.valor, formato)}` : ""}
+            </span>
+            <svg width={anchoTotal} height={altoTotal} aria-hidden="true" style={{ display: "block" }}>
               {meses.map((m) => (
                 <text key={m.sem} x={izq + m.sem * (CELDA + HUECO)} y={11}
                   style={{ fontSize: 11, fontWeight: 600, fill: "var(--ds-ink-3)", fontFamily: "var(--ds-font)" }}>
