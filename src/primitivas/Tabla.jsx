@@ -4,9 +4,15 @@
  * El sistema prefiere `Fila` para listas de personas, pero una matriz de
  * ocho columnas en filas apiladas deja de compararse. Ahí manda una tabla.
  *
- * Tres cosas que una tabla de producto necesita y casi nunca trae: el
- * encabezado se queda pegado al hacer scroll, las columnas numéricas se
- * alinean a la derecha con numerales de ancho fijo, y el vacío dice algo.
+ * Dos cosas que una tabla de producto necesita y casi nunca trae: las
+ * columnas numéricas se alinean a la derecha con numerales de ancho fijo, y el
+ * vacío dice algo.
+ *
+ * El encabezado NO tiene fondo propio (v1.4.2): toma el de la tarjeta. Hasta la
+ * v1.4.1 llevaba --ds-surface-solid para quedarse «pegado» al hacer scroll, pero
+ * el contenedor con scroll horizontal (que el teléfono necesita) impide que un
+ * sticky se pegue: nunca funcionó, y sobre una Superficie translúcida el fondo
+ * sólido se veía como una franja de otro tono, sobre todo en oscuro.
  *
  * `seleccion` (opcional) agrega una columna de casillas para actuar sobre varios renglones (junto con
  * `BarraSeleccion`). Exige `claveFila`. La casilla del encabezado elige TODOS los renglones filtrados, no sólo la
@@ -58,8 +64,8 @@ export default function Tabla({
         <thead>
           <tr>
             {conSeleccion && (
-              <th scope="col" style={{ position: "sticky", top: 0, zIndex: 1, width: 36,
-                padding: "0 var(--ds-2) var(--ds-3) var(--ds-3)", background: "var(--ds-surface-solid)",
+              <th scope="col" style={{ width: 36,
+                padding: "0 var(--ds-2) var(--ds-3) var(--ds-3)",
                 borderBottom: "1px solid var(--ds-line)" }}>
                 <Casilla marcada={estadoTodos} onCambio={alternarTodos} deshabilitado={claves.length === 0}
                   etiqueta={estadoTodos === true ? "Quitar todos" : "Elegir todos"} />
@@ -67,12 +73,10 @@ export default function Tabla({
             )}
             {columnas.map((c) => (
               <th key={c.clave} scope="col" style={{
-                position: "sticky", top: 0, zIndex: 1,
                 textAlign: c.numerica ? "right" : "left",
                 fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.05em",
                 textTransform: "uppercase", color: "var(--ds-ink-3)",
                 padding: "0 var(--ds-3) var(--ds-3)", whiteSpace: "nowrap",
-                background: "var(--ds-surface-solid)",
                 borderBottom: "1px solid var(--ds-line)",
               }}>
                 {c.titulo}

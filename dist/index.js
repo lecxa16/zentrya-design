@@ -2582,12 +2582,8 @@ function ra({
     }, children: [
       /* @__PURE__ */ t("thead", { children: /* @__PURE__ */ u("tr", { children: [
         g && /* @__PURE__ */ t("th", { scope: "col", style: {
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
           width: 36,
           padding: "0 var(--ds-2) var(--ds-3) var(--ds-3)",
-          background: "var(--ds-surface-solid)",
           borderBottom: "1px solid var(--ds-line)"
         }, children: /* @__PURE__ */ t(
           At,
@@ -2599,9 +2595,6 @@ function ra({
           }
         ) }),
         e.map((S) => /* @__PURE__ */ t("th", { scope: "col", style: {
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
           textAlign: S.numerica ? "right" : "left",
           fontSize: "var(--ds-t-micro)",
           fontWeight: 700,
@@ -2610,7 +2603,6 @@ function ra({
           color: "var(--ds-ink-3)",
           padding: "0 var(--ds-3) var(--ds-3)",
           whiteSpace: "nowrap",
-          background: "var(--ds-surface-solid)",
           borderBottom: "1px solid var(--ds-line)"
         }, children: S.titulo }, S.clave))
       ] }) }),

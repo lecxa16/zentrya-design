@@ -382,6 +382,13 @@ El héroe también tiene su propia tinta (`--ds-ink-on-hero`) y su velo (`--ds-v
 `--ds-velo-fuerte`, para `Vidrio` y `Boton claro`). `Heroe` pone la clase `.ds-heroe`, para que una marca de héroe claro pueda
 redefinir ahí la tinta y las superficies (como `.ds-sobre-foto` con una foto).
 
+## Tabla sin franja (v1.4.2)
+
+El encabezado de `Tabla` ya no lleva fondo propio: toma el de la tarjeta. Hasta la v1.4.1 usaba `--ds-surface-solid`
+para quedarse pegado al hacer scroll, pero el contenedor con scroll horizontal (que el teléfono necesita) impide que
+un `sticky` se pegue: nunca funcionó, y sobre una `Superficie` translúcida se veía como una franja de otro tono, sobre
+todo en oscuro (reportado por Carlos en Traceon, 2026-10-22).
+
 ## Temas
 
 Los dos se definen en `tokens.css` como variables CSS. Cada color tiene su par; **ninguno
