@@ -30,18 +30,20 @@ export const sxCampo = (hayError) => {
     /* Se apunta a `.MuiOutlinedInput-notchedOutline`, no a `fieldset`: MUI
        usa esa clase, y una clase le gana a un selector de elemento. Sin
        esto, el azul de su tema seguía mandando al enfocar. */
-    "& .MuiOutlinedInput-notchedOutline": {
+    "& .MuiOutlinedInput-notchedOutline, & .MuiPickersOutlinedInput-notchedOutline": {
       borderColor: borde,
       borderWidth: "1px !important",
       transition: "border-color var(--ds-t-state) var(--ds-ease)",
     },
-    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: bordeEncima },
+    "&:hover .MuiOutlinedInput-notchedOutline, &:hover .MuiPickersOutlinedInput-notchedOutline": { borderColor: bordeEncima },
 
     /* Un solo estado de foco: borde de acento y un halo suave. Antes se
        apilaban dos anillos —el azul de MUI y el del navegador— y eso es lo
        que se veía mal. */
     "&.Mui-focused": { boxShadow: halo },
-    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: bordeFoco },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline, &.Mui-focused .MuiPickersOutlinedInput-notchedOutline": {
+      borderColor: bordeFoco,
+    },
     "&.Mui-disabled": { opacity: 0.55 },
   };
 
@@ -49,8 +51,14 @@ export const sxCampo = (hayError) => {
     /* `&` cubre al `Select`, cuya RAÍZ ya es el `OutlinedInput`; el
        descendiente cubre al `TextField`, que lo envuelve en un
        `FormControl`. Sin las dos, las reglas sólo llegaban a uno de los
-       dos y el otro se quedaba con el tema de la aplicación. */
-    "&.MuiOutlinedInput-root, & .MuiOutlinedInput-root": campo,
+       dos y el otro se quedaba con el tema de la aplicación. El de fecha
+       (MUI X 8+) no usa `OutlinedInput` sino `PickersOutlinedInput`, con
+       secciones en vez de un `<input>`. */
+    "&.MuiOutlinedInput-root, & .MuiOutlinedInput-root, & .MuiPickersOutlinedInput-root": campo,
+    /* Su raíz ya trae el relleno lateral: aquí sólo va el vertical. */
+    "& .MuiPickersOutlinedInput-root": { paddingLeft: "13px" },
+    "& .MuiPickersSectionList-root": { padding: "10px 0", color: "var(--ds-ink)" },
+    "& .MuiPickersOutlinedInput-root.Mui-disabled .MuiPickersSectionList-root": { color: "var(--ds-ink-3)" },
 
     "& .MuiOutlinedInput-input, & .MuiSelect-select": {
       padding: "10px 13px",

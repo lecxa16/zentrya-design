@@ -45,11 +45,15 @@ export default function Buscable({
         filterOptions={(ops, estado) => filtrar(ops, { ...estado, inputValue: plano(estado.inputValue) })}
         onChange={(_, o) => { onCambio?.(o ? o.valor : ""); onSalir?.(); }}
         noOptionsText="Nada coincide"
-        slotProps={{ paper: { sx: sxMenu["& .MuiPaper-root"] } }}
         sx={{
           "& .MuiAutocomplete-inputRoot": { paddingTop: "2px !important", paddingBottom: "2px !important" },
+          /* MUI 7+ le pone al input chico su propio relleno (2.5px), más específico que el de
+             `sxCampo`; sin esto el buscable medía 30px junto a campos de 42. */
+          "&.MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input": {
+            padding: "8px 4px 8px 11px",
+          },
         }}
-        componentsProps={{ popper: { sx: {
+        slotProps={{ paper: { sx: sxMenu["& .MuiPaper-root"] }, popper: { sx: {
           "& .MuiAutocomplete-option": { ...sxMenu["& .MuiMenuItem-root"] },
           "& .MuiAutocomplete-option[aria-selected='true']": {
             backgroundColor: "var(--ds-accent-soft) !important", color: "var(--ds-accent-tinta)",
@@ -61,9 +65,13 @@ export default function Buscable({
           },
           "& .MuiAutocomplete-noOptions": { fontFamily: "var(--ds-font)", color: "var(--ds-ink-3)" },
         } } }}
+        /* Desde MUI 7 los parámetros llegan en `slotProps`, no en `inputProps`: se
+           extiende `htmlInput` sin perder su ref ni sus eventos. */
         renderInput={(p) => (
           <TextField {...p} placeholder={marcador} error={!!error}
-            inputProps={{ ...p.inputProps, "aria-labelledby": etiqueta ? `${id}-etiqueta` : undefined }}
+            slotProps={{ ...p.slotProps, htmlInput: {
+              ...p.slotProps.htmlInput, "aria-labelledby": etiqueta ? `${id}-etiqueta` : undefined,
+            } }}
             sx={sxCampo(!!error)} />
         )}
       />
