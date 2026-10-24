@@ -177,6 +177,9 @@
 
 /* Oscuro, medido contra la tarjeta (#11161A): acento 8.1:1 · la tinta oscura encima 7.7:1 · sobre accent-soft 7.0. */
 [data-ds-theme="dark"][data-ds-marca="oceano"] {
+  /* Todo lo que el bloque claro redefine se redefine aquí: si no, el claro gana por orden (v2.0.1: faltaba el
+     lienzo y el oscuro se pintaba sobre #F4F7FC; lo cachó la prueba de axe de la plantilla). */
+  --ds-canvas:        #06080A;
   --ds-canvas-grad:
       radial-gradient(1200px 760px at 76% -12%, #0F2246 0%, rgba(15,34,70,0) 58%),
       radial-gradient(760px 520px at 4% 6%, #0A1830 0%, rgba(10,24,48,0) 54%),
