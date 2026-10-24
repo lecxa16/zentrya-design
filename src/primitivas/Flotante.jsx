@@ -23,7 +23,7 @@ import { createPortal } from "react-dom";
 const MARGEN = 8;
 
 export default function Flotante({
-  ancla, abierto, onCerrar, children, rol = "menu", etiqueta, minAncho = 200, estilo,
+  ancla, abierto, onCerrar, children, rol = "menu", etiqueta, minAncho = 200, estilo, lado = "abajo",
 }) {
   const panel = useRef(null);
   const [sitio, setSitio] = useState(null);
@@ -42,6 +42,13 @@ export default function Flotante({
       const h = p?.height || 0;
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      /* `lado="derecha"`: junto al botón, no debajo —el riel contraído del menú
+         lateral—. Si no cabe a la derecha, se queda abajo. */
+      if (lado === "derecha" && a.right + 8 + w <= vw - MARGEN) {
+        const top = Math.max(MARGEN, Math.min(a.top, vh - h - MARGEN));
+        setSitio({ izq: a.right + 8, top, haciaArriba: false });
+        return;
+      }
       const abajo = vh - a.bottom;
       const haciaArriba = h > 0 && abajo < h + MARGEN && a.top > abajo;
       const top = haciaArriba ? Math.max(MARGEN, a.top - h - 6) : a.bottom + 6;
@@ -61,7 +68,7 @@ export default function Flotante({
       window.removeEventListener("resize", ubicar);
       window.removeEventListener("scroll", ubicar, true);
     };
-  }, [abierto, ancla, minAncho]);
+  }, [abierto, ancla, minAncho, lado]);
 
   useEffect(() => {
     if (!abierto) return undefined;

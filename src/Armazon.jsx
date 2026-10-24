@@ -32,11 +32,25 @@
  *
  * Cada sección puede traer `insignia`: un número de pendientes (mensajes sin
  * leer, por ejemplo). Se dibuja igual en los cuatro chasis.
+ *
+ * **Subniveles (v2.1).** Una sección puede traer `hijos` (mismo formato, sin
+ * nietos: un tercer nivel son `Pestanas` dentro de la pantalla). `activa`
+ * puede ser el id de un hijo y entonces el padre también se marca. El padre
+ * tiene página propia sólo si trae `ruta` (o `navegable`): ahí su texto
+ * navega y la flechita abre a los hijos; sin ella, cualquier clic los abre.
+ * Su insignia es la suma de la suya y la de sus hijos. Cómo se abren,
+ * según el chasis (decidido con Carlos, 2026-10-23):
+ *   arriba    desplegable debajo de la píldora
+ *   lateral   acordeón en su sitio (flotante si el riel está contraído)
+ *   dock      panel hacia arriba
+ *   teléfono  hoja desde abajo
+ * `onIr(seccion)` recibe al hijo tal como vino; la app navega con su `ruta`.
  */
-import React, { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Transicion from "./primitivas/Transicion";
 import Modal from "./primitivas/Modal";
+import Flotante from "./primitivas/Flotante";
 import { useAngosto, useMedia } from "./ancho";
 
 const LLAVE = "ds-nav";
@@ -110,6 +124,77 @@ function IconoSeccion({ s, alto = 18 }) {
   );
 }
 
+/* ---------------- subniveles ---------------- */
+
+const conHijos = (s) => Array.isArray(s?.hijos) && s.hijos.length > 0;
+/** La sección está activa si lo está ella o uno de sus hijos. */
+const contiene = (s, activa) => s.id === activa || (conHijos(s) && s.hijos.some((h) => h.id === activa));
+/** Un padre sólo tiene página si la trae; una sección sin hijos siempre la tiene. */
+const navegable = (s) => !conHijos(s) || Boolean(s.ruta || s.navegable);
+const suma = (lista) => lista.reduce((n, x) => n + (Number(x.insignia) || 0), 0);
+/** El padre lleva la suma de sus pendientes y los de sus hijos: cerrado, sigue avisando. */
+const conInsigniaTotal = (s) => (conHijos(s)
+  ? { ...s, insigniaPropia: s.insignia, insignia: (Number(s.insignia) || 0) + suma(s.hijos) } : s);
+
+function Flecha({ abierta, tam = 13 }) {
+  return (
+    <svg width={tam} height={tam} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden
+      style={{ flexShrink: 0, transform: abierta ? "rotate(180deg)" : "none",
+        transition: "transform var(--ds-t-state) var(--ds-ease)" }}>
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
+/** Renglón de un menú de navegación: dice cuál es la página actual sin depender del color. */
+function OpcionNav({ texto, nota, insignia, esta, onClick }) {
+  return (
+    <button type="button" role="menuitem" onClick={onClick} aria-current={esta ? "page" : undefined}
+      data-foco={esta ? "" : undefined}
+      style={{
+        display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%", minHeight: 38,
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+        padding: "8px 10px", borderRadius: "var(--ds-r-item)", border: "none",
+        cursor: "pointer", textAlign: "left",
+        background: esta ? "var(--ds-accent-soft)" : "transparent",
+        color: esta ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)",
+      }}
+      onMouseEnter={(e) => { if (!esta) e.currentTarget.style.background = "var(--ds-surface-2)"; }}
+      onMouseLeave={(e) => { if (!esta) e.currentTarget.style.background = "transparent"; }}
+      onFocus={(e) => { if (!esta) e.currentTarget.style.background = "var(--ds-surface-2)"; }}
+      onBlur={(e) => { if (!esta) e.currentTarget.style.background = "transparent"; }}>
+      <span style={{ flex: 1, minWidth: 0 }}>
+        {texto}
+        {nota && <span style={{ display: "block", fontSize: "var(--ds-t-micro)", fontWeight: 600,
+          color: "var(--ds-ink-3)" }}>{nota}</span>}
+      </span>
+      <Contador n={insignia} />
+    </button>
+  );
+}
+
+/** Los hijos de una sección en un `Flotante`: el desplegable de la barra, el
+    panel del dock y el del riel contraído. Si el padre tiene página, va
+    primero como «Resumen». */
+function MenuHijos({ s, ancla, abierto, onCerrar, activa, onIr, lado }) {
+  const ir = (x) => { onCerrar(); onIr?.(x); };
+  return (
+    <Flotante ancla={ancla} abierto={abierto} onCerrar={onCerrar} etiqueta={s.texto} minAncho={220} lado={lado}>
+      {navegable(s) && (
+        <>
+          <OpcionNav texto={s.texto} nota="Resumen" esta={s.id === activa} onClick={() => ir(s)} />
+          <div role="separator" style={{ height: 1, background: "var(--ds-line)", margin: "4px 6px" }} />
+        </>
+      )}
+      {s.hijos.map((h) => (
+        <OpcionNav key={h.id} texto={h.texto} insignia={h.insignia} esta={h.id === activa}
+          onClick={() => ir(h)} />
+      ))}
+    </Flotante>
+  );
+}
+
 /** `encoge`: en la cabecera del teléfono la marca cede antes que los
     controles — un nombre recortado se sigue reconociendo, un botón cortado
     no se puede pulsar. */
@@ -149,37 +234,121 @@ function Pildora({ s, esta, onIr }) {
   );
 }
 
-/** Lo que no cupo en la barra, en una lista. En el teléfono el Modal ya llega
-    como hoja desde abajo; en el escritorio, como un cuadro. */
-function HojaMas({ abierto, onCerrar, secciones, activa, onIr }) {
+/** Píldora de una sección con hijos. Con página propia son dos botones en
+    una misma cápsula —el texto navega, la flecha abre—; sin ella, uno solo
+    que abre. El desplegable se ancla al botón que lo abre, para que el foco
+    vuelva ahí al cerrarlo. */
+function PildoraGrupo({ s, activa, onIr }) {
+  const [abierto, setAbierto] = useState(false);
+  const abre = useRef(null);
+  const esta = contiene(s, activa);
+  const propia = navegable(s);
+  const boton = {
+    display: "inline-flex", alignItems: "center", gap: 8, whiteSpace: "nowrap",
+    fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+    padding: "9px 0", border: "none", background: "transparent", color: "inherit", cursor: "pointer",
+    borderRadius: "var(--ds-r-pill)",
+  };
+  const fondo = esta ? "var(--ds-ink)" : "var(--ds-surface)";
   return (
-    <Modal abierto={abierto} onCerrar={onCerrar} titulo="Más" ancho={420}>
+    <span title={s.texto} style={{
+      display: "inline-flex", alignItems: "center", padding: "0 6px 0 16px",
+      borderRadius: "var(--ds-r-pill)", border: "1px solid transparent",
+      background: fondo, color: esta ? "var(--ds-surface-solid)" : "var(--ds-ink-2)",
+      boxShadow: esta ? "var(--ds-lift-2)" : "none",
+      transition: "background var(--ds-t-state) var(--ds-ease), color var(--ds-t-state) var(--ds-ease)",
+    }}
+      onMouseEnter={(e) => { if (!esta) { e.currentTarget.style.background = "var(--ds-surface-solid)"; e.currentTarget.style.color = "var(--ds-ink)"; } }}
+      onMouseLeave={(e) => { if (!esta) { e.currentTarget.style.background = fondo; e.currentTarget.style.color = "var(--ds-ink-2)"; } }}>
+      {propia ? (
+        <>
+          <button type="button" onClick={() => onIr?.(s)} aria-current={s.id === activa ? "page" : undefined}
+            style={boton}>
+            {s.icono}{s.texto}<Contador n={s.insignia} />
+          </button>
+          <button type="button" ref={abre} onClick={() => setAbierto((v) => !v)}
+            aria-label={`Subsecciones de ${s.texto}`} aria-haspopup="menu" aria-expanded={abierto}
+            style={{ ...boton, padding: "9px 10px 9px 8px" }}>
+            <Flecha abierta={abierto} />
+          </button>
+        </>
+      ) : (
+        <button type="button" ref={abre} onClick={() => setAbierto((v) => !v)}
+          aria-haspopup="menu" aria-expanded={abierto} style={{ ...boton, paddingRight: 10 }}>
+          {s.icono}{s.texto}<Contador n={s.insignia} /><Flecha abierta={abierto} />
+        </button>
+      )}
+      <MenuHijos s={s} ancla={abre} abierto={abierto} onCerrar={() => setAbierto(false)}
+        activa={activa} onIr={onIr} />
+    </span>
+  );
+}
+
+/** Un renglón de la hoja. `sangria`: un hijo bajo el nombre de su grupo. */
+function RenglonHoja({ s, texto, esta, sangria = false, onClick }) {
+  return (
+    <button type="button" onClick={onClick} aria-current={esta ? "page" : undefined}
+      style={{
+        display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%",
+        minHeight: sangria ? 44 : 48, padding: sangria ? "0 var(--ds-3) 0 42px" : "0 var(--ds-3)",
+        border: "none", cursor: "pointer",
+        borderRadius: "var(--ds-r-item)", textAlign: "left",
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)", fontWeight: sangria ? 600 : 700,
+        background: esta ? "var(--ds-accent-soft)" : "transparent",
+        color: esta ? "var(--ds-accent-tinta)" : "var(--ds-ink)",
+      }}>
+      {!sangria && <IconoSeccion s={{ ...s, insignia: 0 }} />}
+      <span style={{ flex: 1, minWidth: 0 }}>
+        {texto ?? s.texto}
+        {s.nota && (
+          <span style={{ display: "block", fontSize: "var(--ds-t-small)", fontWeight: 500,
+            color: "var(--ds-ink-3)" }}>{s.nota}</span>
+        )}
+      </span>
+      <Contador n={s.insignia} />
+    </button>
+  );
+}
+
+/** Lo que no cupo en la barra, en una lista; y en el teléfono, los hijos de
+    una pestaña. En el teléfono el Modal ya llega como hoja desde abajo; en el
+    escritorio, como un cuadro. Un grupo va con su nombre y sus hijos
+    sangrados debajo; si la hoja es de UN solo grupo, el título ya lo nombra
+    y sus hijos van sin sangría (con «Resumen» primero si el padre tiene página). */
+function HojaMas({ abierto, onCerrar, secciones, activa, onIr, titulo = "Más" }) {
+  const ir = (x) => { onCerrar(); onIr?.(x); };
+  const solo = secciones.length === 1 && conHijos(secciones[0]) ? secciones[0] : null;
+  return (
+    <Modal abierto={abierto} onCerrar={onCerrar} titulo={titulo} ancho={420}>
       <div style={{ display: "flex", flexDirection: "column", gap: 2, margin: "calc(var(--ds-2) * -1) 0" }}>
-        {secciones.map((s) => {
-          const esta = s.id === activa;
-          return (
-            <button key={s.id} onClick={() => { onCerrar(); onIr?.(s); }}
-              aria-current={esta ? "page" : undefined}
-              style={{
-                display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%",
-                minHeight: 48, padding: "0 var(--ds-3)", border: "none", cursor: "pointer",
-                borderRadius: "var(--ds-r-item)", textAlign: "left",
-                fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)", fontWeight: 700,
-                background: esta ? "var(--ds-accent-soft)" : "transparent",
-                color: esta ? "var(--ds-accent-tinta)" : "var(--ds-ink)",
-              }}>
-              <IconoSeccion s={{ ...s, insignia: 0 }} />
-              <span style={{ flex: 1, minWidth: 0 }}>
-                {s.texto}
-                {s.nota && (
-                  <span style={{ display: "block", fontSize: "var(--ds-t-small)", fontWeight: 500,
-                    color: "var(--ds-ink-3)" }}>{s.nota}</span>
-                )}
-              </span>
-              <Contador n={s.insignia} />
-            </button>
-          );
-        })}
+        {solo ? (
+          <>
+            {navegable(solo) && (
+              <RenglonHoja s={{ ...solo, insignia: solo.insigniaPropia }} texto="Resumen"
+                esta={solo.id === activa} onClick={() => ir(solo)} />
+            )}
+            {solo.hijos.map((h) => (
+              <RenglonHoja key={h.id} s={{ icono: solo.icono, ...h }} esta={h.id === activa} onClick={() => ir(h)} />
+            ))}
+          </>
+        ) : secciones.map((s) => (conHijos(s) ? (
+          <div key={s.id} role="group" aria-label={s.texto} style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {navegable(s) ? (
+              <RenglonHoja s={{ ...s, insignia: s.insigniaPropia }} esta={s.id === activa} onClick={() => ir(s)} />
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-3)", minHeight: 40,
+                padding: "0 var(--ds-3)", fontSize: "var(--ds-t-small)", fontWeight: 800,
+                color: "var(--ds-ink-2)" }}>
+                <IconoSeccion s={{ ...s, insignia: 0 }} />{s.texto}
+              </div>
+            )}
+            {s.hijos.map((h) => (
+              <RenglonHoja key={h.id} s={h} sangria esta={h.id === activa} onClick={() => ir(h)} />
+            ))}
+          </div>
+        ) : (
+          <RenglonHoja key={s.id} s={s} esta={s.id === activa} onClick={() => ir(s)} />
+        )))}
       </div>
     </Modal>
   );
@@ -225,13 +394,113 @@ function ModoTopbar({ marca, secciones, activa, onIr, derecha, children }) {
         <div style={{ paddingLeft: 8, paddingRight: 8 }}><Marca marca={marca} /></div>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-2)",
           flexWrap: "wrap", flex: 1, minWidth: 0 }}>
-          {secciones.map((s) => <Pildora key={s.id} s={s} esta={s.id === activa} onIr={onIr} />)}
+          {secciones.map((s) => (conHijos(s)
+            ? <PildoraGrupo key={s.id} s={s} activa={activa} onIr={onIr} />
+            : <Pildora key={s.id} s={s} esta={s.id === activa} onIr={onIr} />))}
         </div>
         <div style={{ flex: "0 0 auto", display: "flex", justifyContent: "flex-end" }}>
           {derecha}
         </div>
       </header>
       <main style={{ paddingTop: alto + 20 }}>{children}</main>
+    </div>
+  );
+}
+
+/** Un renglón del menú lateral. `riel`: desplegado (con nombre) o contraído
+    (sólo icono). `hijo`: va sangrado bajo su padre, sin icono. `marcado`: el
+    padre de la página actual, que se tiñe sin elevarse (la elevada es una). */
+function RenglonLateral({ s, esta, marcado, riel, bajo, hijo = false, enFila = false, onClick, botonRef,
+  insignia, extra, ...aria }) {
+  const n = insignia ?? s.insignia;
+  return (
+    <button ref={botonRef} type="button" onClick={onClick} title={s.texto}
+      aria-current={esta ? "page" : undefined} {...aria}
+      style={{
+        display: "flex", alignItems: "center", gap: 11, minWidth: 0,
+        /* En la lista no crece (es una columna: crecería a lo alto); junto a la flecha, sí. */
+        flex: enFila ? "1 1 0" : "0 0 auto",
+        justifyContent: riel ? "flex-start" : "center",
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: hijo ? 600 : 700,
+        padding: hijo ? `${bajo ? 6 : 8}px 13px ${bajo ? 6 : 8}px 42px` : `${bajo ? 8 : 11}px ${riel ? 13 : 0}px`,
+        borderRadius: "var(--ds-r-item)", border: "none",
+        cursor: "pointer", textAlign: "left", width: "100%",
+        /* El activo se ELEVA en una tarjeta sólida, como en la referencia:
+           no se marca con una línea de color al costado. */
+        background: esta ? "var(--ds-surface-solid)" : "transparent",
+        color: esta || marcado ? "var(--ds-ink)" : "var(--ds-ink-2)",
+        boxShadow: esta ? "var(--ds-lift-1)" : "none",
+        transition: "background var(--ds-t-state) var(--ds-ease), color var(--ds-t-state) var(--ds-ease)",
+      }}
+      onMouseEnter={(e) => { if (!esta) e.currentTarget.style.background = "var(--ds-surface-2)"; }}
+      onMouseLeave={(e) => { if (!esta) e.currentTarget.style.background = "transparent"; }}
+    >
+      {!hijo && (
+        <span style={{ color: esta || marcado ? "var(--ds-accent-tinta)" : "inherit", lineHeight: 0 }}>
+          <IconoSeccion s={riel ? { ...s, insignia: 0 } : s} />
+        </span>
+      )}
+      {riel && <span style={{ flex: 1, minWidth: 0, overflow: "hidden",
+        textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.texto}</span>}
+      {riel && <Contador n={n} />}
+      {riel && extra}
+    </button>
+  );
+}
+
+/** Una sección con hijos en el menú lateral: acordeón en su sitio, abierto de
+    entrada si la página actual está dentro. Con el riel contraído no hay
+    sitio para sangrar, y los hijos salen en un menú flotante. Cerrado, el
+    padre lleva la suma de pendientes; abierto, cada hijo dice los suyos. */
+function GrupoLateral({ s, activa, riel, bajo, onIr }) {
+  const dentro = contiene(s, activa);
+  const [abierto, setAbierto] = useState(dentro);
+  const [flota, setFlota] = useState(false);
+  const boton = useRef(null);
+  const idLista = useId();
+  /* Llegar a un hijo desde otro lado (un enlace, el lanzador) abre su grupo. */
+  useEffect(() => { if (dentro) setAbierto(true); }, [dentro]);
+
+  if (!riel) {
+    return (
+      <>
+        <RenglonLateral s={s} esta={dentro} riel={false} bajo={bajo} botonRef={boton}
+          onClick={() => setFlota((v) => !v)} aria-haspopup="menu" aria-expanded={flota} />
+        <MenuHijos s={s} ancla={boton} abierto={flota} onCerrar={() => setFlota(false)}
+          activa={activa} onIr={onIr} lado="derecha" />
+      </>
+    );
+  }
+
+  const propia = navegable(s);
+  const alternar = () => setAbierto((v) => !v);
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: bajo ? 0 : 2, flexShrink: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <RenglonLateral s={s} esta={s.id === activa} marcado={dentro} riel bajo={bajo} enFila
+          insignia={abierto ? Number(s.insigniaPropia) || 0 : s.insignia}
+          onClick={propia ? () => onIr?.(s) : alternar}
+          aria-expanded={propia ? undefined : abierto} aria-controls={propia ? undefined : idLista}
+          extra={propia ? null : <span style={{ color: "var(--ds-ink-3)", lineHeight: 0 }}><Flecha abierta={abierto} /></span>} />
+        {propia && (
+          <button type="button" onClick={alternar} aria-expanded={abierto} aria-controls={idLista}
+            aria-label={`Subsecciones de ${s.texto}`}
+            style={{ display: "grid", placeItems: "center", width: 32, height: 32, flexShrink: 0,
+              border: "none", background: "transparent", cursor: "pointer", color: "var(--ds-ink-3)",
+              borderRadius: "var(--ds-r-item)" }}>
+            <Flecha abierta={abierto} />
+          </button>
+        )}
+      </div>
+      {abierto && (
+        <div id={idLista} role="group" aria-label={s.texto}
+          style={{ display: "flex", flexDirection: "column", gap: bajo ? 0 : 2 }}>
+          {s.hijos.map((h) => (
+            <RenglonLateral key={h.id} s={h} hijo esta={h.id === activa} riel bajo={bajo}
+              onClick={() => onIr?.(h)} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -284,37 +553,10 @@ function ModoSidebar({ marca, secciones, activa, onIr, derecha, children }) {
           overflowY: "auto", overflowX: "hidden", scrollbarWidth: "thin",
           display: "flex", flexDirection: "column", gap: bajo ? 0 : 2,
           margin: "0 calc(var(--ds-1) * -1)", padding: "2px var(--ds-1)" }}>
-          {secciones.map((s) => {
-            const esta = s.id === activa;
-            return (
-              <button key={s.id} onClick={() => onIr?.(s)} title={s.texto}
-                aria-current={esta ? "page" : undefined}
-                style={{
-                  display: "flex", alignItems: "center", gap: 11, flexShrink: 0,
-                  justifyContent: abierto ? "flex-start" : "center",
-                  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
-                  padding: `${bajo ? 8 : 11}px ${abierto ? 13 : 0}px`,
-                  borderRadius: "var(--ds-r-item)", border: "none",
-                  cursor: "pointer", textAlign: "left", width: "100%",
-                  /* El activo se ELEVA en una tarjeta sólida, como en la referencia:
-                     no se marca con una línea de color al costado. */
-                  background: esta ? "var(--ds-surface-solid)" : "transparent",
-                  color: esta ? "var(--ds-ink)" : "var(--ds-ink-2)",
-                  boxShadow: esta ? "var(--ds-lift-1)" : "none",
-                  transition: "background var(--ds-t-state) var(--ds-ease), color var(--ds-t-state) var(--ds-ease)",
-                }}
-                onMouseEnter={(e) => { if (!esta) e.currentTarget.style.background = "var(--ds-surface-2)"; }}
-                onMouseLeave={(e) => { if (!esta) e.currentTarget.style.background = "transparent"; }}
-              >
-                <span style={{ color: esta ? "var(--ds-accent-tinta)" : "inherit", lineHeight: 0 }}>
-                  <IconoSeccion s={abierto ? { ...s, insignia: 0 } : s} />
-                </span>
-                {abierto && <span style={{ flex: 1, minWidth: 0, overflow: "hidden",
-                  textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.texto}</span>}
-                {abierto && <Contador n={s.insignia} />}
-              </button>
-            );
-          })}
+          {secciones.map((s) => (conHijos(s)
+            ? <GrupoLateral key={s.id} s={s} activa={activa} riel={abierto} bajo={bajo} onIr={onIr} />
+            : <RenglonLateral key={s.id} s={s} esta={s.id === activa} riel={abierto} bajo={bajo}
+              onClick={() => onIr?.(s)} />))}
         </nav>
 
         {derecha ? (
@@ -349,10 +591,10 @@ function ModoSidebar({ marca, secciones, activa, onIr, derecha, children }) {
    sitio de las secciones. */
 const ANCHO_ICONO_DOCK = 48;
 
-function BotonDock({ s, esta, conTexto, onIr }) {
+function BotonDock({ s, esta, conTexto, onIr, botonRef, ...aria }) {
   return (
-    <button onClick={() => onIr?.(s)} title={s.texto} aria-label={s.texto}
-      aria-current={esta ? "page" : undefined}
+    <button ref={botonRef} type="button" onClick={() => onIr?.(s)} title={s.texto} aria-label={s.texto}
+      aria-current={esta && !aria["aria-haspopup"] ? "page" : undefined} {...aria}
       style={{
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3,
         fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 700,
@@ -382,6 +624,21 @@ function BotonDock({ s, esta, conTexto, onIr }) {
       <IconoSeccion s={s} alto={19} />
       {conTexto && s.texto}
     </button>
+  );
+}
+
+/** Una sección con hijos en el dock: el botón abre un panel hacia arriba
+    (Flotante sube solo cuando abajo no cabe), como las pilas de un dock. */
+function GrupoDock({ s, activa, conTexto, onIr }) {
+  const [abierto, setAbierto] = useState(false);
+  const boton = useRef(null);
+  return (
+    <>
+      <BotonDock s={s} esta={contiene(s, activa)} conTexto={conTexto} botonRef={boton}
+        onIr={() => setAbierto((v) => !v)} aria-haspopup="menu" aria-expanded={abierto} />
+      <MenuHijos s={s} ancla={boton} abierto={abierto} onCerrar={() => setAbierto(false)}
+        activa={activa} onIr={onIr} />
+    </>
   );
 }
 
@@ -465,12 +722,12 @@ function ModoDock({
 
         <div style={{ flex: "0 1 auto", minWidth: 0, display: "flex", alignItems: "center",
           justifyContent: "center", gap: "var(--ds-1)", position: "relative" }}>
-          {visibles.map((s) => (
-            <BotonDock key={s.id} s={s} esta={s.id === activa} conTexto={escalon === 0} onIr={onIr} />
-          ))}
+          {visibles.map((s) => (conHijos(s)
+            ? <GrupoDock key={s.id} s={s} activa={activa} conTexto={escalon === 0} onIr={onIr} />
+            : <BotonDock key={s.id} s={s} esta={s.id === activa} conTexto={escalon === 0} onIr={onIr} />))}
           {resto.length > 0 && (
-            <BotonMas activo={resto.some((s) => s.id === activa)}
-              insignia={resto.reduce((n, s) => n + (Number(s.insignia) || 0), 0)}
+            <BotonMas activo={resto.some((s) => contiene(s, activa))}
+              insignia={suma(resto)}
               onClick={() => setHojaMas(true)} alto={44} />
           )}
         </div>
@@ -525,6 +782,8 @@ function ModoMovil({
   inicio, inicioAbierto = false, onInicioAbierto, children,
 }) {
   const [hojaMas, setHojaMas] = useState(false);
+  /* La pestaña de una sección con hijos abre su propia hoja. */
+  const [grupo, setGrupo] = useState(null);
   const todasCaben = secciones.length <= PESTANAS_MAX;
   const visibles = todasCaben ? secciones : secciones.slice(0, PESTANAS_MAX - 1);
   const resto = todasCaben ? [] : secciones.slice(PESTANAS_MAX - 1);
@@ -601,15 +860,18 @@ function ModoMovil({
         backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
       }}>
         {visibles.map((s) => pestana(s, {
-          esta: s.id === activa, onClick: () => onIr?.(s), etiqueta: s.texto,
+          esta: contiene(s, activa), etiqueta: s.texto,
+          onClick: conHijos(s) ? () => setGrupo(s) : () => onIr?.(s),
         }))}
         {resto.length > 0 && pestana(
-          { id: "__mas", icono: ICONO_MAS, insignia: resto.reduce((n, s) => n + (Number(s.insignia) || 0), 0) },
-          { esta: resto.some((s) => s.id === activa), onClick: () => setHojaMas(true), etiqueta: "Más" })}
+          { id: "__mas", icono: ICONO_MAS, insignia: suma(resto) },
+          { esta: resto.some((s) => contiene(s, activa)), onClick: () => setHojaMas(true), etiqueta: "Más" })}
       </nav>
 
       <HojaMas abierto={hojaMas} onCerrar={() => setHojaMas(false)}
         secciones={resto} activa={activa} onIr={onIr} />
+      <HojaMas abierto={!!grupo} onCerrar={() => setGrupo(null)} titulo={grupo?.texto}
+        secciones={grupo ? [grupo] : []} activa={activa} onIr={onIr} />
       {inicio}
     </div>
   );
@@ -673,7 +935,8 @@ export default function Armazon({
      —cambian con ella— y dejarlas fuera las haría saltar mientras lo demás
      aparece. */
   const cuerpo = <Transicion vista={vista}>{migas}{children}</Transicion>;
-  const props = { marca, icono, secciones, activa, onIr, derecha, inicio,
+  const conTotales = secciones.map(conInsigniaTotal);
+  const props = { marca, icono, secciones: conTotales, activa, onIr, derecha, inicio,
     inicioAbierto, onInicioAbierto, children: cuerpo };
   const Elegido = movil ? ModoMovil
     : modo === "sidebar" ? ModoSidebar : modo === "dock" ? ModoDock : ModoTopbar;

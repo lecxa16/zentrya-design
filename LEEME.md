@@ -398,6 +398,46 @@ columna, y cada celda dice «fila · columna: valor». El foco se queda en la cu
 `CalendarioCalor` es un dibujo SVG, no una tabla: pasa a `role="group"` con un aviso (`aria-live`) del día activo; los
 datos completos siguen en la vista de tabla del marco.
 
+## Subniveles de navegación (v2.1)
+
+Una sección puede traer `hijos` (mismo formato; **dos niveles como máximo**: un tercero son `Pestanas` dentro
+de la pantalla). `activa` puede ser el id de un hijo y entonces el padre también se marca. La insignia del padre
+es la suya más la de sus hijos. Decidido con Carlos (2026-10-23):
+
+| Chasis | Cómo se abren los hijos |
+|---|---|
+| Arriba | desplegable bajo la píldora (no una segunda barra: no le quita alto a cada pantalla) |
+| Lateral | acordeón en su sitio, abierto de entrada si la página actual está dentro; con el riel contraído, menú flotante al lado |
+| Dock | panel hacia arriba |
+| Teléfono | la pestaña abre una hoja con sus hijos; «Más» los muestra sangrados bajo su grupo |
+
+**El padre tiene página propia sólo si trae `ruta` (o `navegable: true`)**: su texto navega y la flechita abre a
+los hijos (en los menús aparece primero como «Resumen»). Sin ella, cualquier clic abre. `onIr` recibe al hijo
+tal como vino: la app navega con su `ruta` (`onIr={(s) => ir(s.ruta)}`).
+
+```jsx
+const SECCIONES = [
+  { id: "inicio", texto: "Inicio", icono: <IconoInicio />, ruta: "/" },
+  { id: "inversiones", texto: "Inversiones", icono: <IconoInversiones />, ruta: "/inversiones", hijos: [
+    { id: "acciones", texto: "Acciones", ruta: "/inversiones/acciones" },
+    { id: "cetes", texto: "CETES", ruta: "/inversiones/cetes", insignia: 1 },
+  ] },
+];
+```
+
+## Cuenta y notificaciones (v2.1)
+
+Lo que lleva toda app en la esquina: `<Notificaciones />` y `<MenuUsuario />`, en `derecha` del Armazón.
+
+- **`MenuUsuario`** (`nombre`, `correo`, `foto`, `opciones`, `onSalir`, `saliendo`): el avatar es un `Retrato`
+  —la foto si carga, si no las iniciales— y abre un menú con quién es, las `opciones` de la app (`{ texto, icono,
+  onClick }`, p. ej. «Mi cuenta»), **Apariencia** (el mismo modal de `BotonApariencia`) y **Cerrar sesión**. Con
+  él ya no hace falta `BotonApariencia` suelto.
+- **`Notificaciones`** (`avisos`, `onAbrir`, `onMarcarTodas`, `onVerTodas`): la campana cuenta lo **no leído**
+  y abre el panel (bajo la campana; en el teléfono, hoja). Cada aviso: `{ id, titulo, texto?, fecha?, leido?,
+  tono? }`. Lo nuevo lleva punto Y negritas, y el lector de pantalla oye «Sin leer». No sabe de dónde salen los
+  avisos: la app los trae (y decide si sondea o escucha).
+
 ## Paletas que elige la persona (v2.0)
 
 Las marcas también se pueden ofrecer como **paletas**: `<ProveedorTema paletas>` deja elegir entre `PALETAS`
@@ -614,7 +654,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.0.3`
+   `npm install github:lecxa16/zentrya-design#v2.1.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

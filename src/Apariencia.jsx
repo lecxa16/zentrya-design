@@ -29,7 +29,7 @@ const MODOS = [
   { valor: "dock", texto: "Dock" },
 ];
 
-const ENGRANE = (
+export const ENGRANE = (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
     strokeLinecap="round" strokeLinejoin="round" aria-hidden>
     <circle cx="12" cy="12" r="3" />
@@ -46,37 +46,43 @@ function Opcion({ etiqueta, children }) {
   );
 }
 
-export default function BotonApariencia({ texto }) {
-  const [abierto, setAbierto] = useState(false);
+/** El modal solo, para abrirlo desde otro sitio (el menú de la cuenta). */
+export function ModalApariencia({ abierto, onCerrar }) {
   const { tema, fijar, paletas } = useTema();
   const { preferencia, fijarModo, movil } = useArmazon();
   const conNavegacion = preferencia !== undefined && !movil;
+  return (
+    <Modal abierto={abierto} onCerrar={onCerrar} titulo="Apariencia"
+      nota="Se aplica al momento y se recuerda en este navegador." ancho={480}
+      acciones={<Boton variante="solido" onClick={onCerrar}>Listo</Boton>}>
+      <div style={{ display: "grid", gap: "var(--ds-5)" }}>
+        <Opcion etiqueta="Tema">
+          <Segmentado etiqueta="Tema" opciones={TEMAS} valor={tema} onCambio={fijar} pleno />
+        </Opcion>
+        {paletas.length > 0 && (
+          <Opcion etiqueta="Paleta de color">
+            <SelectorPaleta />
+          </Opcion>
+        )}
+        {conNavegacion && (
+          <Opcion etiqueta="Navegación">
+            <Segmentado etiqueta="Navegación" opciones={MODOS} valor={preferencia} onCambio={fijarModo} pleno />
+          </Opcion>
+        )}
+      </div>
+    </Modal>
+  );
+}
 
+export default function BotonApariencia({ texto }) {
+  const [abierto, setAbierto] = useState(false);
   return (
     <>
       <Boton variante="fantasma" icono={ENGRANE} onClick={() => setAbierto(true)}
         aria-label={texto ? undefined : "Apariencia"} aria-haspopup="dialog">
         {texto}
       </Boton>
-      <Modal abierto={abierto} onCerrar={() => setAbierto(false)} titulo="Apariencia"
-        nota="Se aplica al momento y se recuerda en este navegador." ancho={480}
-        acciones={<Boton variante="solido" onClick={() => setAbierto(false)}>Listo</Boton>}>
-        <div style={{ display: "grid", gap: "var(--ds-5)" }}>
-          <Opcion etiqueta="Tema">
-            <Segmentado etiqueta="Tema" opciones={TEMAS} valor={tema} onCambio={fijar} pleno />
-          </Opcion>
-          {paletas.length > 0 && (
-            <Opcion etiqueta="Paleta de color">
-              <SelectorPaleta />
-            </Opcion>
-          )}
-          {conNavegacion && (
-            <Opcion etiqueta="Navegación">
-              <Segmentado etiqueta="Navegación" opciones={MODOS} valor={preferencia} onCambio={fijarModo} pleno />
-            </Opcion>
-          )}
-        </div>
-      </Modal>
+      <ModalApariencia abierto={abierto} onCerrar={() => setAbierto(false)} />
     </>
   );
 }
