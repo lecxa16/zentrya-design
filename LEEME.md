@@ -322,6 +322,13 @@ siempre es el mismo, así que el destino es predecible — y por eso se puede **
 Debajo de 760 px la ruta completa no cabe, y apretarla no la hace legible: se queda sólo el
 volver. **La ruta informa; el volver resuelve.**
 
+**Desde la v2.3 la ruta se arma sola.** Con `migas` como LISTA, el armazón pone el tronco
+—sección › subsección, sacado de `secciones` y `activa`— y la pantalla sólo agrega sus
+escalones extra (`migas={[{ texto: "Nueva tarea" }]}`; `[]` si no tiene). Un padre sin página
+propia se nombra pero no se enlaza. En el teléfono el volver se muda a la **cabecera**, arriba a
+la izquierda («‹ Estructura»), donde lo busca el pulgar, y el contenido ya no lo repite. Pasar
+`migas` como elemento (`<Migas ruta={…} />`, como antes) sigue funcionando.
+
 El armazón la coloca en los tres modos, así que ninguna pantalla puede olvidarse de decir
 dónde está. Una pantalla profunda aporta sólo sus escalones extra —nunca el tronco— para
 que no haya dos sitios donde escribir mal la misma jerarquía.
@@ -669,7 +676,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.2.0`
+   `npm install github:lecxa16/zentrya-design#v2.3.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

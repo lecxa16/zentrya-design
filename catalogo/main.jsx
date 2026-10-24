@@ -83,6 +83,8 @@ function Catalogo() {
   return (
     <Armazon marca="Zentrya · catálogo" secciones={NAVEGACION} activa={activa} vista={actual?.id}
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
+      /* Lista vacía: el armazón arma la ruta solo con la navegación (Piezas › Operación). */
+      migas={[]}
       derecha={<Barra />}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>
     </Armazon>

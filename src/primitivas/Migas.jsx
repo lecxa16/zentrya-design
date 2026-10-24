@@ -76,9 +76,10 @@ export default function Migas({ ruta = [], estilo }) {
               <li key={`${m.texto}-${i}`} style={{ display: "inline-flex", alignItems: "center",
                 gap: 2, minWidth: 0 }}>
                 {i > 0 && <span style={{ color: "var(--ds-ink-3)", display: "inline-flex" }}>{SEPARADOR}</span>}
-                {ultima ? (
-                  <span aria-current="page" style={{ ...enlace, cursor: "default",
-                    color: "var(--ds-ink)", fontWeight: 700 }}>
+                {ultima || !m.ir ? (
+                  /* Sin `ir` es un grupo sin página propia: se nombra, no se enlaza. */
+                  <span aria-current={ultima ? "page" : undefined} style={{ ...enlace, cursor: "default",
+                    color: ultima ? "var(--ds-ink)" : "var(--ds-ink-3)", fontWeight: ultima ? 700 : 600 }}>
                     {m.texto}
                   </span>
                 ) : (

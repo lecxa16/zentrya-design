@@ -45,12 +45,20 @@
  *   dock      panel hacia arriba
  *   teléfono  hoja desde abajo
  * `onIr(seccion)` recibe al hijo tal como vino; la app navega con su `ruta`.
+ *
+ * **Ruta y volver (v2.3).** Con `migas` como LISTA, el armazón arma solo el
+ * tronco —sección › subsección, de `secciones` y `activa`— y la pantalla sólo
+ * agrega sus escalones extra (`[{ texto: "Nueva tarea" }]`): la jerarquía se
+ * escribe en un solo sitio. En el escritorio se ve la ruta con «Volver a …»; en
+ * el teléfono el volver pasa a la cabecera, arriba a la izquierda, donde lo
+ * busca el pulgar. Con `migas` como elemento (antes de la v2.3) se pinta tal cual.
  */
 import React, { createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Transicion from "./primitivas/Transicion";
 import Modal from "./primitivas/Modal";
 import Flotante from "./primitivas/Flotante";
+import Migas from "./primitivas/Migas";
 import { useAngosto, useMedia } from "./ancho";
 
 const LLAVE = "ds-nav";
@@ -808,7 +816,7 @@ const PESTANAS_MAX = 5;
 
 function ModoMovil({
   marca, icono, secciones, activa, onIr, derecha,
-  inicio, inicioAbierto = false, onInicioAbierto, children,
+  inicio, inicioAbierto = false, onInicioAbierto, volver, children,
 }) {
   const [hojaMas, setHojaMas] = useState(false);
   /* La pestaña de una sección con hijos abre su propia hoja. */
@@ -856,8 +864,19 @@ function ModoMovil({
         background: "var(--ds-panel)", borderBottom: "1px solid var(--ds-line)",
         backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
       }}>
-        {/* La marca es la puerta al lanzador, como el botón de inicio del dock. */}
-        {inicio ? (
+        {/* En una pantalla profunda, el volver ocupa el sitio de la marca: arriba a la
+            izquierda, donde lo busca quien usa cualquier app del teléfono. */}
+        {volver ? (
+          <button type="button" onClick={volver.ir} aria-label={`Volver a ${volver.texto}`}
+            style={{ display: "flex", alignItems: "center", gap: 2, minHeight: 44, minWidth: 0,
+              flex: "0 1 auto", overflow: "hidden", padding: "0 8px 0 0", marginLeft: -6,
+              border: "none", background: "transparent", cursor: "pointer",
+              color: "var(--ds-accent-tinta)", fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)",
+              fontWeight: 700, WebkitTapHighlightColor: "transparent" }}>
+            {FLECHA_ATRAS}
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{volver.texto}</span>
+          </button>
+        ) : inicio ? (
           <button onClick={() => onInicioAbierto?.(!inicioAbierto)} aria-label="Menú de inicio"
             aria-expanded={inicioAbierto}
             style={{ display: "flex", alignItems: "center", gap: 6, minHeight: 44, minWidth: 0,
@@ -938,6 +957,26 @@ function BotonInicio({ abierto, onClick, icono }) {
 
 /* ---------------- el armazón ---------------- */
 
+/** El tronco de la ruta: la sección activa y, si es un hijo, su padre antes. */
+function troncoDe(secciones, activa, onIr) {
+  for (const s of secciones) {
+    if (s.id === activa) return [{ texto: s.texto, ir: () => onIr?.(s) }];
+    const h = conHijos(s) ? s.hijos.find((x) => x.id === activa) : null;
+    if (h) {
+      return [{ texto: s.texto, ir: navegable(s) ? () => onIr?.(s) : undefined },
+        { texto: h.texto, ir: () => onIr?.(h) }];
+    }
+  }
+  return [];
+}
+
+const FLECHA_ATRAS = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ flexShrink: 0 }}>
+    <path d="M15 18l-6-6 6-6" />
+  </svg>
+);
+
 export default function Armazon({
   marca, icono, secciones = [], activa, onIr, derecha,
   inicio, inicioAbierto, onInicioAbierto, migas, modo: modoFijo, vista, children,
@@ -963,10 +1002,14 @@ export default function Armazon({
   /* Las migas entran en la transición con el contenido: son parte de la vista
      —cambian con ella— y dejarlas fuera las haría saltar mientras lo demás
      aparece. */
-  const cuerpo = <Transicion vista={vista}>{migas}{children}</Transicion>;
+  const ruta = Array.isArray(migas) ? [...troncoDe(secciones, activa, onIr), ...migas] : null;
+  const padre = ruta && ruta.length > 1 ? ruta[ruta.length - 2] : null;
+  const bloqueMigas = ruta ? (!movil && ruta.length > 1 ? <Migas ruta={ruta} /> : null) : migas;
+  const cuerpo = <Transicion vista={vista}>{bloqueMigas}{children}</Transicion>;
   const conTotales = secciones.map(conInsigniaTotal);
   const props = { marca, icono, secciones: conTotales, activa, onIr, derecha, inicio,
-    inicioAbierto, onInicioAbierto, children: cuerpo };
+    inicioAbierto, onInicioAbierto, children: cuerpo,
+    volver: padre?.ir ? { texto: padre.texto, ir: padre.ir } : null };
   const Elegido = movil ? ModoMovil
     : modo === "sidebar" ? ModoSidebar : modo === "dock" ? ModoDock : ModoTopbar;
 
