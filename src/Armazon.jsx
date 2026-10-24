@@ -486,7 +486,7 @@ function GrupoLateral({ s, activa, riel, bajo, onIr }) {
   const propia = navegable(s);
   const alternar = () => setAbierto((v) => !v);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: bajo ? 0 : 2, flexShrink: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", flexShrink: 0 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
         <RenglonLateral s={s} esta={s.id === activa} marcado={dentro} riel bajo={bajo} enFila
           insignia={abierto ? Number(s.insigniaPropia) || 0 : s.insignia}
@@ -503,15 +503,31 @@ function GrupoLateral({ s, activa, riel, bajo, onIr }) {
           </button>
         )}
       </div>
-      {abierto && (
-        <div id={idLista} role="group" aria-label={s.texto}
-          style={{ display: "flex", flexDirection: "column", gap: bajo ? 0 : 2 }}>
-          {s.hijos.map((h) => (
-            <RenglonLateral key={h.id} s={h} hijo esta={h.id === activa} riel bajo={bajo}
-              onClick={() => onIr?.(h)} />
-          ))}
+      {/* Siempre montados: abrir anima la ALTURA real (filas de 0fr a 1fr, sin medir) y
+          los hijos entran con un fundido corto. Montar y desmontar los hacía aparecer de
+          golpe y empujar todo lo de abajo de un salto (Carlos, 2026-10-23). Cerrado es
+          `inert`: ni el teclado ni el lector entran a lo que no se ve. */}
+      <div id={idLista} role="group" aria-label={s.texto} inert={!abierto}
+        style={{
+          display: "grid", gridTemplateRows: abierto ? "1fr" : "0fr",
+          transition: "grid-template-rows var(--ds-t-move) var(--ds-ease)",
+        }}>
+        <div style={{ overflow: "hidden", minHeight: 0 }}>
+          <div style={{
+            display: "flex", flexDirection: "column", gap: bajo ? 0 : 2, paddingTop: bajo ? 0 : 2,
+            opacity: abierto ? 1 : 0,
+            translate: abierto ? "0 0" : "0 -6px",
+            transition: abierto
+              ? "opacity var(--ds-t-move) var(--ds-ease) 60ms, translate var(--ds-t-move) var(--ds-ease) 60ms"
+              : "opacity var(--ds-t-state) var(--ds-ease), translate var(--ds-t-state) var(--ds-ease)",
+          }}>
+            {s.hijos.map((h) => (
+              <RenglonLateral key={h.id} s={h} hijo esta={h.id === activa} riel bajo={bajo}
+                onClick={() => onIr?.(h)} />
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

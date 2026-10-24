@@ -118,12 +118,12 @@ function k({ children: e, forzar: t, marca: n, paletas: r }) {
 		})
 	});
 }
-var A = () => c(w), j = {
+var A = () => c(w), ee = {
 	plana: "var(--ds-lift-1)",
 	elevada: "var(--ds-lift-2)",
 	flotante: "var(--ds-lift-3)"
 };
-function M({ children: e, nivel: t = "elevada", interactiva: n = !1, hundida: r = !1, solida: i = !1, radio: a = "var(--ds-r-card)", relleno: o = "var(--ds-5)", estilo: s, entrada: c, ...l }) {
+function j({ children: e, nivel: t = "elevada", interactiva: n = !1, hundida: r = !1, solida: i = !1, radio: a = "var(--ds-r-card)", relleno: o = "var(--ds-5)", estilo: s, entrada: c, ...l }) {
 	return /* @__PURE__ */ g("div", {
 		...l,
 		style: {
@@ -134,7 +134,7 @@ function M({ children: e, nivel: t = "elevada", interactiva: n = !1, hundida: r 
 			borderRadius: a,
 			padding: o,
 			boxSizing: "border-box",
-			boxShadow: r ? "none" : j[t],
+			boxShadow: r ? "none" : ee[t],
 			transition: "transform var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease)",
 			cursor: n ? "pointer" : void 0,
 			...c === void 0 ? null : {
@@ -147,13 +147,13 @@ function M({ children: e, nivel: t = "elevada", interactiva: n = !1, hundida: r 
 			e.currentTarget.style.transform = "translateY(-3px)", e.currentTarget.style.boxShadow = "var(--ds-lift-3)";
 		} : void 0,
 		onMouseLeave: n ? (e) => {
-			e.currentTarget.style.transform = "none", e.currentTarget.style.boxShadow = j[t];
+			e.currentTarget.style.transform = "none", e.currentTarget.style.boxShadow = ee[t];
 		} : void 0,
 		children: e
 	});
 }
 // src/primitivas/Bento.jsx
-function ee({ children: e, marco: t = !1, columnas: n = 12, hueco: r = "var(--ds-4)", estilo: i }) {
+function te({ children: e, marco: t = !1, columnas: n = 12, hueco: r = "var(--ds-4)", estilo: i }) {
 	return /* @__PURE__ */ g("div", {
 		style: {
 			display: "grid",
@@ -170,7 +170,7 @@ function ee({ children: e, marco: t = !1, columnas: n = 12, hueco: r = "var(--ds
 		children: e
 	});
 }
-function N({ children: e, ancho: t = 12, anchoMd: n, alto: r, estilo: i }) {
+function M({ children: e, ancho: t = 12, anchoMd: n, alto: r, estilo: i }) {
 	return /* @__PURE__ */ _("div", {
 		className: "ds-celda",
 		style: {
@@ -183,7 +183,7 @@ function N({ children: e, ancho: t = 12, anchoMd: n, alto: r, estilo: i }) {
 	});
 }
 // src/primitivas/Heroe.jsx
-function P({ children: e, imagen: t, imagenChica: n, encuadre: r = "center", alt: i = "", intensidad: o = .26, soloFoto: s = !1, radio: c = "var(--ds-r-card)", relleno: l = "var(--ds-8)", estilo: u, entrada: d, ...f }) {
+function N({ children: e, imagen: t, imagenChica: n, encuadre: r = "center", alt: i = "", intensidad: o = .26, soloFoto: s = !1, radio: c = "var(--ds-r-card)", relleno: l = "var(--ds-8)", estilo: u, entrada: d, ...f }) {
 	let [p, m] = a.useState(!1), v = s && t && !p;
 	return /* @__PURE__ */ _("div", {
 		...f,
@@ -265,7 +265,7 @@ function P({ children: e, imagen: t, imagenChica: n, encuadre: r = "center", alt
 		]
 	});
 }
-function F({ children: e, interactivo: t = !1, estilo: n, ...r }) {
+function P({ children: e, interactivo: t = !1, estilo: n, ...r }) {
 	return /* @__PURE__ */ g("div", {
 		...r,
 		style: {
@@ -290,18 +290,18 @@ function F({ children: e, interactivo: t = !1, estilo: n, ...r }) {
 	});
 }
 // src/primitivas/Cifra.jsx
-var I = {
+var F = {
 	neutro: "var(--ds-ink)",
 	acento: "var(--ds-accent-tinta)",
 	ok: "var(--ds-ok)",
 	aviso: "var(--ds-warn)",
 	riesgo: "var(--ds-risk)"
-}, te = {
+}, ne = {
 	m: "var(--ds-num-m)",
 	l: "var(--ds-num-l)",
 	xl: "var(--ds-num-xl)"
 };
-function ne({ valor: e, etiqueta: t, nota: n, tono: r = "neutro", tamano: i = "l", icono: a, alineacion: o = "left", estilo: s }) {
+function re({ valor: e, etiqueta: t, nota: n, tono: r = "neutro", tamano: i = "l", icono: a, alineacion: o = "left", estilo: s }) {
 	return /* @__PURE__ */ _("div", {
 		style: {
 			minWidth: 0,
@@ -328,11 +328,11 @@ function ne({ valor: e, etiqueta: t, nota: n, tono: r = "neutro", tamano: i = "l
 			/* @__PURE__ */ g("div", {
 				className: "ds-num",
 				style: {
-					fontSize: te[i],
+					fontSize: ne[i],
 					fontWeight: 800,
 					lineHeight: 1.05,
 					letterSpacing: "-0.035em",
-					color: I[r],
+					color: F[r],
 					marginTop: 2
 				},
 				children: e
@@ -349,7 +349,7 @@ function ne({ valor: e, etiqueta: t, nota: n, tono: r = "neutro", tamano: i = "l
 	});
 }
 // src/primitivas/Anillo.jsx
-function L({ valor: e = 0, tamano: t = 132, grosor: n = 10, tono: r = "var(--ds-accent-trazo)", pista: i = "var(--ds-surface-sunk)", children: a, animar: o = !0 }) {
+function I({ valor: e = 0, tamano: t = 132, grosor: n = 10, tono: r = "var(--ds-accent-trazo)", pista: i = "var(--ds-surface-sunk)", children: a, animar: o = !0 }) {
 	let s = Math.max(0, Math.min(100, e)), c = (t - n) / 2, l = 2 * Math.PI * c, u = l * (1 - s / 100);
 	return /* @__PURE__ */ _("div", {
 		style: {
@@ -400,13 +400,13 @@ function L({ valor: e = 0, tamano: t = 132, grosor: n = 10, tono: r = "var(--ds-
 	});
 }
 // src/primitivas/Medidor.jsx
-var R = {
+var L = {
 	acento: "var(--ds-accent-trazo)",
 	ok: "var(--ds-ok)",
 	aviso: "var(--ds-warn)",
 	riesgo: "var(--ds-risk)"
 };
-function z({ valor: e = 0, total: t = 100, tono: n = "acento", alto: r = 6, etiqueta: i, estilo: a }) {
+function R({ valor: e = 0, total: t = 100, tono: n = "acento", alto: r = 6, etiqueta: i, estilo: a }) {
 	let o = t > 0 ? Math.max(0, Math.min(100, e / t * 100)) : 0;
 	return /* @__PURE__ */ g("div", {
 		role: "progressbar",
@@ -425,13 +425,13 @@ function z({ valor: e = 0, total: t = 100, tono: n = "acento", alto: r = 6, etiq
 			height: "100%",
 			width: `${o}%`,
 			borderRadius: 99,
-			background: R[n] || R.acento,
+			background: L[n] || L.acento,
 			transition: "width var(--ds-t-move) var(--ds-ease)"
 		} })
 	});
 }
 // src/primitivas/Esqueleto.jsx
-function B({ alto: e = 14, ancho: t = "100%", radio: n = 7, circulo: r = !1, estilo: i }) {
+function z({ alto: e = 14, ancho: t = "100%", radio: n = 7, circulo: r = !1, estilo: i }) {
 	return /* @__PURE__ */ g("span", {
 		"aria-hidden": !0,
 		style: {
@@ -448,7 +448,7 @@ function B({ alto: e = 14, ancho: t = "100%", radio: n = 7, circulo: r = !1, est
 		}
 	});
 }
-function re({ retrato: e = !0, lineas: t = 2, derecha: n = !0 }) {
+function ie({ retrato: e = !0, lineas: t = 2, derecha: n = !0 }) {
 	return /* @__PURE__ */ _("div", {
 		style: {
 			display: "flex",
@@ -457,7 +457,7 @@ function re({ retrato: e = !0, lineas: t = 2, derecha: n = !0 }) {
 			padding: "var(--ds-3) var(--ds-4)"
 		},
 		children: [
-			e && /* @__PURE__ */ g(B, {
+			e && /* @__PURE__ */ g(z, {
 				circulo: !0,
 				alto: 40
 			}),
@@ -469,29 +469,29 @@ function re({ retrato: e = !0, lineas: t = 2, derecha: n = !0 }) {
 					flexDirection: "column",
 					gap: 7
 				},
-				children: [/* @__PURE__ */ g(B, {
+				children: [/* @__PURE__ */ g(z, {
 					alto: 12,
 					ancho: "42%"
-				}), t > 1 && /* @__PURE__ */ g(B, {
+				}), t > 1 && /* @__PURE__ */ g(z, {
 					alto: 10,
 					ancho: "26%"
 				})]
 			}),
-			n && /* @__PURE__ */ g(B, {
+			n && /* @__PURE__ */ g(z, {
 				alto: 12,
 				ancho: 78
 			})
 		]
 	});
 }
-function ie({ filas: e = 5, ...t }) {
+function ae({ filas: e = 5, ...t }) {
 	return /* @__PURE__ */ g("div", { children: Array.from({ length: e }, (e, n) => /* @__PURE__ */ g("div", {
 		style: { opacity: 1 - n * .12 },
-		children: /* @__PURE__ */ g(re, { ...t })
+		children: /* @__PURE__ */ g(ie, { ...t })
 	}, n)) });
 }
 // src/primitivas/Barras.jsx
-function V({ datos: e = [], alto: t = 132, tono: n = "var(--ds-accent-trazo)", pista: r = "var(--ds-surface-sunk)", ancho: i = 7, hueco: a = 5, animar: o = !0, ejeX: s = !1 }) {
+function B({ datos: e = [], alto: t = 132, tono: n = "var(--ds-accent-trazo)", pista: r = "var(--ds-surface-sunk)", ancho: i = 7, hueco: a = 5, animar: o = !0, ejeX: s = !1 }) {
 	let c = t === "auto", l = Math.max(1, ...e.map((e) => e.total ?? e.valor ?? 0)), u = c ? {
 		flex: "1 1 0",
 		minWidth: 0,
@@ -571,15 +571,15 @@ function V({ datos: e = [], alto: t = 132, tono: n = "var(--ds-accent-trazo)", p
 	});
 }
 // src/primitivas/Pastilla.jsx
-var H = {
+var V = {
 	neutro: ["var(--ds-surface-sunk)", "var(--ds-ink-2)"],
 	acento: ["var(--ds-accent-soft)", "var(--ds-accent-tinta)"],
 	ok: ["var(--ds-ok-soft)", "var(--ds-ok)"],
 	aviso: ["var(--ds-warn-soft)", "var(--ds-warn)"],
 	riesgo: ["var(--ds-risk-soft)", "var(--ds-risk)"]
 };
-function ae({ children: e, tono: t = "neutro", icono: n, estilo: r, ...i }) {
-	let [a, o] = H[t] || H.neutro;
+function oe({ children: e, tono: t = "neutro", icono: n, estilo: r, ...i }) {
+	let [a, o] = V[t] || V.neutro;
 	return /* @__PURE__ */ _("span", {
 		...i,
 		style: {
@@ -599,8 +599,8 @@ function ae({ children: e, tono: t = "neutro", icono: n, estilo: r, ...i }) {
 		children: [n, e]
 	});
 }
-function oe({ children: e, tono: t = "acento", tamano: n = 38, estilo: r }) {
-	let [i, a] = H[t] || H.acento;
+function se({ children: e, tono: t = "acento", tamano: n = 38, estilo: r }) {
+	let [i, a] = V[t] || V.acento;
 	return /* @__PURE__ */ g("div", {
 		style: {
 			width: n,
@@ -618,7 +618,7 @@ function oe({ children: e, tono: t = "acento", tamano: n = 38, estilo: r }) {
 	});
 }
 // src/primitivas/Boton.jsx
-var se = {
+var ce = {
 	display: "inline-flex",
 	alignItems: "center",
 	justifyContent: "center",
@@ -634,7 +634,7 @@ var se = {
 	padding: "10px 18px",
 	cursor: "pointer",
 	transition: "transform var(--ds-t-tap) var(--ds-ease), background var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease)"
-}, ce = {
+}, le = {
 	solido: {
 		background: "var(--ds-accent)",
 		color: "var(--ds-ink-on-accent)",
@@ -657,23 +657,23 @@ var se = {
 		backdropFilter: "blur(12px)",
 		WebkitBackdropFilter: "blur(12px)"
 	}
-}, le = "\n@keyframes ds-boton-gira { to { transform: rotate(360deg); } }\n@keyframes ds-boton-late { 50% { opacity: .35; } }\n.ds-boton-giro { width: 15px; height: 15px; flex-shrink: 0; border-radius: 50%;\n  border: 2px solid currentColor; border-right-color: transparent;\n  animation: ds-boton-gira .7s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .ds-boton-giro { animation: ds-boton-late 1.2s ease-in-out infinite; } }\n";
-function U({ estilo: e }) {
-	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("style", { children: le }), /* @__PURE__ */ g("span", {
+}, ue = "\n@keyframes ds-boton-gira { to { transform: rotate(360deg); } }\n@keyframes ds-boton-late { 50% { opacity: .35; } }\n.ds-boton-giro { width: 15px; height: 15px; flex-shrink: 0; border-radius: 50%;\n  border: 2px solid currentColor; border-right-color: transparent;\n  animation: ds-boton-gira .7s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .ds-boton-giro { animation: ds-boton-late 1.2s ease-in-out infinite; } }\n";
+function H({ estilo: e }) {
+	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("style", { children: ue }), /* @__PURE__ */ g("span", {
 		className: "ds-boton-giro",
 		"aria-hidden": !0,
 		style: e
 	})] });
 }
-function ue({ children: e, variante: t = "contorno", icono: n, esperando: r = !1, disabled: i, pleno: a = !1, estilo: o, ...s }) {
+function U({ children: e, variante: t = "contorno", icono: n, esperando: r = !1, disabled: i, pleno: a = !1, estilo: o, ...s }) {
 	let c = i || r;
 	return /* @__PURE__ */ _("button", {
 		...s,
 		disabled: c,
 		"aria-busy": r || void 0,
 		style: {
-			...se,
-			...ce[t],
+			...ce,
+			...le[t],
 			width: a ? "100%" : void 0,
 			opacity: r ? .88 : i ? .55 : 1,
 			cursor: r ? "progress" : i ? "not-allowed" : "pointer",
@@ -688,7 +688,7 @@ function ue({ children: e, variante: t = "contorno", icono: n, esperando: r = !1
 		onMouseLeave: (e) => {
 			e.currentTarget.style.transform = "none";
 		},
-		children: [r ? /* @__PURE__ */ g(U, {}) : n, e]
+		children: [r ? /* @__PURE__ */ g(H, {}) : n, e]
 	});
 }
 // src/primitivas/Fila.jsx
@@ -1631,13 +1631,13 @@ function je({ abierto: e, severidad: t = "info", titulo: n, mensaje: r, onCerrar
 						marginTop: "var(--ds-5)",
 						flexWrap: "wrap"
 					},
-					children: [(a || []).map((e, t) => /* @__PURE__ */ g(ue, {
+					children: [(a || []).map((e, t) => /* @__PURE__ */ g(U, {
 						variante: e.primaria ? "solido" : "contorno",
 						onClick: () => {
 							e.onClick?.(), c();
 						},
 						children: e.texto
-					}, t)), !l && /* @__PURE__ */ g(ue, {
+					}, t)), !l && /* @__PURE__ */ g(U, {
 						variante: (a || []).length ? "fantasma" : "solido",
 						onClick: c,
 						children: "Entendido"
@@ -2435,7 +2435,6 @@ function lt({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 		style: {
 			display: "flex",
 			flexDirection: "column",
-			gap: r ? 0 : 2,
 			flexShrink: 0
 		},
 		children: [/* @__PURE__ */ _("div", {
@@ -2482,23 +2481,41 @@ function lt({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 				},
 				children: /* @__PURE__ */ g($e, { abierta: o })
 			})]
-		}), o && /* @__PURE__ */ g("div", {
+		}), /* @__PURE__ */ g("div", {
 			id: v,
 			role: "group",
 			"aria-label": e.texto,
+			inert: !o,
 			style: {
-				display: "flex",
-				flexDirection: "column",
-				gap: r ? 0 : 2
+				display: "grid",
+				gridTemplateRows: o ? "1fr" : "0fr",
+				transition: "grid-template-rows var(--ds-t-move) var(--ds-ease)"
 			},
-			children: e.hijos.map((e) => /* @__PURE__ */ g(ct, {
-				s: e,
-				hijo: !0,
-				esta: e.id === t,
-				riel: !0,
-				bajo: r,
-				onClick: () => i?.(e)
-			}, e.id))
+			children: /* @__PURE__ */ g("div", {
+				style: {
+					overflow: "hidden",
+					minHeight: 0
+				},
+				children: /* @__PURE__ */ g("div", {
+					style: {
+						display: "flex",
+						flexDirection: "column",
+						gap: r ? 0 : 2,
+						paddingTop: r ? 0 : 2,
+						opacity: +!!o,
+						translate: o ? "0 0" : "0 -6px",
+						transition: o ? "opacity var(--ds-t-move) var(--ds-ease) 60ms, translate var(--ds-t-move) var(--ds-ease) 60ms" : "opacity var(--ds-t-state) var(--ds-ease), translate var(--ds-t-state) var(--ds-ease)"
+					},
+					children: e.hijos.map((e) => /* @__PURE__ */ g(ct, {
+						s: e,
+						hijo: !0,
+						esta: e.id === t,
+						riel: !0,
+						bajo: r,
+						onClick: () => i?.(e)
+					}, e.id))
+				})
+			})
 		})]
 	});
 }
@@ -3422,7 +3439,7 @@ function Ct({ cantidad: e = 0, onQuitar: t, children: n, singular: r = "seleccio
 				}),
 				/* @__PURE__ */ g("span", { style: { flex: 1 } }),
 				n,
-				/* @__PURE__ */ g(ue, {
+				/* @__PURE__ */ g(U, {
 					variante: "fantasma",
 					onClick: t,
 					children: "Quitar selección"
@@ -3501,10 +3518,10 @@ function wt({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i
 									gap: "var(--ds-3)",
 									justifyContent: e.numerica ? "flex-end" : "flex-start"
 								},
-								children: [t === 0 && /* @__PURE__ */ g(B, {
+								children: [t === 0 && /* @__PURE__ */ g(z, {
 									circulo: !0,
 									alto: 36
-								}), /* @__PURE__ */ g(B, {
+								}), /* @__PURE__ */ g(z, {
 									alto: 11,
 									ancho: t === 0 ? "58%" : e.numerica ? 46 : "72%"
 								})]
@@ -3746,7 +3763,7 @@ function Dt({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 					"Cada campo dice abajo qué necesita."
 				] })]
 			}),
-			/* @__PURE__ */ g(M, {
+			/* @__PURE__ */ g(j, {
 				entrada: 0,
 				children: /* @__PURE__ */ g("div", {
 					ref: c,
@@ -3778,7 +3795,7 @@ function Dt({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 						gap: "var(--ds-2)",
 						flexWrap: "wrap"
 					},
-					children: [/* @__PURE__ */ g(ue, {
+					children: [/* @__PURE__ */ g(U, {
 						variante: "fantasma",
 						onClick: r,
 						children: i
@@ -4962,20 +4979,20 @@ function Sn({ etiqueta: e, valor: t, formato: n = "numero", opcionesFormato: r, 
 			gap: 10
 		},
 		children: [
-			/* @__PURE__ */ g(B, {
+			/* @__PURE__ */ g(z, {
 				alto: 10,
 				ancho: "46%"
 			}),
-			/* @__PURE__ */ g(B, {
+			/* @__PURE__ */ g(z, {
 				alto: m ? 24 : 34,
 				ancho: "62%",
 				radio: 9
 			}),
-			/* @__PURE__ */ g(B, {
+			/* @__PURE__ */ g(z, {
 				alto: 10,
 				ancho: "38%"
 			}),
-			c && !m && /* @__PURE__ */ g(B, {
+			c && !m && /* @__PURE__ */ g(z, {
 				alto: 40,
 				radio: 9
 			})
@@ -5011,7 +5028,7 @@ function Sn({ etiqueta: e, valor: t, formato: n = "numero", opcionesFormato: r, 
 						},
 						children: e
 					}),
-					f && bn[f] && /* @__PURE__ */ g(ae, {
+					f && bn[f] && /* @__PURE__ */ g(oe, {
 						tono: f,
 						children: p || bn[f]
 					}),
@@ -5090,7 +5107,7 @@ function Cn({ onClick: e, href: t, estilo: n, entrada: r, relleno: i, ...a }) {
 			height: "100%",
 			borderRadius: "var(--ds-r-card)"
 		},
-		children: /* @__PURE__ */ g(M, {
+		children: /* @__PURE__ */ g(j, {
 			interactiva: !0,
 			relleno: c,
 			entrada: r,
@@ -5100,7 +5117,7 @@ function Cn({ onClick: e, href: t, estilo: n, entrada: r, relleno: i, ...a }) {
 			},
 			children: s
 		})
-	}) : /* @__PURE__ */ g(M, {
+	}) : /* @__PURE__ */ g(j, {
 		interactiva: o,
 		relleno: c,
 		entrada: r,
@@ -5120,7 +5137,7 @@ function Cn({ onClick: e, href: t, estilo: n, entrada: r, relleno: i, ...a }) {
 // src/primitivas/FilaKpis.jsx
 function wn({ indicadores: e = [], cargando: t = !1, estilo: n, entrada: r }) {
 	let i = W(), a = Math.max(1, e.length), o = i ? Math.min(2, a) : a;
-	return /* @__PURE__ */ g(M, {
+	return /* @__PURE__ */ g(j, {
 		relleno: "0",
 		entrada: r,
 		estilo: {
@@ -5173,7 +5190,7 @@ function Dn({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 		riesgo: "var(--ds-risk)",
 		acento: "var(--ds-accent-trazo)"
 	}[S];
-	return /* @__PURE__ */ g(M, {
+	return /* @__PURE__ */ g(j, {
 		entrada: f,
 		estilo: {
 			height: "100%",
@@ -5187,20 +5204,20 @@ function Dn({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 				gap: 10
 			},
 			children: [
-				/* @__PURE__ */ g(B, {
+				/* @__PURE__ */ g(z, {
 					alto: 10,
 					ancho: "50%"
 				}),
-				/* @__PURE__ */ g(B, {
+				/* @__PURE__ */ g(z, {
 					alto: 34,
 					ancho: "60%",
 					radio: 9
 				}),
-				/* @__PURE__ */ g(B, {
+				/* @__PURE__ */ g(z, {
 					alto: 8,
 					radio: 99
 				}),
-				/* @__PURE__ */ g(B, {
+				/* @__PURE__ */ g(z, {
 					alto: 10,
 					ancho: "70%"
 				})
@@ -5229,7 +5246,7 @@ function Dn({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 							color: "var(--ds-ink-3)"
 						},
 						children: e
-					}), x !== null && /* @__PURE__ */ g(ae, {
+					}), x !== null && /* @__PURE__ */ g(oe, {
 						tono: S,
 						children: C[S]
 					})]
@@ -5241,7 +5258,7 @@ function Dn({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 						gap: "var(--ds-5)",
 						flexWrap: "wrap"
 					},
-					children: [/* @__PURE__ */ g(L, {
+					children: [/* @__PURE__ */ g(I, {
 						valor: Math.min(100, v * 100),
 						tamano: 112,
 						grosor: 9,
@@ -5312,7 +5329,7 @@ function Dn({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 							})]
 						})]
 					}),
-					/* @__PURE__ */ g(z, {
+					/* @__PURE__ */ g(R, {
 						valor: Number(t),
 						total: Number(n),
 						tono: S,
@@ -5384,7 +5401,7 @@ function Dn({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 // src/primitivas/TarjetaComparativa.jsx
 function On({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato: r, sentido: i = "sube", nota: a, cargando: o = !1, estilo: s, entrada: c }) {
 	let l = W(520), u = t.slice(0, 3), d = u[0];
-	return /* @__PURE__ */ _(M, {
+	return /* @__PURE__ */ _(j, {
 		entrada: c,
 		estilo: {
 			height: "100%",
@@ -5428,7 +5445,7 @@ function On({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato
 								},
 								children: e.etiqueta
 							}),
-							o ? /* @__PURE__ */ g(B, {
+							o ? /* @__PURE__ */ g(z, {
 								alto: t === 0 ? 30 : 22,
 								ancho: "70%",
 								radio: 8,
@@ -5475,7 +5492,7 @@ function On({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato
 // src/primitivas/TarjetaRanking.jsx
 function kn({ titulo: e, nota: t, elementos: n = [], formato: r = "numero", opcionesFormato: i, limite: a = 5, participacion: o = !1, total: s, accion: c, onElemento: l, vacio: u = "Sin movimientos en este periodo.", cargando: d = !1, estilo: f, entrada: p }) {
 	let m = n.slice(0, a), h = Math.max(0, ...m.map((e) => Number(e.valor) || 0)), v = Number(s) > 0 ? Number(s) : n.reduce((e, t) => e + (Number(t.valor) || 0), 0);
-	return /* @__PURE__ */ g(M, {
+	return /* @__PURE__ */ g(j, {
 		entrada: p,
 		estilo: {
 			height: "100%",
@@ -5504,15 +5521,15 @@ function kn({ titulo: e, nota: t, elementos: n = [], formato: r = "numero", opci
 							display: "flex",
 							gap: 10
 						},
-						children: [/* @__PURE__ */ g(B, {
+						children: [/* @__PURE__ */ g(z, {
 							alto: 12,
 							ancho: `${50 - t * 5}%`
-						}), /* @__PURE__ */ g(B, {
+						}), /* @__PURE__ */ g(z, {
 							alto: 12,
 							ancho: 70,
 							estilo: { marginLeft: "auto" }
 						})]
-					}), /* @__PURE__ */ g(B, {
+					}), /* @__PURE__ */ g(z, {
 						alto: 4,
 						radio: 99,
 						ancho: `${90 - t * 14}%`
@@ -5640,7 +5657,7 @@ function kn({ titulo: e, nota: t, elementos: n = [], formato: r = "numero", opci
 var An = (e) => e == null || e === "";
 function jn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], acciones: a, onClick: o, cargando: s = !1, estilo: c, entrada: l }) {
 	let u = !!o, d = i.slice(0, 4);
-	return /* @__PURE__ */ _(M, {
+	return /* @__PURE__ */ _(j, {
 		entrada: l,
 		interactiva: u,
 		role: u ? "button" : void 0,
@@ -5665,7 +5682,7 @@ function jn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 					minWidth: 0
 				},
 				children: [
-					s ? /* @__PURE__ */ g(B, {
+					s ? /* @__PURE__ */ g(z, {
 						circulo: !0,
 						alto: 48
 					}) : /* @__PURE__ */ g(fe, {
@@ -5684,10 +5701,10 @@ function jn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 								flexDirection: "column",
 								gap: 7
 							},
-							children: [/* @__PURE__ */ g(B, {
+							children: [/* @__PURE__ */ g(z, {
 								alto: 13,
 								ancho: "60%"
-							}), /* @__PURE__ */ g(B, {
+							}), /* @__PURE__ */ g(z, {
 								alto: 10,
 								ancho: "40%"
 							})]
@@ -5713,7 +5730,7 @@ function jn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 							children: t
 						})] })
 					}),
-					r && !s && /* @__PURE__ */ g(ae, {
+					r && !s && /* @__PURE__ */ g(oe, {
 						tono: r.tono,
 						children: r.texto
 					})
@@ -5739,13 +5756,13 @@ function jn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 							color: "var(--ds-ink-3)"
 						},
 						children: e.etiqueta
-					}), s ? /* @__PURE__ */ g(B, {
+					}), s ? /* @__PURE__ */ g(z, {
 						alto: 16,
 						ancho: "70%",
 						estilo: { marginTop: 5 }
 					}) : An(e.valor) ? /* @__PURE__ */ g("div", {
 						style: { marginTop: 4 },
-						children: /* @__PURE__ */ g(ae, {
+						children: /* @__PURE__ */ g(oe, {
 							tono: "aviso",
 							children: "Sin capturar"
 						})
@@ -5839,7 +5856,7 @@ function Pn({ elementos: e = [], columnas: t = 2, estilo: n }) {
 						gap: 8,
 						minWidth: 0
 					},
-					children: n ? /* @__PURE__ */ g(ae, {
+					children: n ? /* @__PURE__ */ g(oe, {
 						tono: "aviso",
 						children: "Sin capturar"
 					}) : /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("span", {
@@ -5986,7 +6003,7 @@ function Ln({ titulo: e = "Aún no hay nada aquí", children: t, acciones: n, ic
 			...a
 		},
 		children: [
-			r && /* @__PURE__ */ g(oe, {
+			r && /* @__PURE__ */ g(se, {
 				tono: "neutro",
 				tamano: i ? 36 : 48,
 				children: r
@@ -6582,7 +6599,7 @@ function Yn({ tarjeta: e, formatoValor: t }) {
 					marginRight: "auto"
 				},
 				children: J(e.valor, t)
-			}), e.etiquetas?.map((e, t) => /* @__PURE__ */ g(ae, {
+			}), e.etiquetas?.map((e, t) => /* @__PURE__ */ g(oe, {
 				tono: e.tono,
 				children: e.texto
 			}, t))]
@@ -6811,7 +6828,7 @@ function er({ eventos: e = [], ahora: t, agrupar: n = !0, vacio: r = "Sin activi
 					padding: "var(--ds-2) 0"
 				},
 				children: [
-					e.icono ? /* @__PURE__ */ g(oe, {
+					e.icono ? /* @__PURE__ */ g(se, {
 						tono: e.tono || "neutro",
 						tamano: 34,
 						children: e.icono
@@ -7523,7 +7540,7 @@ function vr({ abierto: e, onCerrar: t }) {
 		titulo: "Apariencia",
 		nota: "Se aplica al momento y se recuerda en este navegador.",
 		ancho: 480,
-		acciones: /* @__PURE__ */ g(ue, {
+		acciones: /* @__PURE__ */ g(U, {
 			variante: "solido",
 			onClick: t,
 			children: "Listo"
@@ -7564,7 +7581,7 @@ function vr({ abierto: e, onCerrar: t }) {
 }
 function yr({ texto: e }) {
 	let [t, n] = m(!1);
-	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(ue, {
+	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(U, {
 		variante: "fantasma",
 		icono: gr,
 		onClick: () => n(!0),
@@ -7733,7 +7750,7 @@ function Cr({ nombre: e = "", correo: t, foto: n, opciones: r = [], onSalir: i, 
 					children: "Apariencia"
 				}),
 				i && /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(Sr, {}), /* @__PURE__ */ g(xr, {
-					icono: a ? /* @__PURE__ */ g(U, {}) : br,
+					icono: a ? /* @__PURE__ */ g(H, {}) : br,
 					esperando: a,
 					onClick: () => i(),
 					children: a ? "Cerrando sesión…" : "Cerrar sesión"
@@ -8337,34 +8354,34 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 		y
 	]), C = S.flatMap((e) => e.arriba.filter((e) => e !== null));
 	b !== null && C.push(Number(b));
-	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = fn(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String(Q(e, A)).length)) * Br + 12, ee = j ? Math.min(Hr, Math.max(...e.map((e) => Vr(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = pn(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * Br + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), L = Math.max(1, Math.ceil(v / ne)), R = [], z = -Infinity;
-	for (let e = 0; e < v; e += L) {
-		let n = String(t[e] ?? e + 1).length * Br, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
-		i >= z + 8 && (R.push({
+	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = fn(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, ee = e.length > 1 && e.length <= 4 && d >= 420 && !y, j = Math.max(...D.map((e) => String(Q(e, A)).length)) * Br + 12, te = ee ? Math.min(Hr, Math.max(...e.map((e) => Vr(e.nombre))) + 14) : 10, M = Math.max(10, d - j - te), N = n - 10 - 24, P = (e) => j + (v <= 1 ? M / 2 : e / (v - 1) * M), F = pn(O, k, 10 + N, 10), ne = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * Br + 12, re = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(M / ne))), I = Math.max(1, Math.ceil(v / re)), L = [], R = -Infinity;
+	for (let e = 0; e < v; e += I) {
+		let n = String(t[e] ?? e + 1).length * Br, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? P(e) : r === "end" ? P(e) - n : P(e) - n / 2;
+		i >= R + 8 && (L.push({
 			i: e,
 			ancla: r
-		}), z = i + n);
+		}), R = i + n);
 	}
-	let B = (e) => {
+	let z = (e) => {
 		let t = [], n = [];
 		return e.forEach((e, r) => {
 			e === null ? (n.length && t.push(n), n = []) : n.push(r);
 		}), n.length && t.push(n), t;
-	}, re = {
+	}, ie = {
 		columnas: ["", ...e.map((e) => e.nombre)],
 		filas: Array.from({ length: v }, (e, n) => [t[n] ?? n + 1, ...S.map((e) => Q(e.crudo[n], r))])
-	}, ie = (e) => {
+	}, ae = (e) => {
 		if (!w) return;
-		let t = e.currentTarget.getBoundingClientRect(), n = e.clientX - t.left, r = v <= 1 ? 0 : Math.round((n - M) / N * (v - 1));
+		let t = e.currentTarget.getBoundingClientRect(), n = e.clientX - t.left, r = v <= 1 ? 0 : Math.round((n - j) / M * (v - 1));
 		h(Math.max(0, Math.min(v - 1, r)));
-	}, V = (e) => {
+	}, B = (e) => {
 		e.key === "ArrowRight" && (e.preventDefault(), h((e) => Math.min(v - 1, (e ?? -1) + 1))), e.key === "ArrowLeft" && (e.preventDefault(), h((e) => Math.max(0, (e ?? v) - 1))), e.key === "Escape" && h(null);
-	}, H = p === null ? 0 : Math.min(...S.map((e) => e.arriba[p] === null ? 10 + P : I(e.arriba[p])));
+	}, V = p === null ? 0 : Math.min(...S.map((e) => e.arriba[p] === null ? 10 + N : F(e.arriba[p])));
 	return /* @__PURE__ */ g(Z, {
 		titulo: s,
 		series: e,
 		formaLeyenda: "linea",
-		tabla: w ? re : null,
+		tabla: w ? ie : null,
 		estilo: l,
 		alto: n,
 		children: /* @__PURE__ */ _("div", {
@@ -8384,36 +8401,36 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 					overflow: "visible",
 					outline: "none"
 				},
-				onMouseMove: ie,
+				onMouseMove: ae,
 				onMouseLeave: () => h(null),
 				onFocus: () => h((e) => e === null ? v - 1 : e),
 				onBlur: () => h(null),
-				onKeyDown: V,
+				onKeyDown: B,
 				children: [
 					D.map((e) => /* @__PURE__ */ _("g", { children: [/* @__PURE__ */ g("line", {
-						x1: M,
-						x2: M + N,
-						y1: I(e),
-						y2: I(e),
+						x1: j,
+						x2: j + M,
+						y1: F(e),
+						y2: F(e),
 						stroke: e === 0 ? "var(--ds-eje)" : "var(--ds-grid)",
 						strokeWidth: "1"
 					}), /* @__PURE__ */ g("text", {
-						x: M - 8,
-						y: I(e),
+						x: j - 8,
+						y: F(e),
 						dy: "0.32em",
 						textAnchor: "end",
 						style: X,
 						children: Q(e, A)
 					})] }, e)),
-					R.map(({ i: e, ancla: r }) => /* @__PURE__ */ g("text", {
-						x: F(e),
+					L.map(({ i: e, ancla: r }) => /* @__PURE__ */ g("text", {
+						x: P(e),
 						y: n - 6,
 						textAnchor: r,
 						style: X,
 						children: t[e] ?? e + 1
 					}, e)),
-					i && S.map((t, n) => B(t.arriba).map((r, i) => {
-						let a = (e) => t.abajo ? I(t.abajo[e]) : I(Math.max(O, Math.min(0, k))), o = `M${F(r[0])},${a(r[0])} ` + r.map((e) => `L${F(e)},${I(t.arriba[e])}`).join(" ") + ` ${[...r].reverse().map((e) => `L${F(e)},${a(e)}`).join(" ")} Z`;
+					i && S.map((t, n) => z(t.arriba).map((r, i) => {
+						let a = (e) => t.abajo ? F(t.abajo[e]) : F(Math.max(O, Math.min(0, k))), o = `M${P(r[0])},${a(r[0])} ` + r.map((e) => `L${P(e)},${F(t.arriba[e])}`).join(" ") + ` ${[...r].reverse().map((e) => `L${P(e)},${a(e)}`).join(" ")} Z`;
 						return /* @__PURE__ */ g("path", {
 							d: o,
 							fill: Y(e[n], n),
@@ -8421,9 +8438,9 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 							stroke: "none"
 						}, `a${n}-${i}`);
 					})),
-					S.map((t, n) => B(t.arriba).map((r, i) => r.length === 1 ? /* @__PURE__ */ g("circle", {
-						cx: F(r[0]),
-						cy: I(t.arriba[r[0]]),
+					S.map((t, n) => z(t.arriba).map((r, i) => r.length === 1 ? /* @__PURE__ */ g("circle", {
+						cx: P(r[0]),
+						cy: F(t.arriba[r[0]]),
 						r: "3",
 						fill: Y(e[n], n)
 					}, `p${n}-${i}`) : /* @__PURE__ */ g("path", {
@@ -8432,19 +8449,19 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 						strokeWidth: "2",
 						strokeLinejoin: "round",
 						strokeLinecap: "round",
-						d: r.map((e, n) => `${n ? "L" : "M"}${F(e)},${I(t.arriba[e])}`).join(" ")
+						d: r.map((e, n) => `${n ? "L" : "M"}${P(e)},${F(t.arriba[e])}`).join(" ")
 					}, `l${n}-${i}`))),
 					b !== null && /* @__PURE__ */ _("g", { children: [/* @__PURE__ */ g("line", {
-						x1: M,
-						x2: M + N,
-						y1: I(b),
-						y2: I(b),
+						x1: j,
+						x2: j + M,
+						y1: F(b),
+						y2: F(b),
 						stroke: "var(--ds-ink-2)",
 						strokeWidth: "1.5",
 						strokeDasharray: "5 4"
 					}), /* @__PURE__ */ _("text", {
-						x: M + 6,
-						y: I(b) - 6,
+						x: j + 6,
+						y: F(b) - 6,
 						style: {
 							...X,
 							fill: "var(--ds-ink-2)",
@@ -8456,18 +8473,18 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 							Q(b, r)
 						]
 					})] }),
-					j && (() => {
+					ee && (() => {
 						let t = S.map((e, t) => {
 							let n = e.arriba.map((e, t) => e === null ? -1 : t).filter((e) => e >= 0).pop();
 							return n === void 0 ? null : {
 								si: t,
-								yv: I(e.arriba[n]),
-								xv: F(n)
+								yv: F(e.arriba[n]),
+								xv: P(n)
 							};
 						}).filter(Boolean).sort((e, t) => e.yv - t.yv);
 						for (let e = 1; e < t.length; e++) t[e].yv - t[e - 1].yv < 14 && (t[e].yv = t[e - 1].yv + 14);
 						return t.map((t) => /* @__PURE__ */ _("text", {
-							x: M + N + 8,
+							x: j + M + 8,
 							y: t.yv,
 							dy: "0.32em",
 							style: {
@@ -8475,21 +8492,21 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 								fill: "var(--ds-ink-2)",
 								fontWeight: 700
 							},
-							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), Ur(e[t.si].nombre, ee - 12)]
+							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), Ur(e[t.si].nombre, te - 12)]
 						}, t.si));
 					})(),
 					p !== null && /* @__PURE__ */ _("g", {
 						pointerEvents: "none",
 						children: [/* @__PURE__ */ g("line", {
-							x1: F(p),
-							x2: F(p),
+							x1: P(p),
+							x2: P(p),
 							y1: 10,
-							y2: 10 + P,
+							y2: 10 + N,
 							stroke: "var(--ds-eje)",
 							strokeWidth: "1"
 						}), S.map((t, n) => t.arriba[p] !== null && /* @__PURE__ */ g("circle", {
-							cx: F(p),
-							cy: I(t.arriba[p]),
+							cx: P(p),
+							cy: F(t.arriba[p]),
 							r: "4.5",
 							fill: Y(e[n], n),
 							stroke: "var(--ds-surface-solid)",
@@ -8497,17 +8514,17 @@ function Wr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 						}, n))]
 					}),
 					/* @__PURE__ */ g("rect", {
-						x: M,
+						x: j,
 						y: 10,
-						width: N,
-						height: P,
+						width: M,
+						height: N,
 						fill: "transparent"
 					})
 				]
 			}) : /* @__PURE__ */ g($, { alto: n }), /* @__PURE__ */ g(gn, {
 				visible: p !== null,
-				x: p === null ? 0 : F(p),
-				y: H,
+				x: p === null ? 0 : P(p),
+				y: V,
 				ancho: d,
 				titulo: p === null ? "" : t[p],
 				renglones: p === null ? [] : e.map((e, t) => ({
@@ -8551,8 +8568,8 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		let n = S(t, e);
 		n !== null && (w = Math.max(w, n), C = Math.min(C, n));
 	}
-	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = fn(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String(Q(e, j)).length)) * Gr + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), L = Math.max(10, f - P - F), R = M - I - ne, z = (r ? R : L) / Math.max(1, b), B = z * (r ? .22 : .26), re = z - B, ie = i || x === 1 ? re : (re - qr * (x - 1)) / x, V = r ? pn(k, A, P, P + L) : pn(k, A, I + R, I), H = V(0), ae = (e) => o == null || o === e ? 1 : .35, oe = (e) => {
-		let t = [], n = (r ? I : P) + e * z + B / 2;
+	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = fn(C, w, D), ee = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, j = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), te = r ? Math.min(f * .38, 170) : 0, M = a ? 64 : 12, N = r ? te + 10 : Math.max(...O.map((e) => String(Q(e, ee)).length)) * Gr + 12, P = r ? M : 6, F = a && !r ? 18 : 8, ne = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), re = r ? 22 : 24 + (a && ne ? 16 : 0), I = Math.max(10, f - N - P), L = j - F - re, R = (r ? L : I) / Math.max(1, b), z = R * (r ? .22 : .26), ie = R - z, ae = i || x === 1 ? ie : (ie - qr * (x - 1)) / x, B = r ? pn(k, A, N, N + I) : pn(k, A, F + L, F), V = B(0), oe = (e) => o == null || o === e ? 1 : .35, se = (e) => {
+		let t = [], n = (r ? F : N) + e * R + z / 2;
 		if (i) {
 			let r = 0, i = 0, a = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) > 0), o = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) < 0);
 			y.forEach((s, c) => {
@@ -8561,7 +8578,7 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 				let u = l > 0 ? r : i, d = u + l;
 				l > 0 ? r = d : i = d, t.push({
 					off: n,
-					grueso: ie,
+					grueso: ae,
 					desde: u,
 					hasta: d,
 					si: c,
@@ -8571,8 +8588,8 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		} else y.forEach((r, i) => {
 			let a = S(i, e);
 			a !== null && t.push({
-				off: n + i * (ie + qr),
-				grueso: ie,
+				off: n + i * (ae + qr),
+				grueso: ae,
 				desde: 0,
 				hasta: a,
 				si: i,
@@ -8580,33 +8597,33 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 			});
 		});
 		return t;
-	}, se = (e) => {
-		let t = V(e.desde), n = V(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? qr : 0;
+	}, ce = (e) => {
+		let t = B(e.desde), n = B(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? qr : 0;
 		if (r) {
 			let r = Math.min(t, n), i = Math.abs(n - t), s = e.extremo ? a ? "derecha" : "izquierda" : "ninguno";
 			return Jr(a ? r : r + o, e.off, i - o, e.grueso, s);
 		}
 		let s = Math.min(t, n), c = Math.abs(n - t), l = e.extremo ? a ? "arriba" : "abajo" : "ninguno";
 		return a ? Jr(e.off, s + o, e.grueso, c - o, l) : Jr(e.off, s, e.grueso, c - o, l);
-	}, ce = (e) => y.reduce((t, n, r) => t + (S(r, e) ?? 0), 0), le = {
+	}, le = (e) => y.reduce((t, n, r) => t + (S(r, e) ?? 0), 0), ue = {
 		columnas: ["", ...y.map((e) => e.nombre)],
 		filas: v.map((e, t) => [e, ...y.map((e, n) => Q(S(n, t), c))])
-	}, U = (e) => (r ? I : P) + e * z + z / 2, ue = p === null ? {
+	}, H = (e) => (r ? F : N) + e * R + R / 2, U = p === null ? {
 		x: 0,
 		y: 0
 	} : r ? {
-		x: Math.min(f - 10, V(Math.max(0, i ? ce(p) : Math.max(...y.map((e, t) => S(t, p) ?? 0))))),
-		y: U(p)
+		x: Math.min(f - 10, B(Math.max(0, i ? le(p) : Math.max(...y.map((e, t) => S(t, p) ?? 0))))),
+		y: H(p)
 	} : {
-		x: U(p),
-		y: I + R / 3
-	}, de = Math.max(1, Math.ceil(b * 44 / Math.max(1, L)));
+		x: H(p),
+		y: F + L / 3
+	}, de = Math.max(1, Math.ceil(b * 44 / Math.max(1, I)));
 	return /* @__PURE__ */ g(Z, {
 		titulo: l,
 		series: x > 1 ? y : [],
-		tabla: T ? le : null,
+		tabla: T ? ue : null,
 		estilo: u,
-		alto: M,
+		alto: j,
 		children: /* @__PURE__ */ _("div", {
 			ref: d,
 			style: {
@@ -8615,7 +8632,7 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 			},
 			children: [T ? f > 0 && /* @__PURE__ */ _("svg", {
 				width: f,
-				height: M,
+				height: j,
 				role: "img",
 				style: {
 					display: "block",
@@ -8624,34 +8641,34 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 				"aria-label": `${l ? `${l}: ` : ""}${b} categorías`,
 				children: [
 					O.map((e) => r ? /* @__PURE__ */ _("g", { children: [/* @__PURE__ */ g("line", {
-						x1: V(e),
-						x2: V(e),
-						y1: I,
-						y2: I + R,
+						x1: B(e),
+						x2: B(e),
+						y1: F,
+						y2: F + L,
 						stroke: e === 0 ? "var(--ds-eje)" : "var(--ds-grid)"
 					}), /* @__PURE__ */ g("text", {
-						x: V(e),
-						y: M - 6,
+						x: B(e),
+						y: j - 6,
 						textAnchor: "middle",
 						style: X,
-						children: Q(e, j)
+						children: Q(e, ee)
 					})] }, e) : /* @__PURE__ */ _("g", { children: [/* @__PURE__ */ g("line", {
-						x1: P,
-						x2: P + L,
-						y1: V(e),
-						y2: V(e),
+						x1: N,
+						x2: N + I,
+						y1: B(e),
+						y2: B(e),
 						stroke: e === 0 ? "var(--ds-eje)" : "var(--ds-grid)"
 					}), /* @__PURE__ */ g("text", {
-						x: P - 8,
-						y: V(e),
+						x: N - 8,
+						y: B(e),
 						dy: "0.32em",
 						textAnchor: "end",
 						style: X,
-						children: Q(e, j)
+						children: Q(e, ee)
 					})] }, e)),
 					v.map((e, t) => /* @__PURE__ */ _("g", {
 						tabIndex: 0,
-						opacity: ae(t),
+						opacity: oe(t),
 						"aria-label": `${e}: ${y.map((e, n) => `${x > 1 ? `${e.nombre} ` : ""}${Q(S(n, t), c)}`).join(", ")}`,
 						onMouseEnter: () => h(t),
 						onMouseLeave: () => h(null),
@@ -8663,25 +8680,25 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 						},
 						children: [
 							r ? /* @__PURE__ */ g("rect", {
-								x: P,
-								y: I + t * z,
-								width: L,
-								height: z,
-								fill: p === t ? "var(--ds-surface-sunk)" : "transparent"
-							}) : /* @__PURE__ */ g("rect", {
-								x: P + t * z,
-								y: I,
-								width: z,
+								x: N,
+								y: F + t * R,
+								width: I,
 								height: R,
 								fill: p === t ? "var(--ds-surface-sunk)" : "transparent"
+							}) : /* @__PURE__ */ g("rect", {
+								x: N + t * R,
+								y: F,
+								width: R,
+								height: L,
+								fill: p === t ? "var(--ds-surface-sunk)" : "transparent"
 							}),
-							oe(t).map((e, t) => /* @__PURE__ */ g("path", {
-								d: se(e),
+							se(t).map((e, t) => /* @__PURE__ */ g("path", {
+								d: ce(e),
 								fill: Y(y[e.si], e.si)
 							}, t)),
 							r ? /* @__PURE__ */ _("text", {
-								x: P - 10,
-								y: U(t),
+								x: N - 10,
+								y: H(t),
 								dy: "0.32em",
 								textAnchor: "end",
 								style: {
@@ -8689,23 +8706,23 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 									fontSize: 12,
 									fill: "var(--ds-ink-2)"
 								},
-								children: [/* @__PURE__ */ g("title", { children: e }), Yr(e, ee)]
+								children: [/* @__PURE__ */ g("title", { children: e }), Yr(e, te)]
 							}) : t % de === 0 && /* @__PURE__ */ _("text", {
-								x: U(t),
-								y: M - 6,
+								x: H(t),
+								y: j - 6,
 								textAnchor: "middle",
 								style: X,
-								children: [/* @__PURE__ */ g("title", { children: e }), Yr(e, z * de - 4)]
+								children: [/* @__PURE__ */ g("title", { children: e }), Yr(e, R * de - 4)]
 							}),
 							a && (() => {
-								let e = i || x === 1 ? i ? ce(t) : S(0, t) : null;
+								let e = i || x === 1 ? i ? le(t) : S(0, t) : null;
 								if (e === null) return null;
-								let n = Q(e, j);
+								let n = Q(e, ee);
 								if (r) {
-									let r = V(e);
+									let r = B(e);
 									return /* @__PURE__ */ g("text", {
 										x: e >= 0 ? r + 6 : r - 6,
-										y: U(t),
+										y: H(t),
 										dy: "0.32em",
 										textAnchor: e >= 0 ? "start" : "end",
 										style: {
@@ -8716,10 +8733,10 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 										children: n
 									});
 								}
-								if (z < 34) return null;
-								let a = V(e);
+								if (R < 34) return null;
+								let a = B(e);
 								return /* @__PURE__ */ g("text", {
-									x: U(t),
+									x: H(t),
 									y: e >= 0 ? a - 6 : a + 14,
 									textAnchor: "middle",
 									style: {
@@ -8733,23 +8750,23 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 						]
 					}, t)),
 					r ? /* @__PURE__ */ g("line", {
-						x1: H,
-						x2: H,
-						y1: I,
-						y2: I + R,
+						x1: V,
+						x2: V,
+						y1: F,
+						y2: F + L,
 						stroke: "var(--ds-eje)"
 					}) : /* @__PURE__ */ g("line", {
-						x1: P,
-						x2: P + L,
-						y1: H,
-						y2: H,
+						x1: N,
+						x2: N + I,
+						y1: V,
+						y2: V,
 						stroke: "var(--ds-eje)"
 					})
 				]
-			}) : /* @__PURE__ */ g($, { alto: M }), /* @__PURE__ */ g(gn, {
+			}) : /* @__PURE__ */ g($, { alto: j }), /* @__PURE__ */ g(gn, {
 				visible: p !== null,
-				x: ue.x,
-				y: ue.y,
+				x: U.x,
+				y: U.y,
 				ancho: f,
 				titulo: p === null ? "" : v[p],
 				renglones: p === null ? [] : [...y.map((e, t) => ({
@@ -8758,7 +8775,7 @@ function Xr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 					valor: Q(S(t, p), c)
 				})), ...i && x > 1 ? [{
 					nombre: "Total",
-					valor: Q(ce(p), c)
+					valor: Q(le(p), c)
 				}] : []]
 			})]
 		})
@@ -9133,7 +9150,7 @@ function ai({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = fn(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String(Q(e, b)).length)) * ri + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = pn(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? Q(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${Q(e.delta, t)}`, A = (e, t) => {
 		let n = Math.max(3, Math.floor(t / ri));
 		return e.length > n ? `${e.slice(0, n - 1)}…` : e;
-	}, j = {
+	}, ee = {
 		columnas: [
 			"Paso",
 			"Movimiento",
@@ -9147,7 +9164,7 @@ function ai({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 	};
 	return /* @__PURE__ */ g(Z, {
 		titulo: i,
-		tabla: f ? j : null,
+		tabla: f ? ee : null,
 		estilo: a,
 		alto: t,
 		children: /* @__PURE__ */ _("div", {
@@ -9905,4 +9922,4 @@ function bi({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 		})
 	});
 }
-export { Re as ALTO_CABECERA_MOVIL, Le as ALTO_DOCK, er as Actividad, L as Anillo, bt as Armazon, je as Aviso, Ce as Azulejo, vi as Bala, xe as Barra, bi as BarraDistribucion, zr as BarraFiltros, Ct as BarraSeleccion, V as Barras, ee as Bento, ue as Boton, yr as BotonApariencia, i as Buscador, n as CAJA, ur as Calendario, hi as CalendarioCalor, r as Campo, Ot as Campos, Gt as Cargando, ai as Cascada, St as Casilla, N as Celda, Rr as Chip, ne as Cifra, Sn as CuerpoKpi, Pn as Detalles, $r as Dona, ni as Embudo, dr as EncabezadoPagina, t as Envoltura, B as Esqueleto, re as EsqueletoFila, ie as EsqueletoLista, Ln as EstadoVacio, de as Fila, wn as FilaKpis, Ne as Flotante, Dt as Formulario, U as Giro, gn as Globo, Xr as GraficaBarras, Wr as GraficaLinea, Rn as GrupoRetratos, P as Heroe, oe as Insignia, we as Interruptor, Xn as Kanban, Se as Lamina, hn as Leyenda, Hn as LineaTiempo, In as Llamado, ui as MapaCalor, Z as MarcoGrafica, z as Medidor, Cr as MenuUsuario, be as Migas, ke as Modal, vr as ModalApariencia, kr as Notificaciones, Pe as OpcionFlotante, C as PALETAS, Pr as PERIODOS, Xt as PanelInicio, qn as Pasos, ae as Pastilla, Wt as Pestanas, k as ProveedorTema, fe as Retrato, un as SERIES, $t as SIN_DATO, pe as Seccion, fr as Segmentado, e as Selector, xt as SelectorArmazon, pr as SelectorPaleta, Lr as SelectorPeriodo, $ as SinDatos, yn as Sparkline, M as Superficie, wt as Tabla, On as TarjetaComparativa, jn as TarjetaEntidad, Cn as TarjetaKpi, Dn as TarjetaMeta, kn as TarjetaRanking, Oe as Transicion, ln as Variacion, F as Vidrio, rn as compacto, Rt as condicion, Qt as configurarFormato, It as correo, Pt as digitos, q as fecha, sn as fechaRelativa, J as formatear, Zt as formato, jt as maximo, Mt as minimo, nn as moneda, Nt as numero, Lt as patron, K as porcentaje, Fr as rangoPeriodo, At as requerido, Ft as soloDigitos, Ir as textoRango, W as useAngosto, Be as useArmazon, Ut as useFiltros, zt as useFormulario, me as useMedia, dn as useMedida, A as useTema, cn as variacion };
+export { Re as ALTO_CABECERA_MOVIL, Le as ALTO_DOCK, er as Actividad, I as Anillo, bt as Armazon, je as Aviso, Ce as Azulejo, vi as Bala, xe as Barra, bi as BarraDistribucion, zr as BarraFiltros, Ct as BarraSeleccion, B as Barras, te as Bento, U as Boton, yr as BotonApariencia, i as Buscador, n as CAJA, ur as Calendario, hi as CalendarioCalor, r as Campo, Ot as Campos, Gt as Cargando, ai as Cascada, St as Casilla, M as Celda, Rr as Chip, re as Cifra, Sn as CuerpoKpi, Pn as Detalles, $r as Dona, ni as Embudo, dr as EncabezadoPagina, t as Envoltura, z as Esqueleto, ie as EsqueletoFila, ae as EsqueletoLista, Ln as EstadoVacio, de as Fila, wn as FilaKpis, Ne as Flotante, Dt as Formulario, H as Giro, gn as Globo, Xr as GraficaBarras, Wr as GraficaLinea, Rn as GrupoRetratos, N as Heroe, se as Insignia, we as Interruptor, Xn as Kanban, Se as Lamina, hn as Leyenda, Hn as LineaTiempo, In as Llamado, ui as MapaCalor, Z as MarcoGrafica, R as Medidor, Cr as MenuUsuario, be as Migas, ke as Modal, vr as ModalApariencia, kr as Notificaciones, Pe as OpcionFlotante, C as PALETAS, Pr as PERIODOS, Xt as PanelInicio, qn as Pasos, oe as Pastilla, Wt as Pestanas, k as ProveedorTema, fe as Retrato, un as SERIES, $t as SIN_DATO, pe as Seccion, fr as Segmentado, e as Selector, xt as SelectorArmazon, pr as SelectorPaleta, Lr as SelectorPeriodo, $ as SinDatos, yn as Sparkline, j as Superficie, wt as Tabla, On as TarjetaComparativa, jn as TarjetaEntidad, Cn as TarjetaKpi, Dn as TarjetaMeta, kn as TarjetaRanking, Oe as Transicion, ln as Variacion, P as Vidrio, rn as compacto, Rt as condicion, Qt as configurarFormato, It as correo, Pt as digitos, q as fecha, sn as fechaRelativa, J as formatear, Zt as formato, jt as maximo, Mt as minimo, nn as moneda, Nt as numero, Lt as patron, K as porcentaje, Fr as rangoPeriodo, At as requerido, Ft as soloDigitos, Ir as textoRango, W as useAngosto, Be as useArmazon, Ut as useFiltros, zt as useFormulario, me as useMedia, dn as useMedida, A as useTema, cn as variacion };

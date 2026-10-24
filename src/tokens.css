@@ -370,7 +370,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ds-root *, .ds-root *::before, .ds-root *::after {
+  .ds-root *, .ds-root *::before, .ds-root *::after,
+  .ds-capa, .ds-capa *, .ds-capa *::before, .ds-capa *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
