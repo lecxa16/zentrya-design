@@ -3936,6 +3936,10 @@ function jt({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 				entrada: 0,
 				children: /* @__PURE__ */ g("div", {
 					ref: c,
+					style: {
+						display: "grid",
+						gap: "var(--ds-5)"
+					},
 					children: n
 				})
 			}),
