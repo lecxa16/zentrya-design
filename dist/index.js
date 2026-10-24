@@ -2057,18 +2057,18 @@ function it({ marca: e, logo: t, compacto: n = !1, encoge: r = !1, onInicio: i }
 		fuente: t.icono,
 		alt: "",
 		alto: 28
-	}) : /* @__PURE__ */ g(rt, { texto: a }), s = n ? o : t?.completo ? /* @__PURE__ */ g(nt, {
-		fuente: t.completo,
-		alt: a,
-		alto: 28
-	}) : /* @__PURE__ */ _(h, { children: [o, /* @__PURE__ */ g("span", {
+	}) : /* @__PURE__ */ g(rt, { texto: a }), s = /* @__PURE__ */ g("span", {
 		style: {
 			minWidth: 0,
 			overflow: "hidden",
 			textOverflow: "ellipsis"
 		},
 		children: e
-	})] }), c = {
+	}), c = n ? o : t?.completo ? /* @__PURE__ */ g(nt, {
+		fuente: t.completo,
+		alt: a,
+		alto: 28
+	}) : t?.icono ? /* @__PURE__ */ _(h, { children: [o, s] }) : s, l = {
 		display: "flex",
 		alignItems: "center",
 		gap: 10,
@@ -2086,7 +2086,7 @@ function it({ marca: e, logo: t, compacto: n = !1, encoge: r = !1, onInicio: i }
 		onClick: i,
 		"aria-label": n ? `Ir al inicio de ${a}` : `${a}, ir al inicio`,
 		style: {
-			...c,
+			...l,
 			border: "none",
 			background: "transparent",
 			padding: 0,
@@ -2094,10 +2094,10 @@ function it({ marca: e, logo: t, compacto: n = !1, encoge: r = !1, onInicio: i }
 			fontFamily: "var(--ds-font)",
 			borderRadius: 8
 		},
-		children: s
+		children: c
 	}) : /* @__PURE__ */ g("div", {
-		style: c,
-		children: s
+		style: l,
+		children: c
 	});
 }
 function at({ s: e, esta: t, onIr: n }) {

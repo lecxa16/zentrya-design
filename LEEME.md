@@ -437,7 +437,7 @@ const SECCIONES = [
 `<Armazon logo={{ completo, icono }} onInicio={…}>`: cada uno, ruta de imagen o componente (SVG en línea).
 El **completo** (símbolo + nombre) va donde hay sitio —barra de arriba, menú lateral abierto—; el **icono** donde
 no —riel contraído (arriba del botón de desplegar), dock (a la izquierda), teléfono (con el nombre en texto)—.
-Sin `completo` se pinta el icono y el nombre; sin icono, un **monograma** con la inicial sobre el acento (par
+Sin `completo` se pinta el icono y el nombre; sin `logo` la marca va tal cual donde hay sitio (v2.5.1: una app que trae su símbolo dentro de `marca` no lo ve duplicado) y, donde no cabe, un **monograma** con la inicial sobre el acento (par
 medido ≥ 4.5 en todas las paletas; la letra va en `::before` para no contar como texto del botón). `onInicio`
 vuelve la marca un botón que lleva al inicio.
 
@@ -714,7 +714,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.5.0`
+   `npm install github:lecxa16/zentrya-design#v2.5.1`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

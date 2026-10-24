@@ -251,9 +251,13 @@ function Monograma({ texto = "", alto = 28 }) {
 function Marca({ marca, logo, compacto = false, encoge = false, onInicio }) {
   const texto = typeof marca === "string" ? marca : "";
   const icono = logo?.icono ? <ImagenLogo fuente={logo.icono} alt="" alto={28} /> : <Monograma texto={texto} />;
+  /* Sin `logo`, donde hay sitio la marca va tal cual (como antes de la v2.4: una app como Nykza ya trae su
+     propio símbolo dentro de `marca` y un monograma delante la duplicaba); el monograma sólo cubre donde no
+     cabe el nombre. */
+  const nombre = <span style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>{marca}</span>;
   const contenido = compacto ? icono
     : logo?.completo ? <ImagenLogo fuente={logo.completo} alt={texto} alto={28} />
-      : <>{icono}<span style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>{marca}</span></>;
+      : logo?.icono ? <>{icono}{nombre}</> : nombre;
   const estilo = {
     display: "flex", alignItems: "center", gap: 10,
     flexShrink: encoge ? 1 : 0, minWidth: 0, overflow: encoge ? "hidden" : "visible",
