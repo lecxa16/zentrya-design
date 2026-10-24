@@ -248,9 +248,15 @@ function Monograma({ texto = "", alto = 28 }) {
  * teléfono la marca cede antes que los controles —un nombre recortado se sigue
  * reconociendo, un botón cortado no se puede pulsar—.
  */
-function Marca({ marca, logo, compacto = false, encoge = false, onInicio }) {
+function Marca({ marca, logo, iconoApp, compacto = false, encoge = false, onInicio }) {
   const texto = typeof marca === "string" ? marca : "";
-  const icono = logo?.icono ? <ImagenLogo fuente={logo.icono} alt="" alto={28} /> : <Monograma texto={texto} />;
+  /* El símbolo para donde no cabe el nombre: el `logo.icono`; si no, el `icono` que la app ya le da al
+     armazón (el del botón de inicio del dock, como Nykza); si no, la inicial; y si la marca no es texto,
+     nada (v2.5.2: un monograma sin letra salía como un cuadro vacío). */
+  const icono = logo?.icono ? <ImagenLogo fuente={logo.icono} alt="" alto={28} />
+    : iconoApp ? <span aria-hidden style={{ display: "inline-flex", flexShrink: 0 }}>{iconoApp}</span>
+      : texto ? <Monograma texto={texto} /> : null;
+  if (compacto && !icono) return null;
   /* Sin `logo`, donde hay sitio la marca va tal cual (como antes de la v2.4: una app como Nykza ya trae su
      propio símbolo dentro de `marca` y un monograma delante la duplicaba); el monograma sólo cubre donde no
      cabe el nombre. */
@@ -422,7 +428,7 @@ function HojaMas({ abierto, onCerrar, secciones, activa, onIr, titulo = "Más" }
 
 /* ---------------- los tres modos ---------------- */
 
-function ModoTopbar({ marca, logo, onInicio, secciones, activa, onIr, derecha, children }) {
+function ModoTopbar({ marca, logo, onInicio, icono, secciones, activa, onIr, derecha, children }) {
   const barra = useRef(null);
   const [alto, setAlto] = useState(56);
 
@@ -457,7 +463,7 @@ function ModoTopbar({ marca, logo, onInicio, secciones, activa, onIr, derecha, c
         position: "fixed", top: "var(--ds-4)",
         left: "var(--ds-4)", right: "var(--ds-4)", zIndex: 30,
       }}>
-        <div style={{ paddingLeft: 8, paddingRight: 8 }}><Marca marca={marca} logo={logo} onInicio={onInicio} /></div>
+        <div style={{ paddingLeft: 8, paddingRight: 8 }}><Marca marca={marca} logo={logo} iconoApp={icono} onInicio={onInicio} /></div>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-2)",
           flexWrap: "wrap", flex: 1, minWidth: 0 }}>
           {secciones.map((s) => (conHijos(s)
@@ -587,7 +593,7 @@ function GrupoLateral({ s, activa, riel, bajo, onIr }) {
   );
 }
 
-function ModoSidebar({ marca, logo, onInicio, secciones, activa, onIr, derecha, children }) {
+function ModoSidebar({ marca, logo, onInicio, icono, secciones, activa, onIr, derecha, children }) {
   const [desplegado, setDesplegado] = useState(true);
   /* En una laptop con barra de marcadores el alto se acaba antes que el ancho:
      ahí los renglones se aprietan para que entren más sin deslizar. */
@@ -622,7 +628,7 @@ function ModoSidebar({ marca, logo, onInicio, secciones, activa, onIr, derecha, 
         <div style={{ display: "flex", alignItems: "center", justifyContent: abierto ? "space-between" : "center",
           flexDirection: abierto ? "row" : "column", gap: abierto ? 8 : 10,
           padding: bajo ? "4px 8px 4px" : "6px 8px 10px", flexShrink: 0, minWidth: 0 }}>
-          <Marca marca={marca} logo={logo} onInicio={onInicio} compacto={!abierto} />
+          <Marca marca={marca} logo={logo} iconoApp={icono} onInicio={onInicio} compacto={!abierto} />
           <button onClick={() => setDesplegado((v) => !v)}
             aria-label={abierto ? "Contraer menú" : "Desplegar menú"}
             style={{ background: "transparent", border: "none", cursor: "pointer",
@@ -803,7 +809,7 @@ function ModoDock({
             {inicio ? (
               <BotonInicio abierto={inicioAbierto} icono={icono}
                 onClick={() => onInicioAbierto?.(!inicioAbierto)} />
-            ) : <Marca marca={marca} logo={logo} onInicio={onInicio} compacto />}
+            ) : <Marca marca={marca} logo={logo} iconoApp={icono} onInicio={onInicio} compacto />}
           </div>
         </div>
 

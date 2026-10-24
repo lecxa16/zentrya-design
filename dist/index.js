@@ -2052,41 +2052,50 @@ function rt({ texto: e = "", alto: t = 28 }) {
 		}
 	});
 }
-function it({ marca: e, logo: t, compacto: n = !1, encoge: r = !1, onInicio: i }) {
-	let a = typeof e == "string" ? e : "", o = t?.icono ? /* @__PURE__ */ g(nt, {
+function it({ marca: e, logo: t, iconoApp: n, compacto: r = !1, encoge: i = !1, onInicio: a }) {
+	let o = typeof e == "string" ? e : "", s = t?.icono ? /* @__PURE__ */ g(nt, {
 		fuente: t.icono,
 		alt: "",
 		alto: 28
-	}) : /* @__PURE__ */ g(rt, { texto: a }), s = /* @__PURE__ */ g("span", {
+	}) : n ? /* @__PURE__ */ g("span", {
+		"aria-hidden": !0,
+		style: {
+			display: "inline-flex",
+			flexShrink: 0
+		},
+		children: n
+	}) : o ? /* @__PURE__ */ g(rt, { texto: o }) : null;
+	if (r && !s) return null;
+	let c = /* @__PURE__ */ g("span", {
 		style: {
 			minWidth: 0,
 			overflow: "hidden",
 			textOverflow: "ellipsis"
 		},
 		children: e
-	}), c = n ? o : t?.completo ? /* @__PURE__ */ g(nt, {
+	}), l = r ? s : t?.completo ? /* @__PURE__ */ g(nt, {
 		fuente: t.completo,
-		alt: a,
+		alt: o,
 		alto: 28
-	}) : t?.icono ? /* @__PURE__ */ _(h, { children: [o, s] }) : s, l = {
+	}) : t?.icono ? /* @__PURE__ */ _(h, { children: [s, c] }) : c, u = {
 		display: "flex",
 		alignItems: "center",
 		gap: 10,
-		flexShrink: +!!r,
+		flexShrink: +!!i,
 		minWidth: 0,
-		overflow: r ? "hidden" : "visible",
+		overflow: i ? "hidden" : "visible",
 		fontWeight: 800,
 		fontSize: "var(--ds-t-body)",
 		letterSpacing: "-0.02em",
 		color: "var(--ds-ink)",
 		whiteSpace: "nowrap"
 	};
-	return i ? /* @__PURE__ */ g("button", {
+	return a ? /* @__PURE__ */ g("button", {
 		type: "button",
-		onClick: i,
-		"aria-label": n ? `Ir al inicio de ${a}` : `${a}, ir al inicio`,
+		onClick: a,
+		"aria-label": r ? `Ir al inicio de ${o}` : `${o}, ir al inicio`,
 		style: {
-			...l,
+			...u,
 			border: "none",
 			background: "transparent",
 			padding: 0,
@@ -2094,10 +2103,10 @@ function it({ marca: e, logo: t, compacto: n = !1, encoge: r = !1, onInicio: i }
 			fontFamily: "var(--ds-font)",
 			borderRadius: 8
 		},
-		children: c
+		children: l
 	}) : /* @__PURE__ */ g("div", {
-		style: l,
-		children: c
+		style: u,
+		children: l
 	});
 }
 function at({ s: e, esta: t, onIr: n }) {
@@ -2345,22 +2354,22 @@ function ct({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo:
 		})
 	});
 }
-function lt({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, derecha: o, children: s }) {
-	let c = p(null), [l, u] = m(56);
+function lt({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, children: c }) {
+	let l = p(null), [u, f] = m(56);
 	return d(() => {
-		let e = c.current;
+		let e = l.current;
 		if (!e) return;
-		let t = () => u(e.getBoundingClientRect().height);
+		let t = () => f(e.getBoundingClientRect().height);
 		t();
 		let n = new ResizeObserver(t);
 		return n.observe(e), () => n.disconnect();
-	}, []), We(`${Math.round(l) + 36}px`, "var(--ds-4)"), /* @__PURE__ */ _("div", {
+	}, []), We(`${Math.round(u) + 36}px`, "var(--ds-4)"), /* @__PURE__ */ _("div", {
 		style: {
 			minHeight: "100%",
 			padding: "var(--ds-4)"
 		},
 		children: [/* @__PURE__ */ _("header", {
-			ref: c,
+			ref: l,
 			style: {
 				...Ue,
 				display: "flex",
@@ -2384,6 +2393,7 @@ function lt({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 					children: /* @__PURE__ */ g(it, {
 						marca: e,
 						logo: t,
+						iconoApp: r,
 						onInicio: n
 					})
 				}),
@@ -2396,14 +2406,14 @@ function lt({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 						flex: 1,
 						minWidth: 0
 					},
-					children: r.map((e) => W(e) ? /* @__PURE__ */ g(ot, {
+					children: i.map((e) => W(e) ? /* @__PURE__ */ g(ot, {
 						s: e,
-						activa: i,
-						onIr: a
+						activa: a,
+						onIr: o
 					}, e.id) : /* @__PURE__ */ g(at, {
 						s: e,
-						esta: e.id === i,
-						onIr: a
+						esta: e.id === a,
+						onIr: o
 					}, e.id))
 				}),
 				/* @__PURE__ */ g("div", {
@@ -2412,12 +2422,12 @@ function lt({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 						display: "flex",
 						justifyContent: "flex-end"
 					},
-					children: o
+					children: s
 				})
 			]
 		}), /* @__PURE__ */ g("main", {
-			style: { paddingTop: l + 20 },
-			children: s
+			style: { paddingTop: u + 20 },
+			children: c
 		})]
 	});
 }
@@ -2594,8 +2604,8 @@ function dt({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 		})]
 	});
 }
-function ft({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, derecha: o, children: s }) {
-	let [c, l] = m(!0), u = he("(max-height: 760px)"), d = c, f = d ? 244 : 64;
+function ft({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, children: c }) {
+	let [l, u] = m(!0), d = he("(max-height: 760px)"), f = l, p = f ? 244 : 64;
 	return We("var(--ds-4)", "var(--ds-4)"), /* @__PURE__ */ _("div", {
 		style: {
 			minHeight: "100%",
@@ -2604,7 +2614,7 @@ function ft({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 		children: [/* @__PURE__ */ _("aside", {
 			style: {
 				...Ue,
-				width: f,
+				width: p,
 				borderRadius: "var(--ds-r-frame)",
 				padding: "var(--ds-3)",
 				boxShadow: "var(--ds-lift-2)",
@@ -2625,21 +2635,22 @@ function ft({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 					style: {
 						display: "flex",
 						alignItems: "center",
-						justifyContent: d ? "space-between" : "center",
-						flexDirection: d ? "row" : "column",
-						gap: d ? 8 : 10,
-						padding: u ? "4px 8px 4px" : "6px 8px 10px",
+						justifyContent: f ? "space-between" : "center",
+						flexDirection: f ? "row" : "column",
+						gap: f ? 8 : 10,
+						padding: d ? "4px 8px 4px" : "6px 8px 10px",
 						flexShrink: 0,
 						minWidth: 0
 					},
 					children: [/* @__PURE__ */ g(it, {
 						marca: e,
 						logo: t,
+						iconoApp: r,
 						onInicio: n,
-						compacto: !d
+						compacto: !f
 					}), /* @__PURE__ */ g("button", {
-						onClick: () => l((e) => !e),
-						"aria-label": d ? "Contraer menú" : "Desplegar menú",
+						onClick: () => u((e) => !e),
+						"aria-label": f ? "Contraer menú" : "Desplegar menú",
 						style: {
 							background: "transparent",
 							border: "none",
@@ -2657,7 +2668,7 @@ function ft({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 							stroke: "currentColor",
 							strokeWidth: "2",
 							strokeLinecap: "round",
-							children: /* @__PURE__ */ g("path", { d: d ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6" })
+							children: /* @__PURE__ */ g("path", { d: f ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6" })
 						})
 					})]
 				}),
@@ -2671,25 +2682,25 @@ function ft({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 						scrollbarWidth: "thin",
 						display: "flex",
 						flexDirection: "column",
-						gap: u ? 0 : 2,
+						gap: d ? 0 : 2,
 						margin: "0 calc(var(--ds-1) * -1)",
 						padding: "2px var(--ds-1)"
 					},
-					children: r.map((e) => W(e) ? /* @__PURE__ */ g(dt, {
+					children: i.map((e) => W(e) ? /* @__PURE__ */ g(dt, {
 						s: e,
-						activa: i,
-						riel: d,
-						bajo: u,
-						onIr: a
+						activa: a,
+						riel: f,
+						bajo: d,
+						onIr: o
 					}, e.id) : /* @__PURE__ */ g(ut, {
 						s: e,
-						esta: e.id === i,
-						riel: d,
-						bajo: u,
-						onClick: () => a?.(e)
+						esta: e.id === a,
+						riel: f,
+						bajo: d,
+						onClick: () => o?.(e)
 					}, e.id))
 				}),
-				o ? /* @__PURE__ */ g("div", {
+				s ? /* @__PURE__ */ g("div", {
 					style: {
 						paddingTop: "var(--ds-3)",
 						flexShrink: 0,
@@ -2697,18 +2708,18 @@ function ft({ marca: e, logo: t, onInicio: n, secciones: r, activa: i, onIr: a, 
 						display: "flex",
 						flexWrap: "wrap",
 						gap: "var(--ds-2)",
-						justifyContent: d ? "flex-start" : "center"
+						justifyContent: f ? "flex-start" : "center"
 					},
-					children: o
+					children: s
 				}) : null
 			]
 		}), /* @__PURE__ */ g("main", {
 			style: {
 				minWidth: 0,
-				marginLeft: f + 16,
+				marginLeft: p + 16,
 				transition: "margin-left var(--ds-t-move) var(--ds-ease)"
 			},
-			children: s
+			children: c
 		})]
 	});
 }
@@ -2862,6 +2873,7 @@ function gt({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 							}) : /* @__PURE__ */ g(it, {
 								marca: e,
 								logo: t,
+								iconoApp: r,
 								onInicio: n,
 								compacto: !0
 							})
