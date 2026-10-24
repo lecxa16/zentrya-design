@@ -398,6 +398,12 @@ columna, y cada celda dice «fila · columna: valor». El foco se queda en la cu
 `CalendarioCalor` es un dibujo SVG, no una tabla: pasa a `role="group"` con un aviso (`aria-live`) del día activo; los
 datos completos siguen en la vista de tabla del marco.
 
+## Formulario con aire entre bloques (v1.4.4)
+
+El cuerpo de `Formulario` separa a sus hijos (`gap` de `--ds-5`). Antes era un `div` sin espacio: mientras solo hubiera
+`Campos` no se notaba, pero un aviso, una sub-tarjeta (`Superficie hundida`), un botón y una nota quedaban pegados y la
+ayuda de un campo tocaba el borde de la tarjeta siguiente (reportado por Carlos en Zentrya Bets, 2026-10-24).
+
 ## Temas
 
 Los dos se definen en `tokens.css` como variables CSS. Cada color tiene su par; **ninguno

@@ -76,7 +76,9 @@ export default function Formulario({
         </div>
       )}
 
-      <Superficie entrada={0}><div ref={refCuerpo}>{children}</div></Superficie>
+      {/* Los bloques del cuerpo (avisos, Campos, sub-tarjetas, botones, notas) van separados. Sin el gap quedaban
+          pegados: la ayuda de un campo tocaba el borde de la tarjeta siguiente (Zentrya Bets, 2026-10-24). */}
+      <Superficie entrada={0}><div ref={refCuerpo} style={{ display: "grid", gap: "var(--ds-5)" }}>{children}</div></Superficie>
 
       {/* `fixed`, no `sticky`: el `body` de la aplicación lleva `overflow`, así
           que `sticky` se ancla a algo que nunca se mueve. El relleno inferior

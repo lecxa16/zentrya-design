@@ -2865,7 +2865,7 @@ function ia({
         "Cada campo dice abajo qué necesita."
       ] })
     ] }),
-    /* @__PURE__ */ t(we, { entrada: 0, children: /* @__PURE__ */ t("div", { ref: c, children: n }) }),
+    /* @__PURE__ */ t(we, { entrada: 0, children: /* @__PURE__ */ t("div", { ref: c, style: { display: "grid", gap: "var(--ds-5)" }, children: n }) }),
     /* @__PURE__ */ t("div", { style: {
       position: "fixed",
       left: 0,

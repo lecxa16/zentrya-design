@@ -1,6 +1,6 @@
 {
   "name": "@zentrya/design",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Sistema de diseño de Zentrya para proyectos React: tokens claro/oscuro, primitivas, armazón de navegación y formularios.",
   "private": true,
   "type": "module",
