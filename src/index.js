@@ -5,7 +5,7 @@
  * la fuente va incrustada en los estilos. La capa sobre MUI vive aparte en
  * @zentrya/design/mui.
  */
-export { ProveedorTema, useTema } from "./Tema";
+export { ProveedorTema, useTema, PALETAS } from "./Tema";
 export { default as Superficie } from "./primitivas/Superficie";
 export { Bento, Celda } from "./primitivas/Bento";
 export { default as Heroe, Vidrio } from "./primitivas/Heroe";
@@ -68,6 +68,7 @@ export { default as Actividad } from "./primitivas/Actividad";
 export { default as Calendario } from "./primitivas/Calendario";
 export { default as EncabezadoPagina } from "./primitivas/EncabezadoPagina";
 export { default as Segmentado } from "./primitivas/Segmentado";
+export { default as SelectorPaleta } from "./primitivas/SelectorPaleta";
 export { default as SelectorPeriodo, PERIODOS, rangoPeriodo, textoRango } from "./primitivas/SelectorPeriodo";
 export { default as Chip, BarraFiltros } from "./primitivas/Chip";
 

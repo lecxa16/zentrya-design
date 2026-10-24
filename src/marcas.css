@@ -144,3 +144,57 @@
 
   --ds-info:  #B79CFF;  --ds-info-soft:  #261C42;
 }
+
+/* ---------- Océano ---------- */
+/* Azul (Carlos, 2026-10-23): paleta que la persona puede elegir (`PALETAS` en Tema.jsx), no un producto. Sólo
+   cambia la identidad —acento, lienzo y héroe—; tinta, estados y series se quedan como en Zentrya. Se eligió
+   lejos del rojo, el verde y el ámbar a propósito: en finanzas ésos ya significan pérdida, ganancia y aviso.
+   Medido: blanco sobre el acento 6.0:1 · tinta teñida 6.3 sobre el lienzo, 6.7 sobre la tarjeta, 5.4 sobre
+   accent-soft · el blanco del héroe 5.2:1 en su tono más claro. */
+[data-ds-marca="oceano"] {
+  --ds-canvas:        #F4F7FC;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #DCE6F8 0%, rgba(220,230,248,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #E3EAF6 0%, rgba(227,234,246,0) 54%),
+      linear-gradient(160deg, #F7F9FD 0%, #F2F5FB 52%, #F6F8FC 100%);
+  --ds-frame:         rgba(250,252,255,0.62);
+  --ds-panel:         rgba(242,246,253,0.94);
+
+  --ds-ink-on-accent: #FFFFFF;
+  --ds-accent:        #1F5BD1;
+  --ds-accent-press:  #1849AB;
+  --ds-accent-soft:   #DEE8FB;
+  --ds-accent-ring:   rgba(31,91,209,0.28);
+  --ds-accent-tinta:  #1D55C4;
+  --ds-accent-trazo:  #1F5BD1;
+
+  --ds-hero: linear-gradient(135deg, #0B2F73 0%, #1A4FB8 55%, #2563EB 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(31,91,209,0.45);
+
+  --ds-info:  #1D55C4;  --ds-info-soft:  #DEE8FB;
+}
+
+/* Oscuro, medido contra la tarjeta (#11161A): acento 8.1:1 · la tinta oscura encima 7.7:1 · sobre accent-soft 7.0. */
+[data-ds-theme="dark"][data-ds-marca="oceano"] {
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #0F2246 0%, rgba(15,34,70,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #0A1830 0%, rgba(10,24,48,0) 54%),
+      linear-gradient(160deg, #07090D 0%, #05070A 52%, #07090D 100%);
+  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-panel:         rgba(16,22,34,0.95);
+
+  --ds-ink-on-accent: #061A3D;
+  --ds-accent:        #7DAEFF;
+  --ds-accent-press:  #A3C6FF;
+  --ds-accent-soft:   #13233F;
+  --ds-accent-ring:   rgba(125,174,255,0.32);
+  --ds-accent-tinta:  #7DAEFF;
+  --ds-accent-trazo:  #7DAEFF;
+
+  --ds-hero: linear-gradient(135deg, #0B2F73 0%, #1A4FB8 55%, #2563EB 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(125,174,255,0.40);
+
+  --ds-info:  #7DAEFF;  --ds-info-soft:  #13233F;
+}

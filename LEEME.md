@@ -359,7 +359,7 @@ El mismo sistema puede vestir a otro producto. `<ProveedorTema marca="nykza">` p
 `data-ds-marca` en el elemento raíz y `marcas.css` redefine **sólo** los tokens de
 identidad: lienzo, tinta, acento y héroe. Estados, series, radios, espacios y movimiento no
 cambian. Claro y oscuro siguen existiendo dentro de cada marca. Sin `marca` se ve Zentrya.
-En el catálogo: `?marca=nykza` o `?marca=workos`.
+En el catálogo se recorren con el selector de paleta de la barra (ver «Paletas»).
 
 | Marca | Producto | Acento claro / oscuro |
 |---|---|---|
@@ -397,6 +397,26 @@ columna, y cada celda dice «fila · columna: valor». El foco se queda en la cu
 (`aria-required-children`/`aria-required-parent`) y un lector de pantalla no podía leerlas (Traceon, 2026-10-22).
 `CalendarioCalor` es un dibujo SVG, no una tabla: pasa a `role="group"` con un aviso (`aria-live`) del día activo; los
 datos completos siguen en la vista de tabla del marco.
+
+## Paletas que elige la persona (v2.0)
+
+Las marcas también se pueden ofrecer como **paletas**: `<ProveedorTema paletas>` deja elegir entre `PALETAS`
+(o `paletas={["zentrya", "oceano"]}` para ofrecer sólo algunas) y `<SelectorPaleta />` pinta el control —un
+`Segmentado` con una muestra del acento en el tema activo—. La elección se guarda en `localStorage` bajo
+`ds-paleta`, como claro/oscuro, y manda sobre la `marca`, que pasa a ser con la que arranca. `useTema()` da
+`paleta`, `paletas` y `fijarPaleta`. Sin `paletas`, `SelectorPaleta` no pinta nada y la marca es fija.
+
+| Paleta | id | Acento claro / oscuro |
+|---|---|---|
+| Turquesa | `zentrya` | `#0B7D75` / `#3FD3C7` |
+| Océano (v2.0) | `oceano` | `#1F5BD1` / `#7DAEFF` |
+| Violeta | `workos` | `#6D3FD9` / `#B79CFF` |
+| Grafito | `nykza` | negro / blanco |
+
+**Sin rojo, verde ni ámbar**, a propósito: ya significan riesgo, bien y aviso (pérdida, ganancia y alerta en
+finanzas), y un acento de esos colores se confundiría con un estado. Una paleta nueva cambia sólo identidad
+(acento con sus tres oficios, lienzo, héroe e `info`) y se mide igual que una marca: texto ≥ 4.5 sobre lienzo,
+tarjeta y `accent-soft` en los dos temas, trazo ≥ 3, y el blanco del héroe ≥ 4.5 en su tono más claro.
 
 ## Temas
 
@@ -532,6 +552,13 @@ raíz YA es el `OutlinedInput`; en el `TextField` viene envuelto en un `FormCont
 el que se queda fuera hereda el tema de la aplicación. Por eso las reglas van a
 `"&.MuiOutlinedInput-root, & .MuiOutlinedInput-root"`.
 
+⚠️ **MUI 9 / MUI X 9 (v2.0).** El campo de fecha ya no es un `OutlinedInput` con `<input>`: es
+`PickersOutlinedInput` con secciones (`.MuiPickersSectionList-root`), así que `sxCampo` apunta también a esas
+clases; el día del calendario es `.MuiPickerDay-root` (antes `MuiPickersDay`). En el `Autocomplete`,
+`renderInput` entrega `p.slotProps.htmlInput` (ya no `p.inputProps`): hay que extenderlo, no sustituirlo, o el
+campo pierde su `ref`. Los textos del calendario van en español con `localeText` de `esES`: `adapterLocale`
+sólo traduce las fechas, y sin eso el lector de pantalla decía «Choose date».
+
 ⚠️ **Un campo enfocado lleva UN anillo, no dos.** El borde del campo cambia a acento y se
 acompaña de un halo (`--ds-accent-ring`); el anillo global de `:focus-visible` se apaga en
 `input`, `textarea`, `select` y `combobox`, porque encima del borde eran dos. En botones y
@@ -574,7 +601,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v1.3.1`
+   `npm install github:lecxa16/zentrya-design#v2.0.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

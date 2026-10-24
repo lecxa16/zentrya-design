@@ -6,7 +6,7 @@
  */
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ProveedorTema, Armazon, SelectorArmazon, useTema } from "../src/index.js";
+import { ProveedorTema, Armazon, SelectorArmazon, SelectorPaleta, useTema } from "../src/index.js";
 
 const modulos = import.meta.glob("./secciones/*.jsx", { eager: true });
 const SECCIONES = Object.values(modulos)
@@ -42,29 +42,8 @@ function BotonTema() {
   );
 }
 
-/* La marca viaja en la URL (`?marca=nykza`) para poder revisar cada producto
-   sin tocar el código; sin ella se ve Zentrya. */
-const MARCA = new URLSearchParams(location.search).get("marca") || undefined;
-
-/* Las marcas se recorren en orden: Zentrya → Nykza → Work OS → Zentrya. */
-const MARCAS = [
-  { id: undefined, texto: "Zentrya" },
-  { id: "nykza", texto: "Nykza" },
-  { id: "workos", texto: "Work OS" },
-];
-
-function BotonMarca() {
-  const i = Math.max(0, MARCAS.findIndex((m) => m.id === MARCA));
-  const sig = MARCAS[(i + 1) % MARCAS.length];
-  const otra = sig.id ? `?marca=${sig.id}` : "";
-  return (
-    <a href={`${location.pathname}${otra}${location.hash}`} style={{ border: "1px solid var(--ds-line-firm)",
-      color: "var(--ds-ink-2)", borderRadius: 99, textDecoration: "none",
-      padding: "6px 12px", fontWeight: 700, fontSize: "var(--ds-t-micro)" }}>
-      Ver {sig.texto}
-    </a>
-  );
-}
+/* Las marcas (Nykza, Work OS) son también paletas que se pueden elegir, así que
+   el catálogo las recorre con el mismo `SelectorPaleta` que usan las apps. */
 
 function Catalogo() {
   const inicial = (location.hash || "").replace("#", "") || SECCIONES[0]?.id;
@@ -75,10 +54,10 @@ function Catalogo() {
   return (
     <Armazon marca="Zentrya · catálogo" secciones={NAVEGACION} activa={activa} vista={actual?.id}
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
-      derecha={<div style={{ display: "flex", gap: 8 }}><BotonMarca /><BotonTema /><SelectorArmazon /></div>}>
+      derecha={<div style={{ display: "flex", gap: 8, alignItems: "center" }}><SelectorPaleta tamano="s" /><BotonTema /><SelectorArmazon /></div>}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>
     </Armazon>
   );
 }
 
-createRoot(document.getElementById("root")).render(<ProveedorTema marca={MARCA}><Catalogo /></ProveedorTema>);
+createRoot(document.getElementById("root")).render(<ProveedorTema paletas><Catalogo /></ProveedorTema>);
