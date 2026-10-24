@@ -7,6 +7,7 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ProveedorTema, Armazon, MenuUsuario, Notificaciones } from "../src/index.js";
+import DemoAcceso from "./acceso.jsx";
 
 const modulos = import.meta.glob("./secciones/*.jsx", { eager: true });
 const SECCIONES = Object.values(modulos)
@@ -88,4 +89,9 @@ function Catalogo() {
   );
 }
 
-createRoot(document.getElementById("root")).render(<ProveedorTema paletas><Catalogo /></ProveedorTema>);
+/* `?acceso`: la pantalla de acceso a pantalla completa, fuera del armazón. */
+const ACCESO = new URLSearchParams(location.search).has("acceso");
+
+createRoot(document.getElementById("root")).render(
+  <ProveedorTema paletas>{ACCESO ? <DemoAcceso /> : <Catalogo />}</ProveedorTema>,
+);

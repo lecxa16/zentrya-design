@@ -425,6 +425,21 @@ const SECCIONES = [
 ];
 ```
 
+## Pantalla de acceso «Vitrina» (v2.2)
+
+`<PantallaAcceso marca lema vitrina titulo nota error pie>{formulario}</PantallaAcceso>`: el login, el registro y
+recuperar contraseña de todos los productos (dirección elegida por Carlos, 2026-10-23, tras revisar tendencias).
+A la izquierda el héroe de la paleta con una aurora, la marca, el lema y la **vitrina** (`TarjetaVitrina`:
+tarjetas de vidrio con datos de ejemplo del producto, decorativas); a la derecha el formulario. En el teléfono el
+héroe se vuelve una franja arriba, sin vitrina. Demo: `?acceso` en el catálogo.
+
+- **Movimiento que termina.** La aurora (4.2 s) y la entrada de la vitrina (~1.6 s) acaban y se quedan quietas: un
+  fondo en bucle exigiría botón de pausa (WCAG 2.2.2; «reducir movimiento» no basta). La vitrina se inclina con el
+  puntero sólo mientras la persona lo mueve, y nunca con «reducir movimiento».
+- **`error`**: cada vez que cambia, el formulario se sacude una vez (sin desmontarse: no pierde lo escrito).
+- **`CampoClave`**: contraseña con mostrar/ocultar (`aria-pressed`) y aviso de **Bloq Mayús**. `Campo` gana
+  `adorno` (un control dentro de la caja, a la derecha).
+
 ## Cuenta y notificaciones (v2.1)
 
 Lo que lleva toda app en la esquina: `<Notificaciones />` y `<MenuUsuario />`, en `derecha` del Armazón.
@@ -654,7 +669,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.1.2`
+   `npm install github:lecxa16/zentrya-design#v2.2.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

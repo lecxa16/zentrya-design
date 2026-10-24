@@ -48,15 +48,18 @@ export function Envoltura({ id, etiqueta, requerido, error, ayuda, children, est
   );
 }
 
+/**
+ * `adorno`: un control dentro de la caja, a la derecha (mostrar la contraseña,
+ * limpiar). La caja le deja su sitio para que el texto no corra por debajo.
+ */
 export default function Campo({
   etiqueta, valor, onCambio, onSalir, tipo = "text", marcador, requerido, error, ayuda,
-  deshabilitado, multilinea = false, filas = 3, estilo, ...resto
+  deshabilitado, multilinea = false, filas = 3, estilo, adorno, id: idPropio, ...resto
 }) {
-  const id = useId();
+  const idAuto = useId();
+  const id = idPropio || idAuto;
   const Etiqueta = multilinea ? "textarea" : "input";
-  return (
-    <Envoltura id={id} etiqueta={etiqueta} requerido={requerido} error={error}
-      ayuda={ayuda} estilo={estilo}>
+  const entrada = (
       <Etiqueta
         id={id} type={multilinea ? undefined : tipo} rows={multilinea ? filas : undefined}
         value={valor ?? ""} onChange={(e) => onCambio?.(e.target.value)}
@@ -69,6 +72,7 @@ export default function Campo({
           cursor: deshabilitado ? "not-allowed" : undefined,
           resize: multilinea ? "vertical" : undefined,
           fontFamily: "var(--ds-font)",
+          paddingRight: adorno ? 46 : undefined,
         }}
         onFocus={(e) => {
           if (!error) e.target.style.borderColor = "var(--ds-accent-trazo)";
@@ -85,6 +89,18 @@ export default function Campo({
         }}
         {...resto}
       />
+  );
+  return (
+    <Envoltura id={id} etiqueta={etiqueta} requerido={requerido} error={error}
+      ayuda={ayuda} estilo={estilo}>
+      {adorno ? (
+        <div style={{ position: "relative" }}>
+          {entrada}
+          <div style={{ position: "absolute", top: 0, right: 4, bottom: 0, display: "flex", alignItems: "center" }}>
+            {adorno}
+          </div>
+        </div>
+      ) : entrada}
     </Envoltura>
   );
 }
