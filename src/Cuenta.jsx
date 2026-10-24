@@ -50,11 +50,14 @@ export default function MenuUsuario({ nombre = "", correo, foto, opciones = [], 
   const [apariencia, setApariencia] = useState(false);
   const boton = useRef(null);
   const elegir = (fn) => () => { setAbierto(false); fn?.(); };
+  const iniciales = nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
 
   return (
     <>
       <button ref={boton} type="button" onClick={() => setAbierto((v) => !v)}
-        aria-label={`Cuenta de ${nombre}`} aria-haspopup="menu" aria-expanded={abierto}
+        /* Las iniciales se VEN: van en el nombre para que quien usa control por voz
+           pueda decirlas (WCAG 2.5.3). */
+        aria-label={`Cuenta de ${nombre}${iniciales ? ` · ${iniciales}` : ""}`} aria-haspopup="menu" aria-expanded={abierto}
         style={{
           display: "grid", placeItems: "center", width: 40, height: 40, padding: 0, flexShrink: 0,
           borderRadius: "var(--ds-r-pill)", border: "none", cursor: "pointer", background: "transparent",

@@ -98,20 +98,31 @@ function useReserva(arriba, abajo) {
 /** Los pendientes de una sección. Es un ESTADO —algo espera—, por eso va en el
     tono de riesgo; la tinta de encima es la superficie, que contrasta en los
     dos temas (4.8:1 en claro, 7:1 en oscuro). */
-function Contador({ n, sobre = false }) {
+function Contador({ n, sobre = false, en }) {
   const v = Number(n) || 0;
   if (v <= 0) return null;
+  /* El número se ve pero no se lee: el lector oye «, 3 pendientes» (texto oculto). Así el
+     texto visible de un botón queda dentro de su nombre accesible (WCAG 2.5.3, axe). */
   return (
-    <span className="ds-num" aria-label={`${v} pendientes`} style={{
+    <span className="ds-num" style={{
       ...(sobre ? { position: "absolute", top: -6, right: -9 } : {}),
+      /* `en`: encima del icono pero DESPUÉS del nombre en el documento, para que el
+         nombre accesible («Piezas, 3 pendientes») contenga el texto visible en orden. */
+      ...(en ? { position: "absolute", ...en } : {}),
       minWidth: 18, height: 18, padding: "0 5px", boxSizing: "border-box",
       borderRadius: "var(--ds-r-pill)", background: "var(--ds-risk)",
       color: "var(--ds-surface-solid)", fontSize: "0.66rem", fontWeight: 800,
       lineHeight: "18px", textAlign: "center", flexShrink: 0,
       boxShadow: sobre ? "0 0 0 2px var(--ds-surface-solid)" : "none",
-    }}>{v > 99 ? "99+" : v}</span>
+    }}><span aria-hidden>{v > 99 ? "99+" : v}</span><span style={OCULTO}>, {v} pendientes</span></span>
   );
 }
+
+/** Para el lector de pantalla, invisible en la página. */
+const OCULTO = { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden",
+  clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 };
+/** El nombre de un botón que sólo enseña icono: con sus pendientes, si los hay. */
+const nombreCon = (texto, n) => ((Number(n) || 0) > 0 ? `${texto}, ${n} pendientes` : texto);
 
 /** El icono de una sección con su contador encima. */
 function IconoSeccion({ s, alto = 18 }) {
@@ -593,11 +604,12 @@ const ANCHO_ICONO_DOCK = 48;
 
 function BotonDock({ s, esta, conTexto, onIr, botonRef, ...aria }) {
   return (
-    <button ref={botonRef} type="button" onClick={() => onIr?.(s)} title={s.texto} aria-label={s.texto}
+    <button ref={botonRef} type="button" onClick={() => onIr?.(s)} title={s.texto}
+      aria-label={conTexto ? undefined : nombreCon(s.texto, s.insignia)}
       aria-current={esta && !aria["aria-haspopup"] ? "page" : undefined} {...aria}
       style={{
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3,
-        fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 700,
+        position: "relative", fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 700,
         padding: conTexto ? "7px 15px" : 0, minWidth: conTexto ? 0 : ANCHO_ICONO_DOCK,
         height: conTexto ? "auto" : 44, boxSizing: "border-box",
         borderRadius: "var(--ds-r-item)", border: "none",
@@ -621,8 +633,9 @@ function BotonDock({ s, esta, conTexto, onIr, botonRef, ...aria }) {
         }
       }}
     >
-      <IconoSeccion s={s} alto={19} />
+      <IconoSeccion s={conTexto ? { ...s, insignia: 0 } : s} alto={19} />
       {conTexto && s.texto}
+      {conTexto && <Contador n={s.insignia} en={{ top: 1, left: "calc(50% + 3px)" }} />}
     </button>
   );
 }
@@ -753,7 +766,7 @@ function ModoDock({
 
 function BotonMas({ activo, insignia, onClick, alto }) {
   return (
-    <button onClick={onClick} title="Más secciones" aria-label="Más secciones"
+    <button onClick={onClick} title="Más secciones" aria-label={nombreCon("Más secciones", insignia)}
       style={{
         display: "grid", placeItems: "center", minWidth: ANCHO_ICONO_DOCK, height: alto,
         borderRadius: "var(--ds-r-item)", border: "none", cursor: "pointer", flexShrink: 0,
@@ -793,9 +806,8 @@ function ModoMovil({
 
   const pestana = (s, { esta, onClick, etiqueta }) => (
     <button key={s.id} onClick={onClick} aria-current={esta ? "page" : undefined}
-      aria-label={etiqueta}
       style={{
-        flex: "1 1 0", minWidth: 0, height: ALTO_DOCK, border: "none", cursor: "pointer",
+        position: "relative", flex: "1 1 0", minWidth: 0, height: ALTO_DOCK, border: "none", cursor: "pointer",
         background: "transparent", padding: "8px 2px 6px",
         display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
         fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 700,
@@ -808,10 +820,11 @@ function ModoMovil({
         borderRadius: "var(--ds-r-pill)",
         background: esta ? "var(--ds-accent-soft)" : "transparent",
         transition: "background var(--ds-t-state) var(--ds-ease)" }}>
-        <IconoSeccion s={s} />
+        <IconoSeccion s={{ ...s, insignia: 0 }} />
       </span>
       <span style={{ maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis",
         whiteSpace: "nowrap" }}>{etiqueta}</span>
+      <Contador n={s.insignia} en={{ top: 4, left: "calc(50% + 5px)" }} />
     </button>
   );
 
