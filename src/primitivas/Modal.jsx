@@ -115,7 +115,9 @@ export default function Modal({
               letterSpacing: "-0.03em", color: "var(--ds-ink)" }}>{titulo}</h2>
             {nota && (
               <p style={{ margin: "5px 0 0", fontSize: "var(--ds-t-small)",
-                color: "var(--ds-ink-3)" }}>{nota}</p>
+                /* ink-2, no ink-3: el panel es translúcido sobre el velo oscuro y
+                   queda más oscuro que el lienzo; ink-3 daba 4.36:1 (v2.0.3, axe). */
+                color: "var(--ds-ink-2)" }}>{nota}</p>
             )}
           </div>
         )}

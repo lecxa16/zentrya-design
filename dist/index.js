@@ -1511,7 +1511,7 @@ function ke({ abierto: e, onCerrar: t, titulo: n, nota: r, children: i, acciones
 						style: {
 							margin: "5px 0 0",
 							fontSize: "var(--ds-t-small)",
-							color: "var(--ds-ink-3)"
+							color: "var(--ds-ink-2)"
 						},
 						children: r
 					})]
