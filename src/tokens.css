@@ -263,20 +263,30 @@
   background-color: var(--ds-canvas);
   background-image: var(--ds-canvas-grad);
 }
-.ds-root ::selection { background: var(--ds-accent); color: var(--ds-ink-on-accent); }
-.ds-root :focus-visible { outline: 2px solid var(--ds-accent-trazo); outline-offset: 2px; border-radius: 8px; }
+/* `.ds-capa` es lo que se dibuja en un portal (Modal, Flotante, menús): vive fuera
+   de `.ds-root`, así que recibe aquí la misma base. Sin ella salía con la letra
+   del navegador y SIN anillo de foco (v2.0.2). */
+.ds-capa {
+  color: var(--ds-ink);
+  font-family: var(--ds-font);
+  font-size: var(--ds-t-body);
+  -webkit-font-smoothing: antialiased;
+}
+:is(.ds-root, .ds-capa) ::selection { background: var(--ds-accent); color: var(--ds-ink-on-accent); }
+:is(.ds-root, .ds-capa) :focus-visible { outline: 2px solid var(--ds-accent-trazo); outline-offset: 2px; border-radius: 8px; }
 /* Un campo enseña su foco con su propio borde y halo. El anillo de arriba
    encima de eso son DOS anillos, y eso es lo que se ve mal. El de botones y
    enlaces se queda: ésos no tienen borde que cambiar. */
-.ds-root :is(input, textarea, select, [role="combobox"]):focus-visible { outline: none; }
-.ds-root * { caret-color: var(--ds-accent-tinta); }
+.ds-root :is(input, textarea, select, [role="combobox"]):focus-visible,
+.ds-capa :is(input, textarea, select, [role="combobox"]):focus-visible { outline: none; }
+:is(.ds-root, .ds-capa) * { caret-color: var(--ds-accent-tinta); }
 
 /* ---------- El teléfono ---------- */
 /* Safari de iPhone hace zoom a la página entera al enfocar un campo con letra
    menor de 16 px —y no regresa solo—. El cuerpo del sistema mide 15 px, así
    que en angosto los campos suben a 16. */
 @media (max-width: 760px) {
-  .ds-root :is(input, textarea, select) { font-size: max(16px, 1em); }
+  :is(.ds-root, .ds-capa) :is(input, textarea, select) { font-size: max(16px, 1em); }
 }
 /* El destello gris que pone el navegador al tocar algo no es del sistema:
    cada pieza enseña su propio estado presionado. */

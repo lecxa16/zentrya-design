@@ -786,7 +786,7 @@ export function SelectorArmazon() {
       </button>
 
       {abierto && sitio && createPortal((
-        <div role="menu" ref={menu} style={{
+        <div role="menu" ref={menu} className="ds-capa" style={{
           position: "fixed", left: sitio.izq, top: sitio.arriba, zIndex: 70, minWidth: 186,
           padding: "var(--ds-2)", borderRadius: "var(--ds-r-card)",
           background: "var(--ds-panel)", border: "1px solid var(--ds-line)",

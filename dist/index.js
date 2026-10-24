@@ -578,7 +578,7 @@ var H = {
 	aviso: ["var(--ds-warn-soft)", "var(--ds-warn)"],
 	riesgo: ["var(--ds-risk-soft)", "var(--ds-risk)"]
 };
-function U({ children: e, tono: t = "neutro", icono: n, estilo: r, ...i }) {
+function ae({ children: e, tono: t = "neutro", icono: n, estilo: r, ...i }) {
 	let [a, o] = H[t] || H.neutro;
 	return /* @__PURE__ */ _("span", {
 		...i,
@@ -599,7 +599,7 @@ function U({ children: e, tono: t = "neutro", icono: n, estilo: r, ...i }) {
 		children: [n, e]
 	});
 }
-function ae({ children: e, tono: t = "acento", tamano: n = 38, estilo: r }) {
+function oe({ children: e, tono: t = "acento", tamano: n = 38, estilo: r }) {
 	let [i, a] = H[t] || H.acento;
 	return /* @__PURE__ */ g("div", {
 		style: {
@@ -618,7 +618,7 @@ function ae({ children: e, tono: t = "acento", tamano: n = 38, estilo: r }) {
 	});
 }
 // src/primitivas/Boton.jsx
-var oe = {
+var se = {
 	display: "inline-flex",
 	alignItems: "center",
 	justifyContent: "center",
@@ -634,7 +634,7 @@ var oe = {
 	padding: "10px 18px",
 	cursor: "pointer",
 	transition: "transform var(--ds-t-tap) var(--ds-ease), background var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease)"
-}, se = {
+}, ce = {
 	solido: {
 		background: "var(--ds-accent)",
 		color: "var(--ds-ink-on-accent)",
@@ -657,23 +657,23 @@ var oe = {
 		backdropFilter: "blur(12px)",
 		WebkitBackdropFilter: "blur(12px)"
 	}
-}, ce = "\n@keyframes ds-boton-gira { to { transform: rotate(360deg); } }\n@keyframes ds-boton-late { 50% { opacity: .35; } }\n.ds-boton-giro { width: 15px; height: 15px; flex-shrink: 0; border-radius: 50%;\n  border: 2px solid currentColor; border-right-color: transparent;\n  animation: ds-boton-gira .7s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .ds-boton-giro { animation: ds-boton-late 1.2s ease-in-out infinite; } }\n";
-function le({ estilo: e }) {
-	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("style", { children: ce }), /* @__PURE__ */ g("span", {
+}, le = "\n@keyframes ds-boton-gira { to { transform: rotate(360deg); } }\n@keyframes ds-boton-late { 50% { opacity: .35; } }\n.ds-boton-giro { width: 15px; height: 15px; flex-shrink: 0; border-radius: 50%;\n  border: 2px solid currentColor; border-right-color: transparent;\n  animation: ds-boton-gira .7s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .ds-boton-giro { animation: ds-boton-late 1.2s ease-in-out infinite; } }\n";
+function ue({ estilo: e }) {
+	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("style", { children: le }), /* @__PURE__ */ g("span", {
 		className: "ds-boton-giro",
 		"aria-hidden": !0,
 		style: e
 	})] });
 }
-function ue({ children: e, variante: t = "contorno", icono: n, esperando: r = !1, disabled: i, pleno: a = !1, estilo: o, ...s }) {
+function U({ children: e, variante: t = "contorno", icono: n, esperando: r = !1, disabled: i, pleno: a = !1, estilo: o, ...s }) {
 	let c = i || r;
 	return /* @__PURE__ */ _("button", {
 		...s,
 		disabled: c,
 		"aria-busy": r || void 0,
 		style: {
-			...oe,
-			...se[t],
+			...se,
+			...ce[t],
 			width: a ? "100%" : void 0,
 			opacity: r ? .88 : i ? .55 : 1,
 			cursor: r ? "progress" : i ? "not-allowed" : "pointer",
@@ -688,7 +688,7 @@ function ue({ children: e, variante: t = "contorno", icono: n, esperando: r = !1
 		onMouseLeave: (e) => {
 			e.currentTarget.style.transform = "none";
 		},
-		children: [r ? /* @__PURE__ */ g(le, {}) : n, e]
+		children: [r ? /* @__PURE__ */ g(ue, {}) : n, e]
 	});
 }
 // src/primitivas/Fila.jsx
@@ -1374,12 +1374,12 @@ function Oe({ vista: e, eje: t = "auto", ambito: n = "vista", children: r, estil
 }
 // src/primitivas/Modal.jsx
 function ke({ abierto: e, onCerrar: t, titulo: n, nota: r, children: i, acciones: a, ancho: o = 560, estilo: s, lado: c }) {
-	let u = W(), d = c === "derecha" && !u, f = p(null), m = p(null), v = p(t);
-	return v.current = t, l(() => {
+	let u = W(), d = c === "derecha" && !u, f = p(null), m = p(null), h = p(t);
+	return h.current = t, l(() => {
 		if (!e) return;
 		m.current = document.activeElement;
 		let t = (e) => {
-			e.key === "Escape" && (e.stopPropagation(), v.current?.());
+			e.key === "Escape" && (e.stopPropagation(), h.current?.());
 		};
 		document.addEventListener("keydown", t, !0);
 		let n = setTimeout(() => f.current?.focus(), 40);
@@ -1389,153 +1389,156 @@ function ke({ abierto: e, onCerrar: t, titulo: n, nota: r, children: i, acciones
 				m.current?.focus?.();
 			} catch {}
 		};
-	}, [e]), e ? /* @__PURE__ */ _(h, { children: [!d && /* @__PURE__ */ g("div", {
-		onClick: t,
-		"aria-hidden": "true",
-		style: {
-			position: "fixed",
-			inset: 0,
-			zIndex: 60,
-			background: "rgba(6,8,10,0.46)",
-			backdropFilter: "blur(2px)",
-			WebkitBackdropFilter: "blur(2px)",
-			animation: "ds-fade var(--ds-t-state) var(--ds-ease) both"
-		}
-	}), /* @__PURE__ */ _("div", {
-		ref: f,
-		role: "dialog",
-		"aria-modal": d ? "false" : "true",
-		"aria-label": n,
-		tabIndex: -1,
-		style: {
-			position: "fixed",
-			zIndex: 61,
-			outline: "none",
-			display: "flex",
-			flexDirection: "column",
-			overflow: "hidden",
-			background: "var(--ds-panel)",
-			border: "1px solid var(--ds-line)",
-			backdropFilter: "var(--ds-blur)",
-			WebkitBackdropFilter: "var(--ds-blur)",
-			boxShadow: "var(--ds-lift-3)",
-			...u ? {
-				left: 0,
-				right: 0,
-				bottom: 0,
-				width: "100%",
-				boxSizing: "border-box",
-				maxHeight: "calc(100dvh - var(--ds-8))",
-				borderRadius: "var(--ds-r-frame) var(--ds-r-frame) 0 0",
-				borderBottom: "none",
-				paddingBottom: "env(safe-area-inset-bottom, 0px)",
-				animation: "ds-hoja var(--ds-t-move) var(--ds-ease) both"
-			} : {
-				...d ? {
-					right: "var(--ds-4)",
-					top: "50%",
-					transform: "translateY(-50%)"
+	}, [e]), !e || typeof document > "u" ? null : v(/* @__PURE__ */ _("div", {
+		className: "ds-capa",
+		children: [!d && /* @__PURE__ */ g("div", {
+			onClick: t,
+			"aria-hidden": "true",
+			style: {
+				position: "fixed",
+				inset: 0,
+				zIndex: 60,
+				background: "rgba(6,8,10,0.46)",
+				backdropFilter: "blur(2px)",
+				WebkitBackdropFilter: "blur(2px)",
+				animation: "ds-fade var(--ds-t-state) var(--ds-ease) both"
+			}
+		}), /* @__PURE__ */ _("div", {
+			ref: f,
+			role: "dialog",
+			"aria-modal": d ? "false" : "true",
+			"aria-label": n,
+			tabIndex: -1,
+			style: {
+				position: "fixed",
+				zIndex: 61,
+				outline: "none",
+				display: "flex",
+				flexDirection: "column",
+				overflow: "hidden",
+				background: "var(--ds-panel)",
+				border: "1px solid var(--ds-line)",
+				backdropFilter: "var(--ds-blur)",
+				WebkitBackdropFilter: "var(--ds-blur)",
+				boxShadow: "var(--ds-lift-3)",
+				...u ? {
+					left: 0,
+					right: 0,
+					bottom: 0,
+					width: "100%",
+					boxSizing: "border-box",
+					maxHeight: "calc(100dvh - var(--ds-8))",
+					borderRadius: "var(--ds-r-frame) var(--ds-r-frame) 0 0",
+					borderBottom: "none",
+					paddingBottom: "env(safe-area-inset-bottom, 0px)",
+					animation: "ds-hoja var(--ds-t-move) var(--ds-ease) both"
 				} : {
-					left: "50%",
-					top: "50%",
-					transform: "translate(-50%, -50%)"
+					...d ? {
+						right: "var(--ds-4)",
+						top: "50%",
+						transform: "translateY(-50%)"
+					} : {
+						left: "50%",
+						top: "50%",
+						transform: "translate(-50%, -50%)"
+					},
+					width: `min(${o}px, calc(100% - var(--ds-8)))`,
+					maxHeight: "calc(100dvh - var(--ds-12))",
+					borderRadius: "var(--ds-r-frame)",
+					animation: `${d ? "ds-modal-lado" : "ds-modal"} var(--ds-t-move) var(--ds-ease) both`
 				},
-				width: `min(${o}px, calc(100% - var(--ds-8)))`,
-				maxHeight: "calc(100dvh - var(--ds-12))",
-				borderRadius: "var(--ds-r-frame)",
-				animation: `${d ? "ds-modal-lado" : "ds-modal"} var(--ds-t-move) var(--ds-ease) both`
+				...s
 			},
-			...s
-		},
-		children: [
-			u && /* @__PURE__ */ g("div", {
-				"aria-hidden": !0,
-				style: {
-					width: 38,
-					height: 5,
-					borderRadius: 3,
-					flexShrink: 0,
-					margin: "var(--ds-2) auto 0",
-					background: "var(--ds-line-firm)"
-				}
-			}),
-			d && /* @__PURE__ */ g("button", {
-				type: "button",
-				onClick: t,
-				"aria-label": "Cerrar",
-				title: "Cerrar (Esc)",
-				style: {
-					position: "absolute",
-					top: "var(--ds-4)",
-					right: "var(--ds-4)",
-					zIndex: 1,
-					display: "grid",
-					placeItems: "center",
-					width: 34,
-					height: 34,
-					cursor: "pointer",
-					borderRadius: "var(--ds-r-pill)",
-					border: "1px solid var(--ds-line)",
-					background: "var(--ds-surface)",
-					color: "var(--ds-ink-2)"
-				},
-				children: /* @__PURE__ */ g("svg", {
-					width: "15",
-					height: "15",
-					viewBox: "0 0 24 24",
-					fill: "none",
-					stroke: "currentColor",
-					strokeWidth: "2.2",
-					strokeLinecap: "round",
-					children: /* @__PURE__ */ g("path", { d: "M18 6L6 18M6 6l12 12" })
+			children: [
+				u && /* @__PURE__ */ g("div", {
+					"aria-hidden": !0,
+					style: {
+						width: 38,
+						height: 5,
+						borderRadius: 3,
+						flexShrink: 0,
+						margin: "var(--ds-2) auto 0",
+						background: "var(--ds-line-firm)"
+					}
+				}),
+				d && /* @__PURE__ */ g("button", {
+					type: "button",
+					onClick: t,
+					"aria-label": "Cerrar",
+					title: "Cerrar (Esc)",
+					style: {
+						position: "absolute",
+						top: "var(--ds-4)",
+						right: "var(--ds-4)",
+						zIndex: 1,
+						display: "grid",
+						placeItems: "center",
+						width: 34,
+						height: 34,
+						cursor: "pointer",
+						borderRadius: "var(--ds-r-pill)",
+						border: "1px solid var(--ds-line)",
+						background: "var(--ds-surface)",
+						color: "var(--ds-ink-2)"
+					},
+					children: /* @__PURE__ */ g("svg", {
+						width: "15",
+						height: "15",
+						viewBox: "0 0 24 24",
+						fill: "none",
+						stroke: "currentColor",
+						strokeWidth: "2.2",
+						strokeLinecap: "round",
+						children: /* @__PURE__ */ g("path", { d: "M18 6L6 18M6 6l12 12" })
+					})
+				}),
+				n && /* @__PURE__ */ _("div", {
+					style: {
+						padding: "var(--ds-5) var(--ds-5) 0",
+						flexShrink: 0,
+						paddingRight: d ? 64 : void 0
+					},
+					children: [/* @__PURE__ */ g("h2", {
+						style: {
+							margin: 0,
+							fontSize: "var(--ds-t-title)",
+							fontWeight: 800,
+							letterSpacing: "-0.03em",
+							color: "var(--ds-ink)"
+						},
+						children: n
+					}), r && /* @__PURE__ */ g("p", {
+						style: {
+							margin: "5px 0 0",
+							fontSize: "var(--ds-t-small)",
+							color: "var(--ds-ink-3)"
+						},
+						children: r
+					})]
+				}),
+				/* @__PURE__ */ g("div", {
+					style: {
+						padding: "var(--ds-5)",
+						overflowY: "auto",
+						flex: 1,
+						minHeight: 0
+					},
+					children: i
+				}),
+				a && /* @__PURE__ */ g("div", {
+					style: {
+						display: "flex",
+						justifyContent: "flex-end",
+						gap: "var(--ds-2)",
+						padding: "0 var(--ds-5) var(--ds-5)",
+						flexShrink: 0,
+						flexWrap: "wrap"
+					},
+					children: a
 				})
-			}),
-			n && /* @__PURE__ */ _("div", {
-				style: {
-					padding: "var(--ds-5) var(--ds-5) 0",
-					flexShrink: 0,
-					paddingRight: d ? 64 : void 0
-				},
-				children: [/* @__PURE__ */ g("h2", {
-					style: {
-						margin: 0,
-						fontSize: "var(--ds-t-title)",
-						fontWeight: 800,
-						letterSpacing: "-0.03em",
-						color: "var(--ds-ink)"
-					},
-					children: n
-				}), r && /* @__PURE__ */ g("p", {
-					style: {
-						margin: "5px 0 0",
-						fontSize: "var(--ds-t-small)",
-						color: "var(--ds-ink-3)"
-					},
-					children: r
-				})]
-			}),
-			/* @__PURE__ */ g("div", {
-				style: {
-					padding: "var(--ds-5)",
-					overflowY: "auto",
-					flex: 1,
-					minHeight: 0
-				},
-				children: i
-			}),
-			a && /* @__PURE__ */ g("div", {
-				style: {
-					display: "flex",
-					justifyContent: "flex-end",
-					gap: "var(--ds-2)",
-					padding: "0 var(--ds-5) var(--ds-5)",
-					flexShrink: 0,
-					flexWrap: "wrap"
-				},
-				children: a
-			})
-		]
-	})] }) : null;
+			]
+		})]
+	}), document.body);
 }
 var Ae = {
 	ok: {
@@ -1628,13 +1631,13 @@ function je({ abierto: e, severidad: t = "info", titulo: n, mensaje: r, onCerrar
 						marginTop: "var(--ds-5)",
 						flexWrap: "wrap"
 					},
-					children: [(a || []).map((e, t) => /* @__PURE__ */ g(ue, {
+					children: [(a || []).map((e, t) => /* @__PURE__ */ g(U, {
 						variante: e.primaria ? "solido" : "contorno",
 						onClick: () => {
 							e.onClick?.(), c();
 						},
 						children: e.texto
-					}, t)), !l && /* @__PURE__ */ g(ue, {
+					}, t)), !l && /* @__PURE__ */ g(U, {
 						variante: (a || []).length ? "fantasma" : "solido",
 						onClick: c,
 						children: "Entendido"
@@ -2641,6 +2644,7 @@ function rt() {
 		}), r && a && v(/* @__PURE__ */ _("div", {
 			role: "menu",
 			ref: c,
+			className: "ds-capa",
 			style: {
 				position: "fixed",
 				left: a.izq,
@@ -2812,7 +2816,7 @@ function at({ cantidad: e = 0, onQuitar: t, children: n, singular: r = "seleccio
 				}),
 				/* @__PURE__ */ g("span", { style: { flex: 1 } }),
 				n,
-				/* @__PURE__ */ g(ue, {
+				/* @__PURE__ */ g(U, {
 					variante: "fantasma",
 					onClick: t,
 					children: "Quitar selección"
@@ -3168,7 +3172,7 @@ function lt({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 						gap: "var(--ds-2)",
 						flexWrap: "wrap"
 					},
-					children: [/* @__PURE__ */ g(ue, {
+					children: [/* @__PURE__ */ g(U, {
 						variante: "fantasma",
 						onClick: r,
 						children: i
@@ -4401,7 +4405,7 @@ function rn({ etiqueta: e, valor: t, formato: n = "numero", opcionesFormato: r, 
 						},
 						children: e
 					}),
-					f && tn[f] && /* @__PURE__ */ g(U, {
+					f && tn[f] && /* @__PURE__ */ g(ae, {
 						tono: f,
 						children: p || tn[f]
 					}),
@@ -4619,7 +4623,7 @@ function ln({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 							color: "var(--ds-ink-3)"
 						},
 						children: e
-					}), x !== null && /* @__PURE__ */ g(U, {
+					}), x !== null && /* @__PURE__ */ g(ae, {
 						tono: S,
 						children: C[S]
 					})]
@@ -5103,7 +5107,7 @@ function pn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 							children: t
 						})] })
 					}),
-					r && !s && /* @__PURE__ */ g(U, {
+					r && !s && /* @__PURE__ */ g(ae, {
 						tono: r.tono,
 						children: r.texto
 					})
@@ -5135,7 +5139,7 @@ function pn({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 						estilo: { marginTop: 5 }
 					}) : fn(e.valor) ? /* @__PURE__ */ g("div", {
 						style: { marginTop: 4 },
-						children: /* @__PURE__ */ g(U, {
+						children: /* @__PURE__ */ g(ae, {
 							tono: "aviso",
 							children: "Sin capturar"
 						})
@@ -5229,7 +5233,7 @@ function gn({ elementos: e = [], columnas: t = 2, estilo: n }) {
 						gap: 8,
 						minWidth: 0
 					},
-					children: n ? /* @__PURE__ */ g(U, {
+					children: n ? /* @__PURE__ */ g(ae, {
 						tono: "aviso",
 						children: "Sin capturar"
 					}) : /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("span", {
@@ -5376,7 +5380,7 @@ function yn({ titulo: e = "Aún no hay nada aquí", children: t, acciones: n, ic
 			...a
 		},
 		children: [
-			r && /* @__PURE__ */ g(ae, {
+			r && /* @__PURE__ */ g(oe, {
 				tono: "neutro",
 				tamano: i ? 36 : 48,
 				children: r
@@ -5508,6 +5512,7 @@ function Sn({ ancla: e, abierto: t, onCerrar: n, children: r, rol: i = "menu", e
 		ref: c,
 		role: i,
 		"aria-label": a,
+		className: "ds-capa",
 		onKeyDown: (e) => {
 			if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
 			let t = [...c.current?.querySelectorAll("button:not([disabled])") || []], n = t.indexOf(document.activeElement);
@@ -6116,7 +6121,7 @@ function Pn({ tarjeta: e, formatoValor: t }) {
 					marginRight: "auto"
 				},
 				children: J(e.valor, t)
-			}), e.etiquetas?.map((e, t) => /* @__PURE__ */ g(U, {
+			}), e.etiquetas?.map((e, t) => /* @__PURE__ */ g(ae, {
 				tono: e.tono,
 				children: e.texto
 			}, t))]
@@ -6345,7 +6350,7 @@ function zn({ eventos: e = [], ahora: t, agrupar: n = !0, vacio: r = "Sin activi
 					padding: "var(--ds-2) 0"
 				},
 				children: [
-					e.icono ? /* @__PURE__ */ g(ae, {
+					e.icono ? /* @__PURE__ */ g(oe, {
 						tono: e.tono || "neutro",
 						tamano: 34,
 						children: e.icono
@@ -6933,40 +6938,184 @@ function Zn({ opciones: e = [], valor: t, onCambio: n, etiqueta: r, tamano: i = 
 	});
 }
 // src/primitivas/SelectorPaleta.jsx
-function Qn({ etiqueta: e = "Paleta de color", tamano: t, pleno: n, estilo: r }) {
-	let { tema: i, paleta: a, paletas: o, fijarPaleta: s } = A();
-	return o.length ? /* @__PURE__ */ g(Zn, {
-		etiqueta: e,
-		valor: a,
-		onCambio: s,
-		tamano: t,
-		pleno: n,
-		estilo: r,
-		opciones: o.map((e) => ({
-			valor: e.id,
-			texto: e.nombre,
-			icono: /* @__PURE__ */ g("span", {
-				"aria-hidden": !0,
+function Qn({ etiqueta: e = "Paleta de color", estilo: t }) {
+	let { tema: n, paleta: r, paletas: i, fijarPaleta: a } = A(), o = p([]);
+	if (!i.length) return null;
+	let s = Math.max(0, i.findIndex((e) => e.id === r));
+	return /* @__PURE__ */ g("div", {
+		role: "radiogroup",
+		"aria-label": e,
+		onKeyDown: (e) => {
+			let t = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+			if (!t) return;
+			e.preventDefault();
+			let n = (s + t + i.length) % i.length;
+			a(i[n].id), o.current[n]?.focus();
+		},
+		style: {
+			display: "grid",
+			gap: "var(--ds-2)",
+			gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+			...t
+		},
+		children: i.map((e, t) => {
+			let r = t === s;
+			return /* @__PURE__ */ _("button", {
+				ref: (e) => {
+					o.current[t] = e;
+				},
+				type: "button",
+				role: "radio",
+				"aria-checked": r,
+				tabIndex: r ? 0 : -1,
+				onClick: () => a(e.id),
 				style: {
-					width: 12,
-					height: 12,
-					borderRadius: "var(--ds-r-pill)",
-					flex: "0 0 auto",
-					background: e.muestra[i],
-					boxShadow: "inset 0 0 0 1px var(--ds-line-firm)"
-				}
-			})
-		}))
-	}) : null;
+					display: "flex",
+					alignItems: "center",
+					gap: 10,
+					minHeight: 44,
+					padding: "0 14px",
+					cursor: "pointer",
+					fontFamily: "var(--ds-font)",
+					fontSize: "var(--ds-t-small)",
+					fontWeight: 700,
+					borderRadius: "var(--ds-r-item)",
+					textAlign: "left",
+					color: r ? "var(--ds-ink)" : "var(--ds-ink-2)",
+					background: r ? "var(--ds-surface-solid)" : "var(--ds-surface-sunk)",
+					border: `1px solid ${r ? "var(--ds-accent-trazo)" : "var(--ds-line)"}`,
+					boxShadow: r ? "var(--ds-lift-1)" : "none",
+					transition: "border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease)"
+				},
+				children: [/* @__PURE__ */ g("span", {
+					"aria-hidden": !0,
+					style: {
+						width: 16,
+						height: 16,
+						borderRadius: "var(--ds-r-pill)",
+						flex: "0 0 auto",
+						background: e.muestra[n],
+						boxShadow: "inset 0 0 0 1px var(--ds-line-firm)"
+					}
+				}), e.nombre]
+			}, e.id);
+		})
+	});
+}
+// src/Apariencia.jsx
+var $n = [{
+	valor: "light",
+	texto: "Claro"
+}, {
+	valor: "dark",
+	texto: "Oscuro"
+}], er = [
+	{
+		valor: "topbar",
+		texto: "Arriba"
+	},
+	{
+		valor: "sidebar",
+		texto: "Lateral"
+	},
+	{
+		valor: "dock",
+		texto: "Dock"
+	}
+], tr = /* @__PURE__ */ _("svg", {
+	width: "18",
+	height: "18",
+	viewBox: "0 0 24 24",
+	fill: "none",
+	stroke: "currentColor",
+	strokeWidth: "1.8",
+	strokeLinecap: "round",
+	strokeLinejoin: "round",
+	"aria-hidden": !0,
+	children: [/* @__PURE__ */ g("circle", {
+		cx: "12",
+		cy: "12",
+		r: "3"
+	}), /* @__PURE__ */ g("path", { d: "M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" })]
+});
+function nr({ etiqueta: e, children: t }) {
+	return /* @__PURE__ */ _("div", {
+		style: {
+			display: "grid",
+			gap: "var(--ds-2)"
+		},
+		children: [/* @__PURE__ */ g("span", {
+			style: {
+				fontSize: "var(--ds-t-small)",
+				fontWeight: 700,
+				color: "var(--ds-ink-2)"
+			},
+			children: e
+		}), t]
+	});
+}
+function rr({ texto: e }) {
+	let [t, n] = m(!1), { tema: r, fijar: i, paletas: a } = A(), { preferencia: o, fijarModo: s, movil: c } = Le(), l = o !== void 0 && !c;
+	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(U, {
+		variante: "fantasma",
+		icono: tr,
+		onClick: () => n(!0),
+		"aria-label": e ? void 0 : "Apariencia",
+		"aria-haspopup": "dialog",
+		children: e
+	}), /* @__PURE__ */ g(ke, {
+		abierto: t,
+		onCerrar: () => n(!1),
+		titulo: "Apariencia",
+		nota: "Se aplica al momento y se recuerda en este navegador.",
+		ancho: 480,
+		acciones: /* @__PURE__ */ g(U, {
+			variante: "solido",
+			onClick: () => n(!1),
+			children: "Listo"
+		}),
+		children: /* @__PURE__ */ _("div", {
+			style: {
+				display: "grid",
+				gap: "var(--ds-5)"
+			},
+			children: [
+				/* @__PURE__ */ g(nr, {
+					etiqueta: "Tema",
+					children: /* @__PURE__ */ g(Zn, {
+						etiqueta: "Tema",
+						opciones: $n,
+						valor: r,
+						onCambio: i,
+						pleno: !0
+					})
+				}),
+				a.length > 0 && /* @__PURE__ */ g(nr, {
+					etiqueta: "Paleta de color",
+					children: /* @__PURE__ */ g(Qn, {})
+				}),
+				l && /* @__PURE__ */ g(nr, {
+					etiqueta: "Navegación",
+					children: /* @__PURE__ */ g(Zn, {
+						etiqueta: "Navegación",
+						opciones: er,
+						valor: o,
+						onCambio: s,
+						pleno: !0
+					})
+				})
+			]
+		})
+	})] });
 }
 // src/primitivas/SelectorPeriodo.jsx
-var $n = (e) => String(e).padStart(2, "0"), er = (e) => `${e.getFullYear()}-${$n(e.getMonth() + 1)}-${$n(e.getDate())}`, tr = (e) => {
+var ir = (e) => String(e).padStart(2, "0"), ar = (e) => `${e.getFullYear()}-${ir(e.getMonth() + 1)}-${ir(e.getDate())}`, or = (e) => {
 	let [t, n, r] = String(e).slice(0, 10).split("-").map(Number);
 	return new Date(t, n - 1, r);
-}, nr = (e, t) => {
+}, sr = (e, t) => {
 	let n = new Date(e);
 	return n.setDate(n.getDate() + t), n;
-}, rr = [
+}, cr = [
 	{
 		clave: "hoy",
 		etiqueta: "Hoy"
@@ -7004,20 +7153,20 @@ var $n = (e) => String(e).padStart(2, "0"), er = (e) => `${e.getFullYear()}-${$n
 		etiqueta: "Año anterior"
 	}
 ];
-function ir(e, t = /* @__PURE__ */ new Date()) {
-	let n = t instanceof Date ? new Date(t.getFullYear(), t.getMonth(), t.getDate()) : tr(t), r = n.getFullYear(), i = n.getMonth(), a, o;
+function lr(e, t = /* @__PURE__ */ new Date()) {
+	let n = t instanceof Date ? new Date(t.getFullYear(), t.getMonth(), t.getDate()) : or(t), r = n.getFullYear(), i = n.getMonth(), a, o;
 	switch (e) {
 		case "hoy":
 			a = n, o = n;
 			break;
 		case "ayer":
-			a = nr(n, -1), o = a;
+			a = sr(n, -1), o = a;
 			break;
 		case "7d":
-			a = nr(n, -6), o = n;
+			a = sr(n, -6), o = n;
 			break;
 		case "30d":
-			a = nr(n, -29), o = n;
+			a = sr(n, -29), o = n;
 			break;
 		case "mes":
 			a = new Date(r, i, 1), o = new Date(r, i + 1, 0);
@@ -7038,19 +7187,19 @@ function ir(e, t = /* @__PURE__ */ new Date()) {
 			break;
 		default: return null;
 	}
-	let s = rr.find((t) => t.clave === e);
+	let s = cr.find((t) => t.clave === e);
 	return {
 		clave: e,
-		desde: er(a),
-		hasta: er(o),
+		desde: ar(a),
+		hasta: ar(o),
 		etiqueta: s?.etiqueta ?? e
 	};
 }
-function ar(e, t) {
+function ur(e, t) {
 	return e ? e === t ? q(e, "media") : `${q(e, "media")} – ${q(t, "media")}` : "";
 }
-function or({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "Periodo", estilo: a }) {
-	let o = p(null), [s, c] = m(!1), l = r ?? /* @__PURE__ */ new Date(), u = rr.filter((e) => !n || n.includes(e.clave)), d = e ? ir(e, l) : null;
+function dr({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "Periodo", estilo: a }) {
+	let o = p(null), [s, c] = m(!1), l = r ?? /* @__PURE__ */ new Date(), u = cr.filter((e) => !n || n.includes(e.clave)), d = e ? lr(e, l) : null;
 	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ _("button", {
 		ref: o,
 		type: "button",
@@ -7140,10 +7289,10 @@ function or({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "P
 		etiqueta: i,
 		minAncho: 250,
 		children: u.map((n) => {
-			let r = ir(n.clave, l);
+			let r = lr(n.clave, l);
 			return /* @__PURE__ */ g(Cn, {
 				elegida: n.clave === e,
-				nota: ar(r.desde, r.hasta),
+				nota: ur(r.desde, r.hasta),
 				onClick: () => {
 					c(!1), t?.(r);
 				},
@@ -7153,7 +7302,7 @@ function or({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "P
 	})] });
 }
 // src/primitivas/Chip.jsx
-function sr({ texto: e, valor: t, onQuitar: n, estilo: r }) {
+function fr({ texto: e, valor: t, onQuitar: n, estilo: r }) {
 	let i = t != null && t !== "" ? `${e}: ${t}` : e;
 	return /* @__PURE__ */ _("span", {
 		style: {
@@ -7228,7 +7377,7 @@ function sr({ texto: e, valor: t, onQuitar: n, estilo: r }) {
 		})]
 	});
 }
-function cr({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado: i, estilo: a }) {
+function pr({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado: i, estilo: a }) {
 	return /* @__PURE__ */ _("div", {
 		role: "search",
 		style: {
@@ -7262,7 +7411,7 @@ function cr({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado
 				gap: "var(--ds-2)",
 				marginTop: "var(--ds-3)"
 			},
-			children: [t.map((e) => /* @__PURE__ */ g(sr, {
+			children: [t.map((e) => /* @__PURE__ */ g(fr, {
 				texto: e.texto,
 				valor: e.valor,
 				onQuitar: n ? () => n(e.clave) : void 0
@@ -7286,14 +7435,14 @@ function cr({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado
 	});
 }
 // src/graficas/GraficaLinea.jsx
-var lr = 6.6, ur = (e) => [...String(e ?? "")].reduce((e, t) => e + (t >= "A" && t <= "Z" ? 8 : t === " " ? 3.4 : lr), 0), dr = 140, fr = (e, t) => {
+var mr = 6.6, hr = (e) => [...String(e ?? "")].reduce((e, t) => e + (t >= "A" && t <= "Z" ? 8 : t === " " ? 3.4 : mr), 0), gr = 140, _r = (e, t) => {
 	let n = String(e ?? "");
-	if (ur(n) <= t) return n;
+	if (hr(n) <= t) return n;
 	let r = n;
-	for (; r.length > 1 && ur(r + "…") > t;) r = r.slice(0, -1);
+	for (; r.length > 1 && hr(r + "…") > t;) r = r.slice(0, -1);
 	return r.trimEnd() + "…";
 };
-function pr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "numero", area: i = !1, apilada: a = !1, meta: o, titulo: s, cero: c = !0, estilo: l }) {
+function vr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "numero", area: i = !1, apilada: a = !1, meta: o, titulo: s, cero: c = !0, estilo: l }) {
 	let [u, d] = Kt(), [p, h] = m(null), v = Math.max(t.length, ...e.map((e) => (e.valores || []).length), 0), y = a && i, b = o == null ? null : typeof o == "object" ? o.valor : o, x = o && typeof o == "object" && o.texto ? o.texto : "Meta", S = f(() => {
 		let t = Array(v).fill(0);
 		return e.map((e) => {
@@ -7317,9 +7466,9 @@ function pr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 		y
 	]), C = S.flatMap((e) => e.arriba.filter((e) => e !== null));
 	b !== null && C.push(Number(b));
-	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = qt(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String(Q(e, A)).length)) * lr + 12, ee = j ? Math.min(dr, Math.max(...e.map((e) => ur(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = Jt(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * lr + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), L = Math.max(1, Math.ceil(v / ne)), R = [], z = -Infinity;
+	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = qt(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String(Q(e, A)).length)) * mr + 12, ee = j ? Math.min(gr, Math.max(...e.map((e) => hr(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = Jt(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * mr + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), L = Math.max(1, Math.ceil(v / ne)), R = [], z = -Infinity;
 	for (let e = 0; e < v; e += L) {
-		let n = String(t[e] ?? e + 1).length * lr, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
+		let n = String(t[e] ?? e + 1).length * mr, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
 		i >= z + 8 && (R.push({
 			i: e,
 			ancla: r
@@ -7455,7 +7604,7 @@ function pr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 								fill: "var(--ds-ink-2)",
 								fontWeight: 700
 							},
-							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), fr(e[t.si].nombre, ee - 12)]
+							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), _r(e[t.si].nombre, ee - 12)]
 						}, t.si));
 					})(),
 					p !== null && /* @__PURE__ */ _("g", {
@@ -7500,17 +7649,17 @@ function pr({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 	});
 }
 // src/graficas/GraficaBarras.jsx
-var mr = 6.6, hr = 4, gr = 2;
-function _r(e, t, n, r, i) {
+var yr = 6.6, br = 4, xr = 2;
+function Sr(e, t, n, r, i) {
 	if (n <= 0 || r <= 0) return "";
-	let a = Math.min(hr, n / 2, r / 2);
+	let a = Math.min(br, n / 2, r / 2);
 	return i === "arriba" ? `M${e},${t + r} L${e},${t + a} Q${e},${t} ${e + a},${t} L${e + n - a},${t} Q${e + n},${t} ${e + n},${t + a} L${e + n},${t + r} Z` : i === "abajo" ? `M${e},${t} L${e + n},${t} L${e + n},${t + r - a} Q${e + n},${t + r} ${e + n - a},${t + r} L${e + a},${t + r} Q${e},${t + r} ${e},${t + r - a} Z` : i === "derecha" ? `M${e},${t} L${e + n - a},${t} Q${e + n},${t} ${e + n},${t + a} L${e + n},${t + r - a} Q${e + n},${t + r} ${e + n - a},${t + r} L${e},${t + r} Z` : i === "izquierda" ? `M${e + n},${t} L${e + n},${t + r} L${e + a},${t + r} Q${e},${t + r} ${e},${t + r - a} L${e},${t + a} Q${e},${t} ${e + a},${t} Z` : `M${e},${t} h${n} v${r} h${-n} Z`;
 }
-var vr = (e, t) => {
-	let n = String(e ?? ""), r = Math.max(3, Math.floor(t / mr));
+var Cr = (e, t) => {
+	let n = String(e ?? ""), r = Math.max(3, Math.floor(t / yr));
 	return n.length > r ? `${n.slice(0, r - 1)}…` : n;
 };
-function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: i = !1, etiquetas: a = !1, resaltar: o, alto: s, formato: c = "numero", titulo: l, estilo: u }) {
+function wr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: i = !1, etiquetas: a = !1, resaltar: o, alto: s, formato: c = "numero", titulo: l, estilo: u }) {
 	let [d, f] = Kt(), [p, h] = m(null), v = e ? e.map((e) => e.etiqueta) : t || [], y = e ? [{
 		clave: "valor",
 		nombre: l || "Valor",
@@ -7531,7 +7680,7 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		let n = S(t, e);
 		n !== null && (w = Math.max(w, n), C = Math.min(C, n));
 	}
-	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = qt(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String(Q(e, j)).length)) * mr + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), L = Math.max(10, f - P - F), R = M - I - ne, z = (r ? R : L) / Math.max(1, b), B = z * (r ? .22 : .26), re = z - B, ie = i || x === 1 ? re : (re - gr * (x - 1)) / x, V = r ? Jt(k, A, P, P + L) : Jt(k, A, I + R, I), H = V(0), U = (e) => o == null || o === e ? 1 : .35, ae = (e) => {
+	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = qt(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String(Q(e, j)).length)) * yr + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), L = Math.max(10, f - P - F), R = M - I - ne, z = (r ? R : L) / Math.max(1, b), B = z * (r ? .22 : .26), re = z - B, ie = i || x === 1 ? re : (re - xr * (x - 1)) / x, V = r ? Jt(k, A, P, P + L) : Jt(k, A, I + R, I), H = V(0), ae = (e) => o == null || o === e ? 1 : .35, oe = (e) => {
 		let t = [], n = (r ? I : P) + e * z + B / 2;
 		if (i) {
 			let r = 0, i = 0, a = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) > 0), o = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) < 0);
@@ -7551,7 +7700,7 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		} else y.forEach((r, i) => {
 			let a = S(i, e);
 			a !== null && t.push({
-				off: n + i * (ie + gr),
+				off: n + i * (ie + xr),
 				grueso: ie,
 				desde: 0,
 				hasta: a,
@@ -7560,31 +7709,31 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 			});
 		});
 		return t;
-	}, oe = (e) => {
-		let t = V(e.desde), n = V(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? gr : 0;
+	}, se = (e) => {
+		let t = V(e.desde), n = V(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? xr : 0;
 		if (r) {
 			let r = Math.min(t, n), i = Math.abs(n - t), s = e.extremo ? a ? "derecha" : "izquierda" : "ninguno";
-			return _r(a ? r : r + o, e.off, i - o, e.grueso, s);
+			return Sr(a ? r : r + o, e.off, i - o, e.grueso, s);
 		}
 		let s = Math.min(t, n), c = Math.abs(n - t), l = e.extremo ? a ? "arriba" : "abajo" : "ninguno";
-		return a ? _r(e.off, s + o, e.grueso, c - o, l) : _r(e.off, s, e.grueso, c - o, l);
-	}, se = (e) => y.reduce((t, n, r) => t + (S(r, e) ?? 0), 0), ce = {
+		return a ? Sr(e.off, s + o, e.grueso, c - o, l) : Sr(e.off, s, e.grueso, c - o, l);
+	}, ce = (e) => y.reduce((t, n, r) => t + (S(r, e) ?? 0), 0), le = {
 		columnas: ["", ...y.map((e) => e.nombre)],
 		filas: v.map((e, t) => [e, ...y.map((e, n) => Q(S(n, t), c))])
-	}, le = (e) => (r ? I : P) + e * z + z / 2, ue = p === null ? {
+	}, ue = (e) => (r ? I : P) + e * z + z / 2, U = p === null ? {
 		x: 0,
 		y: 0
 	} : r ? {
-		x: Math.min(f - 10, V(Math.max(0, i ? se(p) : Math.max(...y.map((e, t) => S(t, p) ?? 0))))),
-		y: le(p)
+		x: Math.min(f - 10, V(Math.max(0, i ? ce(p) : Math.max(...y.map((e, t) => S(t, p) ?? 0))))),
+		y: ue(p)
 	} : {
-		x: le(p),
+		x: ue(p),
 		y: I + R / 3
 	}, de = Math.max(1, Math.ceil(b * 44 / Math.max(1, L)));
 	return /* @__PURE__ */ g(Z, {
 		titulo: l,
 		series: x > 1 ? y : [],
-		tabla: T ? ce : null,
+		tabla: T ? le : null,
 		estilo: u,
 		alto: M,
 		children: /* @__PURE__ */ _("div", {
@@ -7631,7 +7780,7 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 					})] }, e)),
 					v.map((e, t) => /* @__PURE__ */ _("g", {
 						tabIndex: 0,
-						opacity: U(t),
+						opacity: ae(t),
 						"aria-label": `${e}: ${y.map((e, n) => `${x > 1 ? `${e.nombre} ` : ""}${Q(S(n, t), c)}`).join(", ")}`,
 						onMouseEnter: () => h(t),
 						onMouseLeave: () => h(null),
@@ -7655,13 +7804,13 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 								height: R,
 								fill: p === t ? "var(--ds-surface-sunk)" : "transparent"
 							}),
-							ae(t).map((e, t) => /* @__PURE__ */ g("path", {
-								d: oe(e),
+							oe(t).map((e, t) => /* @__PURE__ */ g("path", {
+								d: se(e),
 								fill: Y(y[e.si], e.si)
 							}, t)),
 							r ? /* @__PURE__ */ _("text", {
 								x: P - 10,
-								y: le(t),
+								y: ue(t),
 								dy: "0.32em",
 								textAnchor: "end",
 								style: {
@@ -7669,23 +7818,23 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 									fontSize: 12,
 									fill: "var(--ds-ink-2)"
 								},
-								children: [/* @__PURE__ */ g("title", { children: e }), vr(e, ee)]
+								children: [/* @__PURE__ */ g("title", { children: e }), Cr(e, ee)]
 							}) : t % de === 0 && /* @__PURE__ */ _("text", {
-								x: le(t),
+								x: ue(t),
 								y: M - 6,
 								textAnchor: "middle",
 								style: X,
-								children: [/* @__PURE__ */ g("title", { children: e }), vr(e, z * de - 4)]
+								children: [/* @__PURE__ */ g("title", { children: e }), Cr(e, z * de - 4)]
 							}),
 							a && (() => {
-								let e = i || x === 1 ? i ? se(t) : S(0, t) : null;
+								let e = i || x === 1 ? i ? ce(t) : S(0, t) : null;
 								if (e === null) return null;
 								let n = Q(e, j);
 								if (r) {
 									let r = V(e);
 									return /* @__PURE__ */ g("text", {
 										x: e >= 0 ? r + 6 : r - 6,
-										y: le(t),
+										y: ue(t),
 										dy: "0.32em",
 										textAnchor: e >= 0 ? "start" : "end",
 										style: {
@@ -7699,7 +7848,7 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 								if (z < 34) return null;
 								let a = V(e);
 								return /* @__PURE__ */ g("text", {
-									x: le(t),
+									x: ue(t),
 									y: e >= 0 ? a - 6 : a + 14,
 									textAnchor: "middle",
 									style: {
@@ -7728,8 +7877,8 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 				]
 			}) : /* @__PURE__ */ g($, { alto: M }), /* @__PURE__ */ g(Zt, {
 				visible: p !== null,
-				x: ue.x,
-				y: ue.y,
+				x: U.x,
+				y: U.y,
 				ancho: f,
 				titulo: p === null ? "" : v[p],
 				renglones: p === null ? [] : [...y.map((e, t) => ({
@@ -7738,26 +7887,26 @@ function yr({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 					valor: Q(S(t, p), c)
 				})), ...i && x > 1 ? [{
 					nombre: "Total",
-					valor: Q(se(p), c)
+					valor: Q(ce(p), c)
 				}] : []]
 			})]
 		})
 	});
 }
 // src/graficas/Dona.jsx
-var br = 6;
-function xr(e, t, n, r, i, a) {
+var Tr = 6;
+function Er(e, t, n, r, i, a) {
 	let o = (n, r) => [e + n * Math.sin(r), t - n * Math.cos(r)], s = +(a - i > Math.PI), [c, l] = o(r, i), [u, d] = o(r, a), [f, p] = o(n, a), [m, h] = o(n, i);
 	return `M${c},${l} A${r},${r} 0 ${s} 1 ${u},${d} L${f},${p} A${n},${n} 0 ${s} 0 ${m},${h} Z`;
 }
-function Sr({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", tamano: r = 200, grosor: i = 26, titulo: a, estilo: o }) {
+function Dr({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", tamano: r = 200, grosor: i = 26, titulo: a, estilo: o }) {
 	let [s, c] = m(null), l = e.map((e, t) => ({
 		...e,
 		propio: e.color,
 		color: e.color || Y(null, t),
 		valor: Number(e.valor)
 	})).filter((e) => Number.isFinite(e.valor) && e.valor > 0), u = l;
-	if (l.length > br) {
+	if (l.length > Tr) {
 		let e = [...l].sort((e, t) => t.valor - e.valor), t = e.slice(5);
 		u = [...e.slice(0, 5).map((e, t) => ({
 			...e,
@@ -7820,10 +7969,10 @@ function Sr({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 					style: { display: "block" },
 					"aria-label": `${a ? `${a}: ` : ""}${u.map((e) => `${e.etiqueta} ${K(e.valor / d)}`).join(", ")}`,
 					children: u.length === 1 ? /* @__PURE__ */ g("path", {
-						d: `${xr(f, p, v, h, 0, Math.PI)} ${xr(f, p, v, h, Math.PI, Math.PI * 2)}`,
+						d: `${Er(f, p, v, h, 0, Math.PI)} ${Er(f, p, v, h, Math.PI, Math.PI * 2)}`,
 						fill: u[0].color
 					}) : u.map((e, t) => /* @__PURE__ */ g("path", {
-						d: xr(f, p, s === t ? v - 3 : v, s === t ? h + 2 : h, x[t].a0, x[t].a1),
+						d: Er(f, p, s === t ? v - 3 : v, s === t ? h + 2 : h, x[t].a0, x[t].a1),
 						fill: e.color,
 						opacity: s === null || s === t ? 1 : .4,
 						onMouseEnter: () => c(t),
@@ -7955,13 +8104,13 @@ function Sr({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 	});
 }
 // src/graficas/Embudo.jsx
-var Cr = [
+var Or = [
 	5,
 	4,
 	3,
 	2
-], wr = (e, t) => Cr[t <= 1 ? 0 : Math.round(e / (t - 1) * (Cr.length - 1))];
-function Tr({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
+], kr = (e, t) => Or[t <= 1 ? 0 : Math.round(e / (t - 1) * (Or.length - 1))];
+function Ar({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 	let [i, a] = Kt(), o = e.filter((e) => Number.isFinite(Number(e.valor))), s = Math.max(0, ...o.map((e) => Number(e.valor))), c = Number(o[0]?.valor), l = a > 0 && a < 460, u = {
 		columnas: [
 			"Etapa",
@@ -8004,7 +8153,7 @@ function Tr({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 						children: /* @__PURE__ */ g("div", { style: {
 							width: `${Math.max(1.5, r / s * 100)}%`,
 							height: "100%",
-							background: `var(--ds-sec-${wr(n, o.length)})`,
+							background: `var(--ds-sec-${kr(n, o.length)})`,
 							borderRadius: "var(--ds-r-item)",
 							transition: "width var(--ds-t-move) var(--ds-ease)"
 						} })
@@ -8088,8 +8237,8 @@ function Tr({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 	});
 }
 // src/graficas/Cascada.jsx
-var Er = 6.6, Dr = 4;
-function Or({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r = !0, titulo: i, estilo: a }) {
+var jr = 6.6, Mr = 4;
+function Nr({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r = !0, titulo: i, estilo: a }) {
 	let [o, s] = Kt(), [c, l] = m(null), u = 0, d = e.map((e) => {
 		let t = Number(e.valor);
 		if (e.tipo === "total") {
@@ -8110,8 +8259,8 @@ function Or({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 			delta: n,
 			total: !1
 		};
-	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = qt(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String(Q(e, b)).length)) * Er + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = Jt(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? Q(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${Q(e.delta, t)}`, A = (e, t) => {
-		let n = Math.max(3, Math.floor(t / Er));
+	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = qt(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String(Q(e, b)).length)) * jr + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = Jt(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? Q(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${Q(e.delta, t)}`, A = (e, t) => {
+		let n = Math.max(3, Math.floor(t / jr));
 		return e.length > n ? `${e.slice(0, n - 1)}…` : e;
 	}, j = {
 		columnas: [
@@ -8159,7 +8308,7 @@ function Or({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 					style: X,
 					children: Q(e, b)
 				})] }, e)), d.map((e, i) => {
-					let a = x + i * T + (T - E) / 2, o = D(Math.max(e.desde, e.hasta)), s = D(Math.min(e.desde, e.hasta)), u = Math.max(1, s - o), f = e.hasta >= e.desde, p = Math.min(Dr, E / 2, u / 2), m = f ? `M${a},${o + u} L${a},${o + p} Q${a},${o} ${a + p},${o} L${a + E - p},${o} Q${a + E},${o} ${a + E},${o + p} L${a + E},${o + u} Z` : `M${a},${o} L${a + E},${o} L${a + E},${o + u - p} Q${a + E},${o + u} ${a + E - p},${o + u} L${a + p},${o + u} Q${a},${o + u} ${a},${o + u - p} Z`, h = d[i + 1];
+					let a = x + i * T + (T - E) / 2, o = D(Math.max(e.desde, e.hasta)), s = D(Math.min(e.desde, e.hasta)), u = Math.max(1, s - o), f = e.hasta >= e.desde, p = Math.min(Mr, E / 2, u / 2), m = f ? `M${a},${o + u} L${a},${o + p} Q${a},${o} ${a + p},${o} L${a + E - p},${o} Q${a + E},${o} ${a + E},${o + p} L${a + E},${o + u} Z` : `M${a},${o} L${a + E},${o} L${a + E},${o + u - p} Q${a + E},${o + u} ${a + E - p},${o + u} L${a + p},${o + u} Q${a},${o + u} ${a},${o + u - p} Z`, h = d[i + 1];
 					return /* @__PURE__ */ _("g", {
 						tabIndex: 0,
 						style: { outline: "none" },
@@ -8231,21 +8380,21 @@ function Or({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 		})
 	});
 }
-function kr(e) {
+function Pr(e) {
 	let t = e.filter((e) => e != null && Number.isFinite(Number(e))).map(Number);
 	return t.length ? {
 		min: Math.min(...t),
 		max: Math.max(...t)
 	} : null;
 }
-function Ar(e, t) {
+function Fr(e, t) {
 	if (e == null || !Number.isFinite(Number(e)) || !t) return 0;
 	if (t.max === t.min) return 3;
 	let n = (Number(e) - t.min) / (t.max - t.min);
 	return Math.min(5, 1 + Math.floor(n * 5));
 }
-var jr = (e) => `var(--ds-sec-${e})`;
-function Mr({ rango: e, formato: t }) {
+var Ir = (e) => `var(--ds-sec-${e})`;
+function Lr({ rango: e, formato: t }) {
 	if (!e) return null;
 	let n = (e.max - e.min) / 5;
 	return /* @__PURE__ */ _("div", {
@@ -8270,7 +8419,7 @@ function Mr({ rango: e, formato: t }) {
 					width: 22,
 					height: 10,
 					borderRadius: "var(--ds-r-mini)",
-					background: jr(i + 1)
+					background: Ir(i + 1)
 				}
 			}, i)),
 			/* @__PURE__ */ g("span", {
@@ -8288,15 +8437,15 @@ function Mr({ rango: e, formato: t }) {
 					width: 10,
 					height: 10,
 					borderRadius: "var(--ds-r-mini)",
-					background: jr(0)
+					background: Ir(0)
 				} }), "Sin dato"]
 			})
 		]
 	});
 }
 // src/graficas/MapaCalor.jsx
-function Nr({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "numero", celdaMinima: i = 28, altoCelda: a = 28, titulo: o, estilo: s }) {
-	let c = p(null), l = u().replace(/:/g, ""), [d, f] = m(null), v = kr(n.flat()), y = Math.min(140, Math.max(36, ...e.map((e) => String(e).length * 7 + 12))), b = (e, t) => n?.[e]?.[t], x = (e, n) => ({
+function Rr({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "numero", celdaMinima: i = 28, altoCelda: a = 28, titulo: o, estilo: s }) {
+	let c = p(null), l = u().replace(/:/g, ""), [d, f] = m(null), v = Pr(n.flat()), y = Math.min(140, Math.max(36, ...e.map((e) => String(e).length * 7 + 12))), b = (e, t) => n?.[e]?.[t], x = (e, n) => ({
 		x: y + (n + .5) * (c.current ? (c.current.scrollWidth - y) / Math.max(1, t.length) : i),
 		y: 22 + e * (a + 3)
 	}), S = (n, r) => f((i) => {
@@ -8392,7 +8541,7 @@ function Nr({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 							style: {
 								height: a,
 								borderRadius: "var(--ds-r-mini)",
-								background: jr(Ar(s, v)),
+								background: Ir(Fr(s, v)),
 								boxShadow: o ? "0 0 0 2px var(--ds-ink)" : "none",
 								transition: "box-shadow var(--ds-t-tap) var(--ds-ease-out)"
 							}
@@ -8410,14 +8559,14 @@ function Nr({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 					valor: Q(b(...d), r)
 				}] : []
 			})]
-		}), /* @__PURE__ */ g(Mr, {
+		}), /* @__PURE__ */ g(Lr, {
 			rango: v,
 			formato: r
 		})] }) : /* @__PURE__ */ g($, {})
 	});
 }
 // src/graficas/CalendarioCalor.jsx
-var Pr = 13, Fr = [
+var zr = 13, Br = [
 	"L",
 	"",
 	"M",
@@ -8425,14 +8574,14 @@ var Pr = 13, Fr = [
 	"V",
 	"",
 	""
-], Ir = (e) => {
+], Vr = (e) => {
 	if (e instanceof Date) return new Date(e.getFullYear(), e.getMonth(), e.getDate());
 	let [t, n, r] = String(e).slice(0, 10).split("-").map(Number);
 	return new Date(t, n - 1, r);
-}, Lr = (e) => `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, "0")}-${String(e.getDate()).padStart(2, "0")}`;
-function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: i, estilo: a }) {
+}, Hr = (e) => `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, "0")}-${String(e.getDate()).padStart(2, "0")}`;
+function Ur({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: i, estilo: a }) {
 	let o = p(null), [s, c] = m(null), { dias: l, semanas: u, mapa: v, rango: y } = f(() => {
-		let r = new Map(e.map((e) => [String(e.fecha).slice(0, 10), e.valor])), i = e.map((e) => Ir(e.fecha)).sort((e, t) => e - t), a = t ? Ir(t) : i[0], o = n ? Ir(n) : i[i.length - 1];
+		let r = new Map(e.map((e) => [String(e.fecha).slice(0, 10), e.valor])), i = e.map((e) => Vr(e.fecha)).sort((e, t) => e - t), a = t ? Vr(t) : i[0], o = n ? Vr(n) : i[i.length - 1];
 		if (!a || !o || o < a) return {
 			dias: [],
 			semanas: 0,
@@ -8443,7 +8592,7 @@ function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 		s.setDate(s.getDate() - (s.getDay() + 6) % 7);
 		let c = [];
 		for (let e = new Date(s); e <= o; e.setDate(e.getDate() + 1)) {
-			let t = Lr(e);
+			let t = Hr(e);
 			c.push({
 				fecha: new Date(e),
 				k: t,
@@ -8456,7 +8605,7 @@ function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 			dias: c,
 			semanas: Math.ceil(c.length / 7),
 			mapa: r,
-			rango: kr(l)
+			rango: Pr(l)
 		};
 	}, [
 		e,
@@ -8541,9 +8690,9 @@ function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 							},
 							children: e.texto
 						}, e.sem)),
-						Fr.map((e, t) => e && /* @__PURE__ */ g("text", {
+						Br.map((e, t) => e && /* @__PURE__ */ g("text", {
 							x: 0,
-							y: 18 + t * 16 + Pr - 2,
+							y: 18 + t * 16 + zr - 2,
 							style: {
 								fontSize: 10,
 								fontWeight: 600,
@@ -8558,10 +8707,10 @@ function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 							return /* @__PURE__ */ g("rect", {
 								x: n,
 								y: r,
-								width: Pr,
-								height: Pr,
+								width: zr,
+								height: zr,
 								rx: "3",
-								fill: jr(Ar(e.valor, y)),
+								fill: Ir(Fr(e.valor, y)),
 								stroke: s === t ? "var(--ds-ink)" : "none",
 								strokeWidth: "2",
 								onMouseEnter: () => c(t)
@@ -8571,7 +8720,7 @@ function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 				}),
 				/* @__PURE__ */ g(Zt, {
 					visible: !!T,
-					x: E.x + Pr / 2,
+					x: E.x + zr / 2,
 					y: E.y,
 					ancho: C,
 					titulo: T ? q(T.fecha, "larga") : "",
@@ -8581,19 +8730,19 @@ function Rr({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 					}] : []
 				})
 			]
-		}), /* @__PURE__ */ g(Mr, {
+		}), /* @__PURE__ */ g(Lr, {
 			rango: y,
 			formato: r
 		})] }) : /* @__PURE__ */ g($, {})
 	});
 }
 // src/graficas/Bala.jsx
-var zr = [
+var Wr = [
 	"var(--ds-line-firm)",
 	"var(--ds-esqueleto-brillo)",
 	"var(--ds-surface-sunk)"
 ];
-function Br({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
+function Gr({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 	let { etiqueta: i, valor: a, meta: o, rangos: s = [], menorEsMejor: c = !1, nota: l } = e, u = Number(a), d = Math.max(...[
 		...s,
 		u,
@@ -8602,7 +8751,7 @@ function Br({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		0,
 		...s.slice(0, 2),
 		d
-	], m = c ? [...zr].reverse() : zr, h = !Number.isFinite(u), v = /* @__PURE__ */ _("div", {
+	], m = c ? [...Wr].reverse() : Wr, h = !Number.isFinite(u), v = /* @__PURE__ */ _("div", {
 		style: {
 			position: "relative",
 			height: 22,
@@ -8712,7 +8861,7 @@ function Br({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		})
 	});
 }
-function Vr({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) {
+function Kr({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) {
 	let [a, o] = Kt(), s = e || (t ? [t] : []), c = o > 0 && o < 460, l = Math.min(180, Math.max(90, o * .26)), u = {
 		columnas: [
 			"",
@@ -8740,7 +8889,7 @@ function Vr({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) 
 					display: "grid",
 					gap: c ? 16 : 12
 				},
-				children: s.map((e, t) => /* @__PURE__ */ g(Br, {
+				children: s.map((e, t) => /* @__PURE__ */ g(Gr, {
 					item: e,
 					formato: n,
 					angosto: c,
@@ -8751,18 +8900,18 @@ function Vr({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) 
 	});
 }
 // src/graficas/BarraDistribucion.jsx
-var Hr = {
+var qr = {
 	ok: "var(--ds-ok)",
 	aviso: "var(--ds-warn)",
 	riesgo: "var(--ds-risk)",
 	neutro: "var(--ds-ink-3)",
 	acento: "var(--ds-accent-trazo)"
 };
-function Ur({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r = !0, titulo: i, estilo: a }) {
+function Jr({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r = !0, titulo: i, estilo: a }) {
 	let [o, s] = Kt(), [c, l] = m(null), u = e.map((e, t) => ({
 		...e,
 		valor: Number(e.valor),
-		color: e.color || Hr[e.tono] || Y(null, t)
+		color: e.color || qr[e.tono] || Y(null, t)
 	})).filter((e) => Number.isFinite(e.valor) && e.valor > 0), d = u.reduce((e, t) => e + t.valor, 0), f = 0, p = u.map((e) => {
 		let t = f + e.valor / 2;
 		return f += e.valor, d ? t / d * s : 0;
@@ -8885,4 +9034,4 @@ function Ur({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 		})
 	});
 }
-export { Fe as ALTO_CABECERA_MOVIL, Pe as ALTO_DOCK, zn as Actividad, L as Anillo, nt as Armazon, je as Aviso, Ce as Azulejo, Vr as Bala, xe as Barra, Ur as BarraDistribucion, cr as BarraFiltros, at as BarraSeleccion, V as Barras, ee as Bento, ue as Boton, i as Buscador, n as CAJA, Yn as Calendario, Rr as CalendarioCalor, r as Campo, ut as Campos, Dt as Cargando, Or as Cascada, it as Casilla, N as Celda, sr as Chip, ne as Cifra, rn as CuerpoKpi, gn as Detalles, Sr as Dona, Tr as Embudo, Xn as EncabezadoPagina, t as Envoltura, B as Esqueleto, re as EsqueletoFila, ie as EsqueletoLista, yn as EstadoVacio, de as Fila, on as FilaKpis, Sn as Flotante, lt as Formulario, le as Giro, Zt as Globo, yr as GraficaBarras, pr as GraficaLinea, bn as GrupoRetratos, P as Heroe, ae as Insignia, we as Interruptor, Fn as Kanban, Se as Lamina, Xt as Leyenda, Dn as LineaTiempo, vn as Llamado, Nr as MapaCalor, Z as MarcoGrafica, z as Medidor, be as Migas, ke as Modal, Cn as OpcionFlotante, C as PALETAS, rr as PERIODOS, Mt as PanelInicio, Mn as Pasos, U as Pastilla, Et as Pestanas, k as ProveedorTema, fe as Retrato, Gt as SERIES, Ft as SIN_DATO, pe as Seccion, Zn as Segmentado, e as Selector, rt as SelectorArmazon, Qn as SelectorPaleta, or as SelectorPeriodo, $ as SinDatos, en as Sparkline, M as Superficie, ot as Tabla, un as TarjetaComparativa, pn as TarjetaEntidad, an as TarjetaKpi, ln as TarjetaMeta, dn as TarjetaRanking, Oe as Transicion, Wt as Variacion, F as Vidrio, zt as compacto, bt as condicion, Pt as configurarFormato, vt as correo, gt as digitos, q as fecha, Ht as fechaRelativa, J as formatear, Nt as formato, pt as maximo, mt as minimo, Rt as moneda, ht as numero, yt as patron, K as porcentaje, ir as rangoPeriodo, ft as requerido, _t as soloDigitos, ar as textoRango, W as useAngosto, Le as useArmazon, Tt as useFiltros, xt as useFormulario, me as useMedia, Kt as useMedida, A as useTema, Ut as variacion };
+export { Fe as ALTO_CABECERA_MOVIL, Pe as ALTO_DOCK, zn as Actividad, L as Anillo, nt as Armazon, je as Aviso, Ce as Azulejo, Kr as Bala, xe as Barra, Jr as BarraDistribucion, pr as BarraFiltros, at as BarraSeleccion, V as Barras, ee as Bento, U as Boton, rr as BotonApariencia, i as Buscador, n as CAJA, Yn as Calendario, Ur as CalendarioCalor, r as Campo, ut as Campos, Dt as Cargando, Nr as Cascada, it as Casilla, N as Celda, fr as Chip, ne as Cifra, rn as CuerpoKpi, gn as Detalles, Dr as Dona, Ar as Embudo, Xn as EncabezadoPagina, t as Envoltura, B as Esqueleto, re as EsqueletoFila, ie as EsqueletoLista, yn as EstadoVacio, de as Fila, on as FilaKpis, Sn as Flotante, lt as Formulario, ue as Giro, Zt as Globo, wr as GraficaBarras, vr as GraficaLinea, bn as GrupoRetratos, P as Heroe, oe as Insignia, we as Interruptor, Fn as Kanban, Se as Lamina, Xt as Leyenda, Dn as LineaTiempo, vn as Llamado, Rr as MapaCalor, Z as MarcoGrafica, z as Medidor, be as Migas, ke as Modal, Cn as OpcionFlotante, C as PALETAS, cr as PERIODOS, Mt as PanelInicio, Mn as Pasos, ae as Pastilla, Et as Pestanas, k as ProveedorTema, fe as Retrato, Gt as SERIES, Ft as SIN_DATO, pe as Seccion, Zn as Segmentado, e as Selector, rt as SelectorArmazon, Qn as SelectorPaleta, dr as SelectorPeriodo, $ as SinDatos, en as Sparkline, M as Superficie, ot as Tabla, un as TarjetaComparativa, pn as TarjetaEntidad, an as TarjetaKpi, ln as TarjetaMeta, dn as TarjetaRanking, Oe as Transicion, Wt as Variacion, F as Vidrio, zt as compacto, bt as condicion, Pt as configurarFormato, vt as correo, gt as digitos, q as fecha, Ht as fechaRelativa, J as formatear, Nt as formato, pt as maximo, mt as minimo, Rt as moneda, ht as numero, yt as patron, K as porcentaje, lr as rangoPeriodo, ft as requerido, _t as soloDigitos, ur as textoRango, W as useAngosto, Le as useArmazon, Tt as useFiltros, xt as useFormulario, me as useMedia, Kt as useMedida, A as useTema, Ut as variacion };

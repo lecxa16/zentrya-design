@@ -97,7 +97,7 @@ export default function Flotante({
   if (!abierto || typeof document === "undefined") return null;
 
   return createPortal((
-    <div ref={panel} role={rol} aria-label={etiqueta}
+    <div ref={panel} role={rol} aria-label={etiqueta} className="ds-capa"
       onKeyDown={(e) => {
         /* Flechas entre opciones, como en cualquier menú del sistema. */
         if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;

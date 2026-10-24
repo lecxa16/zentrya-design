@@ -69,6 +69,7 @@ export { default as Calendario } from "./primitivas/Calendario";
 export { default as EncabezadoPagina } from "./primitivas/EncabezadoPagina";
 export { default as Segmentado } from "./primitivas/Segmentado";
 export { default as SelectorPaleta } from "./primitivas/SelectorPaleta";
+export { default as BotonApariencia } from "./Apariencia";
 export { default as SelectorPeriodo, PERIODOS, rangoPeriodo, textoRango } from "./primitivas/SelectorPeriodo";
 export { default as Chip, BarraFiltros } from "./primitivas/Chip";
 

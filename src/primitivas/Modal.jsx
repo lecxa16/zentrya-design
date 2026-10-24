@@ -14,6 +14,7 @@
  * alguien lo lea no informó de nada.
  */
 import React, { useCallback, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Boton from "./Boton";
 import { useAngosto } from "../ancho";
 
@@ -52,10 +53,13 @@ export default function Modal({
     };
   }, [abierto]);
 
-  if (!abierto) return null;
+  if (!abierto || typeof document === "undefined") return null;
 
-  return (
-    <>
+  /* En un PORTAL, como Flotante: un ancestro con `backdrop-filter` (el menú lateral
+     del Armazón) se vuelve el contenedor de los `fixed` de dentro, y un modal abierto
+     desde ahí salía encogido dentro de la barra (v2.0.2). */
+  return createPortal((
+    <div className="ds-capa">
       {!derecha && (
         <div onClick={onCerrar} aria-hidden="true"
           style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(6,8,10,0.46)",
@@ -125,8 +129,8 @@ export default function Modal({
           </div>
         )}
       </div>
-    </>
-  );
+    </div>
+  ), document.body);
 }
 
 const SEVERIDAD = {

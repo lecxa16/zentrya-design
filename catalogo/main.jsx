@@ -6,7 +6,7 @@
  */
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ProveedorTema, Armazon, SelectorArmazon, SelectorPaleta, useTema } from "../src/index.js";
+import { ProveedorTema, Armazon, BotonApariencia } from "../src/index.js";
 
 const modulos = import.meta.glob("./secciones/*.jsx", { eager: true });
 const SECCIONES = Object.values(modulos)
@@ -31,19 +31,9 @@ const NAVEGACION = PEDIDAS > SECCIONES.length
   })
   : SECCIONES;
 
-function BotonTema() {
-  const { tema, alternar } = useTema();
-  return (
-    <button type="button" onClick={alternar} style={{ border: "1px solid var(--ds-line-firm)",
-      background: "transparent", color: "var(--ds-ink-2)", borderRadius: 99, cursor: "pointer",
-      padding: "6px 12px", fontFamily: "var(--ds-font)", fontWeight: 700, fontSize: "var(--ds-t-micro)" }}>
-      {tema === "dark" ? "Claro" : "Oscuro"}
-    </button>
-  );
-}
 
-/* Las marcas (Nykza, Work OS) son también paletas que se pueden elegir, así que
-   el catálogo las recorre con el mismo `SelectorPaleta` que usan las apps. */
+/* Tema, paleta (las marcas Nykza y Work OS son también paletas) y navegación se
+   eligen con el mismo `BotonApariencia` que usan las apps. */
 
 function Catalogo() {
   const inicial = (location.hash || "").replace("#", "") || SECCIONES[0]?.id;
@@ -54,7 +44,7 @@ function Catalogo() {
   return (
     <Armazon marca="Zentrya · catálogo" secciones={NAVEGACION} activa={activa} vista={actual?.id}
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
-      derecha={<div style={{ display: "flex", gap: 8, alignItems: "center" }}><SelectorPaleta tamano="s" /><BotonTema /><SelectorArmazon /></div>}>
+      derecha={<BotonApariencia />}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>
     </Armazon>
   );

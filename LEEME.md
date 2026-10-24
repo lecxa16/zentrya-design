@@ -401,8 +401,13 @@ datos completos siguen en la vista de tabla del marco.
 ## Paletas que elige la persona (v2.0)
 
 Las marcas también se pueden ofrecer como **paletas**: `<ProveedorTema paletas>` deja elegir entre `PALETAS`
-(o `paletas={["zentrya", "oceano"]}` para ofrecer sólo algunas) y `<SelectorPaleta />` pinta el control —un
-`Segmentado` con una muestra del acento en el tema activo—. La elección se guarda en `localStorage` bajo
+(o `paletas={["zentrya", "oceano"]}` para ofrecer sólo algunas) y `<SelectorPaleta />` pinta el control —una
+rejilla 2×2 con la muestra del acento en el tema activo—.
+
+**`<BotonApariencia />` (v2.0.2) es lo que va en la barra**: un solo engrane que abre un modal con tema, paleta
+y navegación (este último solo dentro de un `Armazon` y fuera del teléfono). No se ponen selectores de apariencia
+sueltos en `derecha`: en el menú lateral ese espacio es angosto y se cortaban (Carlos, 2026-10-23). Cada elección
+se aplica al momento; no hay «guardar». La elección se guarda en `localStorage` bajo
 `ds-paleta`, como claro/oscuro, y manda sobre la `marca`, que pasa a ser con la que arranca. `useTema()` da
 `paleta`, `paletas` y `fijarPaleta`. Sin `paletas`, `SelectorPaleta` no pinta nada y la marca es fija.
 
@@ -461,6 +466,14 @@ Por eso **ni la barra superior ni el menú lateral usan `sticky`**: los dos son
 `position: fixed` y el contenido reserva su sitio — la barra con un alto medido por
 `ResizeObserver` (con muchas secciones pasa a dos filas) y el riel con un margen que sigue su ancho
 al contraerse.
+
+## ⚠️ Modales y menús: portal y `.ds-capa`
+
+Desde la v2.0.2 `Modal` también se dibuja en un portal (antes solo `Flotante` y el menú del Armazón): abierto desde
+el menú lateral, cuyo `backdrop-filter` vuelve a la barra el contenedor de los `fixed`, salía encogido dentro de
+ella. Todo lo que va en portal lleva la clase **`.ds-capa`**, que le da la base de `.ds-root` (letra, color, anillo
+de foco, selección): fuera de `.ds-root` salía con la letra del navegador y **sin anillo de foco**. Un portal nuevo
+lleva `className="ds-capa"` en su raíz.
 
 ## ⚠️ Menús flotantes: portal, siempre
 
@@ -601,7 +614,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.0.1`
+   `npm install github:lecxa16/zentrya-design#v2.0.2`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.
