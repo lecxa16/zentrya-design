@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 40 80 80" width="64" height="64">
+  <!-- Símbolo de Zentrya (lockup oficial D). Con el sistema en oscuro se invierte, como su versión «dark». -->
+  <style>
+    .cuadro { fill: #0A0A0A; } .z { stroke: #F5F3EE; }
+    @media (prefers-color-scheme: dark) { .cuadro { fill: #F5F3EE; } .z { stroke: #0A0A0A; } }
+  </style>
+  <rect class="cuadro" x="20" y="40" width="80" height="80" rx="16"/>
+  <path class="z" d="M 42 68 L 78 68 L 42 96 L 78 96" fill="none" stroke-width="5" stroke-linecap="square"/>
+  <circle cx="78" cy="96" r="3" fill="#00E5FF"/>
+</svg>

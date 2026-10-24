@@ -8944,14 +8944,52 @@ function Xr({ titulo: e, descripcion: t, boton: n, consecuencias: i, palabra: a 
 		})]
 	});
 }
+// src/marca/Zentrya.jsx
+var Zr = "#00E5FF";
+function Qr({ tamano: e = 28 }) {
+	return /* @__PURE__ */ _("svg", {
+		width: e,
+		height: e,
+		viewBox: "20 40 80 80",
+		"aria-hidden": !0,
+		focusable: "false",
+		style: {
+			display: "block",
+			flexShrink: 0
+		},
+		children: [
+			/* @__PURE__ */ g("rect", {
+				x: "20",
+				y: "40",
+				width: "80",
+				height: "80",
+				rx: "16",
+				fill: "var(--ds-ink)"
+			}),
+			/* @__PURE__ */ g("path", {
+				d: "M 42 68 L 78 68 L 42 96 L 78 96",
+				fill: "none",
+				stroke: "var(--ds-surface-solid)",
+				strokeWidth: "5",
+				strokeLinecap: "square"
+			}),
+			/* @__PURE__ */ g("circle", {
+				cx: "78",
+				cy: "96",
+				r: "3",
+				fill: Zr
+			})
+		]
+	});
+}
 // src/primitivas/SelectorPeriodo.jsx
-var Zr = (e) => String(e).padStart(2, "0"), Qr = (e) => `${e.getFullYear()}-${Zr(e.getMonth() + 1)}-${Zr(e.getDate())}`, $r = (e) => {
+var $r = (e) => String(e).padStart(2, "0"), ei = (e) => `${e.getFullYear()}-${$r(e.getMonth() + 1)}-${$r(e.getDate())}`, ti = (e) => {
 	let [t, n, r] = String(e).slice(0, 10).split("-").map(Number);
 	return new Date(t, n - 1, r);
-}, ei = (e, t) => {
+}, ni = (e, t) => {
 	let n = new Date(e);
 	return n.setDate(n.getDate() + t), n;
-}, ti = [
+}, ri = [
 	{
 		clave: "hoy",
 		etiqueta: "Hoy"
@@ -8989,20 +9027,20 @@ var Zr = (e) => String(e).padStart(2, "0"), Qr = (e) => `${e.getFullYear()}-${Zr
 		etiqueta: "Año anterior"
 	}
 ];
-function ni(e, t = /* @__PURE__ */ new Date()) {
-	let n = t instanceof Date ? new Date(t.getFullYear(), t.getMonth(), t.getDate()) : $r(t), r = n.getFullYear(), i = n.getMonth(), a, o;
+function ii(e, t = /* @__PURE__ */ new Date()) {
+	let n = t instanceof Date ? new Date(t.getFullYear(), t.getMonth(), t.getDate()) : ti(t), r = n.getFullYear(), i = n.getMonth(), a, o;
 	switch (e) {
 		case "hoy":
 			a = n, o = n;
 			break;
 		case "ayer":
-			a = ei(n, -1), o = a;
+			a = ni(n, -1), o = a;
 			break;
 		case "7d":
-			a = ei(n, -6), o = n;
+			a = ni(n, -6), o = n;
 			break;
 		case "30d":
-			a = ei(n, -29), o = n;
+			a = ni(n, -29), o = n;
 			break;
 		case "mes":
 			a = new Date(r, i, 1), o = new Date(r, i + 1, 0);
@@ -9023,19 +9061,19 @@ function ni(e, t = /* @__PURE__ */ new Date()) {
 			break;
 		default: return null;
 	}
-	let s = ti.find((t) => t.clave === e);
+	let s = ri.find((t) => t.clave === e);
 	return {
 		clave: e,
-		desde: Qr(a),
-		hasta: Qr(o),
+		desde: ei(a),
+		hasta: ei(o),
 		etiqueta: s?.etiqueta ?? e
 	};
 }
-function ri(e, t) {
+function ai(e, t) {
 	return e ? e === t ? q(e, "media") : `${q(e, "media")} – ${q(t, "media")}` : "";
 }
-function ii({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "Periodo", estilo: a }) {
-	let o = p(null), [s, c] = m(!1), l = r ?? /* @__PURE__ */ new Date(), u = ti.filter((e) => !n || n.includes(e.clave)), d = e ? ni(e, l) : null;
+function oi({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "Periodo", estilo: a }) {
+	let o = p(null), [s, c] = m(!1), l = r ?? /* @__PURE__ */ new Date(), u = ri.filter((e) => !n || n.includes(e.clave)), d = e ? ii(e, l) : null;
 	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ _("button", {
 		ref: o,
 		type: "button",
@@ -9125,10 +9163,10 @@ function ii({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "P
 		etiqueta: i,
 		minAncho: 250,
 		children: u.map((n) => {
-			let r = ni(n.clave, l);
+			let r = ii(n.clave, l);
 			return /* @__PURE__ */ g(Fe, {
 				elegida: n.clave === e,
-				nota: ri(r.desde, r.hasta),
+				nota: ai(r.desde, r.hasta),
 				onClick: () => {
 					c(!1), t?.(r);
 				},
@@ -9138,7 +9176,7 @@ function ii({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "P
 	})] });
 }
 // src/primitivas/Chip.jsx
-function ai({ texto: e, valor: t, onQuitar: n, estilo: r }) {
+function si({ texto: e, valor: t, onQuitar: n, estilo: r }) {
 	let i = t != null && t !== "" ? `${e}: ${t}` : e;
 	return /* @__PURE__ */ _("span", {
 		style: {
@@ -9213,7 +9251,7 @@ function ai({ texto: e, valor: t, onQuitar: n, estilo: r }) {
 		})]
 	});
 }
-function oi({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado: i, estilo: a }) {
+function ci({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado: i, estilo: a }) {
 	return /* @__PURE__ */ _("div", {
 		role: "search",
 		style: {
@@ -9247,7 +9285,7 @@ function oi({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado
 				gap: "var(--ds-2)",
 				marginTop: "var(--ds-3)"
 			},
-			children: [t.map((e) => /* @__PURE__ */ g(ai, {
+			children: [t.map((e) => /* @__PURE__ */ g(si, {
 				texto: e.texto,
 				valor: e.valor,
 				onQuitar: n ? () => n(e.clave) : void 0
@@ -9271,14 +9309,14 @@ function oi({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado
 	});
 }
 // src/graficas/GraficaLinea.jsx
-var si = 6.6, ci = (e) => [...String(e ?? "")].reduce((e, t) => e + (t >= "A" && t <= "Z" ? 8 : t === " " ? 3.4 : si), 0), li = 140, ui = (e, t) => {
+var li = 6.6, ui = (e) => [...String(e ?? "")].reduce((e, t) => e + (t >= "A" && t <= "Z" ? 8 : t === " " ? 3.4 : li), 0), di = 140, fi = (e, t) => {
 	let n = String(e ?? "");
-	if (ci(n) <= t) return n;
+	if (ui(n) <= t) return n;
 	let r = n;
-	for (; r.length > 1 && ci(r + "…") > t;) r = r.slice(0, -1);
+	for (; r.length > 1 && ui(r + "…") > t;) r = r.slice(0, -1);
 	return r.trimEnd() + "…";
 };
-function di({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "numero", area: i = !1, apilada: a = !1, meta: o, titulo: s, cero: c = !0, estilo: l }) {
+function pi({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "numero", area: i = !1, apilada: a = !1, meta: o, titulo: s, cero: c = !0, estilo: l }) {
 	let [u, d] = hn(), [p, h] = m(null), v = Math.max(t.length, ...e.map((e) => (e.valores || []).length), 0), y = a && i, b = o == null ? null : typeof o == "object" ? o.valor : o, x = o && typeof o == "object" && o.texto ? o.texto : "Meta", S = f(() => {
 		let t = Array(v).fill(0);
 		return e.map((e) => {
@@ -9302,9 +9340,9 @@ function di({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 		y
 	]), C = S.flatMap((e) => e.arriba.filter((e) => e !== null));
 	b !== null && C.push(Number(b));
-	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = gn(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String(Q(e, A)).length)) * si + 12, ee = j ? Math.min(li, Math.max(...e.map((e) => ci(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = _n(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * si + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), re = Math.max(1, Math.ceil(v / ne)), L = [], R = -Infinity;
+	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = gn(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String(Q(e, A)).length)) * li + 12, ee = j ? Math.min(di, Math.max(...e.map((e) => ui(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = _n(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * li + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), re = Math.max(1, Math.ceil(v / ne)), L = [], R = -Infinity;
 	for (let e = 0; e < v; e += re) {
-		let n = String(t[e] ?? e + 1).length * si, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
+		let n = String(t[e] ?? e + 1).length * li, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
 		i >= R + 8 && (L.push({
 			i: e,
 			ancla: r
@@ -9440,7 +9478,7 @@ function di({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 								fill: "var(--ds-ink-2)",
 								fontWeight: 700
 							},
-							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), ui(e[t.si].nombre, ee - 12)]
+							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), fi(e[t.si].nombre, ee - 12)]
 						}, t.si));
 					})(),
 					p !== null && /* @__PURE__ */ _("g", {
@@ -9485,17 +9523,17 @@ function di({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 	});
 }
 // src/graficas/GraficaBarras.jsx
-var fi = 6.6, pi = 4, mi = 2;
-function hi(e, t, n, r, i) {
+var mi = 6.6, hi = 4, gi = 2;
+function _i(e, t, n, r, i) {
 	if (n <= 0 || r <= 0) return "";
-	let a = Math.min(pi, n / 2, r / 2);
+	let a = Math.min(hi, n / 2, r / 2);
 	return i === "arriba" ? `M${e},${t + r} L${e},${t + a} Q${e},${t} ${e + a},${t} L${e + n - a},${t} Q${e + n},${t} ${e + n},${t + a} L${e + n},${t + r} Z` : i === "abajo" ? `M${e},${t} L${e + n},${t} L${e + n},${t + r - a} Q${e + n},${t + r} ${e + n - a},${t + r} L${e + a},${t + r} Q${e},${t + r} ${e},${t + r - a} Z` : i === "derecha" ? `M${e},${t} L${e + n - a},${t} Q${e + n},${t} ${e + n},${t + a} L${e + n},${t + r - a} Q${e + n},${t + r} ${e + n - a},${t + r} L${e},${t + r} Z` : i === "izquierda" ? `M${e + n},${t} L${e + n},${t + r} L${e + a},${t + r} Q${e},${t + r} ${e},${t + r - a} L${e},${t + a} Q${e},${t} ${e + a},${t} Z` : `M${e},${t} h${n} v${r} h${-n} Z`;
 }
-var gi = (e, t) => {
-	let n = String(e ?? ""), r = Math.max(3, Math.floor(t / fi));
+var vi = (e, t) => {
+	let n = String(e ?? ""), r = Math.max(3, Math.floor(t / mi));
 	return n.length > r ? `${n.slice(0, r - 1)}…` : n;
 };
-function _i({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: i = !1, etiquetas: a = !1, resaltar: o, alto: s, formato: c = "numero", titulo: l, estilo: u }) {
+function yi({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: i = !1, etiquetas: a = !1, resaltar: o, alto: s, formato: c = "numero", titulo: l, estilo: u }) {
 	let [d, f] = hn(), [p, h] = m(null), v = e ? e.map((e) => e.etiqueta) : t || [], y = e ? [{
 		clave: "valor",
 		nombre: l || "Valor",
@@ -9516,7 +9554,7 @@ function _i({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		let n = S(t, e);
 		n !== null && (w = Math.max(w, n), C = Math.min(C, n));
 	}
-	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = gn(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String(Q(e, j)).length)) * fi + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), re = Math.max(10, f - P - F), L = M - I - ne, R = (r ? L : re) / Math.max(1, b), z = R * (r ? .22 : .26), ie = R - z, ae = i || x === 1 ? ie : (ie - mi * (x - 1)) / x, B = r ? _n(k, A, P, P + re) : _n(k, A, I + L, I), oe = B(0), se = (e) => o == null || o === e ? 1 : .35, ce = (e) => {
+	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = gn(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String(Q(e, j)).length)) * mi + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), re = Math.max(10, f - P - F), L = M - I - ne, R = (r ? L : re) / Math.max(1, b), z = R * (r ? .22 : .26), ie = R - z, ae = i || x === 1 ? ie : (ie - gi * (x - 1)) / x, B = r ? _n(k, A, P, P + re) : _n(k, A, I + L, I), oe = B(0), se = (e) => o == null || o === e ? 1 : .35, ce = (e) => {
 		let t = [], n = (r ? I : P) + e * R + z / 2;
 		if (i) {
 			let r = 0, i = 0, a = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) > 0), o = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) < 0);
@@ -9536,7 +9574,7 @@ function _i({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		} else y.forEach((r, i) => {
 			let a = S(i, e);
 			a !== null && t.push({
-				off: n + i * (ae + mi),
+				off: n + i * (ae + gi),
 				grueso: ae,
 				desde: 0,
 				hasta: a,
@@ -9546,13 +9584,13 @@ function _i({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		});
 		return t;
 	}, le = (e) => {
-		let t = B(e.desde), n = B(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? mi : 0;
+		let t = B(e.desde), n = B(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? gi : 0;
 		if (r) {
 			let r = Math.min(t, n), i = Math.abs(n - t), s = e.extremo ? a ? "derecha" : "izquierda" : "ninguno";
-			return hi(a ? r : r + o, e.off, i - o, e.grueso, s);
+			return _i(a ? r : r + o, e.off, i - o, e.grueso, s);
 		}
 		let s = Math.min(t, n), c = Math.abs(n - t), l = e.extremo ? a ? "arriba" : "abajo" : "ninguno";
-		return a ? hi(e.off, s + o, e.grueso, c - o, l) : hi(e.off, s, e.grueso, c - o, l);
+		return a ? _i(e.off, s + o, e.grueso, c - o, l) : _i(e.off, s, e.grueso, c - o, l);
 	}, ue = (e) => y.reduce((t, n, r) => t + (S(r, e) ?? 0), 0), de = {
 		columnas: ["", ...y.map((e) => e.nombre)],
 		filas: v.map((e, t) => [e, ...y.map((e, n) => Q(S(n, t), c))])
@@ -9654,13 +9692,13 @@ function _i({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 									fontSize: 12,
 									fill: "var(--ds-ink-2)"
 								},
-								children: [/* @__PURE__ */ g("title", { children: e }), gi(e, ee)]
+								children: [/* @__PURE__ */ g("title", { children: e }), vi(e, ee)]
 							}) : t % fe === 0 && /* @__PURE__ */ _("text", {
 								x: V(t),
 								y: M - 6,
 								textAnchor: "middle",
 								style: X,
-								children: [/* @__PURE__ */ g("title", { children: e }), gi(e, R * fe - 4)]
+								children: [/* @__PURE__ */ g("title", { children: e }), vi(e, R * fe - 4)]
 							}),
 							a && (() => {
 								let e = i || x === 1 ? i ? ue(t) : S(0, t) : null;
@@ -9730,19 +9768,19 @@ function _i({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 	});
 }
 // src/graficas/Dona.jsx
-var vi = 6;
-function yi(e, t, n, r, i, a) {
+var bi = 6;
+function xi(e, t, n, r, i, a) {
 	let o = (n, r) => [e + n * Math.sin(r), t - n * Math.cos(r)], s = +(a - i > Math.PI), [c, l] = o(r, i), [u, d] = o(r, a), [f, p] = o(n, a), [m, h] = o(n, i);
 	return `M${c},${l} A${r},${r} 0 ${s} 1 ${u},${d} L${f},${p} A${n},${n} 0 ${s} 0 ${m},${h} Z`;
 }
-function bi({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", tamano: r = 200, grosor: i = 26, titulo: a, estilo: o }) {
+function Si({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", tamano: r = 200, grosor: i = 26, titulo: a, estilo: o }) {
 	let [s, c] = m(null), l = e.map((e, t) => ({
 		...e,
 		propio: e.color,
 		color: e.color || Y(null, t),
 		valor: Number(e.valor)
 	})).filter((e) => Number.isFinite(e.valor) && e.valor > 0), u = l;
-	if (l.length > vi) {
+	if (l.length > bi) {
 		let e = [...l].sort((e, t) => t.valor - e.valor), t = e.slice(5);
 		u = [...e.slice(0, 5).map((e, t) => ({
 			...e,
@@ -9805,10 +9843,10 @@ function bi({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 					style: { display: "block" },
 					"aria-label": `${a ? `${a}: ` : ""}${u.map((e) => `${e.etiqueta} ${K(e.valor / d)}`).join(", ")}`,
 					children: u.length === 1 ? /* @__PURE__ */ g("path", {
-						d: `${yi(f, p, v, h, 0, Math.PI)} ${yi(f, p, v, h, Math.PI, Math.PI * 2)}`,
+						d: `${xi(f, p, v, h, 0, Math.PI)} ${xi(f, p, v, h, Math.PI, Math.PI * 2)}`,
 						fill: u[0].color
 					}) : u.map((e, t) => /* @__PURE__ */ g("path", {
-						d: yi(f, p, s === t ? v - 3 : v, s === t ? h + 2 : h, x[t].a0, x[t].a1),
+						d: xi(f, p, s === t ? v - 3 : v, s === t ? h + 2 : h, x[t].a0, x[t].a1),
 						fill: e.color,
 						opacity: s === null || s === t ? 1 : .4,
 						onMouseEnter: () => c(t),
@@ -9940,13 +9978,13 @@ function bi({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 	});
 }
 // src/graficas/Embudo.jsx
-var xi = [
+var Ci = [
 	5,
 	4,
 	3,
 	2
-], Si = (e, t) => xi[t <= 1 ? 0 : Math.round(e / (t - 1) * (xi.length - 1))];
-function Ci({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
+], wi = (e, t) => Ci[t <= 1 ? 0 : Math.round(e / (t - 1) * (Ci.length - 1))];
+function Ti({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 	let [i, a] = hn(), o = e.filter((e) => Number.isFinite(Number(e.valor))), s = Math.max(0, ...o.map((e) => Number(e.valor))), c = Number(o[0]?.valor), l = a > 0 && a < 460, u = {
 		columnas: [
 			"Etapa",
@@ -9989,7 +10027,7 @@ function Ci({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 						children: /* @__PURE__ */ g("div", { style: {
 							width: `${Math.max(1.5, r / s * 100)}%`,
 							height: "100%",
-							background: `var(--ds-sec-${Si(n, o.length)})`,
+							background: `var(--ds-sec-${wi(n, o.length)})`,
 							borderRadius: "var(--ds-r-item)",
 							transition: "width var(--ds-t-move) var(--ds-ease)"
 						} })
@@ -10073,8 +10111,8 @@ function Ci({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 	});
 }
 // src/graficas/Cascada.jsx
-var wi = 6.6, Ti = 4;
-function Ei({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r = !0, titulo: i, estilo: a }) {
+var Ei = 6.6, Di = 4;
+function Oi({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r = !0, titulo: i, estilo: a }) {
 	let [o, s] = hn(), [c, l] = m(null), u = 0, d = e.map((e) => {
 		let t = Number(e.valor);
 		if (e.tipo === "total") {
@@ -10095,8 +10133,8 @@ function Ei({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 			delta: n,
 			total: !1
 		};
-	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = gn(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String(Q(e, b)).length)) * wi + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = _n(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? Q(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${Q(e.delta, t)}`, A = (e, t) => {
-		let n = Math.max(3, Math.floor(t / wi));
+	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = gn(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String(Q(e, b)).length)) * Ei + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = _n(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? Q(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${Q(e.delta, t)}`, A = (e, t) => {
+		let n = Math.max(3, Math.floor(t / Ei));
 		return e.length > n ? `${e.slice(0, n - 1)}…` : e;
 	}, j = {
 		columnas: [
@@ -10144,7 +10182,7 @@ function Ei({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 					style: X,
 					children: Q(e, b)
 				})] }, e)), d.map((e, i) => {
-					let a = x + i * T + (T - E) / 2, o = D(Math.max(e.desde, e.hasta)), s = D(Math.min(e.desde, e.hasta)), u = Math.max(1, s - o), f = e.hasta >= e.desde, p = Math.min(Ti, E / 2, u / 2), m = f ? `M${a},${o + u} L${a},${o + p} Q${a},${o} ${a + p},${o} L${a + E - p},${o} Q${a + E},${o} ${a + E},${o + p} L${a + E},${o + u} Z` : `M${a},${o} L${a + E},${o} L${a + E},${o + u - p} Q${a + E},${o + u} ${a + E - p},${o + u} L${a + p},${o + u} Q${a},${o + u} ${a},${o + u - p} Z`, h = d[i + 1];
+					let a = x + i * T + (T - E) / 2, o = D(Math.max(e.desde, e.hasta)), s = D(Math.min(e.desde, e.hasta)), u = Math.max(1, s - o), f = e.hasta >= e.desde, p = Math.min(Di, E / 2, u / 2), m = f ? `M${a},${o + u} L${a},${o + p} Q${a},${o} ${a + p},${o} L${a + E - p},${o} Q${a + E},${o} ${a + E},${o + p} L${a + E},${o + u} Z` : `M${a},${o} L${a + E},${o} L${a + E},${o + u - p} Q${a + E},${o + u} ${a + E - p},${o + u} L${a + p},${o + u} Q${a},${o + u} ${a},${o + u - p} Z`, h = d[i + 1];
 					return /* @__PURE__ */ _("g", {
 						tabIndex: 0,
 						style: { outline: "none" },
@@ -10216,21 +10254,21 @@ function Ei({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 		})
 	});
 }
-function Di(e) {
+function ki(e) {
 	let t = e.filter((e) => e != null && Number.isFinite(Number(e))).map(Number);
 	return t.length ? {
 		min: Math.min(...t),
 		max: Math.max(...t)
 	} : null;
 }
-function Oi(e, t) {
+function Ai(e, t) {
 	if (e == null || !Number.isFinite(Number(e)) || !t) return 0;
 	if (t.max === t.min) return 3;
 	let n = (Number(e) - t.min) / (t.max - t.min);
 	return Math.min(5, 1 + Math.floor(n * 5));
 }
-var ki = (e) => `var(--ds-sec-${e})`;
-function Ai({ rango: e, formato: t }) {
+var ji = (e) => `var(--ds-sec-${e})`;
+function Mi({ rango: e, formato: t }) {
 	if (!e) return null;
 	let n = (e.max - e.min) / 5;
 	return /* @__PURE__ */ _("div", {
@@ -10255,7 +10293,7 @@ function Ai({ rango: e, formato: t }) {
 					width: 22,
 					height: 10,
 					borderRadius: "var(--ds-r-mini)",
-					background: ki(i + 1)
+					background: ji(i + 1)
 				}
 			}, i)),
 			/* @__PURE__ */ g("span", {
@@ -10273,15 +10311,15 @@ function Ai({ rango: e, formato: t }) {
 					width: 10,
 					height: 10,
 					borderRadius: "var(--ds-r-mini)",
-					background: ki(0)
+					background: ji(0)
 				} }), "Sin dato"]
 			})
 		]
 	});
 }
 // src/graficas/MapaCalor.jsx
-function ji({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "numero", celdaMinima: i = 28, altoCelda: a = 28, titulo: o, estilo: s }) {
-	let c = p(null), l = u().replace(/:/g, ""), [d, f] = m(null), v = Di(n.flat()), y = Math.min(140, Math.max(36, ...e.map((e) => String(e).length * 7 + 12))), b = (e, t) => n?.[e]?.[t], x = (e, n) => ({
+function Ni({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "numero", celdaMinima: i = 28, altoCelda: a = 28, titulo: o, estilo: s }) {
+	let c = p(null), l = u().replace(/:/g, ""), [d, f] = m(null), v = ki(n.flat()), y = Math.min(140, Math.max(36, ...e.map((e) => String(e).length * 7 + 12))), b = (e, t) => n?.[e]?.[t], x = (e, n) => ({
 		x: y + (n + .5) * (c.current ? (c.current.scrollWidth - y) / Math.max(1, t.length) : i),
 		y: 22 + e * (a + 3)
 	}), S = (n, r) => f((i) => {
@@ -10377,7 +10415,7 @@ function ji({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 							style: {
 								height: a,
 								borderRadius: "var(--ds-r-mini)",
-								background: ki(Oi(s, v)),
+								background: ji(Ai(s, v)),
 								boxShadow: o ? "0 0 0 2px var(--ds-ink)" : "none",
 								transition: "box-shadow var(--ds-t-tap) var(--ds-ease-out)"
 							}
@@ -10395,14 +10433,14 @@ function ji({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 					valor: Q(b(...d), r)
 				}] : []
 			})]
-		}), /* @__PURE__ */ g(Ai, {
+		}), /* @__PURE__ */ g(Mi, {
 			rango: v,
 			formato: r
 		})] }) : /* @__PURE__ */ g($, {})
 	});
 }
 // src/graficas/CalendarioCalor.jsx
-var Mi = 13, Ni = [
+var Pi = 13, Fi = [
 	"L",
 	"",
 	"M",
@@ -10410,14 +10448,14 @@ var Mi = 13, Ni = [
 	"V",
 	"",
 	""
-], Pi = (e) => {
+], Ii = (e) => {
 	if (e instanceof Date) return new Date(e.getFullYear(), e.getMonth(), e.getDate());
 	let [t, n, r] = String(e).slice(0, 10).split("-").map(Number);
 	return new Date(t, n - 1, r);
-}, Fi = (e) => `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, "0")}-${String(e.getDate()).padStart(2, "0")}`;
-function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: i, estilo: a }) {
+}, Li = (e) => `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, "0")}-${String(e.getDate()).padStart(2, "0")}`;
+function Ri({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: i, estilo: a }) {
 	let o = p(null), [s, c] = m(null), { dias: l, semanas: u, mapa: v, rango: y } = f(() => {
-		let r = new Map(e.map((e) => [String(e.fecha).slice(0, 10), e.valor])), i = e.map((e) => Pi(e.fecha)).sort((e, t) => e - t), a = t ? Pi(t) : i[0], o = n ? Pi(n) : i[i.length - 1];
+		let r = new Map(e.map((e) => [String(e.fecha).slice(0, 10), e.valor])), i = e.map((e) => Ii(e.fecha)).sort((e, t) => e - t), a = t ? Ii(t) : i[0], o = n ? Ii(n) : i[i.length - 1];
 		if (!a || !o || o < a) return {
 			dias: [],
 			semanas: 0,
@@ -10428,7 +10466,7 @@ function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 		s.setDate(s.getDate() - (s.getDay() + 6) % 7);
 		let c = [];
 		for (let e = new Date(s); e <= o; e.setDate(e.getDate() + 1)) {
-			let t = Fi(e);
+			let t = Li(e);
 			c.push({
 				fecha: new Date(e),
 				k: t,
@@ -10441,7 +10479,7 @@ function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 			dias: c,
 			semanas: Math.ceil(c.length / 7),
 			mapa: r,
-			rango: Di(l)
+			rango: ki(l)
 		};
 	}, [
 		e,
@@ -10526,9 +10564,9 @@ function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 							},
 							children: e.texto
 						}, e.sem)),
-						Ni.map((e, t) => e && /* @__PURE__ */ g("text", {
+						Fi.map((e, t) => e && /* @__PURE__ */ g("text", {
 							x: 0,
-							y: 18 + t * 16 + Mi - 2,
+							y: 18 + t * 16 + Pi - 2,
 							style: {
 								fontSize: 10,
 								fontWeight: 600,
@@ -10543,10 +10581,10 @@ function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 							return /* @__PURE__ */ g("rect", {
 								x: n,
 								y: r,
-								width: Mi,
-								height: Mi,
+								width: Pi,
+								height: Pi,
 								rx: "3",
-								fill: ki(Oi(e.valor, y)),
+								fill: ji(Ai(e.valor, y)),
 								stroke: s === t ? "var(--ds-ink)" : "none",
 								strokeWidth: "2",
 								onMouseEnter: () => c(t)
@@ -10556,7 +10594,7 @@ function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 				}),
 				/* @__PURE__ */ g(bn, {
 					visible: !!T,
-					x: E.x + Mi / 2,
+					x: E.x + Pi / 2,
 					y: E.y,
 					ancho: C,
 					titulo: T ? q(T.fecha, "larga") : "",
@@ -10566,19 +10604,19 @@ function Ii({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 					}] : []
 				})
 			]
-		}), /* @__PURE__ */ g(Ai, {
+		}), /* @__PURE__ */ g(Mi, {
 			rango: y,
 			formato: r
 		})] }) : /* @__PURE__ */ g($, {})
 	});
 }
 // src/graficas/Bala.jsx
-var Li = [
+var zi = [
 	"var(--ds-line-firm)",
 	"var(--ds-esqueleto-brillo)",
 	"var(--ds-surface-sunk)"
 ];
-function Ri({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
+function Bi({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 	let { etiqueta: i, valor: a, meta: o, rangos: s = [], menorEsMejor: c = !1, nota: l } = e, u = Number(a), d = Math.max(...[
 		...s,
 		u,
@@ -10587,7 +10625,7 @@ function Ri({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		0,
 		...s.slice(0, 2),
 		d
-	], m = c ? [...Li].reverse() : Li, h = !Number.isFinite(u), v = /* @__PURE__ */ _("div", {
+	], m = c ? [...zi].reverse() : zi, h = !Number.isFinite(u), v = /* @__PURE__ */ _("div", {
 		style: {
 			position: "relative",
 			height: 22,
@@ -10697,7 +10735,7 @@ function Ri({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		})
 	});
 }
-function zi({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) {
+function Vi({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) {
 	let [a, o] = hn(), s = e || (t ? [t] : []), c = o > 0 && o < 460, l = Math.min(180, Math.max(90, o * .26)), u = {
 		columnas: [
 			"",
@@ -10725,7 +10763,7 @@ function zi({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) 
 					display: "grid",
 					gap: c ? 16 : 12
 				},
-				children: s.map((e, t) => /* @__PURE__ */ g(Ri, {
+				children: s.map((e, t) => /* @__PURE__ */ g(Bi, {
 					item: e,
 					formato: n,
 					angosto: c,
@@ -10736,18 +10774,18 @@ function zi({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) 
 	});
 }
 // src/graficas/BarraDistribucion.jsx
-var Bi = {
+var Hi = {
 	ok: "var(--ds-ok)",
 	aviso: "var(--ds-warn)",
 	riesgo: "var(--ds-risk)",
 	neutro: "var(--ds-ink-3)",
 	acento: "var(--ds-accent-trazo)"
 };
-function Vi({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r = !0, titulo: i, estilo: a }) {
+function Ui({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r = !0, titulo: i, estilo: a }) {
 	let [o, s] = hn(), [c, l] = m(null), u = e.map((e, t) => ({
 		...e,
 		valor: Number(e.valor),
-		color: e.color || Bi[e.tono] || Y(null, t)
+		color: e.color || Hi[e.tono] || Y(null, t)
 	})).filter((e) => Number.isFinite(e.valor) && e.valor > 0), d = u.reduce((e, t) => e + t.valor, 0), f = 0, p = u.map((e) => {
 		let t = f + e.valor / 2;
 		return f += e.valor, d ? t / d * s : 0;
@@ -10870,4 +10908,4 @@ function Vi({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 		})
 	});
 }
-export { ze as ALTO_CABECERA_MOVIL, Re as ALTO_DOCK, ir as Actividad, re as Anillo, wt as Armazon, Me as Aviso, we as Azulejo, zi as Bala, Se as Barra, Vi as BarraDistribucion, oi as BarraFiltros, Dt as BarraSeleccion, B as Barras, ee as Bento, H as Boton, Cr as BotonApariencia, i as Buscador, n as CAJA, mr as Calendario, Ii as CalendarioCalor, r as Campo, zr as CampoClave, Mt as Campos, Yr as CargaFoto, Yt as Cargando, Ei as Cascada, Et as Casilla, N as Celda, ai as Chip, ne as Cifra, En as CuerpoKpi, Rn as Detalles, bi as Dona, Ci as Embudo, hr as EncabezadoPagina, t as Envoltura, z as Esqueleto, ie as EsqueletoFila, ae as EsqueletoLista, Kr as EstadoGuardado, Vn as EstadoVacio, fe as Fila, Wr as FilaAjuste, On as FilaKpis, Pe as Flotante, jt as Formulario, V as Giro, bn as Globo, _i as GraficaBarras, di as GraficaLinea, Hn as GrupoRetratos, P as Heroe, ce as Insignia, Te as Interruptor, er as Kanban, Ce as Lamina, yn as Leyenda, Kn as LineaTiempo, Bn as Llamado, ji as MapaCalor, Z as MarcoGrafica, R as Medidor, Dr as MenuUsuario, xe as Migas, Ae as Modal, Sr as ModalApariencia, Nr as Notificaciones, Fe as OpcionFlotante, C as PALETAS, ti as PERIODOS, en as PanelInicio, Ir as PantallaAcceso, Hr as PantallaCuenta, Zn as Pasos, se as Pastilla, Jt as Pestanas, k as ProveedorTema, pe as Retrato, mn as SERIES, rn as SIN_DATO, me as Seccion, Ur as SeccionAjustes, gr as Segmentado, e as Selector, Tt as SelectorArmazon, _r as SelectorPaleta, ii as SelectorPeriodo, $ as SinDatos, Cn as Sparkline, M as Superficie, Ot as Tabla, Mn as TarjetaComparativa, Fn as TarjetaEntidad, Dn as TarjetaKpi, jn as TarjetaMeta, Nn as TarjetaRanking, Fr as TarjetaVitrina, ke as Transicion, pn as Variacion, F as Vidrio, Xr as ZonaPeligro, cn as compacto, Ht as condicion, nn as configurarFormato, Bt as correo, Rt as digitos, q as fecha, dn as fechaRelativa, J as formatear, tn as formato, Ft as maximo, It as minimo, sn as moneda, Lt as numero, Vt as patron, K as porcentaje, ni as rangoPeriodo, Pt as requerido, zt as soloDigitos, ri as textoRango, U as useAngosto, Ve as useArmazon, qt as useFiltros, Ut as useFormulario, he as useMedia, hn as useMedida, A as useTema, fn as variacion };
+export { ze as ALTO_CABECERA_MOVIL, Re as ALTO_DOCK, ir as Actividad, re as Anillo, wt as Armazon, Me as Aviso, we as Azulejo, Vi as Bala, Se as Barra, Ui as BarraDistribucion, ci as BarraFiltros, Dt as BarraSeleccion, B as Barras, ee as Bento, H as Boton, Cr as BotonApariencia, i as Buscador, n as CAJA, Zr as CIAN_ZENTRYA, mr as Calendario, Ri as CalendarioCalor, r as Campo, zr as CampoClave, Mt as Campos, Yr as CargaFoto, Yt as Cargando, Oi as Cascada, Et as Casilla, N as Celda, si as Chip, ne as Cifra, En as CuerpoKpi, Rn as Detalles, Si as Dona, Ti as Embudo, hr as EncabezadoPagina, t as Envoltura, z as Esqueleto, ie as EsqueletoFila, ae as EsqueletoLista, Kr as EstadoGuardado, Vn as EstadoVacio, fe as Fila, Wr as FilaAjuste, On as FilaKpis, Pe as Flotante, jt as Formulario, V as Giro, bn as Globo, yi as GraficaBarras, pi as GraficaLinea, Hn as GrupoRetratos, P as Heroe, ce as Insignia, Te as Interruptor, er as Kanban, Ce as Lamina, yn as Leyenda, Kn as LineaTiempo, Bn as Llamado, Ni as MapaCalor, Z as MarcoGrafica, R as Medidor, Dr as MenuUsuario, xe as Migas, Ae as Modal, Sr as ModalApariencia, Nr as Notificaciones, Fe as OpcionFlotante, C as PALETAS, ri as PERIODOS, en as PanelInicio, Ir as PantallaAcceso, Hr as PantallaCuenta, Zn as Pasos, se as Pastilla, Jt as Pestanas, k as ProveedorTema, pe as Retrato, mn as SERIES, rn as SIN_DATO, me as Seccion, Ur as SeccionAjustes, gr as Segmentado, e as Selector, Tt as SelectorArmazon, _r as SelectorPaleta, oi as SelectorPeriodo, Qr as SimboloZentrya, $ as SinDatos, Cn as Sparkline, M as Superficie, Ot as Tabla, Mn as TarjetaComparativa, Fn as TarjetaEntidad, Dn as TarjetaKpi, jn as TarjetaMeta, Nn as TarjetaRanking, Fr as TarjetaVitrina, ke as Transicion, pn as Variacion, F as Vidrio, Xr as ZonaPeligro, cn as compacto, Ht as condicion, nn as configurarFormato, Bt as correo, Rt as digitos, q as fecha, dn as fechaRelativa, J as formatear, tn as formato, Ft as maximo, It as minimo, sn as moneda, Lt as numero, Vt as patron, K as porcentaje, ii as rangoPeriodo, Pt as requerido, zt as soloDigitos, ai as textoRango, U as useAngosto, Ve as useArmazon, qt as useFiltros, Ut as useFormulario, he as useMedia, hn as useMedida, A as useTema, fn as variacion };

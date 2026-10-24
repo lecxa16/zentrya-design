@@ -441,6 +441,16 @@ Sin `completo` se pinta el icono y el nombre; sin icono, un **monograma** con la
 medido ≥ 4.5 en todas las paletas; la letra va en `::before` para no contar como texto del botón). `onInicio`
 vuelve la marca un botón que lleva al inicio.
 
+### El símbolo de Zentrya (v2.5)
+
+`<SimboloZentrya tamano={28} />` es el símbolo del lockup oficial (D): cuadro redondeado, Z y punto cian
+(`CIAN_ZENTRYA`). Es un SVG en línea que sigue al tema —cuadro en `--ds-ink`, Z en `--ds-surface-solid`: en
+claro sale idéntico al original, en oscuro invertido como su versión «dark», sin el rectángulo de fondo que traen
+esos archivos—. Los productos lo usan como `logo={{ icono: <SimboloZentrya /> }}` y el nombre del producto va al
+lado en texto, con la fuente del sistema (el wordmark original es texto en Space Grotesk, que dentro de un `<img>`
+no carga y caería a Helvetica/Arial). Originales en `marca/originales/`; `marca/favicon.svg` es el favicon, que
+se invierte solo con el sistema en oscuro.
+
 ## Mi cuenta (v2.4)
 
 Decidido con Carlos tras revisar tendencias: **una** pantalla, `PantallaCuenta` (`usuario`, `secciones`,
@@ -704,7 +714,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.4.0`
+   `npm install github:lecxa16/zentrya-design#v2.5.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

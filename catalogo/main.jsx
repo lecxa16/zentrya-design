@@ -6,7 +6,7 @@
  */
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ProveedorTema, Armazon, MenuUsuario, Notificaciones } from "../src/index.js";
+import { ProveedorTema, Armazon, MenuUsuario, Notificaciones, SimboloZentrya } from "../src/index.js";
 import DemoAcceso from "./acceso.jsx";
 
 const modulos = import.meta.glob("./secciones/*.jsx", { eager: true });
@@ -85,6 +85,7 @@ function Catalogo() {
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
       /* Lista vacía: el armazón arma la ruta solo con la navegación (Piezas › Operación). */
       migas={[]}
+      logo={{ icono: <SimboloZentrya /> }}
       onInicio={() => { setActiva(SECCIONES[0].id); location.hash = SECCIONES[0].id; }}
       derecha={<Barra />}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>

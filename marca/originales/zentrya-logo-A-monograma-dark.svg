@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" width="260" height="260">
+  <title>Zentrya — A · Monograma Z · Dark</title>
+  <rect width="260" height="260" fill="#0A0A0A"></rect>
+  <path d="M 60 72 L 200 72 L 60 188 L 200 188" fill="none" stroke="#F5F3EE" stroke-width="18" stroke-linecap="square" stroke-linejoin="miter"></path>
+  <circle cx="60" cy="72" r="6" fill="#00E5FF"></circle>
+  <circle cx="200" cy="188" r="6" fill="#00E5FF"></circle>
+</svg>
