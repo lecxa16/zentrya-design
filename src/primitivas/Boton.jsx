@@ -32,6 +32,9 @@ const VARIANTES = {
     borderColor: "var(--ds-line-firm)", boxShadow: "var(--ds-lift-1)",
   },
   fantasma: { background: "transparent", color: "var(--ds-ink-2)" },
+  /* Para lo que no se deshace (borrar la cuenta). La tinta es la superficie sólida:
+     blanco sobre el rojo claro (5.0:1) y casi negro sobre el rojo del tema oscuro. */
+  peligro: { background: "var(--ds-risk)", color: "var(--ds-surface-solid)" },
   claro: {
     background: "var(--ds-velo)", color: "var(--ds-ink-on-hero)",
     borderColor: "var(--ds-line-glass)",

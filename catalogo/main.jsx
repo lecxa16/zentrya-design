@@ -85,6 +85,7 @@ function Catalogo() {
       onIr={(s) => { setActiva(s.id); location.hash = s.id; }}
       /* Lista vacía: el armazón arma la ruta solo con la navegación (Piezas › Operación). */
       migas={[]}
+      onInicio={() => { setActiva(SECCIONES[0].id); location.hash = SECCIONES[0].id; }}
       derecha={<Barra />}>
       <div style={{ padding: "var(--ds-6) 0 var(--ds-12)" }}>{Vista && <Vista />}</div>
     </Armazon>

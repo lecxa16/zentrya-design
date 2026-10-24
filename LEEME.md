@@ -432,6 +432,34 @@ const SECCIONES = [
 ];
 ```
 
+## Logo en el chasis (v2.4)
+
+`<Armazon logo={{ completo, icono }} onInicio={…}>`: cada uno, ruta de imagen o componente (SVG en línea).
+El **completo** (símbolo + nombre) va donde hay sitio —barra de arriba, menú lateral abierto—; el **icono** donde
+no —riel contraído (arriba del botón de desplegar), dock (a la izquierda), teléfono (con el nombre en texto)—.
+Sin `completo` se pinta el icono y el nombre; sin icono, un **monograma** con la inicial sobre el acento (par
+medido ≥ 4.5 en todas las paletas; la letra va en `::before` para no contar como texto del botón). `onInicio`
+vuelve la marca un botón que lleva al inicio.
+
+## Mi cuenta (v2.4)
+
+Decidido con Carlos tras revisar tendencias: **una** pantalla, `PantallaCuenta` (`usuario`, `secciones`,
+`activa`, `onIr`): cabecera con la portada de la paleta, la foto, nombre, correo y un detalle; debajo un menú
+propio de secciones (cada una con su URL; en el teléfono, fila deslizable; `peligro: true` la pinta en riesgo).
+Piezas para cada sección:
+
+- **`SeccionAjustes`** (`titulo`, `descripcion`, `estado`, `pie`): tarjeta con su propio guardar en `pie`. Nunca
+  un «Guardar todo».
+- **`FilaAjuste`** (`titulo`, `descripcion`, `primera`): qué es a la izquierda, el control a la derecha. Un campo
+  dentro lleva `etiquetaOculta` (la etiqueta existe para el lector, pero no se repite a la vista).
+- **`EstadoGuardado`** (`estado`: guardando | guardado | error): para lo que se guarda solo, visible y anunciado.
+- **`CargaFoto`**: elegir o arrastrar, valida tipo y peso, recorta al centro a 512 px y entrega un File cuadrado.
+- **`ZonaPeligro`**: borde de riesgo, al final; confirmar pide escribir una palabra (y la contraseña), nunca
+  una casilla; el botón no se apaga, el campo dice qué falta. `Boton variante="peligro"` es nuevo.
+
+⚠️ **El cuadro de `Modal` ahora es sólido** (`--ds-surface-solid`): translúcido sobre el velo, todo `ink-3`
+de adentro bajaba de 4.5:1 (lo cachó axe en las etiquetas del modal de borrar).
+
 ## Pantalla de acceso «Vitrina» (v2.2)
 
 `<PantallaAcceso marca lema vitrina titulo nota error pie>{formulario}</PantallaAcceso>`: el login, el registro y
@@ -676,7 +704,7 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.3.0`
+   `npm install github:lecxa16/zentrya-design#v2.4.0`
 2. Instalar lo que el paquete pide y no trae:
    `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
 3. Envolver la app en `<ProveedorTema>`.

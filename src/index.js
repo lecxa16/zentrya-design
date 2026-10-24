@@ -74,6 +74,10 @@ export { default as MenuUsuario } from "./Cuenta";
 export { default as Notificaciones } from "./Notificaciones";
 export { default as PantallaAcceso, TarjetaVitrina } from "./PantallaAcceso";
 export { default as CampoClave } from "./primitivas/CampoClave";
+export { default as PantallaCuenta } from "./Cuenta/PantallaCuenta";
+export { SeccionAjustes, FilaAjuste, EstadoGuardado } from "./Cuenta/Ajustes";
+export { default as CargaFoto } from "./Cuenta/CargaFoto";
+export { default as ZonaPeligro } from "./Cuenta/ZonaPeligro";
 export { default as SelectorPeriodo, PERIODOS, rangoPeriodo, textoRango } from "./primitivas/SelectorPeriodo";
 export { default as Chip, BarraFiltros } from "./primitivas/Chip";
 

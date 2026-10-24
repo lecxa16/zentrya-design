@@ -70,8 +70,10 @@ export default function Modal({
         style={{
           position: "fixed", zIndex: 61, outline: "none",
           display: "flex", flexDirection: "column", overflow: "hidden",
-          background: "var(--ds-panel)", border: "1px solid var(--ds-line)",
-          backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
+          /* Sólido, no vidrio: translúcido sobre el velo oscuro, el panel quedaba más oscuro
+             que una tarjeta y todo `ink-3` de adentro bajaba de 4.5:1 (etiquetas de campos,
+             notas: 4.35, lo cachó axe). Sobre la superficie sólida vale lo medido (v2.4). */
+          background: "var(--ds-surface-solid)", border: "1px solid var(--ds-line)",
           boxShadow: "var(--ds-lift-3)",
           ...(hoja
             ? {

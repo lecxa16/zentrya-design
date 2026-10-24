@@ -14,47 +14,57 @@ var r = {
 	padding: "10px 13px",
 	outline: "none",
 	transition: "border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease)"
+}, i = {
+	position: "absolute",
+	width: 1,
+	height: 1,
+	padding: 0,
+	margin: -1,
+	overflow: "hidden",
+	clip: "rect(0 0 0 0)",
+	whiteSpace: "nowrap",
+	border: 0
 };
-function i({ id: e, etiqueta: r, requerido: i, error: a, ayuda: o, children: s, estilo: c }) {
+function a({ id: e, etiqueta: r, requerido: a, error: o, ayuda: s, children: c, estilo: l, etiquetaOculta: u = !1 }) {
 	return /* @__PURE__ */ n("div", {
-		"data-error": a ? "si" : void 0,
+		"data-error": o ? "si" : void 0,
 		style: {
 			display: "flex",
 			flexDirection: "column",
 			gap: 6,
 			minWidth: 0,
-			...c
+			...l
 		},
 		children: [
 			r && /* @__PURE__ */ n("label", {
 				htmlFor: e,
 				id: e ? `${e}-etiqueta` : void 0,
-				style: {
+				style: u ? i : {
 					fontSize: "var(--ds-t-micro)",
 					fontWeight: 700,
 					letterSpacing: "0.04em",
 					textTransform: "uppercase",
 					color: "var(--ds-ink-3)"
 				},
-				children: [r, i && /* @__PURE__ */ t("span", {
+				children: [r, a && /* @__PURE__ */ t("span", {
 					style: { color: "var(--ds-risk)" },
 					children: " *"
 				})]
 			}),
-			s,
-			(a || o) && /* @__PURE__ */ t("div", {
+			c,
+			(o || s) && /* @__PURE__ */ t("div", {
 				style: {
 					fontSize: "var(--ds-t-small)",
-					color: a ? "var(--ds-risk)" : "var(--ds-ink-3)"
+					color: o ? "var(--ds-risk)" : "var(--ds-ink-3)"
 				},
-				children: a || o
+				children: o || s
 			})
 		]
 	});
 }
-function a({ etiqueta: a, valor: o, onCambio: s, onSalir: c, tipo: l = "text", marcador: u, requerido: d, error: f, ayuda: p, deshabilitado: m, multilinea: h = !1, filas: g = 3, estilo: _, adorno: v, id: y, ...b }) {
-	let x = e(), S = y || x, C = /* @__PURE__ */ t(h ? "textarea" : "input", {
-		id: S,
+function o({ etiqueta: i, valor: o, onCambio: s, onSalir: c, tipo: l = "text", marcador: u, requerido: d, error: f, ayuda: p, deshabilitado: m, multilinea: h = !1, filas: g = 3, estilo: _, adorno: v, id: y, etiquetaOculta: b, ...x }) {
+	let S = e(), C = y || S, w = /* @__PURE__ */ t(h ? "textarea" : "input", {
+		id: C,
 		type: h ? void 0 : l,
 		rows: h ? g : void 0,
 		value: o ?? "",
@@ -77,18 +87,19 @@ function a({ etiqueta: a, valor: o, onCambio: s, onSalir: c, tipo: l = "text", m
 		onBlur: (e) => {
 			e.target.style.borderColor = f ? "var(--ds-risk)" : "var(--ds-line)", e.target.style.boxShadow = "none", c?.();
 		},
-		...b
+		...x
 	});
-	return /* @__PURE__ */ t(i, {
-		id: S,
-		etiqueta: a,
+	return /* @__PURE__ */ t(a, {
+		id: C,
+		etiqueta: i,
 		requerido: d,
 		error: f,
 		ayuda: p,
 		estilo: _,
+		etiquetaOculta: b,
 		children: v ? /* @__PURE__ */ n("div", {
 			style: { position: "relative" },
-			children: [C, /* @__PURE__ */ t("div", {
+			children: [w, /* @__PURE__ */ t("div", {
 				style: {
 					position: "absolute",
 					top: 0,
@@ -99,14 +110,14 @@ function a({ etiqueta: a, valor: o, onCambio: s, onSalir: c, tipo: l = "text", m
 				},
 				children: v
 			})]
-		}) : C
+		}) : w
 	});
 }
-function o({ etiqueta: a, valor: o, onCambio: s, onSalir: c, opciones: l = [], vacio: u, requerido: d, error: f, ayuda: p, deshabilitado: m, estilo: h, ...g }) {
+function s({ etiqueta: i, valor: o, onCambio: s, onSalir: c, opciones: l = [], vacio: u, requerido: d, error: f, ayuda: p, deshabilitado: m, estilo: h, ...g }) {
 	let _ = e();
-	return /* @__PURE__ */ t(i, {
+	return /* @__PURE__ */ t(a, {
 		id: _,
-		etiqueta: a,
+		etiqueta: i,
 		requerido: d,
 		error: f,
 		ayuda: p,
@@ -143,7 +154,7 @@ function o({ etiqueta: a, valor: o, onCambio: s, onSalir: c, opciones: l = [], v
 		})
 	});
 }
-function s({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
+function c({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
 	return /* @__PURE__ */ n("div", {
 		style: {
 			position: "relative",
@@ -193,4 +204,4 @@ function s({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
 		})]
 	});
 }
-export { o as a, i, r as n, a as r, s as t };
+export { s as a, a as i, r as n, o as r, c as t };

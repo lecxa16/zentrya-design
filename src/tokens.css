@@ -377,3 +377,6 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* La inicial del monograma del Armazón: generada, para que no cuente como texto visible. */
+.ds-monograma::before { content: attr(data-inicial); }

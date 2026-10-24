@@ -19,7 +19,12 @@ export const CAJA = {
   transition: "border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease)",
 };
 
-export function Envoltura({ id, etiqueta, requerido, error, ayuda, children, estilo }) {
+/** `etiquetaOculta`: la etiqueta existe (el lector la anuncia) pero no se ve, porque ya la
+    dice algo al lado —el título de un `FilaAjuste`—. Repetirla a la vista es ruido. */
+const OCULTA = { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden",
+  clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 };
+
+export function Envoltura({ id, etiqueta, requerido, error, ayuda, children, estilo, etiquetaOculta = false }) {
   return (
     /* `data-error` es cómo el formulario encuentra el primer campo con
        problema para llevarle el foco: un id no serviría igual, porque los
@@ -30,7 +35,7 @@ export function Envoltura({ id, etiqueta, requerido, error, ayuda, children, est
         /* La etiqueta lleva su propio id: un control de MUI no es un `input`
            —el `Select` dibuja un `div`— y `htmlFor` no lo alcanza. Con el id
            puesto, esos controles se cuelgan de ella con `aria-labelledby`. */
-        <label htmlFor={id} id={id ? `${id}-etiqueta` : undefined} style={{
+        <label htmlFor={id} id={id ? `${id}-etiqueta` : undefined} style={etiquetaOculta ? OCULTA : {
           fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.04em",
           textTransform: "uppercase", color: "var(--ds-ink-3)",
         }}>
@@ -54,7 +59,7 @@ export function Envoltura({ id, etiqueta, requerido, error, ayuda, children, est
  */
 export default function Campo({
   etiqueta, valor, onCambio, onSalir, tipo = "text", marcador, requerido, error, ayuda,
-  deshabilitado, multilinea = false, filas = 3, estilo, adorno, id: idPropio, ...resto
+  deshabilitado, multilinea = false, filas = 3, estilo, adorno, id: idPropio, etiquetaOculta, ...resto
 }) {
   const idAuto = useId();
   const id = idPropio || idAuto;
@@ -92,7 +97,7 @@ export default function Campo({
   );
   return (
     <Envoltura id={id} etiqueta={etiqueta} requerido={requerido} error={error}
-      ayuda={ayuda} estilo={estilo}>
+      ayuda={ayuda} estilo={estilo} etiquetaOculta={etiquetaOculta}>
       {adorno ? (
         <div style={{ position: "relative" }}>
           {entrada}

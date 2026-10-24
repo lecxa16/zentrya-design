@@ -217,15 +217,58 @@ function MenuHijos({ s, ancla, abierto, onCerrar, activa, onIr, lado }) {
 /** `encoge`: en la cabecera del teléfono la marca cede antes que los
     controles — un nombre recortado se sigue reconociendo, un botón cortado
     no se puede pulsar. */
-function Marca({ marca, encoge = false }) {
+/** Un logo puede llegar como ruta de imagen o como componente (un SVG en línea). */
+function ImagenLogo({ fuente, alt, alto }) {
+  if (!fuente) return null;
+  return typeof fuente === "string"
+    ? <img src={fuente} alt={alt} style={{ height: alto, width: "auto", maxWidth: 180, display: "block", flexShrink: 0 }} />
+    : <span style={{ display: "inline-flex", height: alto, flexShrink: 0 }}>{fuente}</span>;
+}
+
+/** Sin logo, la inicial del producto sobre el acento: el par acento / tinta del acento está
+    medido (≥ 4.5) en todas las paletas, el degradado del héroe no. */
+function Monograma({ texto = "", alto = 28 }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10,
-      flexShrink: encoge ? 1 : 0, minWidth: 0, overflow: encoge ? "hidden" : "visible",
-      textOverflow: "ellipsis",
-      fontWeight: 800, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em",
-      color: "var(--ds-ink)", whiteSpace: "nowrap" }}>
-      {marca}
-    </div>
+    /* La letra va en `::before` (tokens.css), no como texto: es decoración, y como texto
+       visible tendría que estar en el nombre del botón que la contiene (WCAG 2.5.3). */
+    <span aria-hidden className="ds-monograma" data-inicial={texto.trim().charAt(0).toUpperCase()} style={{
+      display: "grid", placeItems: "center", width: alto, height: alto, flexShrink: 0,
+      borderRadius: 8, background: "var(--ds-accent)", color: "var(--ds-ink-on-accent)",
+      fontSize: alto * 0.5, fontWeight: 800, letterSpacing: "-0.02em",
+    }} />
+  );
+}
+
+/**
+ * La marca del producto en el chasis: `logo={{ completo, icono }}`.
+ *   completo  logo con nombre, donde hay sitio (barra de arriba, menú lateral abierto)
+ *   icono     sólo el símbolo, donde no (riel contraído, dock, teléfono); sin él, monograma
+ * Sin `completo` se pinta el icono y el nombre en texto. `onInicio` la vuelve un botón que
+ * lleva al inicio de la app, como en cualquier producto. `encoge`: en la cabecera del
+ * teléfono la marca cede antes que los controles —un nombre recortado se sigue
+ * reconociendo, un botón cortado no se puede pulsar—.
+ */
+function Marca({ marca, logo, compacto = false, encoge = false, onInicio }) {
+  const texto = typeof marca === "string" ? marca : "";
+  const icono = logo?.icono ? <ImagenLogo fuente={logo.icono} alt="" alto={28} /> : <Monograma texto={texto} />;
+  const contenido = compacto ? icono
+    : logo?.completo ? <ImagenLogo fuente={logo.completo} alt={texto} alto={28} />
+      : <>{icono}<span style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>{marca}</span></>;
+  const estilo = {
+    display: "flex", alignItems: "center", gap: 10,
+    flexShrink: encoge ? 1 : 0, minWidth: 0, overflow: encoge ? "hidden" : "visible",
+    fontWeight: 800, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em",
+    color: "var(--ds-ink)", whiteSpace: "nowrap",
+  };
+  if (!onInicio) return <div style={estilo}>{contenido}</div>;
+  return (
+    <button type="button" onClick={onInicio}
+      /* Con el nombre a la vista, el nombre accesible lo contiene (WCAG 2.5.3). */
+      aria-label={compacto ? `Ir al inicio de ${texto}` : `${texto}, ir al inicio`}
+      style={{ ...estilo, border: "none", background: "transparent", padding: 0, cursor: "pointer",
+        fontFamily: "var(--ds-font)", borderRadius: 8 }}>
+      {contenido}
+    </button>
   );
 }
 
@@ -375,7 +418,7 @@ function HojaMas({ abierto, onCerrar, secciones, activa, onIr, titulo = "Más" }
 
 /* ---------------- los tres modos ---------------- */
 
-function ModoTopbar({ marca, secciones, activa, onIr, derecha, children }) {
+function ModoTopbar({ marca, logo, onInicio, secciones, activa, onIr, derecha, children }) {
   const barra = useRef(null);
   const [alto, setAlto] = useState(56);
 
@@ -410,7 +453,7 @@ function ModoTopbar({ marca, secciones, activa, onIr, derecha, children }) {
         position: "fixed", top: "var(--ds-4)",
         left: "var(--ds-4)", right: "var(--ds-4)", zIndex: 30,
       }}>
-        <div style={{ paddingLeft: 8, paddingRight: 8 }}><Marca marca={marca} /></div>
+        <div style={{ paddingLeft: 8, paddingRight: 8 }}><Marca marca={marca} logo={logo} onInicio={onInicio} /></div>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-2)",
           flexWrap: "wrap", flex: 1, minWidth: 0 }}>
           {secciones.map((s) => (conHijos(s)
@@ -540,7 +583,7 @@ function GrupoLateral({ s, activa, riel, bajo, onIr }) {
   );
 }
 
-function ModoSidebar({ marca, secciones, activa, onIr, derecha, children }) {
+function ModoSidebar({ marca, logo, onInicio, secciones, activa, onIr, derecha, children }) {
   const [desplegado, setDesplegado] = useState(true);
   /* En una laptop con barra de marcadores el alto se acaba antes que el ancho:
      ahí los renglones se aprietan para que entren más sin deslizar. */
@@ -570,9 +613,12 @@ function ModoSidebar({ marca, secciones, activa, onIr, derecha, children }) {
         transition: "width var(--ds-t-move) var(--ds-ease)",
         display: "flex", flexDirection: "column", gap: "var(--ds-2)",
       }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+        {/* Abierto: logo completo y el botón al lado. Contraído: el símbolo arriba y el botón
+            debajo, para que el riel no se quede sin marca. */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: abierto ? "space-between" : "center",
+          flexDirection: abierto ? "row" : "column", gap: abierto ? 8 : 10,
           padding: bajo ? "4px 8px 4px" : "6px 8px 10px", flexShrink: 0, minWidth: 0 }}>
-          {abierto && <Marca marca={marca} />}
+          <Marca marca={marca} logo={logo} onInicio={onInicio} compacto={!abierto} />
           <button onClick={() => setDesplegado((v) => !v)}
             aria-label={abierto ? "Contraer menú" : "Desplegar menú"}
             style={{ background: "transparent", border: "none", cursor: "pointer",
@@ -680,7 +726,7 @@ function GrupoDock({ s, activa, conTexto, onIr }) {
 }
 
 function ModoDock({
-  marca, icono, secciones, activa, onIr, derecha,
+  marca, logo, onInicio, icono, secciones, activa, onIr, derecha,
   inicio, inicioAbierto = false, onInicioAbierto, children,
 }) {
   const barra = useRef(null);
@@ -750,10 +796,10 @@ function ModoDock({
       }}>
         <div style={lado}>
           <div ref={izq} style={interiorLado}>
-            {inicio && (
+            {inicio ? (
               <BotonInicio abierto={inicioAbierto} icono={icono}
                 onClick={() => onInicioAbierto?.(!inicioAbierto)} />
-            )}
+            ) : <Marca marca={marca} logo={logo} onInicio={onInicio} compacto />}
           </div>
         </div>
 
@@ -815,7 +861,7 @@ const ICONO_MAS = (
 const PESTANAS_MAX = 5;
 
 function ModoMovil({
-  marca, icono, secciones, activa, onIr, derecha,
+  marca, logo, onInicio, icono, secciones, activa, onIr, derecha,
   inicio, inicioAbierto = false, onInicioAbierto, volver, children,
 }) {
   const [hojaMas, setHojaMas] = useState(false);
@@ -883,7 +929,7 @@ function ModoMovil({
               flex: "0 1 auto", overflow: "hidden",
               padding: "0 6px 0 2px", border: "none", background: "transparent", cursor: "pointer",
               color: "var(--ds-ink)", fontFamily: "var(--ds-font)", WebkitTapHighlightColor: "transparent" }}>
-            <Marca marca={marca} encoge />
+            <Marca marca={marca} logo={logo} encoge />
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               strokeWidth="2.2" strokeLinecap="round" aria-hidden
               style={{ color: "var(--ds-ink-3)", flexShrink: 0, transform: inicioAbierto ? "rotate(180deg)" : "none",
@@ -891,7 +937,7 @@ function ModoMovil({
               <path d="M6 9l6 6 6-6" />
             </svg>
           </button>
-        ) : <Marca marca={marca} encoge />}
+        ) : <Marca marca={marca} logo={logo} onInicio={onInicio} encoge />}
         <div style={{ flex: 1, minWidth: 0 }} />
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-2)", flexShrink: 0 }}>
           {derecha}
@@ -978,7 +1024,7 @@ const FLECHA_ATRAS = (
 );
 
 export default function Armazon({
-  marca, icono, secciones = [], activa, onIr, derecha,
+  marca, logo, onInicio, icono, secciones = [], activa, onIr, derecha,
   inicio, inicioAbierto, onInicioAbierto, migas, modo: modoFijo, vista, children,
 }) {
   const [modo, setModo] = useState(() => modoFijo || inicial());
@@ -1007,7 +1053,7 @@ export default function Armazon({
   const bloqueMigas = ruta ? (!movil && ruta.length > 1 ? <Migas ruta={ruta} /> : null) : migas;
   const cuerpo = <Transicion vista={vista}>{bloqueMigas}{children}</Transicion>;
   const conTotales = secciones.map(conInsigniaTotal);
-  const props = { marca, icono, secciones: conTotales, activa, onIr, derecha, inicio,
+  const props = { marca, logo, onInicio, icono, secciones: conTotales, activa, onIr, derecha, inicio,
     inicioAbierto, onInicioAbierto, children: cuerpo,
     volver: padre?.ir ? { texto: padre.texto, ir: padre.ir } : null };
   const Elegido = movil ? ModoMovil
