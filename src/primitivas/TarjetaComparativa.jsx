@@ -52,7 +52,7 @@ export default function TarjetaComparativa({
               paddingTop: angosto && i > 0 ? "var(--ds-3)" : 0,
               borderTop: angosto && i > 0 ? "1px solid var(--ds-line)" : "none",
             }}>
-              <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 700,
+              <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 600,
                 color: i === 0 ? "var(--ds-ink-2)" : "var(--ds-ink-3)" }}>
                 {v.etiqueta}
               </div>
@@ -61,7 +61,7 @@ export default function TarjetaComparativa({
               ) : (
                 <div style={CONTENEDOR_CIFRA}>
                   <div className="ds-num" style={{
-                    fontSize: cabe(i === 0 ? "var(--ds-num-m)" : "var(--ds-num-s)", formatear(v.valor, formato, opcionesFormato)), fontWeight: 800,
+                    fontSize: cabe(i === 0 ? "var(--ds-num-m)" : "var(--ds-num-s)", formatear(v.valor, formato, opcionesFormato)), fontWeight: 700,
                     letterSpacing: "-0.03em", lineHeight: 1.15, marginTop: 4,
                     color: v.valor === null || v.valor === undefined ? "var(--ds-ink-3)"
                       : i === 0 ? "var(--ds-ink)" : "var(--ds-ink-2)",

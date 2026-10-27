@@ -10,9 +10,12 @@
  *
  * Sin fotos de archivo ni ilustraciones genéricas: un icono del sistema, si
  * acaso. La foto de stock junto a un vacío promete un producto que no es.
+ *
+ * A la manera de `ContentUnavailableView` de Apple (v2.9): icono grande sin
+ * recuadro, título, una línea y las acciones, centrados y con aire. Sin borde
+ * punteado: eso se lee como «suelta un archivo aquí».
  */
 import React from "react";
-import { Insignia } from "./Pastilla";
 
 export default function EstadoVacio({
   titulo = "Aún no hay nada aquí", children, acciones, icono, compacto = false, estilo,
@@ -20,19 +23,21 @@ export default function EstadoVacio({
   return (
     <div role="status" style={{
       display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center",
-      gap: compacto ? "var(--ds-2)" : "var(--ds-3)",
+      gap: compacto ? 6 : "var(--ds-2)",
       padding: compacto ? "var(--ds-6) var(--ds-4)" : "var(--ds-12) var(--ds-6)",
-      border: "1px dashed var(--ds-line-firm)", borderRadius: compacto ? "var(--ds-r-item)" : "var(--ds-r-card)",
       ...estilo,
     }}>
-      {icono && <Insignia tono="neutro" tamano={compacto ? 36 : 48}>{icono}</Insignia>}
-      <div style={{ fontWeight: 800, letterSpacing: "-0.02em", color: "var(--ds-ink)",
+      {icono && (
+        <div aria-hidden style={{ display: "grid", placeItems: "center", color: "var(--ds-ink-3)", lineHeight: 1,
+          fontSize: compacto ? 32 : 48, fontWeight: 300, marginBottom: compacto ? 2 : 6 }}>{icono}</div>
+      )}
+      <div style={{ fontWeight: 700, letterSpacing: "-0.015em", color: "var(--ds-ink)",
         fontSize: compacto ? "var(--ds-t-body)" : "var(--ds-t-title)" }}>
         {titulo}
       </div>
       {children && (
-        <div style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-3)", maxWidth: 420,
-          lineHeight: 1.5 }}>
+        <div style={{ fontSize: compacto ? "var(--ds-t-small)" : "var(--ds-t-body)", color: "var(--ds-ink-2)",
+          maxWidth: 400, lineHeight: 1.45, textWrap: "pretty" }}>
           {children}
         </div>
       )}

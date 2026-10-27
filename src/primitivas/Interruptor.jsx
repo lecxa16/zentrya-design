@@ -10,19 +10,26 @@
  * teclado, se acciona con espacio o Enter y un lector de pantalla anuncia
  * encendido/apagado. La etiqueta viaja en `etiqueta` — un interruptor sin
  * nombre accesible es un interruptor que nadie ciego puede usar.
+ *
+ * Medidas de iOS (v2.9): 51 × 31 y perilla de 27; al presionarlo la perilla se
+ * estira hacia donde va a ir, como en el iPhone.
  */
-import React from "react";
+import React, { useState } from "react";
 
 export default function Interruptor({
   encendido = false, onCambio, etiqueta, deshabilitado = false, estilo,
 }) {
+  const [presionado, setPresionado] = useState(false);
+  const perilla = presionado && !deshabilitado ? 33 : 27;
   return (
     <button
       type="button" role="switch" aria-checked={encendido} aria-label={etiqueta}
       title={etiqueta} disabled={deshabilitado}
       onClick={() => onCambio?.(!encendido)}
+      onPointerDown={() => setPresionado(true)} onPointerUp={() => setPresionado(false)}
+      onPointerLeave={() => setPresionado(false)} onPointerCancel={() => setPresionado(false)}
       style={{
-        position: "relative", flexShrink: 0, width: 42, height: 25,
+        position: "relative", flexShrink: 0, width: 51, height: 31,
         borderRadius: "var(--ds-r-pill)", cursor: deshabilitado ? "not-allowed" : "pointer",
         border: `1px solid ${encendido ? "transparent" : "var(--ds-line-firm)"}`,
         background: encendido ? "var(--ds-accent-trazo)" : "var(--ds-surface-sunk)",
@@ -32,11 +39,11 @@ export default function Interruptor({
       }}
     >
       <span aria-hidden style={{
-        position: "absolute", top: 2, left: encendido ? 19 : 2,
-        width: 19, height: 19, borderRadius: "var(--ds-r-pill)",
+        position: "absolute", top: 1, left: encendido ? 49 - 1 - perilla : 1,
+        width: perilla, height: 27, borderRadius: "var(--ds-r-pill)",
         background: encendido ? "var(--ds-ink-on-accent)" : "var(--ds-surface-solid)",
-        boxShadow: "var(--ds-lift-1)",
-        transition: "left var(--ds-t-state) var(--ds-ease)",
+        boxShadow: "0 3px 8px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.12)",
+        transition: "left var(--ds-t-state) var(--ds-ease), width var(--ds-t-state) var(--ds-ease)",
         ...estilo,
       }} />
     </button>

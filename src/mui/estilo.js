@@ -11,20 +11,21 @@
  * usa, y es por esto.
  */
 export const sxCampo = (hayError) => {
-  const borde = hayError ? "var(--ds-risk)" : "var(--ds-line)";
-  const bordeEncima = hayError ? "var(--ds-risk)" : "var(--ds-line-firm)";
+  const borde = hayError ? "var(--ds-risk)" : "var(--ds-line-firm)";
+  const bordeEncima = hayError ? "var(--ds-risk)" : "var(--ds-ink-3)";
   const bordeFoco = hayError ? "var(--ds-risk)" : "var(--ds-accent-trazo)";
   const halo = hayError
-    ? "0 0 0 3px rgba(220,38,38,0.22)"
-    : "0 0 0 3px var(--ds-accent-ring)";
+    ? "0 0 0 4px color-mix(in srgb, var(--ds-risk) 22%, transparent)"
+    : "0 0 0 4px var(--ds-accent-ring)";
 
   const campo = {
     fontFamily: "var(--ds-font)",
     fontSize: "var(--ds-t-body)",
-    fontWeight: 600,
+    fontWeight: 400,
     color: "var(--ds-ink)",
     backgroundColor: "var(--ds-surface-2)",
-    borderRadius: "var(--ds-r-item)",
+    /* En texto: en `sx`, un número suelto se multiplica por el radio del tema (10 → 40 px). */
+    borderRadius: "10px",
     transition: "box-shadow var(--ds-t-state) var(--ds-ease)",
 
     /* Se apunta a `.MuiOutlinedInput-notchedOutline`, no a `fieldset`: MUI
@@ -56,12 +57,13 @@ export const sxCampo = (hayError) => {
        secciones en vez de un `<input>`. */
     "&.MuiOutlinedInput-root, & .MuiOutlinedInput-root, & .MuiPickersOutlinedInput-root": campo,
     /* Su raíz ya trae el relleno lateral: aquí sólo va el vertical. */
-    "& .MuiPickersOutlinedInput-root": { paddingLeft: "13px" },
-    "& .MuiPickersSectionList-root": { padding: "10px 0", color: "var(--ds-ink)" },
+    "& .MuiPickersOutlinedInput-root": { paddingLeft: "14px" },
+    /* 11.5 px arriba y abajo: la misma altura que `Campo` (44 px, el mínimo táctil de Apple). */
+    "& .MuiPickersSectionList-root": { padding: "11.5px 0", color: "var(--ds-ink)" },
     "& .MuiPickersOutlinedInput-root.Mui-disabled .MuiPickersSectionList-root": { color: "var(--ds-ink-3)" },
 
     "& .MuiOutlinedInput-input, & .MuiSelect-select": {
-      padding: "10px 13px",
+      padding: "11.5px 14px",
       color: "var(--ds-ink)",
       WebkitTextFillColor: "var(--ds-ink)",
     },

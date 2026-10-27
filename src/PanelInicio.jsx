@@ -23,7 +23,7 @@ const flecha = (
 
 function Titulo({ children }) {
   return (
-    <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 800, color: "var(--ds-ink-2)",
+    <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink-2)",
       letterSpacing: "-0.01em", margin: "0 0 var(--ds-3)" }}>
       {children}
     </div>
@@ -53,7 +53,7 @@ function Renglon({ item, onIr }) {
           : item.icono}
       </span>
       <span style={{ minWidth: 0, flex: 1 }}>
-        <span style={{ display: "block", fontSize: "var(--ds-t-small)", fontWeight: 700,
+        <span style={{ display: "block", fontSize: "var(--ds-t-small)", fontWeight: 600,
           color: "var(--ds-ink)", whiteSpace: "nowrap", overflow: "hidden",
           textOverflow: "ellipsis" }}>{item.texto}</span>
         {item.subtitulo && (

@@ -76,7 +76,7 @@ function Enlace({ children, onClick }) {
     <button type="button" onClick={onClick} style={{
       border: "none", background: "transparent", cursor: "pointer", padding: "8px 10px",
       borderRadius: "var(--ds-r-item)", fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)",
-      fontWeight: 700, color: "var(--ds-accent-tinta)",
+      fontWeight: 600, color: "var(--ds-accent-tinta)",
     }}>{children}</button>
   );
 }
@@ -108,7 +108,7 @@ export default function Notificaciones({ avisos = [], onAbrir, onMarcarTodas, on
           <span className="ds-num" aria-hidden style={{
             position: "absolute", top: 3, right: 1, minWidth: 18, height: 18, padding: "0 5px",
             boxSizing: "border-box", borderRadius: "var(--ds-r-pill)", background: "var(--ds-risk)",
-            color: "var(--ds-surface-solid)", fontSize: "0.66rem", fontWeight: 800, lineHeight: "18px",
+            color: "var(--ds-surface-solid)", fontSize: "0.66rem", fontWeight: 700, lineHeight: "18px",
             textAlign: "center", boxShadow: "0 0 0 2px var(--ds-surface-solid)",
           }}>{sinLeer > 99 ? "99+" : sinLeer}</span>
         )}
@@ -119,7 +119,7 @@ export default function Notificaciones({ avisos = [], onAbrir, onMarcarTodas, on
       ) : (
         <Flotante ancla={boton} abierto={abierto} onCerrar={cerrar} rol="dialog" etiqueta="Notificaciones"
           minAncho={360} estilo={{ width: 380 }}>
-          <div style={{ padding: "4px 10px 8px", fontWeight: 800, fontSize: "var(--ds-t-body)",
+          <div style={{ padding: "4px 10px 8px", fontWeight: 700, fontSize: "var(--ds-t-body)",
             color: "var(--ds-ink)" }}>Notificaciones</div>
           {lista}
         </Flotante>

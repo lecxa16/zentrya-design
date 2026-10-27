@@ -1,6 +1,7 @@
 /** Gráficas: una muestra de cada pieza con datos de ejemplo de giros distintos. */
-import React from "react";
+import React, { useState } from "react";
 import { Bento, Celda, Superficie, Seccion, Pastilla } from "../../src/index.js";
+import GraficaDestacada from "../../src/graficas/GraficaDestacada.jsx";
 import GraficaLinea from "../../src/graficas/GraficaLinea.jsx";
 import GraficaBarras from "../../src/graficas/GraficaBarras.jsx";
 import Dona from "../../src/graficas/Dona.jsx";
@@ -55,10 +56,32 @@ const Tarjeta = ({ titulo, nota, ancho = 12, anchoMd = 6, children }) => (
   </Celda>
 );
 
+/* Patrimonio de EJEMPLO por periodo, para GraficaDestacada. */
+const PATRIMONIO = {
+  s: { etiquetas: ["lun 20", "mar 21", "mié 22", "jue 23", "vie 24", "sáb 25", "dom 26"],
+       valores: [81200, 81950, 81400, 82600, 83100, 83050, 84250], detalle: "20 – 26 de octubre" },
+  m: { etiquetas: Array.from({ length: 26 }, (_, i) => `${i + 1} oct`),
+       valores: Array.from({ length: 26 }, (_, i) => Math.round(76000 + i * 310 + Math.sin(i / 2.2) * 1400)), detalle: "Octubre de 2026" },
+  a: { etiquetas: MESES.slice(0, 10), valores: [61200, 63400, 62900, 66100, 68800, 70200, 72900, 74100, 79300, 84250],
+       detalle: "Enero – octubre de 2026" },
+};
+
+function Destacada() {
+  const [p, setP] = useState("m");
+  const d = PATRIMONIO[p];
+  return (
+    <GraficaDestacada titulo="Patrimonio" formato="moneda" resumen="hoy" detalle={d.detalle}
+      serie={{ nombre: "Patrimonio", valores: d.valores, color: "var(--ds-accent-trazo)" }} etiquetas={d.etiquetas}
+      periodos={[{ valor: "s", texto: "Semana" }, { valor: "m", texto: "Mes" }, { valor: "a", texto: "Año" }]}
+      periodo={p} onPeriodo={setP} />
+  );
+}
+
 export default function Graficas() {
   return (
     <>
       <div style={{ marginBottom: "var(--ds-4)" }}><Pastilla tono="aviso">Datos de ejemplo</Pastilla></div>
+      <div style={{ maxWidth: 560, marginBottom: "var(--ds-6)" }}><Destacada /></div>
       <Bento>
         <Tarjeta titulo="Ventas por mes" nota="Comercial · GraficaLinea con meta y área" anchoMd={8}>
           <GraficaLinea titulo="Ventas por mes" formato="moneda" area etiquetas={MESES.slice(0, 10)}

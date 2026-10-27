@@ -54,7 +54,7 @@
       radial-gradient(1200px 760px at 76% -12%, #1E1E1E 0%, rgba(30,30,30,0) 58%),
       radial-gradient(760px 520px at 4% 6%, #141414 0%, rgba(20,20,20,0) 54%),
       linear-gradient(160deg, #0B0B0B 0%, #090909 52%, #0B0B0B 100%);
-  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-frame:         rgba(22,22,22,0.74);  /* v2.9: al 5 % la barra bajaba de 4.5:1 con contenido debajo */
   --ds-panel:         rgba(22,22,22,0.95);
   --ds-surface-solid: #161616;
 
@@ -119,7 +119,7 @@
       radial-gradient(1200px 760px at 76% -12%, #251A45 0%, rgba(37,26,69,0) 58%),
       radial-gradient(760px 520px at 4% 6%, #16102A 0%, rgba(22,16,42,0) 54%),
       linear-gradient(160deg, #0A0810 0%, #08060D 52%, #0A0810 100%);
-  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-frame:         rgba(20,16,31,0.74);  /* v2.9: al 5 % la barra bajaba de 4.5:1 con contenido debajo */
   --ds-panel:         rgba(20,16,31,0.95);
   --ds-surface-solid: #16121F;
 
@@ -184,7 +184,7 @@
       radial-gradient(1200px 760px at 76% -12%, #0F2246 0%, rgba(15,34,70,0) 58%),
       radial-gradient(760px 520px at 4% 6%, #0A1830 0%, rgba(10,24,48,0) 54%),
       linear-gradient(160deg, #07090D 0%, #05070A 52%, #07090D 100%);
-  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-frame:         rgba(16,22,34,0.74);  /* v2.9: al 5 % la barra bajaba de 4.5:1 con contenido debajo */
   --ds-panel:         rgba(16,22,34,0.95);
 
   --ds-ink-on-accent: #061A3D;
@@ -238,7 +238,7 @@
       radial-gradient(1200px 760px at 76% -12%, #3A1030 0%, rgba(58,16,48,0) 58%),
       radial-gradient(760px 520px at 4% 6%, #22091D 0%, rgba(34,9,29,0) 54%),
       linear-gradient(160deg, #0B070A 0%, #090508 52%, #0B070A 100%);
-  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-frame:         rgba(30,14,26,0.74);  /* v2.9: al 5 % la barra bajaba de 4.5:1 con contenido debajo */
   --ds-panel:         rgba(30,14,26,0.95);
 
   --ds-ink-on-accent: #3A0A26;
@@ -292,7 +292,7 @@
       radial-gradient(1200px 760px at 76% -12%, #1A2330 0%, rgba(26,35,48,0) 58%),
       radial-gradient(760px 520px at 4% 6%, #10161F 0%, rgba(16,22,31,0) 54%),
       linear-gradient(160deg, #07090C 0%, #05070A 52%, #07090C 100%);
-  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-frame:         rgba(18,23,30,0.74);  /* v2.9: al 5 % la barra bajaba de 4.5:1 con contenido debajo */
   --ds-panel:         rgba(18,23,30,0.95);
 
   --ds-ink-on-accent: #0E1A2A;

@@ -47,7 +47,7 @@ export default function TarjetaEntidad({
             </div>
           ) : (
             <>
-              <div style={{ fontWeight: 800, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em",
+              <div style={{ fontWeight: 700, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em",
                 color: "var(--ds-ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {nombre}
               </div>
@@ -74,7 +74,7 @@ export default function TarjetaEntidad({
               {cargando ? <Esqueleto alto={16} ancho="70%" estilo={{ marginTop: 5 }} /> : falta(m.valor) ? (
                 <div style={{ marginTop: 4 }}><Pastilla tono="aviso">Sin capturar</Pastilla></div>
               ) : (
-                <div className="ds-num" style={{ fontWeight: 800, color: "var(--ds-ink)", marginTop: 2,
+                <div className="ds-num" style={{ fontWeight: 700, color: "var(--ds-ink)", marginTop: 2,
                   overflowWrap: "anywhere" }}>
                   {formatear(m.valor, m.formato || "texto", m.opciones)}
                 </div>

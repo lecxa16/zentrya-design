@@ -74,7 +74,7 @@ export default function Tabla({
             {columnas.map((c) => (
               <th key={c.clave} scope="col" style={{
                 textAlign: c.numerica ? "right" : "left",
-                fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.05em",
+                fontSize: "var(--ds-t-micro)", fontWeight: 600, letterSpacing: "0.05em",
                 textTransform: "uppercase", color: "var(--ds-ink-3)",
                 padding: "0 var(--ds-3) var(--ds-3)", whiteSpace: "nowrap",
                 borderBottom: "1px solid var(--ds-line)",
@@ -162,7 +162,7 @@ export default function Tabla({
         <Paso texto="Anterior" hacia="M15 18l-6-6 6-6" inactivo={pagina <= 1}
           onClick={() => setPagina((p) => Math.max(1, p - 1))} />
         <span className="ds-num" style={{ fontSize: "var(--ds-t-small)",
-          fontWeight: 700, color: "var(--ds-ink-2)" }}>
+          fontWeight: 600, color: "var(--ds-ink-2)" }}>
           {pagina} / {paginas}
         </span>
         <Paso texto="Siguiente" hacia="M9 18l6-6-6-6" inactivo={pagina >= paginas}
@@ -180,7 +180,7 @@ function Paso({ texto, hacia, inactivo, derecha, onClick }) {
       style={{
         display: "inline-flex", alignItems: "center", gap: 6,
         flexDirection: derecha ? "row-reverse" : "row",
-        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
         padding: "7px 13px", borderRadius: "var(--ds-r-item)",
         border: "1px solid var(--ds-line)",
         background: "var(--ds-surface)",

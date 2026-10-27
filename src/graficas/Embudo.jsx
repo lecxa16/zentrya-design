@@ -59,18 +59,18 @@ export default function Embudo({ etapas = [], formato = "numero", titulo, estilo
               );
               const cifras = (
                 <div style={{ display: "flex", alignItems: "baseline", gap: 8, justifyContent: angosto ? "flex-start" : "flex-end", flexWrap: "wrap" }}>
-                  <span className="ds-num" style={{ fontWeight: 800, color: "var(--ds-ink)", fontSize: "var(--ds-t-body)" }}>
+                  <span className="ds-num" style={{ fontWeight: 700, color: "var(--ds-ink)", fontSize: "var(--ds-t-body)" }}>
                     {fmt(v, formato)}
                   </span>
                   {i > 0 && (
-                    <span className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: "var(--ds-ink-3)", whiteSpace: "nowrap" }}>
+                    <span className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: "var(--ds-ink-3)", whiteSpace: "nowrap" }}>
                       {porcentaje(vsAnt)} de la anterior · {porcentaje(vsIni)} del inicio
                     </span>
                   )}
                 </div>
               );
               const etiqueta = (
-                <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink-2)",
+                <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-ink-2)",
                   overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={e.etiqueta}>
                   {e.etiqueta}
                 </div>

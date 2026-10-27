@@ -23,10 +23,9 @@ export default function Esqueleto({
       width: circulo ? lado : ancho,
       height: alto,
       borderRadius: circulo ? "var(--ds-r-pill)" : radio,
-      backgroundImage: "linear-gradient(90deg, var(--ds-esqueleto) 0%, var(--ds-esqueleto-brillo) 40%, var(--ds-esqueleto) 80%)",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "220% 100%",
-      animation: "ds-brillo 1.4s linear infinite",
+      /* El pulso suave de iOS (v2.9), no un barrido: lo que carga respira. */
+      background: "var(--ds-esqueleto)",
+      animation: "ds-pulso 1.6s ease-in-out infinite alternate",
       ...estilo,
     }} />
   );

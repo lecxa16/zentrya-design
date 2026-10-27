@@ -41,7 +41,7 @@ function Marca({ estado, numero, tamano = 30 }) {
     <span style={{
       width: tamano, height: tamano, flexShrink: 0, borderRadius: "var(--ds-r-pill)",
       background: e.fondo, color: e.tinta, border: `2px solid ${e.borde}`,
-      display: "grid", placeItems: "center", fontSize: "var(--ds-t-small)", fontWeight: 800,
+      display: "grid", placeItems: "center", fontSize: "var(--ds-t-small)", fontWeight: 700,
       boxShadow: estado === "actual" ? "0 0 0 4px var(--ds-accent-ring)" : "none",
       transition: "background var(--ds-t-state) var(--ds-ease)",
     }}>
@@ -94,10 +94,10 @@ export default function Pasos({ pasos = [], orientacion = "horizontal", onPaso, 
               </div>
               <Contenedor onPaso={onPaso} paso={p} i={i}
                 estilo={{ display: "block", paddingBottom: ultimo ? 0 : "var(--ds-4)", minWidth: 0 }}>
-                <div style={{ fontWeight: 700, color: "var(--ds-ink)", lineHeight: "30px" }}>
+                <div style={{ fontWeight: 600, color: "var(--ds-ink)", lineHeight: "30px" }}>
                   {p.titulo}
                 </div>
-                <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: e.texto,
+                <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: e.texto,
                   letterSpacing: "0.02em" }}>
                   {e.palabra}
                 </div>
@@ -138,11 +138,11 @@ export default function Pasos({ pasos = [], orientacion = "horizontal", onPaso, 
               estilo={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%",
                 textAlign: "center", padding: "0 var(--ds-1)" }}>
               <Marca estado={p.estado} numero={i + 1} />
-              <div style={{ fontWeight: 700, color: "var(--ds-ink)", marginTop: "var(--ds-2)",
+              <div style={{ fontWeight: 600, color: "var(--ds-ink)", marginTop: "var(--ds-2)",
                 fontSize: "var(--ds-t-small)", lineHeight: 1.25 }}>
                 {p.titulo}
               </div>
-              <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: e.texto, marginTop: 2 }}>
+              <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: e.texto, marginTop: 2 }}>
                 {e.palabra}
               </div>
               {descripcion(p) && (

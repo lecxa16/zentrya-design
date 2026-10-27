@@ -242,14 +242,14 @@ export default function GraficaBarras({
                     return (
                       <text x={total >= 0 ? xv + 6 : xv - 6} y={centroBanda(ci)} dy="0.32em"
                         textAnchor={total >= 0 ? "start" : "end"}
-                        style={{ ...TEXTO_EJE, fill: "var(--ds-ink)", fontWeight: 800 }}>{texto}</text>
+                        style={{ ...TEXTO_EJE, fill: "var(--ds-ink)", fontWeight: 700 }}>{texto}</text>
                     );
                   }
                   if (banda < 34) return null;
                   const yv = valorA(total);
                   return (
                     <text x={centroBanda(ci)} y={total >= 0 ? yv - 6 : yv + 14} textAnchor="middle"
-                      style={{ ...TEXTO_EJE, fill: "var(--ds-ink)", fontWeight: 800 }}>{texto}</text>
+                      style={{ ...TEXTO_EJE, fill: "var(--ds-ink)", fontWeight: 700 }}>{texto}</text>
                   );
                 })()}
               </g>

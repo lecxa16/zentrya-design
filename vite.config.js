@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // Compila el paquete a dist/: index.js (núcleo), mui.js (selector y fecha
-// sobre MUI) y estilos.css (tokens + fuente, con los .woff2 incrustados).
+// sobre MUI) y estilos.css (tokens; la letra es la del sistema desde v2.9).
 // React, MUI y dayjs quedan fuera: los pone el proyecto que lo instala.
 // El núcleo importa su propia hoja: quien instala el paquete no tiene que
 // acordarse de cargar el CSS (igual que cuando el sistema vivía en src/).

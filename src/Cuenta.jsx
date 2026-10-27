@@ -28,23 +28,20 @@ const SALIR = (
 function Opcion({ icono, children, onClick, esperando }) {
   return (
     <button type="button" role="menuitem" onClick={onClick} disabled={esperando} aria-busy={esperando || undefined}
+      className="ds-menu-opcion"
       style={{
-        display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%", minHeight: 40,
-        padding: "8px 10px", border: "none", borderRadius: "var(--ds-r-item)", cursor: "pointer",
-        background: "transparent", color: "var(--ds-ink-2)", textAlign: "left",
-        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
-      }}
-      onMouseEnter={(e) => { e.currentTarget.style.background = "var(--ds-surface-2)"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
-      onFocus={(e) => { e.currentTarget.style.background = "var(--ds-surface-2)"; }}
-      onBlur={(e) => { e.currentTarget.style.background = "transparent"; }}>
+        display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%", minHeight: 36,
+        padding: "6px 10px", border: "none", borderRadius: 7, cursor: "pointer",
+        background: "transparent", color: "var(--ds-ink)", textAlign: "left",
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 500,
+      }}>
       <span style={{ display: "grid", placeItems: "center", width: 18, color: "var(--ds-ink-3)" }}>{icono}</span>
       <span style={{ flex: 1 }}>{children}</span>
     </button>
   );
 }
 
-const Separador = () => <div role="separator" style={{ height: 1, background: "var(--ds-line)", margin: "4px 6px" }} />;
+const Separador = () => <div role="separator" style={{ height: 1, background: "var(--ds-line-firm)", margin: "5px 10px" }} />;
 
 export default function MenuUsuario({ nombre = "", correo, foto, opciones = [], onSalir, saliendo = false, figura = false }) {
   const [abierto, setAbierto] = useState(false);
@@ -75,7 +72,7 @@ export default function MenuUsuario({ nombre = "", correo, foto, opciones = [], 
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-3)", padding: "6px 10px 10px" }}>
           <Retrato src={foto} nombre={nombre} tamano={40} figura={figura} />
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontWeight: 800, fontSize: "var(--ds-t-small)", color: "var(--ds-ink)",
+            <div style={{ fontWeight: 700, fontSize: "var(--ds-t-small)", color: "var(--ds-ink)",
               overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nombre}</div>
             {correo && (
               <div style={{ fontSize: "var(--ds-t-micro)", color: "var(--ds-ink-2)",

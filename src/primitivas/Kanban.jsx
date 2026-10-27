@@ -37,12 +37,12 @@ function BotonMover({ tarjeta, columna, columnas, onMover }) {
         onClick={(e) => { e.stopPropagation(); setAbierto((v) => !v); }}
         style={{ border: "1px solid var(--ds-line)", background: "transparent", cursor: "pointer",
           color: "var(--ds-ink-3)", fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)",
-          fontWeight: 700, padding: "3px 9px", borderRadius: "var(--ds-r-pill)", flexShrink: 0 }}>
+          fontWeight: 600, padding: "3px 9px", borderRadius: "var(--ds-r-pill)", flexShrink: 0 }}>
         Mover a…
       </button>
       <Flotante ancla={ref} abierto={abierto} onCerrar={() => setAbierto(false)}
         etiqueta="Mover a columna" minAncho={190}>
-        <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.05em",
+        <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, letterSpacing: "0.05em",
           textTransform: "uppercase", color: "var(--ds-ink-3)", padding: "4px 10px 7px" }}>
           Mover a
         </div>
@@ -60,7 +60,7 @@ function BotonMover({ tarjeta, columna, columnas, onMover }) {
 function TarjetaPorOmision({ tarjeta, formatoValor }) {
   return (
     <>
-      <div style={{ fontWeight: 700, color: "var(--ds-ink)", fontSize: "var(--ds-t-small)",
+      <div style={{ fontWeight: 600, color: "var(--ds-ink)", fontSize: "var(--ds-t-small)",
         lineHeight: 1.3 }}>
         {tarjeta.titulo}
       </div>
@@ -74,7 +74,7 @@ function TarjetaPorOmision({ tarjeta, formatoValor }) {
         <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap",
           marginTop: "var(--ds-2)" }}>
           {tarjeta.valor !== undefined && (
-            <span className="ds-num" style={{ fontWeight: 800, color: "var(--ds-ink)",
+            <span className="ds-num" style={{ fontWeight: 700, color: "var(--ds-ink)",
               fontSize: "var(--ds-t-small)", marginRight: "auto" }}>
               {formatear(tarjeta.valor, formatoValor)}
             </span>
@@ -135,19 +135,19 @@ export default function Kanban({
             }}>
             <header style={{ display: "flex", alignItems: "baseline", gap: "var(--ds-2)",
               padding: "2px 4px var(--ds-3)" }}>
-              <h3 style={{ margin: 0, fontSize: "var(--ds-t-small)", fontWeight: 800, color: "var(--ds-ink)",
+              <h3 style={{ margin: 0, fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink)",
                 letterSpacing: "-0.01em", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis",
                 whiteSpace: "nowrap" }}>
                 {col.titulo}
               </h3>
-              <span className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 800,
+              <span className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700,
                 color: "var(--ds-ink-3)", background: "var(--ds-surface)", borderRadius: "var(--ds-r-pill)",
                 padding: "1px 8px" }}>
                 {tarjetas.length}
               </span>
               {conValor && (
                 <span className="ds-num" style={{ marginLeft: "auto", fontSize: "var(--ds-t-micro)",
-                  fontWeight: 700, color: "var(--ds-ink-2)", whiteSpace: "nowrap" }}>
+                  fontWeight: 600, color: "var(--ds-ink-2)", whiteSpace: "nowrap" }}>
                   {formatear(total, formatoValor === "moneda" ? "monedaCompacta" : formatoValor)}
                 </span>
               )}

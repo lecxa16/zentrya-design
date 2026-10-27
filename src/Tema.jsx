@@ -11,7 +11,6 @@
  * preferencia de todas las demás.
  */
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
-import "./fuentes.css";
 import "./tokens.css";
 import "./marcas.css";
 

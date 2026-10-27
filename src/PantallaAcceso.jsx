@@ -58,9 +58,8 @@ const CSS = `
 }
 `;
 
-/* La letra de las pantallas de cuenta de Apple: la del sistema. En una Mac o
-   un iPhone es SF; en Windows y Android, la suya. Manrope queda de respaldo. */
-export const LETRA_SISTEMA = '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, var(--ds-font)';
+/* La letra del sistema (SF en Apple). Desde v2.9 es la de todo el sistema (`--ds-font`); se exporta por compatibilidad. */
+export const LETRA_SISTEMA = "var(--ds-font)";
 
 /* La Z del símbolo (M 42 68 → 78 96, trazo 5): viewBox recortado a su trazo,
    con el medio grueso de margen. El punto cian va al final, como en el logo. */
@@ -127,9 +126,9 @@ export function TarjetaVitrina({ titulo, cifra, detalle, children, ancho = 260 }
   return (
     <Vidrio estilo={{ width: ancho, maxWidth: "100%", boxSizing: "border-box", padding: "var(--ds-4)",
       boxShadow: "0 18px 40px -18px rgba(0,0,0,0.45)" }}>
-      {titulo && <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.04em",
+      {titulo && <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, letterSpacing: "0.04em",
         textTransform: "uppercase", opacity: 0.85 }}>{titulo}</div>}
-      {cifra && <div className="ds-num" style={{ fontSize: "var(--ds-t-title)", fontWeight: 800,
+      {cifra && <div className="ds-num" style={{ fontSize: "var(--ds-t-title)", fontWeight: 700,
         letterSpacing: "-0.02em", marginTop: 4 }}>{cifra}</div>}
       {detalle && <div style={{ fontSize: "var(--ds-t-small)", marginTop: 2 }}>{detalle}</div>}
       {children}

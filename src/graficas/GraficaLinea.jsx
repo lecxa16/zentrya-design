@@ -15,8 +15,12 @@
  *   · `apilada` sólo tiene sentido con área (partes de un todo); apilar
  *     líneas sueltas hace que la de arriba parezca más grande de lo que es.
  *   · En angosto se dejan menos marcas en el eje X, nunca texto girado.
+ *   · Se recorre con el ratón, con el dedo (deslizando de lado; el scroll
+ *     vertical sigue funcionando) y con las flechas. `onActivo(i | null)` avisa
+ *     qué punto se está viendo, y `globo={false}` lo quita cuando quien la usa
+ *     ya enseña el valor arriba, como la app Salud (v2.9).
  */
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   MarcoGrafica, Globo, useMedida, marcasBonitas, escala, TEXTO_EJE, colorSerie, SinDatos, fmt,
 } from "./base";
@@ -41,10 +45,13 @@ const recortarA = (t, max) => {
 
 export default function GraficaLinea({
   series = [], etiquetas = [], alto = 240, formato = "numero", area = false, apilada = false,
-  meta, titulo, cero = true, estilo,
+  meta, titulo, cero = true, estilo, onActivo, globo = true,
 }) {
   const [ref, ancho] = useMedida();
   const [activo, setActivo] = useState(null);
+  const avisar = useRef(onActivo);
+  avisar.current = onActivo;
+  useEffect(() => { avisar.current?.(activo); }, [activo]);
 
   const n = Math.max(etiquetas.length, ...series.map((s) => (s.valores || []).length), 0);
   const apilar = apilada && area;
@@ -159,8 +166,8 @@ export default function GraficaLinea({
         {!hayDatos ? <SinDatos alto={alto} /> : ancho > 0 && (
           <svg width={ancho} height={alto} role="img" tabIndex={0}
             aria-label={`${titulo ? `${titulo}: ` : ""}${series.length} serie(s), ${n} puntos. Flechas para recorrer.`}
-            style={{ display: "block", overflow: "visible", outline: "none" }}
-            onMouseMove={alMover} onMouseLeave={() => setActivo(null)}
+            style={{ display: "block", overflow: "visible", outline: "none", touchAction: "pan-y" }}
+            onPointerDown={alMover} onPointerMove={alMover} onPointerLeave={() => setActivo(null)}
             onFocus={() => setActivo((a) => (a === null ? n - 1 : a))} onBlur={() => setActivo(null)}
             onKeyDown={alTeclear}>
             {marcas.map((m) => (
@@ -201,7 +208,7 @@ export default function GraficaLinea({
                 <line x1={izq} x2={izq + anchoPlot} y1={y(metaValor)} y2={y(metaValor)}
                   stroke="var(--ds-ink-2)" strokeWidth="1.5" strokeDasharray="5 4" />
                 <text x={izq + 6} y={y(metaValor) - 6}
-                  style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 700 }}>
+                  style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 600 }}>
                   {metaTexto} · {fmt(metaValor, formato)}
                 </text>
               </g>
@@ -218,7 +225,7 @@ export default function GraficaLinea({
               }
               return pos.map((p) => (
                 <text key={p.si} x={izq + anchoPlot + 8} y={p.yv} dy="0.32em"
-                  style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 700 }}>
+                  style={{ ...TEXTO_EJE, fill: "var(--ds-ink-2)", fontWeight: 600 }}>
                   <title>{series[p.si].nombre}</title>
                   {recortarA(series[p.si].nombre, der - 12)}
                 </text>
@@ -238,7 +245,7 @@ export default function GraficaLinea({
             <rect x={izq} y={arriba} width={anchoPlot} height={altoPlot} fill="transparent" />
           </svg>
         )}
-        <Globo visible={activo !== null} x={activo === null ? 0 : x(activo)} y={yGlobo} ancho={ancho}
+        <Globo visible={globo && activo !== null} x={activo === null ? 0 : x(activo)} y={yGlobo} ancho={ancho}
           titulo={activo === null ? "" : etiquetas[activo]}
           renglones={activo === null ? [] : series.map((s, si) => ({
             color: colorSerie(s, si), nombre: s.nombre, valor: fmt(capas[si].crudo[activo], formato),

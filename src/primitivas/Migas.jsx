@@ -44,7 +44,7 @@ export default function Migas({ ruta = [], estilo }) {
   const padre = ruta.length > 1 ? ruta[ruta.length - 2] : null;
 
   const Volver = padre && padre.ir ? (
-    <button onClick={padre.ir} style={{ ...enlace, color: "var(--ds-ink-2)", fontWeight: 700 }}
+    <button onClick={padre.ir} style={{ ...enlace, color: "var(--ds-ink-2)", fontWeight: 600 }}
       onMouseEnter={(ev) => { ev.currentTarget.style.color = "var(--ds-accent-tinta)"; }}
       onMouseLeave={(ev) => { ev.currentTarget.style.color = "var(--ds-ink-2)"; }}>
       {ATRAS} Volver a {padre.texto}

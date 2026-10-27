@@ -57,7 +57,7 @@ export function BarraSeleccion({ cantidad = 0, onQuitar, children, singular = "s
     }}>
       <div style={{ width: "100%", maxWidth: 1200, display: "flex", alignItems: "center", gap: "var(--ds-2)",
         flexWrap: "wrap" }}>
-        <span className="ds-num" aria-live="polite" style={{ fontWeight: 800, color: "var(--ds-ink)",
+        <span className="ds-num" aria-live="polite" style={{ fontWeight: 700, color: "var(--ds-ink)",
           fontSize: "var(--ds-t-body)", marginRight: "var(--ds-2)" }}>
           {cantidad} {cantidad === 1 ? singular : plural}
         </span>

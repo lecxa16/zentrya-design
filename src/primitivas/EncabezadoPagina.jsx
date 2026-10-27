@@ -13,15 +13,31 @@
  *                «Actualizado hace 5 min», el periodo
  *   acciones     a la derecha; en angosto bajan debajo del título en vez de
  *                apretarse contra él
+ *
+ * En el teléfono el título es grande (Large Title de Apple) y, cuando se sale
+ * por arriba al hacer scroll, aparece compacto en la barra del Armazón (v2.9).
  */
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Migas from "./Migas";
 import { useAngosto } from "../ancho";
+import { TituloBarraCtx } from "../tituloBarra";
+import { ALTO_CABECERA_MOVIL } from "../Armazon";
 
 export default function EncabezadoPagina({
   titulo, descripcion, migas, meta, acciones, estilo,
 }) {
   const angosto = useAngosto();
+  const ponerEnBarra = useContext(TituloBarraCtx);
+  const h1 = useRef(null);
+  useEffect(() => {
+    const el = h1.current;
+    if (!angosto || !ponerEnBarra || !el || typeof IntersectionObserver === "undefined") return undefined;
+    /* La barra tapa los primeros ALTO_CABECERA_MOVIL px: ahí el título ya «se fue». */
+    const obs = new IntersectionObserver(([e]) => ponerEnBarra(e.isIntersecting ? null : titulo),
+      { rootMargin: `-${ALTO_CABECERA_MOVIL}px 0px 0px 0px` });
+    obs.observe(el);
+    return () => { obs.disconnect(); ponerEnBarra(null); };
+  }, [angosto, ponerEnBarra, titulo]);
   return (
     <header style={{ marginBottom: "var(--ds-6)", ...estilo }}>
       {migas?.length > 0 && <Migas ruta={migas} />}
@@ -31,9 +47,9 @@ export default function EncabezadoPagina({
         alignItems: angosto ? "stretch" : "flex-end",
       }}>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h1 style={{
-            margin: 0, fontSize: angosto ? "var(--ds-num-m)" : "var(--ds-num-l)", fontWeight: 800,
-            letterSpacing: "-0.035em", lineHeight: 1.1, color: "var(--ds-ink)",
+          <h1 ref={h1} style={{
+            margin: 0, fontSize: angosto ? "var(--ds-t-display)" : "var(--ds-num-l)", fontWeight: 700,
+            letterSpacing: "-0.02em", lineHeight: 1.1, color: "var(--ds-ink)",
             overflowWrap: "anywhere",
           }}>
             {titulo}

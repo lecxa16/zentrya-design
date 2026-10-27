@@ -3,7 +3,9 @@
  *
  * Etiqueta siempre visible, nunca flotando dentro del campo: en un
  * expediente de 40 datos, una etiqueta que desaparece al escribir obliga a
- * recordar qué se estaba capturando.
+ * recordar qué se estaba capturando. A la manera de Apple (v2.9): la etiqueta
+ * en letra normal y peso medio —no en mayúsculas chicas, que se leen como
+ * tablero genérico— y la caja de 44 px, el mínimo táctil de sus guías.
  *
  * El error se dice debajo y con palabras. Un borde rojo sin texto informa
  * de que algo está mal, no de qué.
@@ -12,10 +14,10 @@ import React, { useId } from "react";
 
 export const CAJA = {
   width: "100%", boxSizing: "border-box",
-  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)", fontWeight: 600,
+  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)", fontWeight: 400,
   color: "var(--ds-ink)", background: "var(--ds-surface-2)",
-  border: "1px solid var(--ds-line)", borderRadius: "var(--ds-r-item)",
-  padding: "10px 13px", outline: "none",
+  border: "1px solid var(--ds-line-firm)", borderRadius: 10,
+  minHeight: 44, padding: "11px 14px", lineHeight: 1.35, outline: "none",
   transition: "border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease)",
 };
 
@@ -36,8 +38,7 @@ export function Envoltura({ id, etiqueta, requerido, error, ayuda, children, est
            —el `Select` dibuja un `div`— y `htmlFor` no lo alcanza. Con el id
            puesto, esos controles se cuelgan de ella con `aria-labelledby`. */
         <label htmlFor={id} id={id ? `${id}-etiqueta` : undefined} style={etiquetaOculta ? OCULTA : {
-          fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.04em",
-          textTransform: "uppercase", color: "var(--ds-ink-3)",
+          fontSize: "var(--ds-t-small)", fontWeight: 500, color: "var(--ds-ink-2)", paddingLeft: 2,
         }}>
           {etiqueta}{requerido && <span style={{ color: "var(--ds-risk)" }}> *</span>}
         </label>
@@ -72,7 +73,7 @@ export default function Campo({
         aria-invalid={error ? "true" : undefined}
         style={{
           ...CAJA,
-          borderColor: error ? "var(--ds-risk)" : "var(--ds-line)",
+          borderColor: error ? "var(--ds-risk)" : "var(--ds-line-firm)",
           opacity: deshabilitado ? 0.55 : 1,
           cursor: deshabilitado ? "not-allowed" : undefined,
           resize: multilinea ? "vertical" : undefined,
@@ -82,10 +83,10 @@ export default function Campo({
         onFocus={(e) => {
           if (!error) e.target.style.borderColor = "var(--ds-accent-trazo)";
           e.target.style.boxShadow = error
-            ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)";
+            ? "0 0 0 4px color-mix(in srgb, var(--ds-risk) 22%, transparent)" : "0 0 0 4px var(--ds-accent-ring)";
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = error ? "var(--ds-risk)" : "var(--ds-line)";
+          e.target.style.borderColor = error ? "var(--ds-risk)" : "var(--ds-line-firm)";
           e.target.style.boxShadow = "none";
           /* Aquí es donde el formulario se entera de que este campo ya se
              capturó y puede juzgarlo. Va DESPUÉS del estilo: si quien lo
@@ -127,7 +128,7 @@ export function Selector({
         {...resto}
         style={{
           ...CAJA,
-          borderColor: error ? "var(--ds-risk)" : "var(--ds-line)",
+          borderColor: error ? "var(--ds-risk)" : "var(--ds-line-firm)",
           opacity: deshabilitado ? 0.55 : 1,
           cursor: deshabilitado ? "not-allowed" : "pointer",
           /* La flecha del sistema operativo no sigue al tema; se dibuja aquí. */
@@ -160,10 +161,10 @@ export function Buscador({ valor, onCambio, marcador = "Buscar…", estilo }) {
         style={{ ...CAJA, paddingLeft: 36, borderRadius: "var(--ds-r-pill)" }}
         onFocus={(e) => {
           e.target.style.borderColor = "var(--ds-accent-trazo)";
-          e.target.style.boxShadow = "0 0 0 3px var(--ds-accent-ring)";
+          e.target.style.boxShadow = "0 0 0 4px var(--ds-accent-ring)";
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = "var(--ds-line)";
+          e.target.style.borderColor = "var(--ds-line-firm)";
           e.target.style.boxShadow = "none";
         }} />
     </div>

@@ -101,11 +101,11 @@ export default function SelectorPeriodo({
           style={{ color: "var(--ds-ink-3)", flexShrink: 0 }}>
           <rect x="3" y="5" width="18" height="16" rx="3" /><path d="M16 3v4M8 3v4M3 10h18" />
         </svg>
-        <span style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: "var(--ds-ink-3)",
+        <span style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: "var(--ds-ink-3)",
           textTransform: "uppercase", letterSpacing: "0.05em" }}>
           {etiqueta}
         </span>
-        <span style={{ fontSize: "var(--ds-t-small)", fontWeight: 800, whiteSpace: "nowrap",
+        <span style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, whiteSpace: "nowrap",
           overflow: "hidden", textOverflow: "ellipsis" }}>
           {actual ? actual.etiqueta : "Elegir"}
         </span>

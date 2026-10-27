@@ -18,7 +18,7 @@ export default function Barra({ marca, secciones = [], activa, onIr, derecha, es
     }}>
       {marca && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px 6px 10px",
-          fontWeight: 800, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em" }}>
+          fontWeight: 700, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em" }}>
           {marca}
         </div>
       )}
@@ -30,7 +30,7 @@ export default function Barra({ marca, secciones = [], activa, onIr, derecha, es
             aria-current={esta ? "page" : undefined}
             style={{
               display: "inline-flex", alignItems: "center", gap: 7,
-              fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+              fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
               padding: "8px 14px", borderRadius: "var(--ds-r-pill)", border: "none",
               cursor: "pointer",
               background: esta ? "rgba(255,255,255,0.14)" : "transparent",

@@ -42,7 +42,7 @@ function Evento({ e, onEvento, compacto }) {
   const [fondo, borde] = TONOS[e.tono] || TONOS.acento;
   const cuerpo = (
     <span style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-      {e.hora && <span className="ds-num" style={{ fontWeight: 800, marginRight: 4 }}>{e.hora}</span>}
+      {e.hora && <span className="ds-num" style={{ fontWeight: 700, marginRight: 4 }}>{e.hora}</span>}
       {e.titulo}
     </span>
   );
@@ -69,13 +69,13 @@ function MasEventos({ resto, dia, onEvento }) {
       <button ref={ref} type="button" aria-haspopup="dialog" aria-expanded={abierto}
         onClick={(ev) => { ev.stopPropagation(); setAbierto((v) => !v); }}
         style={{ background: "transparent", border: "none", padding: "1px 4px", cursor: "pointer",
-          fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 800,
+          fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 700,
           color: "var(--ds-accent-tinta)", textAlign: "left", borderRadius: 6 }}>
         +{resto.length} más
       </button>
       <Flotante ancla={ref} abierto={abierto} onCerrar={() => setAbierto(false)} rol="dialog"
         etiqueta={`Eventos del ${fFecha(dia, "larga")}`} minAncho={240}>
-        <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.05em",
+        <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, letterSpacing: "0.05em",
           textTransform: "uppercase", color: "var(--ds-ink-3)", padding: "4px 6px 8px" }}>
           {fFecha(dia, "larga")}
         </div>
@@ -90,7 +90,7 @@ function MasEventos({ resto, dia, onEvento }) {
 const botonNav = {
   border: "1px solid var(--ds-line-firm)", background: "var(--ds-surface)", color: "var(--ds-ink-2)",
   borderRadius: "var(--ds-r-pill)", cursor: "pointer", fontFamily: "var(--ds-font)",
-  fontWeight: 700, fontSize: "var(--ds-t-small)", height: 34, minWidth: 34, padding: "0 12px",
+  fontWeight: 600, fontSize: "var(--ds-t-small)", height: 34, minWidth: 34, padding: "0 12px",
   display: "inline-grid", placeItems: "center",
 };
 
@@ -135,7 +135,7 @@ export default function Calendario({
   const cabecera = (
     <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-2)", flexWrap: "wrap",
       marginBottom: "var(--ds-4)" }}>
-      <h3 aria-live="polite" style={{ margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 800,
+      <h3 aria-live="polite" style={{ margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 700,
         letterSpacing: "-0.03em", color: "var(--ds-ink)", marginRight: "auto",
         textTransform: "capitalize" }}>
         {titulo}
@@ -167,11 +167,11 @@ export default function Calendario({
                   disabled={!onDia} aria-label={fFecha(k, "larga")}
                   style={{ border: "none", background: "transparent", padding: 0, textAlign: "center",
                     cursor: onDia ? "pointer" : "default", fontFamily: "var(--ds-font)" }}>
-                  <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, textTransform: "uppercase",
+                  <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, textTransform: "uppercase",
                     color: esHoy ? "var(--ds-accent-tinta)" : "var(--ds-ink-3)" }}>
                     {DIAS[(d.getDay() + 6) % 7]}
                   </div>
-                  <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 800, lineHeight: 1.1,
+                  <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 700, lineHeight: 1.1,
                     color: esHoy ? "var(--ds-accent-tinta)" : "var(--ds-ink)" }}>
                     {d.getDate()}
                   </div>
@@ -196,7 +196,7 @@ export default function Calendario({
         gridTemplateColumns: "repeat(7, minmax(0, 1fr))", border: "1px solid var(--ds-line)",
         borderRadius: "var(--ds-r-item)", overflow: "hidden" }}>
         {DIAS.map((d) => (
-          <div key={d} aria-hidden style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700,
+          <div key={d} aria-hidden style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600,
             letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--ds-ink-3)",
             padding: "8px 10px", borderBottom: "1px solid var(--ds-line)", background: "var(--ds-surface-2)" }}>
             {d}
@@ -221,7 +221,7 @@ export default function Calendario({
                 onClick={onDia ? () => onDia(k, lista) : undefined}
                 aria-label={`${fFecha(k, "larga")}${lista.length ? `, ${lista.length} eventos` : ", sin eventos"}`}
                 style={{
-                alignSelf: "flex-start", fontSize: "var(--ds-t-small)", fontWeight: 800,
+                alignSelf: "flex-start", fontSize: "var(--ds-t-small)", fontWeight: 700,
                 border: "none", padding: 0, fontFamily: "var(--ds-font)",
                 cursor: onDia ? "pointer" : "default",
                 width: 26, height: 26, display: "grid", placeItems: "center", borderRadius: "var(--ds-r-pill)",

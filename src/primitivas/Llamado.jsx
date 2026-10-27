@@ -34,13 +34,13 @@ export default function Llamado({
     }}>
       <span aria-hidden style={{ width: 24, height: 24, flexShrink: 0, borderRadius: 99,
         background: color, color: "var(--ds-surface-solid)", display: "flex",
-        alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 13,
+        alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13,
         marginTop: 1 }}>
         {icono || marca}
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
         {titulo && (
-          <div style={{ fontWeight: 800, color: "var(--ds-ink)", letterSpacing: "-0.01em" }}>
+          <div style={{ fontWeight: 700, color: "var(--ds-ink)", letterSpacing: "-0.01em" }}>
             {titulo}
           </div>
         )}

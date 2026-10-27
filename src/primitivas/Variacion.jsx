@@ -47,7 +47,7 @@ export default function Variacion({
     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap", ...estilo }}>
       <span className="ds-num" style={{
         display: "inline-flex", alignItems: "center", gap: 4, background: fondo, color: tinta,
-        fontSize: fs, fontWeight: 800, padding: "2px 8px", borderRadius: "var(--ds-r-pill)",
+        fontSize: fs, fontWeight: 700, padding: "2px 8px", borderRadius: "var(--ds-r-pill)",
         whiteSpace: "nowrap",
       }}
         aria-label={`${dir > 0 ? "Sube" : dir < 0 ? "Baja" : "Sin cambio"} ${texto}${

@@ -10,12 +10,16 @@ import {
 
 export const meta = { id: "cuenta", titulo: "Mi cuenta", orden: 70 };
 
+const ico = (d) => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d={d} /></svg>
+);
 const SECCIONES = [
-  { id: "perfil", texto: "Perfil" },
-  { id: "seguridad", texto: "Seguridad" },
-  { id: "notificaciones", texto: "Notificaciones" },
-  { id: "apariencia", texto: "Apariencia" },
-  { id: "peligro", texto: "Zona de peligro", peligro: true },
+  { id: "perfil", texto: "Perfil", icono: ico("M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10") },
+  { id: "seguridad", texto: "Seguridad", icono: ico("M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10") },
+  { id: "notificaciones", texto: "Notificaciones", icono: ico("M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0") },
+  { id: "apariencia", texto: "Apariencia", icono: ico("M12 3a9 9 0 1 0 9 9c0-.5 0-1-.1-1.4A5.5 5.5 0 0 1 12 3") },
+  { id: "peligro", texto: "Zona de peligro", peligro: true, icono: ico("M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0") },
 ];
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -37,7 +41,16 @@ function Perfil() {
   const [subiendo, setSubiendo] = useState(false);
   const [guardando, setGuardando] = useState(false);
   return (
-    <SeccionAjustes id="perfil" titulo="Perfil" descripcion="Cómo te ven en la app."
+    <>
+    <SeccionAjustes id="general" titulo="General" descripcion="Así se muestran fechas y cantidades en toda la app.">
+      <FilaAjuste primera titulo="Idioma" valor="Español (México)" onClick={() => {}}
+        icono={ico("M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20")} />
+      <FilaAjuste titulo="Zona horaria" valor="Ciudad de México" onClick={() => {}}
+        icono={ico("M12 6v6l4 2M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20")} />
+      <FilaAjuste titulo="Moneda" valor="MXN" onClick={() => {}}
+        icono={ico("M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6")} />
+    </SeccionAjustes>
+    <SeccionAjustes id="perfil" titulo="Datos personales" descripcion="Cómo te ven en la app."
       pie={<Boton variante="solido" esperando={guardando} onClick={async () => { setGuardando(true); await espera(600); setGuardando(false); }}>Guardar cambios</Boton>}>
       <FilaAjuste primera titulo="Foto" descripcion="Se ve en tu avatar y en lo que registras.">
         <CargaFoto nombre={nombre} foto={foto} subiendo={subiendo} onQuitar={() => setFoto(null)}
@@ -50,6 +63,7 @@ function Perfil() {
         <Campo etiqueta="Correo" etiquetaOculta valor="ana@ejemplo.com" deshabilitado estilo={{ width: "100%" }} />
       </FilaAjuste>
     </SeccionAjustes>
+    </>
   );
 }
 

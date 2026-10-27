@@ -119,7 +119,7 @@ export default function Flotante({
         position: "fixed", left: sitio?.izq ?? -9999, top: sitio?.top ?? -9999, zIndex: 80,
         minWidth: minAncho, maxWidth: `calc(100vw - ${MARGEN * 2}px)`,
         maxHeight: `calc(100vh - ${MARGEN * 2}px)`, overflowY: "auto",
-        padding: "var(--ds-2)", borderRadius: "var(--ds-r-card)",
+        padding: 5, borderRadius: 12,
         background: "var(--ds-panel)", border: "1px solid var(--ds-line)",
         backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
         boxShadow: "var(--ds-lift-3)", fontFamily: "var(--ds-font)", color: "var(--ds-ink)",
@@ -138,20 +138,15 @@ export default function Flotante({
 export function OpcionFlotante({ children, elegida, onClick, rol = "menuitemradio", nota, peligro }) {
   return (
     <button type="button" role={rol} aria-checked={rol === "menuitemradio" ? !!elegida : undefined}
-      onClick={onClick}
+      onClick={onClick} className="ds-menu-opcion" data-peligro={peligro ? "" : undefined}
       style={{
-        display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%",
-        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
-        padding: "9px 10px", borderRadius: "var(--ds-r-item)", border: "none",
+        display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%", minHeight: 34,
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 500,
+        padding: "6px 10px", borderRadius: 7, border: "none",
         cursor: "pointer", textAlign: "left",
         background: elegida ? "var(--ds-accent-soft)" : "transparent",
-        color: peligro ? "var(--ds-risk)" : elegida ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)",
-        transition: "background var(--ds-t-state) var(--ds-ease)",
-      }}
-      onMouseEnter={(e) => { if (!elegida) e.currentTarget.style.background = "var(--ds-surface-2)"; }}
-      onMouseLeave={(e) => { if (!elegida) e.currentTarget.style.background = "transparent"; }}
-      onFocus={(e) => { if (!elegida) e.currentTarget.style.background = "var(--ds-surface-2)"; }}
-      onBlur={(e) => { if (!elegida) e.currentTarget.style.background = "transparent"; }}>
+        color: peligro ? "var(--ds-risk)" : elegida ? "var(--ds-accent-tinta)" : "var(--ds-ink)",
+      }}>
       <span style={{ flex: 1, minWidth: 0 }}>
         {children}
         {nota && (

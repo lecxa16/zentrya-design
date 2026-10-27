@@ -78,7 +78,7 @@ export default function LineaTiempo({
         return (
           <React.Fragment key={e.id ?? i}>
             {encabezado && (
-              <li aria-hidden={false} style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700,
+              <li aria-hidden={false} style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600,
                 letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--ds-ink-3)",
                 padding: i === 0 ? "0 0 var(--ds-2)" : "var(--ds-3) 0 var(--ds-2)" }}>
                 {dia === "sin-fecha" ? "Sin fecha" : fFecha(e.fecha, "larga")}

@@ -38,7 +38,7 @@ function Copiar({ texto, etiqueta }) {
     <button type="button" onClick={copiar} aria-label={`Copiar ${etiqueta}`}
       style={{ border: "1px solid var(--ds-line-firm)", background: "transparent",
         color: hecho ? "var(--ds-ok)" : "var(--ds-ink-2)", cursor: "pointer",
-        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 700,
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 600,
         padding: "2px 8px", borderRadius: "var(--ds-r-pill)", flexShrink: 0 }}>
       <span aria-live="polite">{hecho ? "Copiado" : "Copiar"}</span>
     </button>
@@ -69,7 +69,7 @@ export default function Detalles({ elementos = [], columnas = 2, estilo }) {
               ) : (
                 <>
                   <span className={e.formato && e.formato !== "texto" ? "ds-num" : undefined}
-                    style={{ fontWeight: 700, color: "var(--ds-ink)", overflowWrap: "anywhere",
+                    style={{ fontWeight: 600, color: "var(--ds-ink)", overflowWrap: "anywhere",
                       minWidth: 0 }}>
                     {texto}
                   </span>

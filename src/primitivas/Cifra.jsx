@@ -41,7 +41,7 @@ export default function Cifra({
         </div>
       )}
       <div className="ds-num" style={{
-        fontSize: TAMANO[tamano], fontWeight: 800, lineHeight: 1.05,
+        fontSize: TAMANO[tamano], fontWeight: 700, lineHeight: 1.05,
         letterSpacing: "-0.035em", color: TONO[tono], marginTop: 2,
       }}>
         {valor}

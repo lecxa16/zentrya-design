@@ -36,7 +36,7 @@ export default function Pestanas({ pestanas = [], activa, onCambio, estilo }) {
             onClick={() => onCambio?.(p.id)}
             style={{
               display: "inline-flex", alignItems: "center", gap: 7, whiteSpace: "nowrap",
-              fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+              fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
               padding: "8px 15px", borderRadius: "var(--ds-r-pill)", border: "none",
               cursor: "pointer",
               background: esta ? "var(--ds-ink)" : "transparent",
@@ -46,7 +46,7 @@ export default function Pestanas({ pestanas = [], activa, onCambio, estilo }) {
             {p.icono}{p.texto}
             {p.cuenta !== undefined && (
               <span className="ds-num" style={{
-                fontSize: "var(--ds-t-micro)", fontWeight: 800, padding: "1px 6px",
+                fontSize: "var(--ds-t-micro)", fontWeight: 700, padding: "1px 6px",
                 borderRadius: "var(--ds-r-pill)",
                 background: esta ? "rgba(255,255,255,0.18)" : "var(--ds-surface)",
                 color: esta ? "var(--ds-surface-solid)" : "var(--ds-ink-3)",

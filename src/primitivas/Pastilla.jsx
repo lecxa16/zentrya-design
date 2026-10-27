@@ -20,7 +20,7 @@ export function Pastilla({ children, tono = "neutro", icono, estilo, ...resto })
     <span {...resto} style={{
       display: "inline-flex", alignItems: "center", gap: 5,
       background: fondo, color: tinta,
-      fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.02em",
+      fontSize: "var(--ds-t-micro)", fontWeight: 600, letterSpacing: "0.02em",
       padding: "4px 10px", borderRadius: "var(--ds-r-pill)", whiteSpace: "nowrap",
       ...estilo,
     }}>

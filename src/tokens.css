@@ -25,6 +25,9 @@
   --ds-surface-2:     rgba(255,255,255,0.52);
   --ds-surface-sunk:  rgba(255,255,255,0.40);
   --ds-blur:          saturate(180%) blur(22px);
+  /* El material de las barras del teléfono y el dock (v2.9): la superficie del tema a 82 %, con el desenfoque de
+     arriba. Translúcido de verdad, como iOS; antes era --ds-panel al 94 % y casi no se veía lo de atrás. */
+  --ds-material:      color-mix(in srgb, var(--ds-surface-solid) 82%, transparent);
   --ds-frame:         rgba(250,254,252,0.62);   /* el marco también es vidrio */
   --ds-panel:         rgba(241,250,247,0.94);   /* lo que se superpone al trabajo */
 
@@ -111,11 +114,16 @@
   --ds-5: 20px;  --ds-6: 24px;  --ds-8: 32px;  --ds-10: 40px;  --ds-12: 48px;
 
   /* ---------- Tipografía ---------- */
-  --ds-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* La letra del sistema, como las apps de Apple (v2.9, Carlos 2026-10-27): SF en Mac y iPhone, Segoe en Windows,
+     Roboto en Android. Antes era Manrope auto-hospedada; con SF no se usaba y eran 40 KB de más. */
+  --ds-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI Variable", "Segoe UI",
+    Roboto, "Helvetica Neue", sans-serif;
   /* La cifra es la protagonista de este sistema: tiene su propia escala. */
   --ds-num-xl: 3.4rem;  --ds-num-l: 2.3rem;  --ds-num-m: 1.6rem;  --ds-num-s: 1.15rem;
-  --ds-t-display: 2.9rem; --ds-t-title: 1.3rem; --ds-t-body: 0.94rem;
-  --ds-t-small: 0.82rem;  --ds-t-micro: 0.72rem;
+  /* Escala de Apple (HIG): Large Title 34 · Title 2 22 · Subheadline 15 (el cuerpo de una app densa) ·
+     Footnote 13 · Caption 12. */
+  --ds-t-display: 2.125rem; --ds-t-title: 1.375rem; --ds-t-body: 0.9375rem;
+  --ds-t-small: 0.8125rem;  --ds-t-micro: 0.75rem;
 
   /* ---------- Movimiento ---------- */
   /* Una sola curva de llegada en todo el sistema. Nunca rebote. */
@@ -172,7 +180,7 @@
   --ds-surface-solid: #11161A;
   --ds-surface-2:     rgba(255,255,255,0.042);
   --ds-surface-sunk:  rgba(0,0,0,0.32);
-  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-frame:         rgba(14,18,22,0.74);  /* v2.9: al 5 % la barra bajaba de 4.5:1 con contenido debajo */
   --ds-panel:         rgba(14,18,22,0.94);
 
   /* La tinta secundaria arrastra la misma temperatura: un gris neutro sobre
@@ -280,6 +288,12 @@
 .ds-root :is(input, textarea, select, [role="combobox"]):focus-visible,
 .ds-capa :is(input, textarea, select, [role="combobox"]):focus-visible { outline: none; }
 :is(.ds-root, .ds-capa) * { caret-color: var(--ds-accent-tinta); }
+/* La opción de un menú, a la manera de macOS (v2.9): bajo el puntero o con el foco del teclado se pinta en acento
+   con su tinta encima (≥ 4.5:1, lo mide `npm run contraste`). El relleno ES el foco: sin anillo encima. */
+.ds-menu-opcion { transition: background var(--ds-t-tap) var(--ds-ease), color var(--ds-t-tap) var(--ds-ease); }
+.ds-menu-opcion:is(:hover, :focus-visible):not(:disabled) { background: var(--ds-accent) !important; color: var(--ds-ink-on-accent) !important; outline: none; }
+.ds-menu-opcion:is(:hover, :focus-visible):not(:disabled) * { color: inherit !important; }
+.ds-menu-opcion[data-peligro]:is(:hover, :focus-visible):not(:disabled) { background: var(--ds-risk-soft) !important; color: var(--ds-risk) !important; }
 
 /* ---------- El teléfono ---------- */
 /* Safari de iPhone hace zoom a la página entera al enfocar un campo con letra
@@ -334,6 +348,7 @@
    la regla global de más abajo y queda un bloque quieto, que sigue
    reservando el sitio: que es lo que de verdad hace el esqueleto. */
 @keyframes ds-brillo { to { background-position-x: -220%; } }
+@keyframes ds-pulso { from { opacity: 1; } to { opacity: 0.45; } }
 /* Menús que nacen de su botón: hacia arriba cuando está pegado al borde
    inferior, hacia abajo cuando está arriba. */
 @keyframes ds-sube { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

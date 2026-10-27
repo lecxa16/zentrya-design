@@ -25,8 +25,8 @@ export default function Chip({ texto, valor, onQuitar, estilo }) {
     }}>
       <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>
         {valor !== undefined && valor !== null && valor !== ""
-          ? <><span style={{ color: "var(--ds-ink-2)" }}>{texto}:</span> <strong style={{ fontWeight: 800 }}>{valor}</strong></>
-          : <strong style={{ fontWeight: 800 }}>{texto}</strong>}
+          ? <><span style={{ color: "var(--ds-ink-2)" }}>{texto}:</span> <strong style={{ fontWeight: 700 }}>{valor}</strong></>
+          : <strong style={{ fontWeight: 700 }}>{texto}</strong>}
       </span>
       {onQuitar && (
         <button type="button" onClick={onQuitar} aria-label={`Quitar filtro ${nombre}`}
@@ -55,7 +55,7 @@ export function BarraFiltros({ children, activos = [], onQuitar, onLimpiar, resu
         {children}
         {resultado && (
           <span className="ds-num" style={{ marginLeft: "auto", fontSize: "var(--ds-t-small)",
-            fontWeight: 700, color: "var(--ds-ink-3)", whiteSpace: "nowrap" }}>
+            fontWeight: 600, color: "var(--ds-ink-3)", whiteSpace: "nowrap" }}>
             {resultado}
           </span>
         )}
@@ -70,7 +70,7 @@ export function BarraFiltros({ children, activos = [], onQuitar, onLimpiar, resu
           {onLimpiar && activos.length > 1 && (
             <button type="button" onClick={onLimpiar}
               style={{ border: "none", background: "transparent", cursor: "pointer", padding: "4px 8px",
-                fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+                fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
                 color: "var(--ds-accent-tinta)", borderRadius: 8 }}>
               Limpiar todo
             </button>

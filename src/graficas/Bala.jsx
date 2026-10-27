@@ -49,9 +49,9 @@ function Renglon({ item, formato, angosto, anchoEtiqueta }) {
 
   const cifras = (
     <div className="ds-num" style={{ textAlign: angosto ? "left" : "right", whiteSpace: "nowrap" }}>
-      <span style={{ fontWeight: 800, color: "var(--ds-ink)" }}>{sinDato ? "Sin dato" : fmt(v, formato)}</span>
+      <span style={{ fontWeight: 700, color: "var(--ds-ink)" }}>{sinDato ? "Sin dato" : fmt(v, formato)}</span>
       {Number.isFinite(Number(meta)) && (
-        <span style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: "var(--ds-ink-3)", marginLeft: 6 }}>
+        <span style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: "var(--ds-ink-3)", marginLeft: 6 }}>
           meta {fmt(meta, formato)}
         </span>
       )}
@@ -60,7 +60,7 @@ function Renglon({ item, formato, angosto, anchoEtiqueta }) {
 
   const texto = (
     <div style={{ minWidth: 0 }}>
-      <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink-2)",
+      <div style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-ink-2)",
         overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={etiqueta}>{etiqueta}</div>
       {nota && <div style={{ fontSize: "var(--ds-t-micro)", color: "var(--ds-ink-3)" }}>{nota}</div>}
     </div>

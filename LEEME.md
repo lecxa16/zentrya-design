@@ -1,7 +1,7 @@
 # Sistema de diseño
 
 Lenguaje visual compartido, empaquetado como `@zentrya/design` para cualquier proyecto de
-React. La fuente viaja dentro del paquete y los estilos se cargan solos al importar.
+React. La letra es la del sistema (SF en Apple, desde v2.9) y los estilos se cargan solos al importar.
 
 ```jsx
 import { ProveedorTema, Bento, Celda, Heroe, Superficie, Cifra, Boton } from "@zentrya/design";
@@ -19,6 +19,35 @@ Pantalla de referencia construida al 100% con el sistema: `/zentrya/rh`.
 📐 **Para agregar algo nuevo, lee [`GUIA.md`](GUIA.md) primero.** Este archivo dice qué
 existe; la guía dice qué hacer, con las trampas que ya se pagaron y la lista de lo que hay
 que comprobar antes de dar algo por terminado.
+
+## A la manera de Apple (v2.9)
+
+Carlos (2026-10-27), tras el login tipo Apple: «haz todas» las mejoras basadas en sus apps.
+
+- **Letra y escala.** `--ds-font` es la del sistema (SF en Mac y iPhone, Segoe en Windows, Roboto en Android); Manrope
+  se fue (40 KB menos). Escala de la HIG: `--ds-t-display` 34 · `--ds-t-title` 22 · `--ds-t-body` 15 · `--ds-t-small` 13
+  · `--ds-t-micro` 12. Los pesos bajaron un escalón en todo el sistema (SF a 800 es «Heavy»): títulos 700, énfasis 600.
+- **Campos.** Etiqueta en letra normal y peso medio (ya no en mayúsculas chicas), caja de 44 px (el mínimo táctil),
+  radio 10, borde `line-firm`, texto regular y halo de foco de 4 px. Los de MUI (`/mui`) miden igual.
+- **Mi cuenta como la cuenta de Apple.** Sin portada (Carlos: «es carga de diseño y no tiene funcionalidad»): la
+  identidad —foto o figura, nombre, correo— arriba de la barra lateral, las secciones con iconos de un solo color y la
+  elegida sobre gris suave; el contenido abre con el nombre de la sección como título grande. `SeccionAjustes` es un
+  grupo redondeado con el título arriba y la explicación abajo; `FilaAjuste` acepta `icono` (gris, `IconoAjuste`;
+  `color` para teñirlo), `valor` y `onClick` (el renglón entero es un botón con ›). Sin cuadritos de color: no
+  combinaban con el resto.
+- **Barras.** El teléfono y el dock usan `--ds-material` (la superficie al 82 % + desenfoque): translúcidas de verdad.
+  En oscuro, la barra de arriba del escritorio pasó del 5 % al 74 % (bajaba de 4.5:1 con contenido debajo).
+  **Título grande:** en el teléfono, el `h1` de `EncabezadoPagina` mide 34 px y, al salirse por arriba, aparece compacto
+  y centrado en la barra (la marca le cede el lugar). Sólo dentro del `Armazon`.
+- **Hoja y menús.** La hoja del teléfono (`Modal`) se cierra arrastrándola hacia abajo desde la barrita o el título.
+  Los menús (`Flotante`, `MenuUsuario`) resaltan la opción en acento como macOS (`.ds-menu-opcion`).
+- **Controles.** `Interruptor` 51 × 31 con perilla que se estira al presionar; `Segmentado` en rectángulo redondeado
+  (no cápsula) con la elegida en blanco que se encoge al presionar.
+- **Vacío y carga.** `EstadoVacio` como `ContentUnavailableView`: icono grande sin recuadro y sin borde punteado. El
+  `Esqueleto` respira (pulso) en vez de barrer.
+- **`GraficaDestacada`** (nueva), como Salud o Bolsa: periodo arriba, la cifra grande y su fecha, y la línea; al
+  recorrerla (ratón, dedo o flechas) la cifra enseña ese punto. `GraficaLinea` ya responde al dedo y gana
+  `onActivo` y `globo={false}`.
 
 ## Los tres modos de navegación
 

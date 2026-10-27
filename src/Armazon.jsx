@@ -54,6 +54,7 @@
  * busca el pulgar. Con `migas` como elemento (antes de la v2.3) se pinta tal cual.
  */
 import React, { createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { TituloBarraCtx } from "./tituloBarra";
 import { createPortal } from "react-dom";
 import Transicion from "./primitivas/Transicion";
 import Modal from "./primitivas/Modal";
@@ -119,7 +120,7 @@ function Contador({ n, sobre = false, en }) {
       ...(en ? { position: "absolute", ...en } : {}),
       minWidth: 18, height: 18, padding: "0 5px", boxSizing: "border-box",
       borderRadius: "var(--ds-r-pill)", background: "var(--ds-risk)",
-      color: "var(--ds-surface-solid)", fontSize: "0.66rem", fontWeight: 800,
+      color: "var(--ds-surface-solid)", fontSize: "0.66rem", fontWeight: 700,
       lineHeight: "18px", textAlign: "center", flexShrink: 0,
       boxShadow: sobre ? "0 0 0 2px var(--ds-surface-solid)" : "none",
     }}><span aria-hidden>{v > 99 ? "99+" : v}</span><span style={OCULTO}>, {v} pendientes</span></span>
@@ -173,7 +174,7 @@ function OpcionNav({ texto, nota, insignia, esta, onClick }) {
       data-foco={esta ? "" : undefined}
       style={{
         display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%", minHeight: 38,
-        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
         padding: "8px 10px", borderRadius: "var(--ds-r-item)", border: "none",
         cursor: "pointer", textAlign: "left",
         background: esta ? "var(--ds-accent-soft)" : "transparent",
@@ -234,7 +235,7 @@ function Monograma({ texto = "", alto = 28 }) {
     <span aria-hidden className="ds-monograma" data-inicial={texto.trim().charAt(0).toUpperCase()} style={{
       display: "grid", placeItems: "center", width: alto, height: alto, flexShrink: 0,
       borderRadius: 8, background: "var(--ds-accent)", color: "var(--ds-ink-on-accent)",
-      fontSize: alto * 0.5, fontWeight: 800, letterSpacing: "-0.02em",
+      fontSize: alto * 0.5, fontWeight: 700, letterSpacing: "-0.02em",
     }} />
   );
 }
@@ -267,7 +268,7 @@ function Marca({ marca, logo, iconoApp, compacto = false, encoge = false, onInic
   const estilo = {
     display: "flex", alignItems: "center", gap: 10,
     flexShrink: encoge ? 1 : 0, minWidth: 0, overflow: encoge ? "hidden" : "visible",
-    fontWeight: 800, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em",
+    fontWeight: 700, fontSize: "var(--ds-t-body)", letterSpacing: "-0.02em",
     color: "var(--ds-ink)", whiteSpace: "nowrap",
   };
   if (!onInicio) return <div style={estilo}>{contenido}</div>;
@@ -288,7 +289,7 @@ function Pildora({ s, esta, onIr }) {
     <button onClick={() => onIr?.(s)} aria-current={esta ? "page" : undefined} title={s.texto}
       style={{
         display: "inline-flex", alignItems: "center", gap: 8, whiteSpace: "nowrap",
-        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+        fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
         padding: "9px 16px", borderRadius: "var(--ds-r-pill)",
         border: "1px solid transparent", cursor: "pointer",
         background: esta ? "var(--ds-ink)" : "var(--ds-surface)",
@@ -317,7 +318,7 @@ function PildoraGrupo({ s, activa, onIr }) {
   const propia = navegable(s);
   const boton = {
     display: "inline-flex", alignItems: "center", gap: 8, whiteSpace: "nowrap",
-    fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+    fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
     padding: "9px 0", border: "none", background: "transparent", color: "inherit", cursor: "pointer",
     borderRadius: "var(--ds-r-pill)",
   };
@@ -409,7 +410,7 @@ function HojaMas({ abierto, onCerrar, secciones, activa, onIr, titulo = "Más" }
               <RenglonHoja s={{ ...s, insignia: s.insigniaPropia }} esta={s.id === activa} onClick={() => ir(s)} />
             ) : (
               <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-3)", minHeight: 40,
-                padding: "0 var(--ds-3)", fontSize: "var(--ds-t-small)", fontWeight: 800,
+                padding: "0 var(--ds-3)", fontSize: "var(--ds-t-small)", fontWeight: 700,
                 color: "var(--ds-ink-2)" }}>
                 <IconoSeccion s={{ ...s, insignia: 0 }} />{s.texto}
               </div>
@@ -689,7 +690,7 @@ function BotonDock({ s, esta, conTexto, onIr, botonRef, ...aria }) {
       aria-current={esta && !aria["aria-haspopup"] ? "page" : undefined} {...aria}
       style={{
         display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3,
-        position: "relative", fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 700,
+        position: "relative", fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 600,
         padding: conTexto ? "7px 15px" : 0, minWidth: conTexto ? 0 : ANCHO_ICONO_DOCK,
         height: conTexto ? "auto" : 44, boxSizing: "border-box",
         borderRadius: "var(--ds-r-item)", border: "none",
@@ -799,7 +800,7 @@ function ModoDock({
         display: "flex", alignItems: "center", gap: "var(--ds-2)",
         padding: "0 var(--ds-4)",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
-        background: "var(--ds-panel)",
+        background: "var(--ds-material)",
         borderTop: "1px solid var(--ds-line)",
         backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
         boxShadow: "var(--ds-lift-3)",
@@ -875,6 +876,8 @@ function ModoMovil({
   inicio, inicioAbierto = false, onInicioAbierto, volver, children,
 }) {
   const [hojaMas, setHojaMas] = useState(false);
+  /* El título grande de la pantalla, cuando se salió por arriba (ver tituloBarra.js). */
+  const [tituloBarra, setTituloBarra] = useState(null);
   /* La pestaña de una sección con hijos abre su propia hoja. */
   const [grupo, setGrupo] = useState(null);
   const todasCaben = secciones.length <= PESTANAS_MAX;
@@ -890,8 +893,9 @@ function ModoMovil({
         position: "relative", flex: "1 1 0", minWidth: 0, height: ALTO_DOCK, border: "none", cursor: "pointer",
         background: "transparent", padding: "8px 2px 6px",
         display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
-        fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 700,
-        color: esta ? "var(--ds-accent-tinta)" : "var(--ds-ink-3)",
+        fontFamily: "var(--ds-font)", fontSize: "0.66rem", fontWeight: 600,
+        /* ink-2: sobre el material translúcido, ink-3 podía bajar de 4.5 con algo oscuro detrás. */
+        color: esta ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)",
         WebkitTapHighlightColor: "transparent",
       }}>
       {/* La activa se marca con una cápsula detrás del icono, no sólo con el
@@ -909,6 +913,7 @@ function ModoMovil({
   );
 
   return (
+    <TituloBarraCtx.Provider value={setTituloBarra}>
     <div style={{ minHeight: "100%", paddingTop: arriba, paddingBottom: abajo,
       paddingLeft: "var(--ds-3)", paddingRight: "var(--ds-3)" }}>
       <header style={{
@@ -917,7 +922,7 @@ function ModoMovil({
         paddingTop: "env(safe-area-inset-top, 0px)", boxSizing: "border-box",
         display: "flex", alignItems: "center", gap: "var(--ds-2)",
         paddingLeft: "var(--ds-3)", paddingRight: "var(--ds-3)",
-        background: "var(--ds-panel)", borderBottom: "1px solid var(--ds-line)",
+        background: "var(--ds-material)", borderBottom: "1px solid var(--ds-line)",
         backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
       }}>
         {/* En una pantalla profunda, el volver ocupa el sitio de la marca: arriba a la
@@ -928,7 +933,7 @@ function ModoMovil({
               flex: "0 1 auto", overflow: "hidden", padding: "0 8px 0 0", marginLeft: -6,
               border: "none", background: "transparent", cursor: "pointer",
               color: "var(--ds-accent-tinta)", fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)",
-              fontWeight: 700, WebkitTapHighlightColor: "transparent" }}>
+              fontWeight: 600, WebkitTapHighlightColor: "transparent" }}>
             {FLECHA_ATRAS}
             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{volver.texto}</span>
           </button>
@@ -947,8 +952,23 @@ function ModoMovil({
               <path d="M6 9l6 6 6-6" />
             </svg>
           </button>
-        ) : <Marca marca={marca} logo={logo} onInicio={onInicio} encoge />}
+        ) : (
+          /* Con el título compacto a la vista, la marca le cede el lugar (como en iOS); el volver se queda. */
+          <span style={{ display: "flex", minWidth: 0, opacity: tituloBarra ? 0 : 1,
+            pointerEvents: tituloBarra ? "none" : undefined,
+            transition: "opacity var(--ds-t-state) var(--ds-ease)" }}>
+            <Marca marca={marca} logo={logo} onInicio={onInicio} encoge />
+          </span>
+        )}
         <div style={{ flex: 1, minWidth: 0 }} />
+        {/* El título compacto, centrado como en iOS. Decorativo: el h1 sigue en la página. */}
+        <span aria-hidden style={{
+          position: "absolute", left: "50%", bottom: 0, height: ALTO_CABECERA_MOVIL, display: "flex", alignItems: "center",
+          translate: "-50% 0", maxWidth: volver ? "38%" : "50%", pointerEvents: "none",
+          fontSize: "var(--ds-t-body)", fontWeight: 600, color: "var(--ds-ink)",
+          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+          opacity: tituloBarra ? 1 : 0, transition: "opacity var(--ds-t-state) var(--ds-ease)",
+        }}>{tituloBarra}</span>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-2)", flexShrink: 0 }}>
           {derecha}
         </div>
@@ -960,7 +980,7 @@ function ModoMovil({
         position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 40,
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
         display: "flex", alignItems: "stretch",
-        background: "var(--ds-panel)", borderTop: "1px solid var(--ds-line)",
+        background: "var(--ds-material)", borderTop: "1px solid var(--ds-line)",
         backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
       }}>
         {visibles.map((s) => pestana(s, {
@@ -978,6 +998,7 @@ function ModoMovil({
         secciones={grupo ? [grupo] : []} activa={activa} onIr={onIr} />
       {inicio}
     </div>
+    </TituloBarraCtx.Provider>
   );
 }
 
@@ -1185,7 +1206,7 @@ export function SelectorArmazon() {
           boxShadow: "var(--ds-lift-3)",
           animation: `${haciaArriba ? "ds-sube" : "ds-baja"} var(--ds-t-state) var(--ds-ease) both`,
         }}>
-          <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700,
+          <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600,
             letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--ds-ink-3)",
             padding: "4px 10px 7px" }}>
             Navegación
@@ -1197,7 +1218,7 @@ export function SelectorArmazon() {
                 onClick={() => { fijarModo(o.id); setAbierto(false); }}
                 style={{
                   display: "flex", alignItems: "center", gap: "var(--ds-3)", width: "100%",
-                  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+                  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
                   padding: "9px 10px", borderRadius: "var(--ds-r-item)", border: "none",
                   cursor: "pointer", textAlign: "left", whiteSpace: "nowrap",
                   background: esta ? "var(--ds-accent-soft)" : "transparent",

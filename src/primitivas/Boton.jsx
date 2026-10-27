@@ -16,7 +16,7 @@ import React from "react";
 
 const BASE = {
   display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)", fontWeight: 700,
+  fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-body)", fontWeight: 600,
   letterSpacing: "-0.005em", borderWidth: 1, borderStyle: "solid", borderColor: "transparent",
   borderRadius: "var(--ds-r-item)", padding: "10px 18px", cursor: "pointer",
   transition: "transform var(--ds-t-tap) var(--ds-ease), background var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease)",

@@ -32,7 +32,7 @@ export default function GrupoRetratos({ personas = [], maximo = 4, tamano = 32, 
           marginLeft: -tamano * 0.28, width: tamano, height: tamano, borderRadius: 99,
           background: "var(--ds-retrato-neutro)", color: "var(--ds-ink-2)",
           boxShadow: "0 0 0 2px var(--ds-surface-solid)", display: "flex",
-          alignItems: "center", justifyContent: "center", fontSize: tamano * 0.34, fontWeight: 800,
+          alignItems: "center", justifyContent: "center", fontSize: tamano * 0.34, fontWeight: 700,
         }}>
           +{resto}
         </div>

@@ -6,12 +6,14 @@ var r = {
 	boxSizing: "border-box",
 	fontFamily: "var(--ds-font)",
 	fontSize: "var(--ds-t-body)",
-	fontWeight: 600,
+	fontWeight: 400,
 	color: "var(--ds-ink)",
 	background: "var(--ds-surface-2)",
-	border: "1px solid var(--ds-line)",
-	borderRadius: "var(--ds-r-item)",
-	padding: "10px 13px",
+	border: "1px solid var(--ds-line-firm)",
+	borderRadius: 10,
+	minHeight: 44,
+	padding: "11px 14px",
+	lineHeight: 1.35,
 	outline: "none",
 	transition: "border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease)"
 }, i = {
@@ -40,11 +42,10 @@ function a({ id: e, etiqueta: r, requerido: a, error: o, ayuda: s, children: c, 
 				htmlFor: e,
 				id: e ? `${e}-etiqueta` : void 0,
 				style: u ? i : {
-					fontSize: "var(--ds-t-micro)",
-					fontWeight: 700,
-					letterSpacing: "0.04em",
-					textTransform: "uppercase",
-					color: "var(--ds-ink-3)"
+					fontSize: "var(--ds-t-small)",
+					fontWeight: 500,
+					color: "var(--ds-ink-2)",
+					paddingLeft: 2
 				},
 				children: [r, a && /* @__PURE__ */ t("span", {
 					style: { color: "var(--ds-risk)" },
@@ -74,7 +75,7 @@ function o({ etiqueta: i, valor: o, onCambio: s, onSalir: c, tipo: l = "text", m
 		"aria-invalid": f ? "true" : void 0,
 		style: {
 			...r,
-			borderColor: f ? "var(--ds-risk)" : "var(--ds-line)",
+			borderColor: f ? "var(--ds-risk)" : "var(--ds-line-firm)",
 			opacity: m ? .55 : 1,
 			cursor: m ? "not-allowed" : void 0,
 			resize: h ? "vertical" : void 0,
@@ -82,10 +83,10 @@ function o({ etiqueta: i, valor: o, onCambio: s, onSalir: c, tipo: l = "text", m
 			paddingRight: v ? 46 : void 0
 		},
 		onFocus: (e) => {
-			f || (e.target.style.borderColor = "var(--ds-accent-trazo)"), e.target.style.boxShadow = f ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)";
+			f || (e.target.style.borderColor = "var(--ds-accent-trazo)"), e.target.style.boxShadow = f ? "0 0 0 4px color-mix(in srgb, var(--ds-risk) 22%, transparent)" : "0 0 0 4px var(--ds-accent-ring)";
 		},
 		onBlur: (e) => {
-			e.target.style.borderColor = f ? "var(--ds-risk)" : "var(--ds-line)", e.target.style.boxShadow = "none", c?.();
+			e.target.style.borderColor = f ? "var(--ds-risk)" : "var(--ds-line-firm)", e.target.style.boxShadow = "none", c?.();
 		},
 		...x
 	});
@@ -133,7 +134,7 @@ function s({ etiqueta: i, valor: o, onCambio: s, onSalir: c, opciones: l = [], v
 			...g,
 			style: {
 				...r,
-				borderColor: f ? "var(--ds-risk)" : "var(--ds-line)",
+				borderColor: f ? "var(--ds-risk)" : "var(--ds-line-firm)",
 				opacity: m ? .55 : 1,
 				cursor: m ? "not-allowed" : "pointer",
 				appearance: "none",
@@ -196,10 +197,10 @@ function c({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
 				borderRadius: "var(--ds-r-pill)"
 			},
 			onFocus: (e) => {
-				e.target.style.borderColor = "var(--ds-accent-trazo)", e.target.style.boxShadow = "0 0 0 3px var(--ds-accent-ring)";
+				e.target.style.borderColor = "var(--ds-accent-trazo)", e.target.style.boxShadow = "0 0 0 4px var(--ds-accent-ring)";
 			},
 			onBlur: (e) => {
-				e.target.style.borderColor = "var(--ds-line)", e.target.style.boxShadow = "none";
+				e.target.style.borderColor = "var(--ds-line-firm)", e.target.style.boxShadow = "none";
 			}
 		})]
 	});

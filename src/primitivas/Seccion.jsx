@@ -17,7 +17,7 @@ export default function Seccion({ titulo, nota, accion, children, estilo }) {
         marginBottom: "var(--ds-4)" }}>
         <div style={{ minWidth: 0 }}>
           <h2 style={{
-            margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 800,
+            margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 700,
             letterSpacing: "-0.03em", lineHeight: 1.15, color: "var(--ds-ink)",
           }}>
             {titulo}

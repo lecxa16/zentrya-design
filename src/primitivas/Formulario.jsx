@@ -43,7 +43,7 @@ export default function Formulario({
   return (
     <div style={{ maxWidth: ancho, margin: "0 auto", paddingBottom: 96 + piso }}>
       <div style={{ marginBottom: "var(--ds-6)", padding: "0 var(--ds-2)" }}>
-        <h1 style={{ margin: 0, fontSize: "var(--ds-t-display)", fontWeight: 800,
+        <h1 style={{ margin: 0, fontSize: "var(--ds-t-display)", fontWeight: 700,
           letterSpacing: "-0.045em", lineHeight: 1.02, color: "var(--ds-ink)" }}>
           {titulo}
         </h1>

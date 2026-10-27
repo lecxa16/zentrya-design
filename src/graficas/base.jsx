@@ -91,7 +91,7 @@ export function Leyenda({ series = [], forma, valores, estilo }) {
           <Muestra color={colorSerie(s, i)} forma={forma} />
           {s.nombre}
           {valores && valores[i] !== undefined && (
-            <span className="ds-num" style={{ color: "var(--ds-ink)", fontWeight: 700 }}>
+            <span className="ds-num" style={{ color: "var(--ds-ink)", fontWeight: 600 }}>
               {valores[i]}
             </span>
           )}
@@ -131,7 +131,7 @@ export function Globo({ x, y, ancho, titulo, renglones = [], visible }) {
       transition: "left var(--ds-t-tap) var(--ds-ease-out), top var(--ds-t-tap) var(--ds-ease-out)",
     }}>
       {titulo && (
-        <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: "var(--ds-ink-3)",
+        <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: "var(--ds-ink-3)",
           letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 6 }}>
           {titulo}
         </div>
@@ -143,7 +143,7 @@ export function Globo({ x, y, ancho, titulo, renglones = [], visible }) {
           <span style={{ color: "var(--ds-ink-2)", fontWeight: 600, flex: 1, minWidth: 0 }}>
             {r.nombre}
           </span>
-          <span className="ds-num" style={{ color: "var(--ds-ink)", fontWeight: 800 }}>
+          <span className="ds-num" style={{ color: "var(--ds-ink)", fontWeight: 700 }}>
             {r.valor}
           </span>
         </div>
@@ -166,7 +166,7 @@ export function VistaTabla({ columnas, filas }) {
           <tr>
             {columnas.map((c, i) => (
               <th key={i} scope="col" style={{ textAlign: i === 0 ? "left" : "right",
-                padding: "6px 8px", color: "var(--ds-ink-3)", fontWeight: 700,
+                padding: "6px 8px", color: "var(--ds-ink-3)", fontWeight: 600,
                 fontSize: "var(--ds-t-micro)", textTransform: "uppercase", letterSpacing: "0.05em",
                 borderBottom: "1px solid var(--ds-line)", whiteSpace: "nowrap" }}>
                 {c}
@@ -212,7 +212,7 @@ export function MarcoGrafica({ titulo, series, formaLeyenda, tabla, children, es
               aria-pressed={verTabla}
               style={{ flexShrink: 0, border: "1px solid var(--ds-line-firm)",
                 background: "transparent", color: "var(--ds-ink-2)", cursor: "pointer",
-                fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 700,
+                fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 600,
                 padding: "4px 10px", borderRadius: "var(--ds-r-pill)", marginBottom: "var(--ds-3)" }}>
               {verTabla ? "Ver gráfica" : "Ver tabla"}
             </button>

@@ -35,7 +35,7 @@ export default function Fila({
     >
       {izquierda}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: "var(--ds-t-body)", fontWeight: 700, color: "var(--ds-ink)",
+        <div style={{ fontSize: "var(--ds-t-body)", fontWeight: 600, color: "var(--ds-ink)",
           whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {titulo}
         </div>
@@ -90,7 +90,7 @@ export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generi
       width: tamano, height: tamano, flexShrink: 0, borderRadius: "var(--ds-r-pill)",
       background: fondo, color: tinta, overflow: "hidden",
       display: "flex", alignItems: "center", justifyContent: "center",
-      fontSize: tamano * 0.34, fontWeight: 800, letterSpacing: "-0.02em",
+      fontSize: tamano * 0.34, fontWeight: 700, letterSpacing: "-0.02em",
     }}>
       {conFoto
         ? <img src={src} alt="" onError={() => setRoto(true)}

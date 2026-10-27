@@ -8,6 +8,8 @@
  * En el teléfono deja de ser un cuadro flotante y sube como HOJA desde abajo:
  * a todo lo ancho, al alcance del pulgar y con la acción donde cae la mano.
  * Un cuadro centrado a 390 px es un cuadro angosto con márgenes que no sirven.
+ * Como en iOS (v2.9), la hoja se cierra arrastrándola hacia abajo desde la
+ * barrita o el título; si no se suelta lo bastante abajo, regresa.
  *
  * `Aviso` es su variante de notificación: centrada, con icono de severidad
  * y **sin cierre automático**. Un resultado que se va solo antes de que
@@ -39,6 +41,36 @@ export default function Modal({
      foco: con lo de atrás vivo (`lado="derecha"`) no se podría ni escribir. */
   const cerrarRef = useRef(onCerrar);
   cerrarRef.current = onCerrar;
+  /* Arrastre de la hoja. Se mueve con `translate` (propiedad aparte), no con
+     `transform`: la animación de entrada termina con `both` y le ganaría. */
+  const arrastre = useRef(null);
+  const empezar = (e) => {
+    if (!hoja || e.button > 0) return;
+    arrastre.current = { y0: e.clientY, t0: performance.now(), dy: 0 };
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    if (caja.current) caja.current.style.transition = "none";
+  };
+  const mover = (e) => {
+    const a = arrastre.current;
+    if (!a || !caja.current) return;
+    a.dy = Math.max(0, e.clientY - a.y0);
+    caja.current.style.translate = `0 ${a.dy}px`;
+  };
+  const soltar = () => {
+    const a = arrastre.current, el = caja.current;
+    arrastre.current = null;
+    if (!a || !el) return;
+    const rapido = a.dy / Math.max(1, performance.now() - a.t0) > 0.6;
+    el.style.transition = "translate var(--ds-t-state) var(--ds-ease)";
+    if (a.dy > 110 || (rapido && a.dy > 30)) {
+      el.style.translate = "0 100%";
+      setTimeout(() => cerrarRef.current?.(), 180);
+    } else {
+      el.style.translate = "0 0";
+    }
+  };
+  const asa = hoja ? { onPointerDown: empezar, onPointerMove: mover, onPointerUp: soltar, onPointerCancel: soltar,
+    style: { touchAction: "none", cursor: "grab" } } : {};
 
   useEffect(() => {
     if (!abierto) return undefined;
@@ -97,8 +129,9 @@ export default function Modal({
           ...estilo,
         }}>
         {hoja && (
-          <div aria-hidden style={{ width: 38, height: 5, borderRadius: 3, flexShrink: 0,
-            margin: "var(--ds-2) auto 0", background: "var(--ds-line-firm)" }} />
+          <div aria-hidden {...asa} style={{ ...asa.style, flexShrink: 0, display: "grid", placeItems: "center", height: 22 }}>
+            <div style={{ width: 38, height: 5, borderRadius: 3, background: "var(--ds-line-firm)" }} />
+          </div>
         )}
         {derecha && (
           <button type="button" onClick={onCerrar} aria-label="Cerrar" title="Cerrar (Esc)"
@@ -111,10 +144,12 @@ export default function Modal({
           </button>
         )}
         {titulo && (
-          <div style={{ padding: "var(--ds-5) var(--ds-5) 0", flexShrink: 0,
-            paddingRight: derecha ? 64 : undefined }}>
-            <h2 style={{ margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 800,
-              letterSpacing: "-0.03em", color: "var(--ds-ink)" }}>{titulo}</h2>
+          <div {...(hoja ? { onPointerDown: asa.onPointerDown, onPointerMove: mover, onPointerUp: soltar,
+            onPointerCancel: soltar } : null)}
+            style={{ padding: hoja ? "var(--ds-2) var(--ds-5) 0" : "var(--ds-5) var(--ds-5) 0", flexShrink: 0,
+              paddingRight: derecha ? 64 : undefined, touchAction: hoja ? "none" : undefined }}>
+            <h2 style={{ margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 700,
+              letterSpacing: "-0.02em", color: "var(--ds-ink)" }}>{titulo}</h2>
             {nota && (
               <p style={{ margin: "5px 0 0", fontSize: "var(--ds-t-small)",
                 /* ink-2, no ink-3: el panel es translúcido sobre el velo oscuro y
@@ -186,7 +221,7 @@ export function Aviso({ abierto, severidad = "info", titulo, mensaje, onCerrar, 
             <path d={cfg.d} />
           </svg>
         </div>
-        <div style={{ fontSize: "var(--ds-t-title)", fontWeight: 800,
+        <div style={{ fontSize: "var(--ds-t-title)", fontWeight: 700,
           letterSpacing: "-0.03em", color: "var(--ds-ink)" }}>
           {titulo || cfg.titulo}
         </div>

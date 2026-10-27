@@ -76,7 +76,7 @@ export { default as PantallaAcceso, TarjetaVitrina, LETRA_SISTEMA } from "./Pant
 export { default as EntradaCuenta } from "./EntradaCuenta";
 export { default as CampoClave } from "./primitivas/CampoClave";
 export { default as PantallaCuenta } from "./Cuenta/PantallaCuenta";
-export { SeccionAjustes, FilaAjuste, EstadoGuardado } from "./Cuenta/Ajustes";
+export { SeccionAjustes, FilaAjuste, IconoAjuste, EstadoGuardado } from "./Cuenta/Ajustes";
 export { default as CargaFoto } from "./Cuenta/CargaFoto";
 export { default as ZonaPeligro } from "./Cuenta/ZonaPeligro";
 export { SimboloZentrya, CIAN_ZENTRYA } from "./marca/Zentrya";
@@ -85,6 +85,7 @@ export { default as Chip, BarraFiltros } from "./primitivas/Chip";
 
 export { default as Sparkline } from "./graficas/Sparkline";
 export { default as GraficaLinea } from "./graficas/GraficaLinea";
+export { default as GraficaDestacada } from "./graficas/GraficaDestacada";
 export { default as GraficaBarras } from "./graficas/GraficaBarras";
 export { default as Dona } from "./graficas/Dona";
 export { default as Embudo } from "./graficas/Embudo";

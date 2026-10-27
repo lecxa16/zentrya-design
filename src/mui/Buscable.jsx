@@ -46,7 +46,7 @@ export default function Buscable({
         onChange={(_, o) => { onCambio?.(o ? o.valor : ""); onSalir?.(); }}
         noOptionsText="Nada coincide"
         sx={{
-          "& .MuiAutocomplete-inputRoot": { paddingTop: "2px !important", paddingBottom: "2px !important" },
+          "& .MuiAutocomplete-inputRoot": { paddingTop: "3.5px !important", paddingBottom: "3.5px !important" },
           /* MUI 7+ le pone al input chico su propio relleno (2.5px), más específico que el de
              `sxCampo`; sin esto el buscable medía 30px junto a campos de 42. */
           "&.MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input": {
@@ -59,7 +59,7 @@ export default function Buscable({
             backgroundColor: "var(--ds-accent-soft) !important", color: "var(--ds-accent-tinta)",
           },
           "& .MuiAutocomplete-groupLabel": {
-            fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 700,
+            fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-micro)", fontWeight: 600,
             letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--ds-ink-3)",
             backgroundColor: "var(--ds-panel)", lineHeight: "30px",
           },

@@ -73,29 +73,29 @@ export default function TarjetaMeta({
           ) : forma === "anillo" ? (
             <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-5)", flexWrap: "wrap" }}>
               <Anillo valor={Math.min(100, avance * 100)} tamano={112} grosor={9} tono={color}>
-                <span className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 800,
+                <span className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 700,
                   letterSpacing: "-0.03em" }}>{porcentaje(avance, { decimales: 0 })}</span>
               </Anillo>
               <div style={{ minWidth: 0 }}>
-                <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 800,
+                <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 700,
                   letterSpacing: "-0.03em" }}>{f(logrado)}</div>
                 <div style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-3)" }}>
-                  de <span className="ds-num" style={{ fontWeight: 700, color: "var(--ds-ink-2)" }}>{f(meta)}</span>
+                  de <span className="ds-num" style={{ fontWeight: 600, color: "var(--ds-ink-2)" }}>{f(meta)}</span>
                 </div>
               </div>
             </div>
           ) : (
             <>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-                <span className="ds-num" style={{ fontSize: "var(--ds-num-l)", fontWeight: 800,
+                <span className="ds-num" style={{ fontSize: "var(--ds-num-l)", fontWeight: 700,
                   letterSpacing: "-0.035em", lineHeight: 1.05 }}>{f(logrado)}</span>
                 <span style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-3)" }}>
-                  de <span className="ds-num" style={{ fontWeight: 700, color: "var(--ds-ink-2)" }}>{f(meta)}</span>
+                  de <span className="ds-num" style={{ fontWeight: 600, color: "var(--ds-ink-2)" }}>{f(meta)}</span>
                 </span>
               </div>
               <Medidor valor={Number(logrado)} total={Number(meta)} tono={tono}
                 alto={8} etiqueta={`${titulo}: ${porcentaje(avance)} de la meta`} />
-              <div className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 700,
+              <div className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 600,
                 color: "var(--ds-ink-2)" }}>
                 {porcentaje(avance)} de la meta
               </div>

@@ -39,7 +39,7 @@ export default function SelectorPaleta({ etiqueta = "Paleta de color", estilo })
             aria-checked={elegida} tabIndex={elegida ? 0 : -1} onClick={() => fijarPaleta(p.id)}
             style={{
               display: "flex", alignItems: "center", gap: 10, minHeight: 44, padding: "0 14px",
-              cursor: "pointer", fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 700,
+              cursor: "pointer", fontFamily: "var(--ds-font)", fontSize: "var(--ds-t-small)", fontWeight: 600,
               borderRadius: "var(--ds-r-item)", textAlign: "left",
               color: elegida ? "var(--ds-ink)" : "var(--ds-ink-2)",
               background: elegida ? "var(--ds-surface-solid)" : "var(--ds-surface-sunk)",

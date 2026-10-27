@@ -1,4 +1,4 @@
-import { i as e } from "./Campo-zo67AVjF.js";
+import { i as e } from "./Campo-BvKR4Hi6.js";
 import { useEffect as t, useId as n, useMemo as r, useState as i } from "react";
 import { jsx as a, jsxs as o } from "react/jsx-runtime";
 import { DatePicker as s } from "@mui/x-date-pickers/DatePicker";
@@ -16,29 +16,29 @@ var _ = (e) => ({
 	"&.MuiOutlinedInput-root, & .MuiOutlinedInput-root, & .MuiPickersOutlinedInput-root": {
 		fontFamily: "var(--ds-font)",
 		fontSize: "var(--ds-t-body)",
-		fontWeight: 600,
+		fontWeight: 400,
 		color: "var(--ds-ink)",
 		backgroundColor: "var(--ds-surface-2)",
-		borderRadius: "var(--ds-r-item)",
+		borderRadius: "10px",
 		transition: "box-shadow var(--ds-t-state) var(--ds-ease)",
 		"& .MuiOutlinedInput-notchedOutline, & .MuiPickersOutlinedInput-notchedOutline": {
-			borderColor: e ? "var(--ds-risk)" : "var(--ds-line)",
+			borderColor: e ? "var(--ds-risk)" : "var(--ds-line-firm)",
 			borderWidth: "1px !important",
 			transition: "border-color var(--ds-t-state) var(--ds-ease)"
 		},
-		"&:hover .MuiOutlinedInput-notchedOutline, &:hover .MuiPickersOutlinedInput-notchedOutline": { borderColor: e ? "var(--ds-risk)" : "var(--ds-line-firm)" },
-		"&.Mui-focused": { boxShadow: e ? "0 0 0 3px rgba(220,38,38,0.22)" : "0 0 0 3px var(--ds-accent-ring)" },
+		"&:hover .MuiOutlinedInput-notchedOutline, &:hover .MuiPickersOutlinedInput-notchedOutline": { borderColor: e ? "var(--ds-risk)" : "var(--ds-ink-3)" },
+		"&.Mui-focused": { boxShadow: e ? "0 0 0 4px color-mix(in srgb, var(--ds-risk) 22%, transparent)" : "0 0 0 4px var(--ds-accent-ring)" },
 		"&.Mui-focused .MuiOutlinedInput-notchedOutline, &.Mui-focused .MuiPickersOutlinedInput-notchedOutline": { borderColor: e ? "var(--ds-risk)" : "var(--ds-accent-trazo)" },
 		"&.Mui-disabled": { opacity: .55 }
 	},
-	"& .MuiPickersOutlinedInput-root": { paddingLeft: "13px" },
+	"& .MuiPickersOutlinedInput-root": { paddingLeft: "14px" },
 	"& .MuiPickersSectionList-root": {
-		padding: "10px 0",
+		padding: "11.5px 0",
 		color: "var(--ds-ink)"
 	},
 	"& .MuiPickersOutlinedInput-root.Mui-disabled .MuiPickersSectionList-root": { color: "var(--ds-ink-3)" },
 	"& .MuiOutlinedInput-input, & .MuiSelect-select": {
-		padding: "10px 13px",
+		padding: "11.5px 14px",
 		color: "var(--ds-ink)",
 		WebkitTextFillColor: "var(--ds-ink)"
 	},
@@ -136,7 +136,7 @@ var S = {
 	},
 	"& .MuiDayCalendar-weekDayLabel": {
 		color: "var(--ds-ink-3)",
-		fontWeight: 700
+		fontWeight: 600
 	},
 	"& .MuiPickerDay-root:hover": { backgroundColor: "var(--ds-surface-2)" },
 	"& .MuiPickerDay-today": { borderColor: "var(--ds-accent-trazo)" },
@@ -222,8 +222,8 @@ function T({ etiqueta: t, valor: i, onCambio: o, onSalir: s, opciones: c = [], m
 			noOptionsText: "Nada coincide",
 			sx: {
 				"& .MuiAutocomplete-inputRoot": {
-					paddingTop: "2px !important",
-					paddingBottom: "2px !important"
+					paddingTop: "3.5px !important",
+					paddingBottom: "3.5px !important"
 				},
 				"&.MuiAutocomplete-root .MuiOutlinedInput-root.MuiInputBase-sizeSmall .MuiAutocomplete-input": { padding: "8px 4px 8px 11px" }
 			},
@@ -238,7 +238,7 @@ function T({ etiqueta: t, valor: i, onCambio: o, onSalir: s, opciones: c = [], m
 					"& .MuiAutocomplete-groupLabel": {
 						fontFamily: "var(--ds-font)",
 						fontSize: "var(--ds-t-micro)",
-						fontWeight: 700,
+						fontWeight: 600,
 						letterSpacing: "0.05em",
 						textTransform: "uppercase",
 						color: "var(--ds-ink-3)",

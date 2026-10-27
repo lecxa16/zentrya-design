@@ -75,13 +75,13 @@ export default function BarraDistribucion({
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, minWidth: 0 }}>
                   <span style={{ marginTop: 4 }}><Muestra color={s.color} /></span>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: "var(--ds-ink-3)",
+                    <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: "var(--ds-ink-3)",
                       overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={s.etiqueta}>
                       {s.etiqueta}
                     </div>
-                    <div className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 800, color: "var(--ds-ink)" }}>
+                    <div className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink)" }}>
                       {fmt(s.valor, formato)}
-                      <span style={{ fontWeight: 700, color: "var(--ds-ink-3)", marginLeft: 6, fontSize: "var(--ds-t-micro)" }}>
+                      <span style={{ fontWeight: 600, color: "var(--ds-ink-3)", marginLeft: 6, fontSize: "var(--ds-t-micro)" }}>
                         {porcentaje(s.valor / total)}
                       </span>
                     </div>

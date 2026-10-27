@@ -49,7 +49,7 @@ export default function Azulejo({
         {icono}
       </span>
       <span style={{ display: "block", minWidth: 0, width: "100%" }}>
-        <span style={{ display: "block", fontSize: "var(--ds-t-small)", fontWeight: 700,
+        <span style={{ display: "block", fontSize: "var(--ds-t-small)", fontWeight: 600,
           color: tinta, letterSpacing: "-0.01em", lineHeight: 1.25 }}>
           {etiqueta}
         </span>

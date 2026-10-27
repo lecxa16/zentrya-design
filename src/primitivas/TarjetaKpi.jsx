@@ -70,7 +70,7 @@ export function CuerpoKpi({
 
       <div style={CONTENEDOR_CIFRA}>
         <div className="ds-num" style={{
-          fontSize: cabe(compacta ? "var(--ds-num-m)" : "var(--ds-num-l)", texto), fontWeight: 800,
+          fontSize: cabe(compacta ? "var(--ds-num-m)" : "var(--ds-num-l)", texto), fontWeight: 700,
           lineHeight: 1.05, letterSpacing: "-0.035em", marginTop: compacta ? 4 : 6,
           color: falta ? "var(--ds-ink-3)" : "var(--ds-ink)",
           whiteSpace: "nowrap",

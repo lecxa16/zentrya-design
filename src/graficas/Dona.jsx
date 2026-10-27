@@ -89,18 +89,18 @@ export default function Dona({
             </svg>
             <div style={{ position: "absolute", inset: grosor + 10, display: "flex", flexDirection: "column",
               alignItems: "center", justifyContent: "center", textAlign: "center", pointerEvents: "none" }}>
-              <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, color: "var(--ds-ink-3)",
+              <div style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, color: "var(--ds-ink-3)",
                 textTransform: "uppercase", letterSpacing: "0.05em", lineHeight: 1.2,
                 overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%", whiteSpace: "nowrap" }}>
                 {centro.t}
               </div>
-              <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 800,
+              <div className="ds-num" style={{ fontSize: "var(--ds-num-m)", fontWeight: 700,
                 letterSpacing: "-0.03em", color: "var(--ds-ink)", lineHeight: 1.1, marginTop: 2,
                 maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {centro.v}
               </div>
               {activo !== null && (
-                <div className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink-2)" }}>
+                <div className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-ink-2)" }}>
                   {porcentaje(rebanadas[activo].valor / total)}
                 </div>
               )}
@@ -123,10 +123,10 @@ export default function Dona({
                   title={d.etiqueta}>
                   {d.etiqueta}
                 </span>
-                <span className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 800, color: "var(--ds-ink)" }}>
+                <span className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink)" }}>
                   {fmt(d.valor, formato)}
                 </span>
-                <span className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700,
+                <span className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600,
                   color: "var(--ds-ink-3)", minWidth: 44, textAlign: "right" }}>
                   {porcentaje(d.valor / total)}
                 </span>

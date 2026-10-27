@@ -41,7 +41,7 @@ export default function ZonaPeligro({
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-4)", flexWrap: "wrap" }}>
         <div style={{ flex: "1 1 260px", minWidth: 0 }}>
-          <h2 id="zona-peligro-titulo" style={{ margin: 0, fontSize: "var(--ds-t-body)", fontWeight: 800,
+          <h2 id="zona-peligro-titulo" style={{ margin: 0, fontSize: "var(--ds-t-body)", fontWeight: 700,
             color: "var(--ds-risk)" }}>{titulo}</h2>
           {descripcion && <p style={{ margin: "4px 0 0", fontSize: "var(--ds-t-small)", color: "var(--ds-ink)" }}>{descripcion}</p>}
         </div>
@@ -57,7 +57,7 @@ export default function ZonaPeligro({
         )}>
         <div style={{ display: "grid", gap: "var(--ds-4)" }}>
           {consecuencias && <div style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink)" }}>{consecuencias}</div>}
-          {error && <div role="alert" style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-risk)" }}>{error}</div>}
+          {error && <div role="alert" style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-risk)" }}>{error}</div>}
           {pideClave && (
             <CampoClave etiqueta="Tu contraseña" valor={clave} onCambio={setClave} error={falta.clave}
               autoComplete="current-password" />

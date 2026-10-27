@@ -87,7 +87,7 @@ export default function Sparkline({
         <div className="ds-num" style={{ position: "absolute", bottom: "100%", marginBottom: 4,
           left: Math.min(Math.max(0, x(hover) - 40), Math.max(0, w - 80)), pointerEvents: "none",
           background: "var(--ds-panel)", border: "1px solid var(--ds-line-firm)",
-          borderRadius: "var(--ds-r-item)", padding: "3px 8px", fontSize: "var(--ds-t-micro)", fontWeight: 800,
+          borderRadius: "var(--ds-r-item)", padding: "3px 8px", fontSize: "var(--ds-t-micro)", fontWeight: 700,
           color: "var(--ds-ink)", whiteSpace: "nowrap", boxShadow: "var(--ds-lift-2)", zIndex: 2 }}>
           {etiquetas?.[hover] ? `${etiquetas[hover]} · ` : ""}{fmt(valores[hover], formato)}
         </div>

@@ -69,10 +69,10 @@ export default function TarjetaRanking({
                       transition: "background var(--ds-t-state) var(--ds-ease)" }}
                     onMouseEnter={clicable ? (ev) => { ev.currentTarget.style.background = "var(--ds-surface-2)"; } : undefined}
                     onMouseLeave={clicable ? (ev) => { ev.currentTarget.style.background = "transparent"; } : undefined}>
-                    <span className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 800,
+                    <span className="ds-num" style={{ fontSize: "var(--ds-t-small)", fontWeight: 700,
                       color: "var(--ds-ink-3)" }}>{i + 1}</span>
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, color: "var(--ds-ink)", whiteSpace: "nowrap",
+                      <div style={{ fontWeight: 600, color: "var(--ds-ink)", whiteSpace: "nowrap",
                         overflow: "hidden", textOverflow: "ellipsis" }}>{e.nombre}</div>
                       {e.subtitulo && (
                         <div style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-3)",
@@ -82,11 +82,11 @@ export default function TarjetaRanking({
                       )}
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <div className="ds-num" style={{ fontWeight: 800, color: "var(--ds-ink)" }}>
+                      <div className="ds-num" style={{ fontWeight: 700, color: "var(--ds-ink)" }}>
                         {formatear(e.valor, formato, opcionesFormato)}
                       </div>
                       {participacion && universo > 0 && (
-                        <div className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700,
+                        <div className="ds-num" style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600,
                           color: "var(--ds-ink-3)" }}>
                           {porcentaje(v / universo)} del total
                         </div>

@@ -108,7 +108,7 @@ export default function Cascada({
                   )}
                   {etiquetas && banda >= 40 && (
                     <text x={x0 + grueso / 2} y={yA - 6} textAnchor="middle"
-                      style={{ ...TEXTO_EJE, fill: "var(--ds-ink)", fontWeight: 800 }}>
+                      style={{ ...TEXTO_EJE, fill: "var(--ds-ink)", fontWeight: 700 }}>
                       {/* Sobre la barra va la cifra compacta: la completa, con
                           centavos, se amontona entre barras vecinas y ya está
                           en el globo y en la tabla. */}

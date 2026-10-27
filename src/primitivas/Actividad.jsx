@@ -62,7 +62,7 @@ export default function Actividad({
         return (
           <React.Fragment key={e.id ?? i}>
             {encabezado && (
-              <li style={{ fontSize: "var(--ds-t-micro)", fontWeight: 700, letterSpacing: "0.05em",
+              <li style={{ fontSize: "var(--ds-t-micro)", fontWeight: 600, letterSpacing: "0.05em",
                 textTransform: "uppercase", color: "var(--ds-ink-3)",
                 padding: i === 0 ? "0 0 var(--ds-2)" : "var(--ds-4) 0 var(--ds-2)" }}>
                 {grupo}
@@ -75,9 +75,9 @@ export default function Actividad({
                 : <Retrato nombre={e.actor || ""} src={e.retrato} tamano={34} tono="neutro" />}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-2)", lineHeight: 1.45 }}>
-                  {e.actor && <strong style={{ color: "var(--ds-ink)", fontWeight: 800 }}>{e.actor}</strong>}
+                  {e.actor && <strong style={{ color: "var(--ds-ink)", fontWeight: 700 }}>{e.actor}</strong>}
                   {e.actor ? " " : ""}{e.accion}
-                  {e.objeto && <> <strong style={{ color: "var(--ds-ink)", fontWeight: 700 }}>{e.objeto}</strong></>}
+                  {e.objeto && <> <strong style={{ color: "var(--ds-ink)", fontWeight: 600 }}>{e.objeto}</strong></>}
                 </div>
                 {e.detalle && (
                   <div style={{ fontSize: "var(--ds-t-micro)", color: "var(--ds-ink-3)", marginTop: 2,

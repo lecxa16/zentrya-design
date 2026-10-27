@@ -40,7 +40,7 @@ export const ENGRANE = (
 function Opcion({ etiqueta, children }) {
   return (
     <div style={{ display: "grid", gap: "var(--ds-2)" }}>
-      <span style={{ fontSize: "var(--ds-t-small)", fontWeight: 700, color: "var(--ds-ink-2)" }}>{etiqueta}</span>
+      <span style={{ fontSize: "var(--ds-t-small)", fontWeight: 600, color: "var(--ds-ink-2)" }}>{etiqueta}</span>
       {children}
     </div>
   );
