@@ -480,24 +480,27 @@ Piezas para cada sección:
 ⚠️ **El cuadro de `Modal` ahora es sólido** (`--ds-surface-solid`): translúcido sobre el velo, todo `ink-3`
 de adentro bajaba de 4.5:1 (lo cachó axe en las etiquetas del modal de borrar).
 
-## Pantalla de acceso «Vitrina» (v2.2)
+## Pantalla de acceso (v2.8: a la manera de Apple)
 
-`<PantallaAcceso marca lema vitrina titulo nota error pie>{formulario}</PantallaAcceso>`: el login, el registro y
-recuperar contraseña de todos los productos (dirección elegida por Carlos, 2026-10-23, tras revisar tendencias).
-A la izquierda el héroe de la paleta con **la Z de Zentrya** (v2.7), la marca, el lema y, opcional, la **vitrina**
-(`TarjetaVitrina`: tarjetas de vidrio con datos de ejemplo del producto, decorativas); a la derecha el formulario. En
-el teléfono el héroe se vuelve una franja arriba, sin vitrina y con la Z chica junto a la marca. Demo: `?acceso` en el
-catálogo (`?acceso&vitrina` con las tarjetas).
+`<PantallaAcceso marca titulo nota pie error><EntradaCuenta …/></PantallaAcceso>`: el login de todos los productos.
+Carlos (2026-10-27): el héroe con tarjetas «se veía muy de IA genérico… implementa un login tipo Apple». Una sola
+columna centrada, sin panel de color ni tarjeta: arriba a la izquierda el nombre del producto (`marca`); al centro el
+símbolo de Zentrya dibujándose, el título (`titulo`), una línea (`nota`, o `lema`) y el formulario; abajo `pie`. Detrás,
+en pantallas anchas, la Z grabada en siete líneas finas, tenue, a la izquierda de la columna, color `accent-trazo`.
+La letra es la del sistema (`LETRA_SISTEMA`: SF en Apple). Demo: `?acceso` en el catálogo (contraseña «demo»).
+`vitrina` ya no se pinta; `TarjetaVitrina` se sigue exportando para no romper importaciones.
 
-**La Z (v2.7, Carlos 2026-10-26: la aurora con tarjetas «se veía muy de IA genérico»):** la geometría exacta del
-símbolo, monumental y grabada en siete líneas finas que llenan su grueso. Una luz recorre la central dibujándola, las
-demás la siguen y al final aparece el punto cian con una sola onda. El trazo es `--ds-ink-on-hero` (sigue a las seis
-paletas); el cian es de la marca. Sin vitrina se luce más: es la recomendación para productos nuevos.
+**`<EntradaCuenta onEntrar esperando error recordar enlaces correoInicial />`** (v2.8): correo y contraseña en un solo
+grupo. Primero el correo con una flecha dentro («Continuar»); al continuar se despliega la contraseña debajo y la
+flecha pasa a ella («Entrar»). Las etiquetas viven dentro del campo y suben al escribir (aquí sí: dos campos que todos
+conocen). `onEntrar({ correo, clave, recordar })`. `error` es el texto del fallo: lo dice debajo con `role="alert"`,
+pinta el grupo de rojo, vacía la contraseña y le regresa el foco. `recordar` muestra «Mantener la sesión iniciada».
+Si el gestor de contraseñas llena las dos, la contraseña se despliega sola. En pruebas e2e: llenar «Correo», botón
+«Continuar», llenar «Contraseña», botón «Entrar».
 
-- **Movimiento que termina.** La Z (~2.3 s) y la entrada de la vitrina (~1.6 s) acaban y se quedan quietas: un
-  fondo en bucle exigiría botón de pausa (WCAG 2.2.2; «reducir movimiento» no basta). La vitrina se inclina y la Z se
-  desplaza unos pixeles con el puntero sólo mientras la persona lo mueve. Con «reducir movimiento» la Z aparece ya
-  dibujada y nada sigue al puntero.
+- **Movimiento que termina.** El símbolo y la Z (~2.3 s) acaban y se quedan quietos: un fondo en bucle exigiría botón
+  de pausa (WCAG 2.2.2). La Z se desplaza unos pixeles con el ratón sólo mientras se mueve. Con «reducir movimiento»
+  todo aparece ya dibujado.
 - **`error`**: cada vez que cambia, el formulario se sacude una vez (sin desmontarse: no pierde lo escrito).
 - **`CampoClave`**: contraseña con mostrar/ocultar (`aria-pressed`) y aviso de **Bloq Mayús**. `Campo` gana
   `adorno` (un control dentro de la caja, a la derecha).

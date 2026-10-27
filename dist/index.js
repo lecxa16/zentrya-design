@@ -678,14 +678,14 @@ var le = {
 		WebkitBackdropFilter: "blur(12px)"
 	}
 }, de = "\n@keyframes ds-boton-gira { to { transform: rotate(360deg); } }\n@keyframes ds-boton-late { 50% { opacity: .35; } }\n.ds-boton-giro { width: 15px; height: 15px; flex-shrink: 0; border-radius: 50%;\n  border: 2px solid currentColor; border-right-color: transparent;\n  animation: ds-boton-gira .7s linear infinite; }\n@media (prefers-reduced-motion: reduce) { .ds-boton-giro { animation: ds-boton-late 1.2s ease-in-out infinite; } }\n";
-function fe({ estilo: e }) {
+function V({ estilo: e }) {
 	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g("style", { children: de }), /* @__PURE__ */ g("span", {
 		className: "ds-boton-giro",
 		"aria-hidden": !0,
 		style: e
 	})] });
 }
-function V({ children: e, variante: t = "contorno", icono: n, esperando: r = !1, disabled: i, pleno: a = !1, estilo: o, ...s }) {
+function H({ children: e, variante: t = "contorno", icono: n, esperando: r = !1, disabled: i, pleno: a = !1, estilo: o, ...s }) {
 	let c = i || r;
 	return /* @__PURE__ */ _("button", {
 		...s,
@@ -708,11 +708,11 @@ function V({ children: e, variante: t = "contorno", icono: n, esperando: r = !1,
 		onMouseLeave: (e) => {
 			e.currentTarget.style.transform = "none";
 		},
-		children: [r ? /* @__PURE__ */ g(fe, {}) : n, e]
+		children: [r ? /* @__PURE__ */ g(V, {}) : n, e]
 	});
 }
 // node_modules/blobatar/dist/blob.js
-function pe({ l: e, c: t, h: n }) {
+function fe({ l: e, c: t, h: n }) {
 	let r = n * Math.PI / 180, i = t * Math.cos(r), a = t * Math.sin(r), o = e + .3963377774 * i + .2158037573 * a, s = e - .1055613458 * i - .0638541728 * a, c = e - .0894841775 * i - 1.291485548 * a, l = o * o * o, u = s * s * s, d = c * c * c;
 	return [
 		4.0767416621 * l - 3.3077115913 * u + .2309699292 * d,
@@ -720,40 +720,40 @@ function pe({ l: e, c: t, h: n }) {
 		-.0041960863 * l - .7034186147 * u + 1.707614701 * d
 	];
 }
-var me = (e) => e.every((e) => e >= -1e-4 && e <= 1.0001);
-function he(e) {
-	let t = pe(e);
-	if (!me(t)) {
+var pe = (e) => e.every((e) => e >= -1e-4 && e <= 1.0001);
+function me(e) {
+	let t = fe(e);
+	if (!pe(t)) {
 		let n = 0, r = e.c;
 		for (let t = 0; t < 12; t++) {
 			let t = (n + r) / 2;
-			me(pe({
+			pe(fe({
 				...e,
 				c: t
 			})) ? n = t : r = t;
 		}
-		t = pe({
+		t = fe({
 			...e,
 			c: n
 		});
 	}
 	return t.map((e) => Math.min(1, Math.max(0, e)));
 }
-function ge(e) {
-	let [t, n, r] = he(e);
+function he(e) {
+	let [t, n, r] = me(e);
 	return .2126 * t + .7152 * n + .0722 * r;
 }
-function _e(e, t) {
-	let n = ge(e), r = ge(t);
+function ge(e, t) {
+	let n = he(e), r = he(t);
 	return (Math.max(n, r) + .05) / (Math.min(n, r) + .05);
 }
-function ve(e, t, n) {
-	if (_e(e, t) >= n) return e;
+function _e(e, t, n) {
+	if (ge(e, t) >= n) return e;
 	let r = e.l >= t.l ? 1 : -1;
 	for (let i of [r, -r]) {
 		let r = { ...e };
 		for (let e = 0; e < 60; e++) {
-			if (r.l = Math.min(1, Math.max(0, r.l + i * .02)), _e(r, t) >= n) return r;
+			if (r.l = Math.min(1, Math.max(0, r.l + i * .02)), ge(r, t) >= n) return r;
 			if (r.l === 0 || r.l === 1) break;
 		}
 	}
@@ -766,15 +766,15 @@ function ve(e, t, n) {
 		l: 1,
 		c: 0
 	};
-	return _e(i, t) >= _e(a, t) ? i : a;
+	return ge(i, t) >= ge(a, t) ? i : a;
 }
-function ye(e) {
-	return "#" + he(e).map((e) => {
+function ve(e) {
+	return "#" + me(e).map((e) => {
 		let t = e <= .0031308 ? 12.92 * e : 1.055 * e ** .4166666666666667 - .055;
 		return Math.round(t * 255).toString(16).padStart(2, "0");
 	}).join("");
 }
-var be = [
+var ye = [
 	[.2, {
 		l: .86,
 		c: .085
@@ -799,16 +799,16 @@ var be = [
 		l: .34,
 		c: .035
 	}]
-], xe = (e) => be.find(([t]) => e < t)?.[1] ?? be[0][1], Se = {
+], be = (e) => ye.find(([t]) => e < t)?.[1] ?? ye[0][1], xe = {
 	l: .145,
 	c: 0,
 	h: 0
-}, Ce = 1.5, we = (e, t) => {
-	let n = xe(t), r = ve({
+}, Se = 1.5, Ce = (e, t) => {
+	let n = be(t), r = _e({
 		l: n.l,
 		c: n.c,
 		h: e
-	}, Se, Ce);
+	}, xe, Se);
 	return {
 		bg: {
 			l: .965,
@@ -826,7 +826,7 @@ var be = [
 			h: e
 		}
 	};
-}, Te = [[
+}, we = [[
 	"head",
 	"bg",
 	1.25
@@ -835,21 +835,21 @@ var be = [
 	"head",
 	4.5
 ]];
-function Ee(e, t = !0, n = 0) {
-	let r = we(e, n);
-	if (t) for (let [e, t, n] of Te) r[e] = ve(r[e], r[t], n);
+function Te(e, t = !0, n = 0) {
+	let r = Ce(e, n);
+	if (t) for (let [e, t, n] of we) r[e] = _e(r[e], r[t], n);
 	return r;
 }
-function De(e, t = !0, n = 0) {
-	let r = Ee(e, t, n), i = {};
-	for (let e in r) i[e] = ye(r[e]);
+function Ee(e, t = !0, n = 0) {
+	let r = Te(e, t, n), i = {};
+	for (let e in r) i[e] = ve(r[e]);
 	return i;
 }
-var H = (e) => {
+var U = (e) => {
 	let t = Math.round(e * 100) / 100;
 	return Object.is(t, -0) ? "0" : String(t);
 };
-function Oe({ cx: e, cy: t, rx: n, ry: r, n: i = 4, rot: a = 0 }) {
+function De({ cx: e, cy: t, rx: n, ry: r, n: i = 4, rot: a = 0 }) {
 	let o = Math.min(1, (8 * 2 ** (-1 / i) - 4) / 3), s = n, c = r, l = s * o, u = c * o, d = [
 		[s, 0],
 		[s, u],
@@ -866,92 +866,92 @@ function Oe({ cx: e, cy: t, rx: n, ry: r, n: i = 4, rot: a = 0 }) {
 		[s, 0]
 	], f = a * Math.PI / 180, p = Math.cos(f), m = Math.sin(f), h = (n) => {
 		let [r, i] = d[n];
-		return `${H(e + r * p - i * m)} ${H(t + r * m + i * p)}`;
+		return `${U(e + r * p - i * m)} ${U(t + r * m + i * p)}`;
 	}, g = `M${h(0)}`;
 	for (let e = 1; e < 13; e += 3) g += `C${h(e)} ${h(e + 1)} ${h(e + 2)}`;
 	return g + "Z";
 }
-function ke(e, t, n, r, i, a = 0) {
+function Oe(e, t, n, r, i, a = 0) {
 	let o = i.length, s = a * Math.PI / 180, c = i.map((i, a) => {
 		let c = s + 2 * Math.PI * a / o;
 		return [e + n * i * Math.cos(c), t + r * i * Math.sin(c)];
-	}), l = (e) => c[(e % o + o) % o], u = `M${H(l(0)[0])} ${H(l(0)[1])}`;
+	}), l = (e) => c[(e % o + o) % o], u = `M${U(l(0)[0])} ${U(l(0)[1])}`;
 	for (let e = 0; e < o; e++) {
 		let [t, n] = l(e - 1), [r, i] = l(e), [a, o] = l(e + 1), [s, c] = l(e + 2);
-		u += `C${H(r + (a - t) / 6)} ${H(i + (o - n) / 6)} ${H(a - (s - r) / 6)} ${H(o - (c - i) / 6)} ${H(a)} ${H(o)}`;
+		u += `C${U(r + (a - t) / 6)} ${U(i + (o - n) / 6)} ${U(a - (s - r) / 6)} ${U(o - (c - i) / 6)} ${U(a)} ${U(o)}`;
 	}
 	return u + "Z";
 }
-function Ae({ cx: e, cy: t, rx: n, ry: r, sides: i, round: a = .3, rot: o = 0 }) {
+function ke({ cx: e, cy: t, rx: n, ry: r, sides: i, round: a = .3, rot: o = 0 }) {
 	let s = a > 0 ? a < 1 ? a / 2 : .5 : 0, c = o * Math.PI / 180 - Math.PI / 2, l = Array.from({ length: i }, (a, o) => {
 		let s = c + 2 * Math.PI * o / i;
 		return [e + n * Math.cos(s), t + r * Math.sin(s)];
 	}), u = (e) => l[(e % i + i) % i], d = (e, t) => {
 		let [n, r] = u(e), [i, a] = u(t);
-		return `${H(n + (i - n) * s)} ${H(r + (a - r) * s)}`;
+		return `${U(n + (i - n) * s)} ${U(r + (a - r) * s)}`;
 	}, f = `M${d(0, -1)}`;
 	for (let e = 0; e < i; e++) {
 		let [t, n] = u(e);
-		f += `Q${H(t)} ${H(n)} ${d(e, e + 1)}`, s < .5 && (f += `L${d(e + 1, e)}`);
+		f += `Q${U(t)} ${U(n)} ${d(e, e + 1)}`, s < .5 && (f += `L${d(e + 1, e)}`);
 	}
 	return f + "Z";
 }
-function je(e, t, n, r) {
-	let i = H(e - n), a = H(e + n);
-	return `M${i} ${H(t - r)}H${a}V${H(t + r)}H${i}Z`;
+function Ae(e, t, n, r) {
+	let i = U(e - n), a = U(e + n);
+	return `M${i} ${U(t - r)}H${a}V${U(t + r)}H${i}Z`;
 }
-function Me(e, t, n, r, i) {
+function je(e, t, n, r, i) {
 	let a = Math.max(1.05, i), o = n * Math.sqrt(1 - 1 / (a * a)), s = t - r / a, c = t - a * r, l = o * .14, u = s + .86 * (c - s);
-	return `M${H(e - o)} ${H(s)}L${H(e - l)} ${H(u)}Q${H(e)} ${H(c)} ${H(e + l)} ${H(u)}L${H(e + o)} ${H(s)}Z`;
+	return `M${U(e - o)} ${U(s)}L${U(e - l)} ${U(u)}Q${U(e)} ${U(c)} ${U(e + l)} ${U(u)}L${U(e + o)} ${U(s)}Z`;
 }
-function Ne(e, t) {
+function Me(e, t) {
 	for (let n = 0; n < t.length; n++) e = Math.imul(e ^ t[n], 3432918353), e = e << 13 | e >>> 19;
 	return e;
 }
-function Pe(e) {
+function Ne(e) {
 	return e = Math.imul(e ^ e >>> 16, 2246822507), e = Math.imul(e ^ e >>> 13, 3266489909), (e ^ e >>> 16) >>> 0;
 }
-var Fe = new TextEncoder();
-function Ie(e) {
+var Pe = new TextEncoder();
+function Fe(e) {
 	return e.normalize("NFC").trim().toLowerCase();
 }
-function Le(e, t = !0) {
-	let n = t ? Ie(e) : e;
-	return Ne(1779033703 ^ n.length, Fe.encode(n));
+function Ie(e, t = !0) {
+	let n = t ? Fe(e) : e;
+	return Me(1779033703 ^ n.length, Pe.encode(n));
 }
-function Re(e, t) {
-	return Pe(Ne(Ne(e, Uint8Array.of(255)), Fe.encode(t))) / 4294967296;
+function Le(e, t) {
+	return Ne(Me(Me(e, Uint8Array.of(255)), Pe.encode(t))) / 4294967296;
 }
-function ze(e, t = !0, n) {
-	let r = Le(e, t), i = (e) => {
-		let t = n?.[e], i = Array.isArray(t) ? t[Math.floor(Re(r, e) * t.length)] : t;
-		return i === void 0 ? Re(r, e) : i > 0 ? i < 1 ? i : .999999 : 0;
+function Re(e, t = !0, n) {
+	let r = Ie(e, t), i = (e) => {
+		let t = n?.[e], i = Array.isArray(t) ? t[Math.floor(Le(r, e) * t.length)] : t;
+		return i === void 0 ? Le(r, e) : i > 0 ? i < 1 ? i : .999999 : 0;
 	};
 	return i.num = (e, t, n) => t + i(e) * (n - t), i.int = (e, t, n) => t + Math.floor(i(e) * (n - t + 1)), i.pick = (e, t) => t[Math.floor(i(e) * t.length)], i.bool = (e, t = .5) => i(e) < t, i.jitter = (e, t) => (i(e) * 2 - 1) * t, i;
 }
-function Be(e, t, n) {
+function ze(e, t, n) {
 	let r = t.expression;
 	return n || !r ? {
 		l: e,
 		wrap: ""
 	} : r.bake(e, r.p);
 }
-var Ve = (e, t) => t?.tint ? t.tint(e, t.p) : e, He = (e, t) => t ? `<g transform="${t}">${e}</g>` : e, Ue = (e) => e.replace(/[&<>]/g, (e) => e === "&" ? "&amp;" : e === "<" ? "&lt;" : "&gt;");
-function We(e, t) {
-	let n = ze(e, t.normalize ?? !0, t.traits);
+var Be = (e, t) => t?.tint ? t.tint(e, t.p) : e, Ve = (e, t) => t ? `<g transform="${t}">${e}</g>` : e, He = (e) => e.replace(/[&<>]/g, (e) => e === "&" ? "&amp;" : e === "<" ? "&lt;" : "&gt;");
+function Ue(e, t) {
+	let n = Re(e, t.normalize ?? !0, t.traits);
 	return {
 		t: n,
 		palette: {
-			...De(t.hue ?? n.num("hue", 0, 360), t.contrast ?? !0, t.tone ?? n("tone")),
+			...Ee(t.hue ?? n.num("hue", 0, 360), t.contrast ?? !0, t.tone ?? n("tone")),
 			...t.palette
 		}
 	};
 }
-var Ge = (e) => e.title ? `<title>${Ue(e.title)}</title>` : "";
-function Ke(e, t, n) {
+var We = (e) => e.title ? `<title>${He(e.title)}</title>` : "";
+function Ge(e, t, n) {
 	let r = t.background ?? e.background;
 	if (r !== !1) return {
-		d: r === "square" ? "M0 0H100V100H0Z" : Oe({
+		d: r === "square" ? "M0 0H100V100H0Z" : De({
 			cx: 50,
 			cy: 50,
 			rx: 50,
@@ -961,14 +961,14 @@ function Ke(e, t, n) {
 		fill: n.bg
 	};
 }
-var qe = (e) => e ? `<path d="${e.d}" fill="${e.fill}"/>` : "";
-function Je(e) {
+var Ke = (e) => e ? `<path d="${e.d}" fill="${e.fill}"/>` : "";
+function qe(e) {
 	return (t, n = {}) => {
-		let { t: r, palette: i } = We(t, n), a = Ve(i, n.expression), o = n.size ? ` width="${n.size}" height="${n.size}"` : "", s = Be(e.layout(r), n);
-		return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"${o}>${Ge(n) + qe(Ke(e, n, a)) + He(e.render(s.l, a), s.wrap)}</svg>`;
+		let { t: r, palette: i } = Ue(t, n), a = Be(i, n.expression), o = n.size ? ` width="${n.size}" height="${n.size}"` : "", s = ze(e.layout(r), n);
+		return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"${o}>${We(n) + Ke(Ge(e, n, a)) + Ve(e.render(s.l, a), s.wrap)}</svg>`;
 	};
 }
-var Ye = (e, t, n) => {
+var Je = (e, t, n) => {
 	let r = t.rx, i = e.num("eye.rx", .075, .105) * r, a = e.num("eye.ratio", 1.9, 3.2), o = e.num("eye.scale", .78, 1.24), s = e.num("eye.stretch", .85, 1.18), c = e.num("eye.gap", .1, .24) * r, l = i * Math.max(1, o), u = i * a * Math.max(1, o * s), d = l + r * .03 + c, f = e.jitter("gaze.x", .09) * n.rx, p = e.num("gaze.y", -.2, .08) * n.ry, m = e.jitter("eye.dy", .04) * n.ry, h = Math.hypot(l, u), g = Math.hypot((Math.abs(f) + d + h) / n.rx, (Math.abs(p) + Math.abs(m) + h) / n.ry), _ = g > .9 ? .9 / g : 1, v = i * _, y = v * a, b = d * _, x = Math.max(0, Math.min(1, c / u)), S = Math.min(12, Math.asin(x) * 180 / Math.PI), C = e.num("eye.lean", -1, 1) * S, w = Math.max(-12, Math.min(12, C + e.jitter("eye.lean2", 3.5))), T = n.cx + f * _, E = n.cy + p * _;
 	return [{
 		cx: T - b,
@@ -986,7 +986,7 @@ var Ye = (e, t, n) => {
 		rot: w
 	}];
 };
-function Xe(e, t) {
+function Ye(e, t) {
 	let n = (t) => (e.find(([, e]) => t < e) ?? e[e.length - 1])[0];
 	function r(e) {
 		let r = n(e("shape")), i = e.num("body.r", 31, 38) * r.core, a = {
@@ -1014,8 +1014,8 @@ function Xe(e, t) {
 		};
 	}
 	function i(e, t, n) {
-		let r = (e) => Math.round(e * 100) / 100, i = `<g fill="${t.head}">` + e.petals.map((e) => `<circle cx="${r(e.cx)}" cy="${r(e.cy)}" r="${r(e.r)}"/>`).join("") + e.extra.map((e) => `<path d="${e}"/>`).join("") + `<path d="${e.draw ? e.draw(e.body) : Oe(e.body)}"/></g><g fill="${t.eye}"${n ? " class=\"mo-eyes\"" : ""}>` + e.eyes.map((e, t) => {
-			let i = `<path d="${Oe(e)}"/>`;
+		let r = (e) => Math.round(e * 100) / 100, i = `<g fill="${t.head}">` + e.petals.map((e) => `<circle cx="${r(e.cx)}" cy="${r(e.cy)}" r="${r(e.r)}"/>`).join("") + e.extra.map((e) => `<path d="${e}"/>`).join("") + `<path d="${e.draw ? e.draw(e.body) : De(e.body)}"/></g><g fill="${t.eye}"${n ? " class=\"mo-eyes\"" : ""}>` + e.eyes.map((e, t) => {
+			let i = `<path d="${De(e)}"/>`;
 			return n ? `<g class="mo-eye" style="--mo-wrap:${t ? 1 : -1};--mo-lean:${r(e.rot)};transform-origin:${r(e.cx)}px ${r(e.cy)}px">${i}</g>` : i;
 		}).join("") + "</g>";
 		return n ? `<g class="mo-breathe"><g class="mo-bob">${i}</g></g>` : i;
@@ -1026,32 +1026,32 @@ function Xe(e, t) {
 		background: !1
 	};
 }
-var Ze = (e) => Ae(e), Qe = (e) => ke(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), $e = (e) => (t) => ({
+var Xe = (e) => ke(e), Ze = (e) => Oe(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), Qe = (e) => (t) => ({
 	cx: t.cx,
 	cy: t.cy,
 	rx: t.rx * e,
 	ry: t.ry * e
-}), et = (e) => $e(Math.min(...e.radii) * .95)(e), tt = (e) => $e(.84)(e), nt = {
+}), $e = (e) => Qe(Math.min(...e.radii) * .95)(e), et = (e) => Qe(.84)(e), tt = {
 	name: "round",
 	core: 1
-}, rt = {
+}, nt = {
 	name: "organic",
 	core: .98,
-	path: Qe,
-	face: et
-}, it = {
+	path: Ze,
+	face: $e
+}, rt = {
 	name: "boxy",
 	core: .86,
 	body: (e, t) => {
 		t.n = e.num("body.n", 3.4, 6), t.rot = e.num("body.rot", -20, 20);
 	}
-}, at = {
+}, it = {
 	name: "capsule",
 	core: 1.02,
 	body: (e, t) => {
 		t.ry *= e.num("capsule.squat", .55, .68);
 	},
-	face: $e(.94),
+	face: Qe(.94),
 	decorate: (e, t, n) => {
 		for (let e of [-1, 1]) n.petals.push({
 			cx: t.cx + e * (t.rx - t.ry),
@@ -1059,12 +1059,12 @@ var Ze = (e) => Ae(e), Qe = (e) => ke(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), $
 			r: t.ry
 		});
 	},
-	path: (e) => je(e.cx, e.cy, e.rx - e.ry, e.ry)
-}, ot = Xe([
-	[nt, .22],
-	[rt, .48],
-	[it, .6],
-	[at, .7],
+	path: (e) => Ae(e.cx, e.cy, e.rx - e.ry, e.ry)
+}, at = Ye([
+	[tt, .22],
+	[nt, .48],
+	[rt, .6],
+	[it, .7],
 	[{
 		name: "nub",
 		core: .88,
@@ -1083,8 +1083,8 @@ var Ze = (e) => Ae(e), Qe = (e) => ke(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), $
 	[{
 		name: "cloud",
 		core: .78,
-		face: et,
-		path: Qe,
+		face: $e,
+		path: Ze,
 		decorate: (e, t, n) => {
 			let r = e.int("cloud.n", 4, 6);
 			for (let i = 0; i < r; i++) {
@@ -1110,14 +1110,14 @@ var Ze = (e) => Ae(e), Qe = (e) => ke(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), $
 			ry: e.ry * .88
 		}),
 		decorate: (e, t, n) => {
-			n.extra.push(Me(t.cx, t.cy, t.rx, t.ry, e.num("droplet.tip", 1.4, 1.65)));
+			n.extra.push(je(t.cx, t.cy, t.rx, t.ry, e.num("droplet.tip", 1.4, 1.65)));
 		}
 	}, .915],
 	[{
 		name: "hexagon",
 		core: 1.05,
-		path: Ze,
-		face: tt,
+		path: Xe,
+		face: et,
 		body: (e, t) => {
 			t.sides = 6, t.rot = e.num("body.rot", -12, 12), t.round = e.num("poly.round", .24, .5);
 		}
@@ -1140,7 +1140,7 @@ var Ze = (e) => Ae(e), Qe = (e) => ke(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), $
 	[{
 		name: "triangle",
 		core: 1.15,
-		path: Ze,
+		path: Xe,
 		body: (e, t) => {
 			t.sides = 3, t.rot = e.num("body.rot", -5, 5), t.round = e.num("poly.round", .24, .5);
 		},
@@ -1151,10 +1151,10 @@ var Ze = (e) => Ae(e), Qe = (e) => ke(e.cx, e.cy, e.rx, e.ry, e.radii, e.rot), $
 			ry: e.ry * .36
 		})
 	}, 1]
-], Ye), st = Je(ot);
-ot.layout;
+], Je), ot = qe(at);
+at.layout;
 // src/primitivas/Fila.jsx
-function ct({ izquierda: e, titulo: t, subtitulo: n, derecha: r, extremo: i, onClick: a, estilo: o, entrada: s, ...c }) {
+function st({ izquierda: e, titulo: t, subtitulo: n, derecha: r, extremo: i, onClick: a, estilo: o, entrada: s, ...c }) {
 	let l = !!a;
 	return /* @__PURE__ */ _("div", {
 		...c,
@@ -1226,12 +1226,12 @@ function ct({ izquierda: e, titulo: t, subtitulo: n, derecha: r, extremo: i, onC
 		]
 	});
 }
-function lt({ src: e, nombre: t = "", tamano: n = 40, tono: r = "acento", generico: i = !1, figura: o = !1 }) {
+function ct({ src: e, nombre: t = "", tamano: n = 40, tono: r = "acento", generico: i = !1, figura: o = !1 }) {
 	let [s, c] = a.useState(!1);
 	a.useEffect(() => {
 		c(!1);
 	}, [e]);
-	let l = t.split(" ").filter(Boolean).slice(0, 2).map((e) => e[0]).join("").toUpperCase(), u = e && !s, d = o && !u && !!t.trim(), f = a.useMemo(() => d ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(st(t))}` : null, [d, t]), p = i && !d;
+	let l = t.split(" ").filter(Boolean).slice(0, 2).map((e) => e[0]).join("").toUpperCase(), u = e && !s, d = o && !u && !!t.trim(), f = a.useMemo(() => d ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(ot(t))}` : null, [d, t]), p = i && !d;
 	return /* @__PURE__ */ g("div", {
 		style: {
 			width: n,
@@ -1287,7 +1287,7 @@ function lt({ src: e, nombre: t = "", tamano: n = 40, tono: r = "acento", generi
 	});
 }
 // src/primitivas/Seccion.jsx
-function ut({ titulo: e, nota: t, accion: n, children: r, estilo: i }) {
+function lt({ titulo: e, nota: t, accion: n, children: r, estilo: i }) {
 	return /* @__PURE__ */ _("div", {
 		style: { ...i },
 		children: [/* @__PURE__ */ _("div", {
@@ -1332,10 +1332,10 @@ function ut({ titulo: e, nota: t, accion: n, children: r, estilo: i }) {
 	});
 }
 // src/ancho.js
-function U(e = 760) {
-	return dt(`(max-width: ${e}px)`);
+function W(e = 760) {
+	return ut(`(max-width: ${e}px)`);
 }
-function dt(e) {
+function ut(e) {
 	let [t, n] = m(() => typeof window < "u" && !!window.matchMedia && window.matchMedia(e).matches);
 	return l(() => {
 		if (typeof window > "u" || !window.matchMedia) return;
@@ -1343,15 +1343,15 @@ function dt(e) {
 		return n(t.matches), t.addEventListener("change", r), () => t.removeEventListener("change", r);
 	}, [e]), t;
 }
-var ft = {
+var dt = {
 	containerType: "inline-size",
 	minWidth: 0
 };
-function pt(e, t) {
+function ft(e, t) {
 	return `min(${e}, calc(100cqi / ${(Math.max(4, String(t ?? "").length) * .62).toFixed(2)}))`;
 }
 // src/primitivas/Migas.jsx
-var mt = /* @__PURE__ */ g("svg", {
+var pt = /* @__PURE__ */ g("svg", {
 	width: "13",
 	height: "13",
 	viewBox: "0 0 24 24",
@@ -1366,7 +1366,7 @@ var mt = /* @__PURE__ */ g("svg", {
 		opacity: .55
 	},
 	children: /* @__PURE__ */ g("path", { d: "M9 18l6-6-6-6" })
-}), ht = /* @__PURE__ */ g("svg", {
+}), mt = /* @__PURE__ */ g("svg", {
 	width: "15",
 	height: "15",
 	viewBox: "0 0 24 24",
@@ -1378,7 +1378,7 @@ var mt = /* @__PURE__ */ g("svg", {
 	"aria-hidden": !0,
 	style: { flexShrink: 0 },
 	children: /* @__PURE__ */ g("path", { d: "M19 12H5M12 19l-7-7 7-7" })
-}), gt = {
+}), ht = {
 	display: "inline-flex",
 	alignItems: "center",
 	gap: 6,
@@ -1397,13 +1397,13 @@ var mt = /* @__PURE__ */ g("svg", {
 	textOverflow: "ellipsis",
 	transition: "color var(--ds-t-state) var(--ds-ease)"
 };
-function _t({ ruta: e = [], estilo: t }) {
-	let n = U();
+function gt({ ruta: e = [], estilo: t }) {
+	let n = W();
 	if (e.length === 0) return null;
 	let r = e[e.length - 1], i = e.length > 1 ? e[e.length - 2] : null, a = i && i.ir ? /* @__PURE__ */ _("button", {
 		onClick: i.ir,
 		style: {
-			...gt,
+			...ht,
 			color: "var(--ds-ink-2)",
 			fontWeight: 700
 		},
@@ -1414,7 +1414,7 @@ function _t({ ruta: e = [], estilo: t }) {
 			e.currentTarget.style.color = "var(--ds-ink-2)";
 		},
 		children: [
-			ht,
+			mt,
 			" Volver a ",
 			i.texto
 		]
@@ -1471,11 +1471,11 @@ function _t({ ruta: e = [], estilo: t }) {
 									color: "var(--ds-ink-3)",
 									display: "inline-flex"
 								},
-								children: mt
+								children: pt
 							}), r || !t.ir ? /* @__PURE__ */ g("span", {
 								"aria-current": r ? "page" : void 0,
 								style: {
-									...gt,
+									...ht,
 									cursor: "default",
 									color: r ? "var(--ds-ink)" : "var(--ds-ink-3)",
 									fontWeight: r ? 700 : 600
@@ -1483,7 +1483,7 @@ function _t({ ruta: e = [], estilo: t }) {
 								children: t.texto
 							}) : /* @__PURE__ */ g("button", {
 								onClick: t.ir,
-								style: gt,
+								style: ht,
 								onMouseEnter: (e) => {
 									e.currentTarget.style.color = "var(--ds-ink)";
 								},
@@ -1502,7 +1502,7 @@ function _t({ ruta: e = [], estilo: t }) {
 	});
 }
 // src/primitivas/Barra.jsx
-function vt({ marca: e, secciones: t = [], activa: n, onIr: r, derecha: i, estilo: a }) {
+function _t({ marca: e, secciones: t = [], activa: n, onIr: r, derecha: i, estilo: a }) {
 	return /* @__PURE__ */ _("div", {
 		style: {
 			display: "flex",
@@ -1564,7 +1564,7 @@ function vt({ marca: e, secciones: t = [], activa: n, onIr: r, derecha: i, estil
 	});
 }
 // src/primitivas/Lamina.jsx
-function yt({ imagen: e, imagenChica: t, alt: n = "", alto: r = 200, children: i, pie: o, radio: s = "var(--ds-r-card)", encima: c = !0, encuadre: l = "center", fondo: u = !1, estilo: d, entrada: f, ...p }) {
+function vt({ imagen: e, imagenChica: t, alt: n = "", alto: r = 200, children: i, pie: o, radio: s = "var(--ds-r-card)", encima: c = !0, encuadre: l = "center", fondo: u = !1, estilo: d, entrada: f, ...p }) {
 	let [m, v] = a.useState(!1), y = ({ estiloExtra: r }) => /* @__PURE__ */ g("img", {
 		src: e,
 		srcSet: t ? `${t} 800w, ${e} 1600w` : void 0,
@@ -1687,7 +1687,7 @@ function yt({ imagen: e, imagenChica: t, alt: n = "", alto: r = 200, children: i
 	});
 }
 // src/primitivas/Azulejo.jsx
-function bt({ icono: e, etiqueta: t, nota: n, color: r, onClick: i, ancho: o = 1, entrada: s, estilo: c }) {
+function yt({ icono: e, etiqueta: t, nota: n, color: r, onClick: i, ancho: o = 1, entrada: s, estilo: c }) {
 	let [l, u] = a.useState(!1), d = r || "var(--ds-accent)", f = `color-mix(in oklab, ${d}, var(--ds-mezcla-tono))`;
 	return /* @__PURE__ */ _("button", {
 		onClick: i,
@@ -1757,7 +1757,7 @@ function bt({ icono: e, etiqueta: t, nota: n, color: r, onClick: i, ancho: o = 1
 	});
 }
 // src/primitivas/Interruptor.jsx
-function xt({ encendido: e = !1, onCambio: t, etiqueta: n, deshabilitado: r = !1, estilo: i }) {
+function bt({ encendido: e = !1, onCambio: t, etiqueta: n, deshabilitado: r = !1, estilo: i }) {
 	return /* @__PURE__ */ g("button", {
 		type: "button",
 		role: "switch",
@@ -1797,17 +1797,17 @@ function xt({ encendido: e = !1, onCambio: t, etiqueta: n, deshabilitado: r = !1
 	});
 }
 // src/primitivas/Transicion.jsx
-var St = /* @__PURE__ */ new Map(), Ct = (e) => String(e ?? "").split("/").filter(Boolean).length;
-function wt(e, t, n) {
+var xt = /* @__PURE__ */ new Map(), St = (e) => String(e ?? "").split("/").filter(Boolean).length;
+function Ct(e, t, n) {
 	let r = getComputedStyle(e).getPropertyValue(t).trim();
 	return r.endsWith("ms") ? parseFloat(r) : r.endsWith("s") ? parseFloat(r) * 1e3 : n;
 }
-function Tt({ vista: e, eje: t = "auto", ambito: n = "vista", children: r, estilo: i }) {
+function wt({ vista: e, eje: t = "auto", ambito: n = "vista", children: r, estilo: i }) {
 	let a = p(null);
 	return d(() => {
-		let r = a.current, i = St.get(n);
-		if (St.set(n, e), !r || e === void 0 || i === void 0 || i === e || typeof r.animate != "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
-		let o = t === "y" ? 0 : Ct(e) - Ct(i), s = o > 0 ? {
+		let r = a.current, i = xt.get(n);
+		if (xt.set(n, e), !r || e === void 0 || i === void 0 || i === e || typeof r.animate != "function" || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
+		let o = t === "y" ? 0 : St(e) - St(i), s = o > 0 ? {
 			left: "24px",
 			top: "0px"
 		} : o < 0 ? {
@@ -1825,7 +1825,7 @@ function Tt({ vista: e, eje: t = "auto", ambito: n = "vista", children: r, estil
 			left: "0px",
 			top: "0px"
 		}], {
-			duration: wt(r, "--ds-t-vista", 320),
+			duration: Ct(r, "--ds-t-vista", 320),
 			easing: getComputedStyle(r).getPropertyValue("--ds-ease").trim() || "cubic-bezier(0.16, 1, 0.3, 1)",
 			fill: "none"
 		});
@@ -1844,8 +1844,8 @@ function Tt({ vista: e, eje: t = "auto", ambito: n = "vista", children: r, estil
 	});
 }
 // src/primitivas/Modal.jsx
-function Et({ abierto: e, onCerrar: t, titulo: n, nota: r, children: i, acciones: a, ancho: o = 560, estilo: s, lado: c }) {
-	let u = U(), d = c === "derecha" && !u, f = p(null), m = p(null), h = p(t);
+function Tt({ abierto: e, onCerrar: t, titulo: n, nota: r, children: i, acciones: a, ancho: o = 560, estilo: s, lado: c }) {
+	let u = W(), d = c === "derecha" && !u, f = p(null), m = p(null), h = p(t);
 	return h.current = t, l(() => {
 		if (!e) return;
 		m.current = document.activeElement;
@@ -2009,7 +2009,7 @@ function Et({ abierto: e, onCerrar: t, titulo: n, nota: r, children: i, acciones
 		})]
 	}), document.body);
 }
-var Dt = {
+var Et = {
 	ok: {
 		tono: "var(--ds-ok)",
 		suave: "var(--ds-ok-soft)",
@@ -2035,9 +2035,9 @@ var Dt = {
 		d: "M12 16v-5M12 8h.01"
 	}
 };
-function Ot({ abierto: e, severidad: t = "info", titulo: n, mensaje: r, onCerrar: i, acciones: a }) {
-	let o = Dt[t] || Dt.info, c = s(() => i?.(), [i]), l = (a || []).some((e) => e.cierra);
-	return /* @__PURE__ */ g(Et, {
+function Dt({ abierto: e, severidad: t = "info", titulo: n, mensaje: r, onCerrar: i, acciones: a }) {
+	let o = Et[t] || Et.info, c = s(() => i?.(), [i]), l = (a || []).some((e) => e.cierra);
+	return /* @__PURE__ */ g(Tt, {
 		abierto: e,
 		onCerrar: c,
 		ancho: 420,
@@ -2100,13 +2100,13 @@ function Ot({ abierto: e, severidad: t = "info", titulo: n, mensaje: r, onCerrar
 						marginTop: "var(--ds-5)",
 						flexWrap: "wrap"
 					},
-					children: [(a || []).map((e, t) => /* @__PURE__ */ g(V, {
+					children: [(a || []).map((e, t) => /* @__PURE__ */ g(H, {
 						variante: e.primaria ? "solido" : "contorno",
 						onClick: () => {
 							e.onClick?.(), c();
 						},
 						children: e.texto
-					}, t)), !l && /* @__PURE__ */ g(V, {
+					}, t)), !l && /* @__PURE__ */ g(H, {
 						variante: (a || []).length ? "fantasma" : "solido",
 						onClick: c,
 						children: "Entendido"
@@ -2117,8 +2117,8 @@ function Ot({ abierto: e, severidad: t = "info", titulo: n, mensaje: r, onCerrar
 	});
 }
 // src/primitivas/Flotante.jsx
-var kt = 8;
-function At({ ancla: e, abierto: t, onCerrar: n, children: r, rol: i = "menu", etiqueta: a, minAncho: o = 200, estilo: s, lado: c = "abajo" }) {
+var Ot = 8;
+function kt({ ancla: e, abierto: t, onCerrar: n, children: r, rol: i = "menu", etiqueta: a, minAncho: o = 200, estilo: s, lado: c = "abajo" }) {
 	let u = p(null), [f, h] = m(null), _ = p(n);
 	return _.current = n, d(() => {
 		if (!t) {
@@ -2129,8 +2129,8 @@ function At({ ancla: e, abierto: t, onCerrar: n, children: r, rol: i = "menu", e
 			let t = e?.current?.getBoundingClientRect(), n = u.current?.getBoundingClientRect();
 			if (!t) return;
 			let r = n?.width || o, i = n?.height || 0, a = window.innerWidth, s = window.innerHeight;
-			if (c === "derecha" && t.right + 8 + r <= a - kt) {
-				let e = Math.max(kt, Math.min(t.top, s - i - kt));
+			if (c === "derecha" && t.right + 8 + r <= a - Ot) {
+				let e = Math.max(Ot, Math.min(t.top, s - i - Ot));
 				h({
 					izq: t.right + 8,
 					top: e,
@@ -2138,8 +2138,8 @@ function At({ ancla: e, abierto: t, onCerrar: n, children: r, rol: i = "menu", e
 				});
 				return;
 			}
-			let l = s - t.bottom, d = i > 0 && l < i + kt && t.top > l, f = d ? Math.max(kt, t.top - i - 6) : t.bottom + 6, p = t.left;
-			p + r > a - kt && (p = t.right - r), p = Math.max(kt, Math.min(p, a - r - kt)), h({
+			let l = s - t.bottom, d = i > 0 && l < i + Ot && t.top > l, f = d ? Math.max(Ot, t.top - i - 6) : t.bottom + 6, p = t.left;
+			p + r > a - Ot && (p = t.right - r), p = Math.max(Ot, Math.min(p, a - r - Ot)), h({
 				izq: p,
 				top: f,
 				haciaArriba: d
@@ -2207,7 +2207,7 @@ function At({ ancla: e, abierto: t, onCerrar: n, children: r, rol: i = "menu", e
 		children: r
 	}), document.body);
 }
-function jt({ children: e, elegida: t, onClick: n, rol: r = "menuitemradio", nota: i, peligro: a }) {
+function At({ children: e, elegida: t, onClick: n, rol: r = "menuitemradio", nota: i, peligro: a }) {
 	return /* @__PURE__ */ _("button", {
 		type: "button",
 		role: r,
@@ -2273,29 +2273,29 @@ function jt({ children: e, elegida: t, onClick: n, rol: r = "menuitemradio", not
 	});
 }
 // src/Armazon.jsx
-var Mt = "ds-nav", Nt = [
+var jt = "ds-nav", Mt = [
 	"topbar",
 	"sidebar",
 	"dock"
-], Pt = 64, Ft = 52, It = o({
+], Nt = 64, Pt = 52, Ft = o({
 	modo: "topbar",
 	movil: !1,
 	fijarModo: () => {}
-}), Lt = () => c(It);
-function Rt() {
+}), It = () => c(Ft);
+function Lt() {
 	try {
-		let e = localStorage.getItem(Mt);
-		if (Nt.includes(e)) return e;
+		let e = localStorage.getItem(jt);
+		if (Mt.includes(e)) return e;
 	} catch {}
 	return "topbar";
 }
-var zt = {
+var Rt = {
 	background: "var(--ds-frame)",
 	backdropFilter: "var(--ds-blur)",
 	WebkitBackdropFilter: "var(--ds-blur)",
 	border: "1px solid var(--ds-line)"
 };
-function Bt(e, t) {
+function zt(e, t) {
 	d(() => {
 		let n = document.documentElement.style;
 		return n.setProperty("--ds-reserva-arriba", e), n.setProperty("--ds-reserva-abajo", t), () => {
@@ -2303,7 +2303,7 @@ function Bt(e, t) {
 		};
 	}, [e, t]);
 }
-function Vt({ n: e, sobre: t = !1, en: n }) {
+function Bt({ n: e, sobre: t = !1, en: n }) {
 	let r = Number(e) || 0;
 	return r <= 0 ? null : /* @__PURE__ */ _("span", {
 		className: "ds-num",
@@ -2335,7 +2335,7 @@ function Vt({ n: e, sobre: t = !1, en: n }) {
 			"aria-hidden": !0,
 			children: r > 99 ? "99+" : r
 		}), /* @__PURE__ */ _("span", {
-			style: Ht,
+			style: Vt,
 			children: [
 				", ",
 				r,
@@ -2344,7 +2344,7 @@ function Vt({ n: e, sobre: t = !1, en: n }) {
 		})]
 	});
 }
-var Ht = {
+var Vt = {
 	position: "absolute",
 	width: 1,
 	height: 1,
@@ -2354,8 +2354,8 @@ var Ht = {
 	clip: "rect(0 0 0 0)",
 	whiteSpace: "nowrap",
 	border: 0
-}, Ut = (e, t) => (Number(t) || 0) > 0 ? `${e}, ${t} pendientes` : e;
-function Wt({ s: e, alto: t = 18 }) {
+}, Ht = (e, t) => (Number(t) || 0) > 0 ? `${e}, ${t} pendientes` : e;
+function Ut({ s: e, alto: t = 18 }) {
 	return /* @__PURE__ */ _("span", {
 		style: {
 			position: "relative",
@@ -2365,18 +2365,18 @@ function Wt({ s: e, alto: t = 18 }) {
 			height: t,
 			flexShrink: 0
 		},
-		children: [e.icono || "•", /* @__PURE__ */ g(Vt, {
+		children: [e.icono || "•", /* @__PURE__ */ g(Bt, {
 			n: e.insignia,
 			sobre: !0
 		})]
 	});
 }
-var W = (e) => Array.isArray(e?.hijos) && e.hijos.length > 0, Gt = (e, t) => e.id === t || W(e) && e.hijos.some((e) => e.id === t), Kt = (e) => !W(e) || !!(e.ruta || e.navegable), qt = (e) => e.reduce((e, t) => e + (Number(t.insignia) || 0), 0), Jt = (e) => W(e) ? {
+var G = (e) => Array.isArray(e?.hijos) && e.hijos.length > 0, Wt = (e, t) => e.id === t || G(e) && e.hijos.some((e) => e.id === t), Gt = (e) => !G(e) || !!(e.ruta || e.navegable), Kt = (e) => e.reduce((e, t) => e + (Number(t.insignia) || 0), 0), qt = (e) => G(e) ? {
 	...e,
 	insigniaPropia: e.insignia,
-	insignia: (Number(e.insignia) || 0) + qt(e.hijos)
+	insignia: (Number(e.insignia) || 0) + Kt(e.hijos)
 } : e;
-function Yt({ abierta: e, tam: t = 13 }) {
+function Jt({ abierta: e, tam: t = 13 }) {
 	return /* @__PURE__ */ g("svg", {
 		width: t,
 		height: t,
@@ -2395,7 +2395,7 @@ function Yt({ abierta: e, tam: t = 13 }) {
 		children: /* @__PURE__ */ g("path", { d: "M6 9l6 6 6-6" })
 	});
 }
-function Xt({ texto: e, nota: t, insignia: n, esta: r, onClick: i }) {
+function Yt({ texto: e, nota: t, insignia: n, esta: r, onClick: i }) {
 	return /* @__PURE__ */ _("button", {
 		type: "button",
 		role: "menuitem",
@@ -2445,21 +2445,21 @@ function Xt({ texto: e, nota: t, insignia: n, esta: r, onClick: i }) {
 				},
 				children: t
 			})]
-		}), /* @__PURE__ */ g(Vt, { n })]
+		}), /* @__PURE__ */ g(Bt, { n })]
 	});
 }
-function Zt({ s: e, ancla: t, abierto: n, onCerrar: r, activa: i, onIr: a, lado: o }) {
+function Xt({ s: e, ancla: t, abierto: n, onCerrar: r, activa: i, onIr: a, lado: o }) {
 	let s = (e) => {
 		r(), a?.(e);
 	};
-	return /* @__PURE__ */ _(At, {
+	return /* @__PURE__ */ _(kt, {
 		ancla: t,
 		abierto: n,
 		onCerrar: r,
 		etiqueta: e.texto,
 		minAncho: 220,
 		lado: o,
-		children: [Kt(e) && /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(Xt, {
+		children: [Gt(e) && /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(Yt, {
 			texto: e.texto,
 			nota: "Resumen",
 			esta: e.id === i,
@@ -2471,7 +2471,7 @@ function Zt({ s: e, ancla: t, abierto: n, onCerrar: r, activa: i, onIr: a, lado:
 				background: "var(--ds-line)",
 				margin: "4px 6px"
 			}
-		})] }), e.hijos.map((e) => /* @__PURE__ */ g(Xt, {
+		})] }), e.hijos.map((e) => /* @__PURE__ */ g(Yt, {
 			texto: e.texto,
 			insignia: e.insignia,
 			esta: e.id === i,
@@ -2479,7 +2479,7 @@ function Zt({ s: e, ancla: t, abierto: n, onCerrar: r, activa: i, onIr: a, lado:
 		}, e.id))]
 	});
 }
-function Qt({ fuente: e, alt: t, alto: n }) {
+function Zt({ fuente: e, alt: t, alto: n }) {
 	return e ? typeof e == "string" ? /* @__PURE__ */ g("img", {
 		src: e,
 		alt: t,
@@ -2499,7 +2499,7 @@ function Qt({ fuente: e, alt: t, alto: n }) {
 		children: e
 	}) : null;
 }
-function $t({ texto: e = "", alto: t = 28 }) {
+function Qt({ texto: e = "", alto: t = 28 }) {
 	return /* @__PURE__ */ g("span", {
 		"aria-hidden": !0,
 		className: "ds-monograma",
@@ -2519,8 +2519,8 @@ function $t({ texto: e = "", alto: t = 28 }) {
 		}
 	});
 }
-function en({ marca: e, logo: t, iconoApp: n, compacto: r = !1, encoge: i = !1, onInicio: a }) {
-	let o = typeof e == "string" ? e : "", s = t?.icono ? /* @__PURE__ */ g(Qt, {
+function $t({ marca: e, logo: t, iconoApp: n, compacto: r = !1, encoge: i = !1, onInicio: a }) {
+	let o = typeof e == "string" ? e : "", s = t?.icono ? /* @__PURE__ */ g(Zt, {
 		fuente: t.icono,
 		alt: "",
 		alto: 28
@@ -2531,7 +2531,7 @@ function en({ marca: e, logo: t, iconoApp: n, compacto: r = !1, encoge: i = !1, 
 			flexShrink: 0
 		},
 		children: n
-	}) : o ? /* @__PURE__ */ g($t, { texto: o }) : null;
+	}) : o ? /* @__PURE__ */ g(Qt, { texto: o }) : null;
 	if (r && !s) return null;
 	let c = /* @__PURE__ */ g("span", {
 		style: {
@@ -2540,7 +2540,7 @@ function en({ marca: e, logo: t, iconoApp: n, compacto: r = !1, encoge: i = !1, 
 			textOverflow: "ellipsis"
 		},
 		children: e
-	}), l = r ? s : t?.completo ? /* @__PURE__ */ g(Qt, {
+	}), l = r ? s : t?.completo ? /* @__PURE__ */ g(Zt, {
 		fuente: t.completo,
 		alt: o,
 		alto: 28
@@ -2576,7 +2576,7 @@ function en({ marca: e, logo: t, iconoApp: n, compacto: r = !1, encoge: i = !1, 
 		children: l
 	});
 }
-function tn({ s: e, esta: t, onIr: n }) {
+function en({ s: e, esta: t, onIr: n }) {
 	return /* @__PURE__ */ _("button", {
 		onClick: () => n?.(e),
 		"aria-current": t ? "page" : void 0,
@@ -2613,12 +2613,12 @@ function tn({ s: e, esta: t, onIr: n }) {
 		children: [
 			e.icono,
 			e.texto,
-			/* @__PURE__ */ g(Vt, { n: e.insignia })
+			/* @__PURE__ */ g(Bt, { n: e.insignia })
 		]
 	});
 }
-function nn({ s: e, activa: t, onIr: n }) {
-	let [r, i] = m(!1), a = p(null), o = Gt(e, t), s = Kt(e), c = {
+function tn({ s: e, activa: t, onIr: n }) {
+	let [r, i] = m(!1), a = p(null), o = Wt(e, t), s = Gt(e), c = {
 		display: "inline-flex",
 		alignItems: "center",
 		gap: 8,
@@ -2660,7 +2660,7 @@ function nn({ s: e, activa: t, onIr: n }) {
 			children: [
 				e.icono,
 				e.texto,
-				/* @__PURE__ */ g(Vt, { n: e.insignia })
+				/* @__PURE__ */ g(Bt, { n: e.insignia })
 			]
 		}), /* @__PURE__ */ g("button", {
 			type: "button",
@@ -2673,7 +2673,7 @@ function nn({ s: e, activa: t, onIr: n }) {
 				...c,
 				padding: "9px 10px 9px 8px"
 			},
-			children: /* @__PURE__ */ g(Yt, { abierta: r })
+			children: /* @__PURE__ */ g(Jt, { abierta: r })
 		})] }) : /* @__PURE__ */ _("button", {
 			type: "button",
 			ref: a,
@@ -2687,10 +2687,10 @@ function nn({ s: e, activa: t, onIr: n }) {
 			children: [
 				e.icono,
 				e.texto,
-				/* @__PURE__ */ g(Vt, { n: e.insignia }),
-				/* @__PURE__ */ g(Yt, { abierta: r })
+				/* @__PURE__ */ g(Bt, { n: e.insignia }),
+				/* @__PURE__ */ g(Jt, { abierta: r })
 			]
-		}), /* @__PURE__ */ g(Zt, {
+		}), /* @__PURE__ */ g(Xt, {
 			s: e,
 			ancla: a,
 			abierto: r,
@@ -2700,7 +2700,7 @@ function nn({ s: e, activa: t, onIr: n }) {
 		})]
 	});
 }
-function rn({ s: e, texto: t, esta: n, sangria: r = !1, onClick: i }) {
+function nn({ s: e, texto: t, esta: n, sangria: r = !1, onClick: i }) {
 	return /* @__PURE__ */ _("button", {
 		type: "button",
 		onClick: i,
@@ -2723,7 +2723,7 @@ function rn({ s: e, texto: t, esta: n, sangria: r = !1, onClick: i }) {
 			color: n ? "var(--ds-accent-tinta)" : "var(--ds-ink)"
 		},
 		children: [
-			!r && /* @__PURE__ */ g(Wt, { s: {
+			!r && /* @__PURE__ */ g(Ut, { s: {
 				...e,
 				insignia: 0
 			} }),
@@ -2742,15 +2742,15 @@ function rn({ s: e, texto: t, esta: n, sangria: r = !1, onClick: i }) {
 					children: e.nota
 				})]
 			}),
-			/* @__PURE__ */ g(Vt, { n: e.insignia })
+			/* @__PURE__ */ g(Bt, { n: e.insignia })
 		]
 	});
 }
-function an({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo: a = "Más" }) {
+function rn({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo: a = "Más" }) {
 	let o = (e) => {
 		t(), i?.(e);
-	}, s = n.length === 1 && W(n[0]) ? n[0] : null;
-	return /* @__PURE__ */ g(Et, {
+	}, s = n.length === 1 && G(n[0]) ? n[0] : null;
+	return /* @__PURE__ */ g(Tt, {
 		abierto: e,
 		onCerrar: t,
 		titulo: a,
@@ -2762,7 +2762,7 @@ function an({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo:
 				gap: 2,
 				margin: "calc(var(--ds-2) * -1) 0"
 			},
-			children: s ? /* @__PURE__ */ _(h, { children: [Kt(s) && /* @__PURE__ */ g(rn, {
+			children: s ? /* @__PURE__ */ _(h, { children: [Gt(s) && /* @__PURE__ */ g(nn, {
 				s: {
 					...s,
 					insignia: s.insigniaPropia
@@ -2770,14 +2770,14 @@ function an({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo:
 				texto: "Resumen",
 				esta: s.id === r,
 				onClick: () => o(s)
-			}), s.hijos.map((e) => /* @__PURE__ */ g(rn, {
+			}), s.hijos.map((e) => /* @__PURE__ */ g(nn, {
 				s: {
 					icono: s.icono,
 					...e
 				},
 				esta: e.id === r,
 				onClick: () => o(e)
-			}, e.id))] }) : n.map((e) => W(e) ? /* @__PURE__ */ _("div", {
+			}, e.id))] }) : n.map((e) => G(e) ? /* @__PURE__ */ _("div", {
 				role: "group",
 				"aria-label": e.texto,
 				style: {
@@ -2785,7 +2785,7 @@ function an({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo:
 					flexDirection: "column",
 					gap: 2
 				},
-				children: [Kt(e) ? /* @__PURE__ */ g(rn, {
+				children: [Gt(e) ? /* @__PURE__ */ g(nn, {
 					s: {
 						...e,
 						insignia: e.insigniaPropia
@@ -2803,17 +2803,17 @@ function an({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo:
 						fontWeight: 800,
 						color: "var(--ds-ink-2)"
 					},
-					children: [/* @__PURE__ */ g(Wt, { s: {
+					children: [/* @__PURE__ */ g(Ut, { s: {
 						...e,
 						insignia: 0
 					} }), e.texto]
-				}), e.hijos.map((e) => /* @__PURE__ */ g(rn, {
+				}), e.hijos.map((e) => /* @__PURE__ */ g(nn, {
 					s: e,
 					sangria: !0,
 					esta: e.id === r,
 					onClick: () => o(e)
 				}, e.id))]
-			}, e.id) : /* @__PURE__ */ g(rn, {
+			}, e.id) : /* @__PURE__ */ g(nn, {
 				s: e,
 				esta: e.id === r,
 				onClick: () => o(e)
@@ -2821,7 +2821,7 @@ function an({ abierto: e, onCerrar: t, secciones: n, activa: r, onIr: i, titulo:
 		})
 	});
 }
-function on({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, children: c }) {
+function an({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, children: c }) {
 	let l = p(null), [u, f] = m(56);
 	return d(() => {
 		let e = l.current;
@@ -2830,7 +2830,7 @@ function on({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 		t();
 		let n = new ResizeObserver(t);
 		return n.observe(e), () => n.disconnect();
-	}, []), Bt(`${Math.round(u) + 36}px`, "var(--ds-4)"), /* @__PURE__ */ _("div", {
+	}, []), zt(`${Math.round(u) + 36}px`, "var(--ds-4)"), /* @__PURE__ */ _("div", {
 		style: {
 			minHeight: "100%",
 			padding: "var(--ds-4)"
@@ -2838,7 +2838,7 @@ function on({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 		children: [/* @__PURE__ */ _("header", {
 			ref: l,
 			style: {
-				...zt,
+				...Rt,
 				display: "flex",
 				alignItems: "center",
 				gap: "var(--ds-2)",
@@ -2857,7 +2857,7 @@ function on({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 						paddingLeft: 8,
 						paddingRight: 8
 					},
-					children: /* @__PURE__ */ g(en, {
+					children: /* @__PURE__ */ g($t, {
 						marca: e,
 						logo: t,
 						iconoApp: r,
@@ -2873,11 +2873,11 @@ function on({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 						flex: 1,
 						minWidth: 0
 					},
-					children: i.map((e) => W(e) ? /* @__PURE__ */ g(nn, {
+					children: i.map((e) => G(e) ? /* @__PURE__ */ g(tn, {
 						s: e,
 						activa: a,
 						onIr: o
-					}, e.id) : /* @__PURE__ */ g(tn, {
+					}, e.id) : /* @__PURE__ */ g(en, {
 						s: e,
 						esta: e.id === a,
 						onIr: o
@@ -2898,7 +2898,7 @@ function on({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 		})]
 	});
 }
-function sn({ s: e, esta: t, marcado: n, riel: r, bajo: i, hijo: a = !1, enFila: o = !1, onClick: s, botonRef: c, insignia: l, extra: u, ...d }) {
+function on({ s: e, esta: t, marcado: n, riel: r, bajo: i, hijo: a = !1, enFila: o = !1, onClick: s, botonRef: c, insignia: l, extra: u, ...d }) {
 	let f = l ?? e.insignia;
 	return /* @__PURE__ */ _("button", {
 		ref: c,
@@ -2940,7 +2940,7 @@ function sn({ s: e, esta: t, marcado: n, riel: r, bajo: i, hijo: a = !1, enFila:
 					color: t || n ? "var(--ds-accent-tinta)" : "inherit",
 					lineHeight: 0
 				},
-				children: /* @__PURE__ */ g(Wt, { s: r ? {
+				children: /* @__PURE__ */ g(Ut, { s: r ? {
 					...e,
 					insignia: 0
 				} : e })
@@ -2955,16 +2955,16 @@ function sn({ s: e, esta: t, marcado: n, riel: r, bajo: i, hijo: a = !1, enFila:
 				},
 				children: e.texto
 			}),
-			r && /* @__PURE__ */ g(Vt, { n: f }),
+			r && /* @__PURE__ */ g(Bt, { n: f }),
 			r && u
 		]
 	});
 }
-function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
-	let a = Gt(e, t), [o, s] = m(a), [c, d] = m(!1), f = p(null), v = u();
+function sn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
+	let a = Wt(e, t), [o, s] = m(a), [c, d] = m(!1), f = p(null), v = u();
 	if (l(() => {
 		a && s(!0);
-	}, [a]), !n) return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(sn, {
+	}, [a]), !n) return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(on, {
 		s: e,
 		esta: a,
 		riel: !1,
@@ -2973,7 +2973,7 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 		onClick: () => d((e) => !e),
 		"aria-haspopup": "menu",
 		"aria-expanded": c
-	}), /* @__PURE__ */ g(Zt, {
+	}), /* @__PURE__ */ g(Xt, {
 		s: e,
 		ancla: f,
 		abierto: c,
@@ -2982,7 +2982,7 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 		onIr: i,
 		lado: "derecha"
 	})] });
-	let y = Kt(e), b = () => s((e) => !e);
+	let y = Gt(e), b = () => s((e) => !e);
 	return /* @__PURE__ */ _("div", {
 		style: {
 			display: "flex",
@@ -2995,7 +2995,7 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 				alignItems: "center",
 				gap: 2
 			},
-			children: [/* @__PURE__ */ g(sn, {
+			children: [/* @__PURE__ */ g(on, {
 				s: e,
 				esta: e.id === t,
 				marcado: a,
@@ -3011,7 +3011,7 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 						color: "var(--ds-ink-3)",
 						lineHeight: 0
 					},
-					children: /* @__PURE__ */ g(Yt, { abierta: o })
+					children: /* @__PURE__ */ g(Jt, { abierta: o })
 				})
 			}), y && /* @__PURE__ */ g("button", {
 				type: "button",
@@ -3031,7 +3031,7 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 					color: "var(--ds-ink-3)",
 					borderRadius: "var(--ds-r-item)"
 				},
-				children: /* @__PURE__ */ g(Yt, { abierta: o })
+				children: /* @__PURE__ */ g(Jt, { abierta: o })
 			})]
 		}), /* @__PURE__ */ g("div", {
 			id: v,
@@ -3058,7 +3058,7 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 						translate: o ? "0 0" : "0 -6px",
 						transition: o ? "opacity var(--ds-t-move) var(--ds-ease) 60ms, translate var(--ds-t-move) var(--ds-ease) 60ms" : "opacity var(--ds-t-state) var(--ds-ease), translate var(--ds-t-state) var(--ds-ease)"
 					},
-					children: e.hijos.map((e) => /* @__PURE__ */ g(sn, {
+					children: e.hijos.map((e) => /* @__PURE__ */ g(on, {
 						s: e,
 						hijo: !0,
 						esta: e.id === t,
@@ -3071,16 +3071,16 @@ function cn({ s: e, activa: t, riel: n, bajo: r, onIr: i }) {
 		})]
 	});
 }
-function ln({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, children: c }) {
-	let [l, u] = m(!0), d = dt("(max-height: 760px)"), f = l, p = f ? 244 : 64;
-	return Bt("var(--ds-4)", "var(--ds-4)"), /* @__PURE__ */ _("div", {
+function cn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, children: c }) {
+	let [l, u] = m(!0), d = ut("(max-height: 760px)"), f = l, p = f ? 244 : 64;
+	return zt("var(--ds-4)", "var(--ds-4)"), /* @__PURE__ */ _("div", {
 		style: {
 			minHeight: "100%",
 			padding: "var(--ds-4)"
 		},
 		children: [/* @__PURE__ */ _("aside", {
 			style: {
-				...zt,
+				...Rt,
 				width: p,
 				borderRadius: "var(--ds-r-frame)",
 				padding: "var(--ds-3)",
@@ -3109,7 +3109,7 @@ function ln({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 						flexShrink: 0,
 						minWidth: 0
 					},
-					children: [/* @__PURE__ */ g(en, {
+					children: [/* @__PURE__ */ g($t, {
 						marca: e,
 						logo: t,
 						iconoApp: r,
@@ -3153,13 +3153,13 @@ function ln({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 						margin: "0 calc(var(--ds-1) * -1)",
 						padding: "2px var(--ds-1)"
 					},
-					children: i.map((e) => W(e) ? /* @__PURE__ */ g(cn, {
+					children: i.map((e) => G(e) ? /* @__PURE__ */ g(sn, {
 						s: e,
 						activa: a,
 						riel: f,
 						bajo: d,
 						onIr: o
-					}, e.id) : /* @__PURE__ */ g(sn, {
+					}, e.id) : /* @__PURE__ */ g(on, {
 						s: e,
 						esta: e.id === a,
 						riel: f,
@@ -3190,14 +3190,14 @@ function ln({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 		})]
 	});
 }
-var un = 48;
-function dn({ s: e, esta: t, conTexto: n, onIr: r, botonRef: i, ...a }) {
+var ln = 48;
+function un({ s: e, esta: t, conTexto: n, onIr: r, botonRef: i, ...a }) {
 	return /* @__PURE__ */ _("button", {
 		ref: i,
 		type: "button",
 		onClick: () => r?.(e),
 		title: e.texto,
-		"aria-label": n ? void 0 : Ut(e.texto, e.insignia),
+		"aria-label": n ? void 0 : Ht(e.texto, e.insignia),
 		"aria-current": t && !a["aria-haspopup"] ? "page" : void 0,
 		...a,
 		style: {
@@ -3211,7 +3211,7 @@ function dn({ s: e, esta: t, conTexto: n, onIr: r, botonRef: i, ...a }) {
 			fontSize: "0.66rem",
 			fontWeight: 700,
 			padding: n ? "7px 15px" : 0,
-			minWidth: n ? 0 : un,
+			minWidth: n ? 0 : ln,
 			height: n ? "auto" : 44,
 			boxSizing: "border-box",
 			borderRadius: "var(--ds-r-item)",
@@ -3230,7 +3230,7 @@ function dn({ s: e, esta: t, conTexto: n, onIr: r, botonRef: i, ...a }) {
 			e.currentTarget.style.transform = "none", t || (e.currentTarget.style.background = "transparent", e.currentTarget.style.color = "var(--ds-ink-2)");
 		},
 		children: [
-			/* @__PURE__ */ g(Wt, {
+			/* @__PURE__ */ g(Ut, {
 				s: n ? {
 					...e,
 					insignia: 0
@@ -3238,7 +3238,7 @@ function dn({ s: e, esta: t, conTexto: n, onIr: r, botonRef: i, ...a }) {
 				alto: 19
 			}),
 			n && e.texto,
-			n && /* @__PURE__ */ g(Vt, {
+			n && /* @__PURE__ */ g(Bt, {
 				n: e.insignia,
 				en: {
 					top: 1,
@@ -3248,17 +3248,17 @@ function dn({ s: e, esta: t, conTexto: n, onIr: r, botonRef: i, ...a }) {
 		]
 	});
 }
-function fn({ s: e, activa: t, conTexto: n, onIr: r }) {
+function dn({ s: e, activa: t, conTexto: n, onIr: r }) {
 	let [i, a] = m(!1), o = p(null);
-	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(dn, {
+	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(un, {
 		s: e,
-		esta: Gt(e, t),
+		esta: Wt(e, t),
 		conTexto: n,
 		botonRef: o,
 		onIr: () => a((e) => !e),
 		"aria-haspopup": "menu",
 		"aria-expanded": i
-	}), /* @__PURE__ */ g(Zt, {
+	}), /* @__PURE__ */ g(Xt, {
 		s: e,
 		ancla: o,
 		abierto: i,
@@ -3267,9 +3267,9 @@ function fn({ s: e, activa: t, conTexto: n, onIr: r }) {
 		onIr: r
 	})] });
 }
-function pn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: c, inicio: l, inicioAbierto: u = !1, onInicioAbierto: f, children: h }) {
+function fn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: c, inicio: l, inicioAbierto: u = !1, onInicioAbierto: f, children: h }) {
 	let v = p(null), y = p(null), b = p(null), x = p(null), [S, C] = m(0), [w, T] = m(i.length), [E, D] = m(!1);
-	Bt("var(--ds-4)", "calc(64px + var(--ds-6) + env(safe-area-inset-bottom, 0px))");
+	zt("var(--ds-4)", "calc(64px + var(--ds-6) + env(safe-area-inset-bottom, 0px))");
 	let O = s(() => {
 		let e = v.current;
 		if (!e) return;
@@ -3333,11 +3333,11 @@ function pn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 						children: /* @__PURE__ */ g("div", {
 							ref: y,
 							style: M,
-							children: l ? /* @__PURE__ */ g(vn, {
+							children: l ? /* @__PURE__ */ g(_n, {
 								abierto: u,
 								icono: r,
 								onClick: () => f?.(!u)
-							}) : /* @__PURE__ */ g(en, {
+							}) : /* @__PURE__ */ g($t, {
 								marca: e,
 								logo: t,
 								iconoApp: r,
@@ -3356,19 +3356,19 @@ function pn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 							gap: "var(--ds-1)",
 							position: "relative"
 						},
-						children: [k.map((e) => W(e) ? /* @__PURE__ */ g(fn, {
+						children: [k.map((e) => G(e) ? /* @__PURE__ */ g(dn, {
 							s: e,
 							activa: a,
 							conTexto: S === 0,
 							onIr: o
-						}, e.id) : /* @__PURE__ */ g(dn, {
+						}, e.id) : /* @__PURE__ */ g(un, {
 							s: e,
 							esta: e.id === a,
 							conTexto: S === 0,
 							onIr: o
-						}, e.id)), A.length > 0 && /* @__PURE__ */ g(mn, {
-							activo: A.some((e) => Gt(e, a)),
-							insignia: qt(A),
+						}, e.id)), A.length > 0 && /* @__PURE__ */ g(pn, {
+							activo: A.some((e) => Wt(e, a)),
+							insignia: Kt(A),
 							onClick: () => D(!0),
 							alto: 44
 						})]
@@ -3397,7 +3397,7 @@ function pn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 							gap: "var(--ds-1)",
 							width: "max-content"
 						},
-						children: i.map((e) => /* @__PURE__ */ g(dn, {
+						children: i.map((e) => /* @__PURE__ */ g(un, {
 							s: e,
 							esta: !1,
 							conTexto: !0
@@ -3405,7 +3405,7 @@ function pn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 					})
 				]
 			}),
-			/* @__PURE__ */ g(an, {
+			/* @__PURE__ */ g(rn, {
 				abierto: E,
 				onCerrar: () => D(!1),
 				secciones: A,
@@ -3416,15 +3416,15 @@ function pn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 		]
 	});
 }
-function mn({ activo: e, insignia: t, onClick: n, alto: r }) {
+function pn({ activo: e, insignia: t, onClick: n, alto: r }) {
 	return /* @__PURE__ */ g("button", {
 		onClick: n,
 		title: "Más secciones",
-		"aria-label": Ut("Más secciones", t),
+		"aria-label": Ht("Más secciones", t),
 		style: {
 			display: "grid",
 			placeItems: "center",
-			minWidth: un,
+			minWidth: ln,
 			height: r,
 			borderRadius: "var(--ds-r-item)",
 			border: "none",
@@ -3433,13 +3433,13 @@ function mn({ activo: e, insignia: t, onClick: n, alto: r }) {
 			background: e ? "var(--ds-ink)" : "transparent",
 			color: e ? "var(--ds-surface-solid)" : "var(--ds-ink-2)"
 		},
-		children: /* @__PURE__ */ g(Wt, { s: {
+		children: /* @__PURE__ */ g(Ut, { s: {
 			insignia: t,
-			icono: hn
+			icono: mn
 		} })
 	});
 }
-var hn = /* @__PURE__ */ _("svg", {
+var mn = /* @__PURE__ */ _("svg", {
 	width: "18",
 	height: "18",
 	viewBox: "0 0 24 24",
@@ -3462,10 +3462,10 @@ var hn = /* @__PURE__ */ _("svg", {
 			r: "1.8"
 		})
 	]
-}), gn = 5;
-function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, inicio: c, inicioAbierto: l = !1, onInicioAbierto: u, volver: d, children: f }) {
-	let [p, h] = m(!1), [v, y] = m(null), b = i.length <= gn, x = b ? i : i.slice(0, 4), S = b ? [] : i.slice(4), C = "calc(52px + env(safe-area-inset-top, 0px) + var(--ds-3))", w = "calc(64px + env(safe-area-inset-bottom, 0px) + var(--ds-4))";
-	Bt(C, w);
+}), hn = 5;
+function gn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a, onIr: o, derecha: s, inicio: c, inicioAbierto: l = !1, onInicioAbierto: u, volver: d, children: f }) {
+	let [p, h] = m(!1), [v, y] = m(null), b = i.length <= hn, x = b ? i : i.slice(0, 4), S = b ? [] : i.slice(4), C = "calc(52px + env(safe-area-inset-top, 0px) + var(--ds-3))", w = "calc(64px + env(safe-area-inset-bottom, 0px) + var(--ds-4))";
+	zt(C, w);
 	let T = (e, { esta: t, onClick: n, etiqueta: r }) => /* @__PURE__ */ _("button", {
 		onClick: n,
 		"aria-current": t ? "page" : void 0,
@@ -3499,7 +3499,7 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 					background: t ? "var(--ds-accent-soft)" : "transparent",
 					transition: "background var(--ds-t-state) var(--ds-ease)"
 				},
-				children: /* @__PURE__ */ g(Wt, { s: {
+				children: /* @__PURE__ */ g(Ut, { s: {
 					...e,
 					insignia: 0
 				} })
@@ -3513,7 +3513,7 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 				},
 				children: r
 			}),
-			/* @__PURE__ */ g(Vt, {
+			/* @__PURE__ */ g(Bt, {
 				n: e.insignia,
 				en: {
 					top: 4,
@@ -3575,7 +3575,7 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 							fontWeight: 700,
 							WebkitTapHighlightColor: "transparent"
 						},
-						children: [bn, /* @__PURE__ */ g("span", {
+						children: [yn, /* @__PURE__ */ g("span", {
 							style: {
 								overflow: "hidden",
 								textOverflow: "ellipsis",
@@ -3603,7 +3603,7 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 							fontFamily: "var(--ds-font)",
 							WebkitTapHighlightColor: "transparent"
 						},
-						children: [/* @__PURE__ */ g(en, {
+						children: [/* @__PURE__ */ g($t, {
 							marca: e,
 							logo: t,
 							encoge: !0
@@ -3624,7 +3624,7 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 							},
 							children: /* @__PURE__ */ g("path", { d: "M6 9l6 6 6-6" })
 						})]
-					}) : /* @__PURE__ */ g(en, {
+					}) : /* @__PURE__ */ g($t, {
 						marca: e,
 						logo: t,
 						onInicio: n,
@@ -3663,27 +3663,27 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 					WebkitBackdropFilter: "var(--ds-blur)"
 				},
 				children: [x.map((e) => T(e, {
-					esta: Gt(e, a),
+					esta: Wt(e, a),
 					etiqueta: e.texto,
-					onClick: W(e) ? () => y(e) : () => o?.(e)
+					onClick: G(e) ? () => y(e) : () => o?.(e)
 				})), S.length > 0 && T({
 					id: "__mas",
-					icono: hn,
-					insignia: qt(S)
+					icono: mn,
+					insignia: Kt(S)
 				}, {
-					esta: S.some((e) => Gt(e, a)),
+					esta: S.some((e) => Wt(e, a)),
 					onClick: () => h(!0),
 					etiqueta: "Más"
 				})]
 			}),
-			/* @__PURE__ */ g(an, {
+			/* @__PURE__ */ g(rn, {
 				abierto: p,
 				onCerrar: () => h(!1),
 				secciones: S,
 				activa: a,
 				onIr: o
 			}),
-			/* @__PURE__ */ g(an, {
+			/* @__PURE__ */ g(rn, {
 				abierto: !!v,
 				onCerrar: () => y(null),
 				titulo: v?.texto,
@@ -3695,7 +3695,7 @@ function _n({ marca: e, logo: t, onInicio: n, icono: r, secciones: i, activa: a,
 		]
 	});
 }
-function vn({ abierto: e, onClick: t, icono: n }) {
+function _n({ abierto: e, onClick: t, icono: n }) {
 	return /* @__PURE__ */ g("button", {
 		onClick: t,
 		"aria-label": "Menú de inicio",
@@ -3740,16 +3740,16 @@ function vn({ abierto: e, onClick: t, icono: n }) {
 		})
 	});
 }
-function yn(e, t, n) {
+function vn(e, t, n) {
 	for (let r of e) {
 		if (r.id === t) return [{
 			texto: r.texto,
 			ir: () => n?.(r)
 		}];
-		let e = W(r) ? r.hijos.find((e) => e.id === t) : null;
+		let e = G(r) ? r.hijos.find((e) => e.id === t) : null;
 		if (e) return [{
 			texto: r.texto,
-			ir: Kt(r) ? () => n?.(r) : void 0
+			ir: Gt(r) ? () => n?.(r) : void 0
 		}, {
 			texto: e.texto,
 			ir: () => n?.(e)
@@ -3757,7 +3757,7 @@ function yn(e, t, n) {
 	}
 	return [];
 }
-var bn = /* @__PURE__ */ g("svg", {
+var yn = /* @__PURE__ */ g("svg", {
 	width: "20",
 	height: "20",
 	viewBox: "0 0 24 24",
@@ -3770,8 +3770,8 @@ var bn = /* @__PURE__ */ g("svg", {
 	style: { flexShrink: 0 },
 	children: /* @__PURE__ */ g("path", { d: "M15 18l-6-6 6-6" })
 });
-function xn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i = [], activa: a, onIr: o, derecha: c, inicio: u, inicioAbierto: d, onInicioAbierto: f, migas: p, modo: h, vista: v, children: y }) {
-	let [b, x] = m(() => h || Rt()), S = U();
+function bn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i = [], activa: a, onIr: o, derecha: c, inicio: u, inicioAbierto: d, onInicioAbierto: f, migas: p, modo: h, vista: v, children: y }) {
+	let [b, x] = m(() => h || Lt()), S = W();
 	l(() => {
 		v !== void 0 && window.scrollTo({
 			top: 0,
@@ -3780,12 +3780,12 @@ function xn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i = [], activ
 	}, [v]), l(() => {
 		if (h) x(h);
 		else try {
-			localStorage.setItem(Mt, b);
+			localStorage.setItem(jt, b);
 		} catch {}
 	}, [b, h]);
 	let C = s((e) => {
-		Nt.includes(e) && x(e);
-	}, []), w = Array.isArray(p) ? [...yn(i, a, o), ...p] : null, T = w && w.length > 1 ? w[w.length - 2] : null, E = w ? !S && w.length > 1 ? /* @__PURE__ */ g(_t, { ruta: w }) : null : p, D = /* @__PURE__ */ _(Tt, {
+		Mt.includes(e) && x(e);
+	}, []), w = Array.isArray(p) ? [...vn(i, a, o), ...p] : null, T = w && w.length > 1 ? w[w.length - 2] : null, E = w ? !S && w.length > 1 ? /* @__PURE__ */ g(gt, { ruta: w }) : null : p, D = /* @__PURE__ */ _(wt, {
 		vista: v,
 		children: [E, y]
 	}), O = {
@@ -3793,7 +3793,7 @@ function xn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i = [], activ
 		logo: t,
 		onInicio: n,
 		icono: r,
-		secciones: i.map(Jt),
+		secciones: i.map(qt),
 		activa: a,
 		onIr: o,
 		derecha: c,
@@ -3805,20 +3805,20 @@ function xn({ marca: e, logo: t, onInicio: n, icono: r, secciones: i = [], activ
 			texto: T.texto,
 			ir: T.ir
 		} : null
-	}, k = S ? _n : b === "sidebar" ? ln : b === "dock" ? pn : on;
-	return /* @__PURE__ */ g(It.Provider, {
+	}, k = S ? gn : b === "sidebar" ? cn : b === "dock" ? fn : an;
+	return /* @__PURE__ */ g(Ft.Provider, {
 		value: {
 			modo: S ? "dock" : b,
 			preferencia: b,
 			movil: S,
 			fijarModo: C,
-			modos: Nt
+			modos: Mt
 		},
 		children: /* @__PURE__ */ g(k, { ...O })
 	});
 }
-function Sn() {
-	let { preferencia: e, fijarModo: t, movil: n } = Lt(), [r, i] = m(!1), [a, o] = m(null), s = p(null), c = p(null), u = [
+function xn() {
+	let { preferencia: e, fijarModo: t, movil: n } = It(), [r, i] = m(!1), [a, o] = m(null), s = p(null), c = p(null), u = [
 		{
 			id: "topbar",
 			texto: "Barra arriba",
@@ -3986,7 +3986,7 @@ function Sn() {
 	});
 }
 // src/primitivas/Seleccion.jsx
-function Cn({ marcada: e = !1, onCambio: t, etiqueta: n, deshabilitado: r = !1 }) {
+function Sn({ marcada: e = !1, onCambio: t, etiqueta: n, deshabilitado: r = !1 }) {
 	let i = e === "mixta", a = e === !0 || i;
 	return /* @__PURE__ */ g("button", {
 		type: "button",
@@ -4027,8 +4027,8 @@ function Cn({ marcada: e = !1, onCambio: t, etiqueta: n, deshabilitado: r = !1 }
 		})
 	});
 }
-function wn({ cantidad: e = 0, onQuitar: t, children: n, singular: r = "seleccionado", plural: i = "seleccionados" }) {
-	let { modo: a } = Lt();
+function Cn({ cantidad: e = 0, onQuitar: t, children: n, singular: r = "seleccionado", plural: i = "seleccionados" }) {
+	let { modo: a } = It();
 	return e ? /* @__PURE__ */ g("div", {
 		role: "region",
 		"aria-label": "Acciones sobre la selección",
@@ -4075,7 +4075,7 @@ function wn({ cantidad: e = 0, onQuitar: t, children: n, singular: r = "seleccio
 				}),
 				/* @__PURE__ */ g("span", { style: { flex: 1 } }),
 				n,
-				/* @__PURE__ */ g(V, {
+				/* @__PURE__ */ g(H, {
 					variante: "fantasma",
 					onClick: t,
 					children: "Quitar selección"
@@ -4085,7 +4085,7 @@ function wn({ cantidad: e = 0, onQuitar: t, children: n, singular: r = "seleccio
 	}) : null;
 }
 // src/primitivas/Tabla.jsx
-function Tn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i = "No hay nada que mostrar.", cargando: a = !1, porPagina: o = 0, seleccion: s, estilo: c }) {
+function wn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i = "No hay nada que mostrar.", cargando: a = !1, porPagina: o = 0, seleccion: s, estilo: c }) {
 	let [u, d] = m(1), p = t.length, h = o > 0 && p > o, v = h ? Math.ceil(p / o) : 1;
 	l(() => {
 		d((e) => Math.min(Math.max(1, e), Math.max(1, v)));
@@ -4119,7 +4119,7 @@ function Tn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i
 						padding: "0 var(--ds-2) var(--ds-3) var(--ds-3)",
 						borderBottom: "1px solid var(--ds-line)"
 					},
-					children: /* @__PURE__ */ g(Cn, {
+					children: /* @__PURE__ */ g(Sn, {
 						marcada: w,
 						onCambio: T,
 						deshabilitado: S.length === 0,
@@ -4197,7 +4197,7 @@ function Tn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i
 									verticalAlign: "middle",
 									borderBottom: "1px solid var(--ds-line)"
 								},
-								children: /* @__PURE__ */ g(Cn, {
+								children: /* @__PURE__ */ g(Sn, {
 									marcada: c,
 									onCambio: () => E(o),
 									etiqueta: s.etiqueta ? s.etiqueta(t) : "Elegir renglón"
@@ -4246,7 +4246,7 @@ function Tn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i
 					]
 				}),
 				/* @__PURE__ */ g("span", { style: { flex: 1 } }),
-				/* @__PURE__ */ g(En, {
+				/* @__PURE__ */ g(Tn, {
 					texto: "Anterior",
 					hacia: "M15 18l-6-6 6-6",
 					inactivo: u <= 1,
@@ -4265,7 +4265,7 @@ function Tn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i
 						v
 					]
 				}),
-				/* @__PURE__ */ g(En, {
+				/* @__PURE__ */ g(Tn, {
 					texto: "Siguiente",
 					hacia: "M9 18l6-6-6-6",
 					inactivo: u >= v,
@@ -4276,7 +4276,7 @@ function Tn({ columnas: e = [], filas: t = [], claveFila: n, onFila: r, vacio: i
 		})]
 	});
 }
-function En({ texto: e, hacia: t, inactivo: n, derecha: r, onClick: i }) {
+function Tn({ texto: e, hacia: t, inactivo: n, derecha: r, onClick: i }) {
 	return /* @__PURE__ */ _("button", {
 		onClick: i,
 		disabled: n,
@@ -4313,11 +4313,11 @@ function En({ texto: e, hacia: t, inactivo: n, derecha: r, onClick: i }) {
 	});
 }
 // src/primitivas/Formulario.jsx
-function Dn(e) {
+function En(e) {
 	return e.length <= 1 ? e[0] || "" : `${e.slice(0, -1).join(", ")} y ${e[e.length - 1]}`;
 }
-function On({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i = "Cancelar", accion: a, ancho: o = 820, problemas: s = [], refCuerpo: c }) {
-	let { modo: l } = Lt(), u = l === "dock" ? 64 : 0;
+function Dn({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i = "Cancelar", accion: a, ancho: o = 820, problemas: s = [], refCuerpo: c }) {
+	let { modo: l } = It(), u = l === "dock" ? 64 : 0;
 	return /* @__PURE__ */ _("div", {
 		style: {
 			maxWidth: o,
@@ -4392,7 +4392,7 @@ function On({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 						"Faltan ",
 						s.length,
 						" datos: ",
-						/* @__PURE__ */ g("b", { children: Dn(s) }),
+						/* @__PURE__ */ g("b", { children: En(s) }),
 						"."
 					] }),
 					" ",
@@ -4435,7 +4435,7 @@ function On({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 						gap: "var(--ds-2)",
 						flexWrap: "wrap"
 					},
-					children: [/* @__PURE__ */ g(V, {
+					children: [/* @__PURE__ */ g(H, {
 						variante: "fantasma",
 						onClick: r,
 						children: i
@@ -4445,7 +4445,7 @@ function On({ titulo: e, nota: t, children: n, onCancelar: r, cancelarTexto: i =
 		]
 	});
 }
-function kn({ children: e, minimo: t = 220, estilo: n }) {
+function On({ children: e, minimo: t = 220, estilo: n }) {
 	return /* @__PURE__ */ g("div", {
 		style: {
 			display: "grid",
@@ -4457,16 +4457,16 @@ function kn({ children: e, minimo: t = 220, estilo: n }) {
 	});
 }
 // src/validacion.js
-var An = (e) => e == null || String(e).trim() === "", jn = (e = "Este dato es obligatorio.") => (t) => An(t) ? e : null, Mn = (e, t) => (n) => !An(n) && String(n).trim().length > e ? t || `No puede pasar de ${e} caracteres; llevas ${String(n).trim().length}.` : null, Nn = (e, t) => (n) => !An(n) && String(n).trim().length < e ? t || `Necesita al menos ${e} caracteres.` : null, Pn = ({ desde: e = null, hasta: t = null, mensaje: n } = {}) => (r) => {
-	if (An(r)) return null;
+var kn = (e) => e == null || String(e).trim() === "", An = (e = "Este dato es obligatorio.") => (t) => kn(t) ? e : null, jn = (e, t) => (n) => !kn(n) && String(n).trim().length > e ? t || `No puede pasar de ${e} caracteres; llevas ${String(n).trim().length}.` : null, Mn = (e, t) => (n) => !kn(n) && String(n).trim().length < e ? t || `Necesita al menos ${e} caracteres.` : null, Nn = ({ desde: e = null, hasta: t = null, mensaje: n } = {}) => (r) => {
+	if (kn(r)) return null;
 	let i = Number(String(r).replace(/,/g, ""));
 	return Number.isNaN(i) ? n || "Tiene que ser un número." : e !== null && i < e ? n || `Tiene que ser un número mayor o igual a ${e}.` : t !== null && i > t ? n || `No puede pasar de ${t}.` : null;
-}, Fn = (e, t, n) => (r) => {
-	if (An(r)) return null;
+}, Pn = (e, t, n) => (r) => {
+	if (kn(r)) return null;
 	let i = String(r).replace(/\D/g, "").length;
 	return i < e || i > t ? n || `Debe tener de ${e} a ${t} dígitos.` : null;
-}, In = (e, t) => (n) => !An(n) && !RegExp(`^\\d{${e}}$`).test(String(n).trim()) ? t || `Debe tener exactamente ${e} dígitos, sin espacios ni guiones.` : null, Ln = (e = "El correo debe llevar arroba y dominio, como nombre@dominio.com.") => (t) => !An(t) && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(t).trim()) ? e : null, Rn = (e, t) => (n) => !An(n) && !e.test(String(n).trim()) ? t : null, zn = (e, t) => (n, r) => e(n, r) ? null : t;
-function Bn(e) {
+}, Fn = (e, t) => (n) => !kn(n) && !RegExp(`^\\d{${e}}$`).test(String(n).trim()) ? t || `Debe tener exactamente ${e} dígitos, sin espacios ni guiones.` : null, In = (e = "El correo debe llevar arroba y dominio, como nombre@dominio.com.") => (t) => !kn(t) && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(t).trim()) ? e : null, Ln = (e, t) => (n) => !kn(n) && !e.test(String(n).trim()) ? t : null, Rn = (e, t) => (n, r) => e(n, r) ? null : t;
+function zn(e) {
 	let t = f(() => Object.fromEntries(Object.entries(e).map(([e, t]) => [e, t.valor ?? ""])), []), [n, r] = m(t), [i, a] = m({}), [o, c] = m(!1), l = p(null), u = f(() => {
 		let t = {};
 		return Object.entries(e).forEach(([e, r]) => {
@@ -4545,21 +4545,21 @@ function Bn(e) {
 	};
 }
 // src/filtros.js
-var Vn = (e) => `ds-filtros:${e}`, Hn = (e) => {
+var Bn = (e) => `ds-filtros:${e}`, Vn = (e) => {
 	try {
-		let t = sessionStorage.getItem(Vn(e));
+		let t = sessionStorage.getItem(Bn(e));
 		return t ? JSON.parse(t) : null;
 	} catch {
 		return null;
 	}
-}, Un = (e, t) => {
+}, Hn = (e, t) => {
 	try {
-		sessionStorage.setItem(Vn(e), JSON.stringify(t));
+		sessionStorage.setItem(Bn(e), JSON.stringify(t));
 	} catch {}
 };
-function Wn(e, t) {
+function Un(e, t) {
 	let n = p(t), [r, i] = m(() => {
-		let t = Hn(e);
+		let t = Vn(e);
 		if (!t) return { ...n.current };
 		let r = { ...n.current };
 		return Object.keys(n.current).forEach((e) => {
@@ -4567,7 +4567,7 @@ function Wn(e, t) {
 		}), r;
 	});
 	return l(() => {
-		Un(e, r);
+		Hn(e, r);
 	}, [e, r]), [
 		r,
 		s((e, t) => {
@@ -4584,7 +4584,7 @@ function Wn(e, t) {
 	];
 }
 // src/primitivas/Pestanas.jsx
-function Gn({ pestanas: e = [], activa: t, onCambio: n, estilo: r }) {
+function Wn({ pestanas: e = [], activa: t, onCambio: n, estilo: r }) {
 	let i = p([]);
 	return /* @__PURE__ */ g("div", {
 		role: "tablist",
@@ -4653,7 +4653,7 @@ function Gn({ pestanas: e = [], activa: t, onCambio: n, estilo: r }) {
 		})
 	});
 }
-function Kn({ texto: e = "Cargando…", alto: t = 200 }) {
+function Gn({ texto: e = "Cargando…", alto: t = 200 }) {
 	return /* @__PURE__ */ _("div", {
 		role: "status",
 		style: {
@@ -4682,7 +4682,7 @@ function Kn({ texto: e = "Cargando…", alto: t = 200 }) {
 	});
 }
 // src/PanelInicio.jsx
-var qn = /* @__PURE__ */ _("svg", {
+var Kn = /* @__PURE__ */ _("svg", {
 	width: "17",
 	height: "17",
 	viewBox: "0 0 24 24",
@@ -4695,7 +4695,7 @@ var qn = /* @__PURE__ */ _("svg", {
 		cy: "11",
 		r: "7"
 	}), /* @__PURE__ */ g("path", { d: "M20 20l-3.5-3.5" })]
-}), Jn = /* @__PURE__ */ g("svg", {
+}), qn = /* @__PURE__ */ g("svg", {
 	width: "16",
 	height: "16",
 	viewBox: "0 0 24 24",
@@ -4706,7 +4706,7 @@ var qn = /* @__PURE__ */ _("svg", {
 	strokeLinejoin: "round",
 	children: /* @__PURE__ */ g("path", { d: "M5 12h14M13 6l6 6-6 6" })
 });
-function Yn({ children: e }) {
+function Jn({ children: e }) {
 	return /* @__PURE__ */ g("div", {
 		style: {
 			fontSize: "var(--ds-t-small)",
@@ -4718,7 +4718,7 @@ function Yn({ children: e }) {
 		children: e
 	});
 }
-function Xn({ item: e, onIr: t }) {
+function Yn({ item: e, onIr: t }) {
 	let [n, r] = a.useState(!1), i = e.color || "var(--ds-ink-2)";
 	return /* @__PURE__ */ _("button", {
 		onClick: () => {
@@ -4799,12 +4799,12 @@ function Xn({ item: e, onIr: t }) {
 					flexShrink: 0,
 					transition: "opacity var(--ds-t-state) var(--ds-ease)"
 				},
-				children: Jn
+				children: qn
 			})
 		]
 	});
 }
-function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [], tituloRecientes: a = "Reciente", grupos: o = [], busqueda: c = "", onBusqueda: u, resultados: d = null, marcadorBusqueda: m = "Buscar…", onIr: v }) {
+function Xn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [], tituloRecientes: a = "Reciente", grupos: o = [], busqueda: c = "", onBusqueda: u, resultados: d = null, marcadorBusqueda: m = "Buscar…", onIr: v }) {
 	let y = p(null), b = p(null);
 	l(() => {
 		if (!e) return;
@@ -4880,7 +4880,7 @@ function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [
 					overflowY: "auto",
 					padding: "var(--ds-2) var(--ds-5) var(--ds-4)"
 				},
-				children: S ? /* @__PURE__ */ _("div", { children: [/* @__PURE__ */ g(Yn, { children: C ? "Sin coincidencias" : "Resultados" }), C ? /* @__PURE__ */ _("div", {
+				children: S ? /* @__PURE__ */ _("div", { children: [/* @__PURE__ */ g(Jn, { children: C ? "Sin coincidencias" : "Resultados" }), C ? /* @__PURE__ */ _("div", {
 					style: {
 						padding: "var(--ds-8) 0",
 						textAlign: "center",
@@ -4892,7 +4892,7 @@ function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [
 						c,
 						"»."
 					]
-				}) : (d || []).map((e) => /* @__PURE__ */ g(Xn, {
+				}) : (d || []).map((e) => /* @__PURE__ */ g(Yn, {
 					item: e,
 					onIr: x
 				}, e.id))] }) : /* @__PURE__ */ _("div", {
@@ -4907,7 +4907,7 @@ function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [
 							flex: "1 1 200px",
 							minWidth: 190
 						},
-						children: [/* @__PURE__ */ g(Yn, { children: a }), i.length > 0 ? i.map((e) => /* @__PURE__ */ g(Xn, {
+						children: [/* @__PURE__ */ g(Jn, { children: a }), i.length > 0 ? i.map((e) => /* @__PURE__ */ g(Yn, {
 							item: e,
 							onIr: x
 						}, e.id)) : /* @__PURE__ */ g("div", {
@@ -4927,13 +4927,13 @@ function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [
 							flexDirection: "column",
 							gap: "var(--ds-5)"
 						},
-						children: o.map((e, t) => /* @__PURE__ */ _("div", { children: [/* @__PURE__ */ g(Yn, { children: e.titulo }), /* @__PURE__ */ g("div", {
+						children: o.map((e, t) => /* @__PURE__ */ _("div", { children: [/* @__PURE__ */ g(Jn, { children: e.titulo }), /* @__PURE__ */ g("div", {
 							style: {
 								display: "grid",
 								gap: "var(--ds-3)",
 								gridTemplateColumns: "repeat(auto-fill, minmax(136px, 1fr))"
 							},
-							children: e.items.map((e, n) => /* @__PURE__ */ g(bt, {
+							children: e.items.map((e, n) => /* @__PURE__ */ g(yt, {
 								icono: e.icono,
 								etiqueta: e.texto,
 								nota: e.subtitulo,
@@ -4967,7 +4967,7 @@ function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [
 								display: "grid",
 								placeItems: "center"
 							},
-							children: qn
+							children: Kn
 						}),
 						/* @__PURE__ */ g("input", {
 							ref: y,
@@ -5017,65 +5017,65 @@ function Zn({ abierto: e, onCerrar: t, usuario: n, acciones: r, recientes: i = [
 	})] }) : null;
 }
 // src/formato.js
-var Qn = /* @__PURE__ */ b({
+var Zn = /* @__PURE__ */ b({
 	SIN_DATO: () => "—",
-	compacto: () => ir,
-	configurarFormato: () => $n,
-	fecha: () => q,
-	fechaRelativa: () => sr,
-	formatear: () => J,
-	moneda: () => rr,
-	numero: () => nr,
-	porcentaje: () => K,
-	variacion: () => cr
-}), G = {
+	compacto: () => rr,
+	configurarFormato: () => Qn,
+	fecha: () => J,
+	fechaRelativa: () => or,
+	formatear: () => Y,
+	moneda: () => nr,
+	numero: () => tr,
+	porcentaje: () => q,
+	variacion: () => sr
+}), K = {
 	idioma: "es-MX",
 	moneda: "MXN",
 	zonaHoraria: void 0
 };
-function $n(e = {}) {
-	G = {
-		...G,
+function Qn(e = {}) {
+	K = {
+		...K,
 		...e
 	};
 }
-var er = "—", tr = (e) => e == null || e === "" || Number.isNaN(Number(e));
-function nr(e, { decimales: t, minimo: n } = {}) {
-	return tr(e) ? "—" : new Intl.NumberFormat(G.idioma, {
+var $n = "—", er = (e) => e == null || e === "" || Number.isNaN(Number(e));
+function tr(e, { decimales: t, minimo: n } = {}) {
+	return er(e) ? "—" : new Intl.NumberFormat(K.idioma, {
 		minimumFractionDigits: t ?? n ?? 0,
 		maximumFractionDigits: t ?? 2
 	}).format(Number(e));
 }
-function rr(e, { moneda: t = G.moneda, decimales: n = 2, compacto: r = !1 } = {}) {
-	return tr(e) ? "—" : r ? new Intl.NumberFormat(G.idioma, {
+function nr(e, { moneda: t = K.moneda, decimales: n = 2, compacto: r = !1 } = {}) {
+	return er(e) ? "—" : r ? new Intl.NumberFormat(K.idioma, {
 		style: "currency",
 		currency: t,
 		notation: "compact",
 		maximumFractionDigits: 1
-	}).format(Number(e)) : new Intl.NumberFormat(G.idioma, {
+	}).format(Number(e)) : new Intl.NumberFormat(K.idioma, {
 		style: "currency",
 		currency: t,
 		minimumFractionDigits: n,
 		maximumFractionDigits: n
 	}).format(Number(e));
 }
-function ir(e, { decimales: t = 1 } = {}) {
-	return tr(e) ? "—" : new Intl.NumberFormat(G.idioma, {
+function rr(e, { decimales: t = 1 } = {}) {
+	return er(e) ? "—" : new Intl.NumberFormat(K.idioma, {
 		notation: "compact",
 		maximumFractionDigits: t
 	}).format(Number(e));
 }
-function K(e, { decimales: t = 1, enPuntos: n = !1, signo: r = !1 } = {}) {
-	if (tr(e)) return "—";
+function q(e, { decimales: t = 1, enPuntos: n = !1, signo: r = !1 } = {}) {
+	if (er(e)) return "—";
 	let i = n ? Number(e) / 100 : Number(e);
-	return new Intl.NumberFormat(G.idioma, {
+	return new Intl.NumberFormat(K.idioma, {
 		style: "percent",
 		minimumFractionDigits: 0,
 		maximumFractionDigits: t,
 		signDisplay: r ? "exceptZero" : "auto"
 	}).format(i);
 }
-function ar(e) {
+function ir(e) {
 	if (e instanceof Date) return e;
 	if (typeof e == "string" && /^\d{4}-\d{2}-\d{2}$/.test(e)) {
 		let [t, n, r] = e.split("-").map(Number);
@@ -5083,7 +5083,7 @@ function ar(e) {
 	}
 	return new Date(e);
 }
-var or = {
+var ar = {
 	corta: {
 		day: "2-digit",
 		month: "2-digit",
@@ -5120,19 +5120,19 @@ var or = {
 		minute: "2-digit"
 	}
 };
-function q(e, t = "media") {
+function J(e, t = "media") {
 	if (e == null || e === "") return "—";
-	let n = ar(e);
-	return Number.isNaN(n.getTime()) ? "—" : new Intl.DateTimeFormat(G.idioma, {
-		...or[t] || or.media,
-		timeZone: G.zonaHoraria
+	let n = ir(e);
+	return Number.isNaN(n.getTime()) ? "—" : new Intl.DateTimeFormat(K.idioma, {
+		...ar[t] || ar.media,
+		timeZone: K.zonaHoraria
 	}).format(n).replace(/\.$/, "");
 }
-function sr(e, t = /* @__PURE__ */ new Date()) {
+function or(e, t = /* @__PURE__ */ new Date()) {
 	if (e == null || e === "") return "—";
-	let n = ar(e);
+	let n = ir(e);
 	if (Number.isNaN(n.getTime())) return "—";
-	let r = (n.getTime() - t.getTime()) / 1e3, i = new Intl.RelativeTimeFormat(G.idioma, { numeric: "auto" });
+	let r = (n.getTime() - t.getTime()) / 1e3, i = new Intl.RelativeTimeFormat(K.idioma, { numeric: "auto" });
 	for (let [e, t] of [
 		["year", 31536e3],
 		["month", 2592e3],
@@ -5143,25 +5143,25 @@ function sr(e, t = /* @__PURE__ */ new Date()) {
 	]) if (Math.abs(r) >= t) return i.format(Math.round(r / t), e);
 	return i.format(0, "minute");
 }
-function cr(e, t) {
-	return tr(e) || tr(t) || Number(t) === 0 ? null : (Number(e) - Number(t)) / Math.abs(Number(t));
+function sr(e, t) {
+	return er(e) || er(t) || Number(t) === 0 ? null : (Number(e) - Number(t)) / Math.abs(Number(t));
 }
-function J(e, t = "numero", n) {
+function Y(e, t = "numero", n) {
 	if (typeof t == "function") return t(e);
 	switch (t) {
-		case "moneda": return rr(e, n);
-		case "monedaCompacta": return rr(e, {
+		case "moneda": return nr(e, n);
+		case "monedaCompacta": return nr(e, {
 			...n,
 			compacto: !0
 		});
-		case "compacto": return ir(e, n);
-		case "porcentaje": return K(e, n);
+		case "compacto": return rr(e, n);
+		case "porcentaje": return q(e, n);
 		case "texto": return e == null || e === "" ? "—" : String(e);
-		default: return nr(e, n);
+		default: return tr(e, n);
 	}
 }
 // src/primitivas/Variacion.jsx
-function lr({ valor: e, sentido: t = "sube", contra: n, decimales: r = 1, enPuntos: i = !1, tamano: a = "s", estilo: o }) {
+function cr({ valor: e, sentido: t = "sube", contra: n, decimales: r = 1, enPuntos: i = !1, tamano: a = "s", estilo: o }) {
 	let s = e == null || Number.isNaN(Number(e)), c = s ? 0 : Number(e), l = s || c === 0 ? 0 : c > 0 ? 1 : -1, u = t === "neutro" || l === 0 ? null : t === "sube" ? l > 0 : l < 0, d = u === null ? "var(--ds-ink-2)" : u ? "var(--ds-ok)" : "var(--ds-risk)", f = u === null ? "var(--ds-surface-sunk)" : u ? "var(--ds-ok-soft)" : "var(--ds-risk-soft)", p = l > 0 ? "▲" : l < 0 ? "▼" : "●", m = a === "m" ? "var(--ds-t-small)" : "var(--ds-t-micro)";
 	if (s) return /* @__PURE__ */ g("span", {
 		style: {
@@ -5172,7 +5172,7 @@ function lr({ valor: e, sentido: t = "sube", contra: n, decimales: r = 1, enPunt
 		},
 		children: "Sin comparativo"
 	});
-	let h = i ? `${c > 0 ? "+" : ""}${c.toFixed(r)} pts` : K(c, {
+	let h = i ? `${c > 0 ? "+" : ""}${c.toFixed(r)} pts` : q(c, {
 		decimales: r,
 		signo: !0
 	});
@@ -5215,21 +5215,21 @@ function lr({ valor: e, sentido: t = "sube", contra: n, decimales: r = 1, enPunt
 	});
 }
 // src/graficas/base.jsx
-var ur = [
+var lr = [
 	1,
 	2,
 	3,
 	4,
 	5,
 	6
-].map((e) => `var(--ds-serie-${e})`), Y = (e, t) => e?.color || ur[t % ur.length];
-function dr() {
+].map((e) => `var(--ds-serie-${e})`), X = (e, t) => e?.color || lr[t % lr.length];
+function ur() {
 	let [e, t] = m(0), n = p(null);
 	return [s((e) => {
 		n.current &&= (n.current.disconnect(), null), e && (t(e.getBoundingClientRect().width), typeof ResizeObserver < "u" && (n.current = new ResizeObserver(([e]) => t(e.contentRect.width)), n.current.observe(e)));
 	}, []), e];
 }
-function fr(e, t, n = 4) {
+function dr(e, t, n = 4) {
 	if (!Number.isFinite(e) || !Number.isFinite(t)) return {
 		marcas: [0, 1],
 		min: 0,
@@ -5244,14 +5244,14 @@ function fr(e, t, n = 4) {
 		max: c
 	};
 }
-var pr = (e, t, n, r) => (i) => t === e ? (n + r) / 2 : n + (i - e) / (t - e) * (r - n), X = {
+var fr = (e, t, n, r) => (i) => t === e ? (n + r) / 2 : n + (i - e) / (t - e) * (r - n), Z = {
 	fontSize: 11,
 	fontWeight: 600,
 	fill: "var(--ds-ink-3)",
 	fontFamily: "var(--ds-font)",
 	fontVariantNumeric: "tabular-nums"
 };
-function mr({ color: e, forma: t = "cuadro" }) {
+function pr({ color: e, forma: t = "cuadro" }) {
 	let n = {
 		flexShrink: 0,
 		background: e
@@ -5268,7 +5268,7 @@ function mr({ color: e, forma: t = "cuadro" }) {
 		borderRadius: "var(--ds-r-mini)"
 	} });
 }
-function hr({ series: e = [], forma: t, valores: n, estilo: r }) {
+function mr({ series: e = [], forma: t, valores: n, estilo: r }) {
 	return e.length < 2 ? null : /* @__PURE__ */ g("div", {
 		role: "list",
 		style: {
@@ -5289,8 +5289,8 @@ function hr({ series: e = [], forma: t, valores: n, estilo: r }) {
 				color: "var(--ds-ink-2)"
 			},
 			children: [
-				/* @__PURE__ */ g(mr, {
-					color: Y(e, r),
+				/* @__PURE__ */ g(pr, {
+					color: X(e, r),
 					forma: t
 				}),
 				e.nombre,
@@ -5306,7 +5306,7 @@ function hr({ series: e = [], forma: t, valores: n, estilo: r }) {
 		}, e.clave ?? e.nombre ?? r))
 	});
 }
-function gr({ x: e, y: t, ancho: n, titulo: r, renglones: i = [], visible: a }) {
+function hr({ x: e, y: t, ancho: n, titulo: r, renglones: i = [], visible: a }) {
 	let o = p(null), [s, c] = m({
 		w: 160,
 		h: 60
@@ -5359,7 +5359,7 @@ function gr({ x: e, y: t, ancho: n, titulo: r, renglones: i = [], visible: a }) 
 				lineHeight: 1.6
 			},
 			children: [
-				e.color && /* @__PURE__ */ g(mr, { color: e.color }),
+				e.color && /* @__PURE__ */ g(pr, { color: e.color }),
 				/* @__PURE__ */ g("span", {
 					style: {
 						color: "var(--ds-ink-2)",
@@ -5381,7 +5381,7 @@ function gr({ x: e, y: t, ancho: n, titulo: r, renglones: i = [], visible: a }) 
 		}, t))]
 	});
 }
-function _r({ columnas: e, filas: t }) {
+function gr({ columnas: e, filas: t }) {
 	return /* @__PURE__ */ g("div", {
 		style: { overflowX: "auto" },
 		children: /* @__PURE__ */ _("table", {
@@ -5420,7 +5420,7 @@ function _r({ columnas: e, filas: t }) {
 		})
 	});
 }
-function Z({ titulo: e, series: t, formaLeyenda: n, tabla: r, children: i, estilo: a, alto: o }) {
+function Q({ titulo: e, series: t, formaLeyenda: n, tabla: r, children: i, estilo: a, alto: o }) {
 	let [s, c] = m(!1);
 	return /* @__PURE__ */ _("figure", {
 		style: {
@@ -5440,7 +5440,7 @@ function Z({ titulo: e, series: t, formaLeyenda: n, tabla: r, children: i, estil
 					flex: 1,
 					minWidth: 0
 				},
-				children: !s && /* @__PURE__ */ g(hr, {
+				children: !s && /* @__PURE__ */ g(mr, {
 					series: t || [],
 					forma: n
 				})
@@ -5465,11 +5465,11 @@ function Z({ titulo: e, series: t, formaLeyenda: n, tabla: r, children: i, estil
 			})]
 		}), s && r ? /* @__PURE__ */ g("div", {
 			style: { minHeight: o },
-			children: /* @__PURE__ */ g(_r, { ...r })
+			children: /* @__PURE__ */ g(gr, { ...r })
 		}) : i]
 	});
 }
-var vr = {
+var _r = {
 	position: "absolute",
 	width: 1,
 	height: 1,
@@ -5479,8 +5479,8 @@ var vr = {
 	clip: "rect(0 0 0 0)",
 	whiteSpace: "nowrap",
 	border: 0
-}, Q = (e, t, n) => J(e, t, n);
-function $({ alto: e = 160, texto: t = "Sin datos para este periodo." }) {
+}, $ = (e, t, n) => Y(e, t, n);
+function vr({ alto: e = 160, texto: t = "Sin datos para este periodo." }) {
 	return /* @__PURE__ */ g("div", {
 		style: {
 			height: e,
@@ -5500,7 +5500,7 @@ function $({ alto: e = 160, texto: t = "Sin datos para este periodo." }) {
 }
 // src/graficas/Sparkline.jsx
 function yr({ datos: e = [], alto: t = 40, color: n = "var(--ds-accent-trazo)", area: r = !0, formato: i = "numero", etiquetas: o, estilo: s }) {
-	let [c, l] = dr(), [u, d] = m(null), f = e.map((e) => typeof e == "object" && e ? e.valor : e), p = f.filter((e) => e != null && Number.isFinite(Number(e))), h = Math.min(...p), v = Math.max(...p), y = Math.max(0, l), b = (e) => f.length <= 1 ? y / 2 : 4 + e / (f.length - 1) * (y - 8), x = (e) => v === h ? t / 2 : 4 + (1 - (e - h) / (v - h)) * (t - 8), S = [], C = [];
+	let [c, l] = ur(), [u, d] = m(null), f = e.map((e) => typeof e == "object" && e ? e.valor : e), p = f.filter((e) => e != null && Number.isFinite(Number(e))), h = Math.min(...p), v = Math.max(...p), y = Math.max(0, l), b = (e) => f.length <= 1 ? y / 2 : 4 + e / (f.length - 1) * (y - 8), x = (e) => v === h ? t / 2 : 4 + (1 - (e - h) / (v - h)) * (t - 8), S = [], C = [];
 	f.forEach((e, t) => {
 		e == null || !Number.isFinite(Number(e)) ? (C.length && S.push(C), C = []) : C.push([b(t), x(Number(e))]);
 	}), C.length && S.push(C);
@@ -5527,7 +5527,7 @@ function yr({ datos: e = [], alto: t = 40, color: n = "var(--ds-accent-trazo)", 
 				display: "block",
 				overflow: "visible"
 			},
-			"aria-label": `Tendencia de ${f.length} puntos, último ${Q(f[T], i)}`,
+			"aria-label": `Tendencia de ${f.length} puntos, último ${$(f[T], i)}`,
 			children: [
 				/* @__PURE__ */ g("defs", { children: /* @__PURE__ */ _("linearGradient", {
 					id: `sp${E}`,
@@ -5600,7 +5600,7 @@ function yr({ datos: e = [], alto: t = 40, color: n = "var(--ds-accent-trazo)", 
 				boxShadow: "var(--ds-lift-2)",
 				zIndex: 2
 			},
-			children: [o?.[u] ? `${o[u]} · ` : "", Q(f[u], i)]
+			children: [o?.[u] ? `${o[u]} · ` : "", $(f[u], i)]
 		})]
 	});
 }
@@ -5638,7 +5638,7 @@ function Sr({ etiqueta: e, valor: t, formato: n = "numero", opcionesFormato: r, 
 			})
 		]
 	});
-	let v = xr(t), y = v ? "—" : typeof t == "number" || !Number.isNaN(Number(t)) ? J(t, n, r) : t;
+	let v = xr(t), y = v ? "—" : typeof t == "number" || !Number.isNaN(Number(t)) ? Y(t, n, r) : t;
 	return /* @__PURE__ */ _("div", {
 		style: {
 			display: "flex",
@@ -5684,11 +5684,11 @@ function Sr({ etiqueta: e, valor: t, formato: n = "numero", opcionesFormato: r, 
 				]
 			}),
 			/* @__PURE__ */ g("div", {
-				style: ft,
+				style: dt,
 				children: /* @__PURE__ */ g("div", {
 					className: "ds-num",
 					style: {
-						fontSize: pt(m ? "var(--ds-num-m)" : "var(--ds-num-l)", y),
+						fontSize: ft(m ? "var(--ds-num-m)" : "var(--ds-num-l)", y),
 						fontWeight: 800,
 						lineHeight: 1.05,
 						letterSpacing: "-0.035em",
@@ -5707,7 +5707,7 @@ function Sr({ etiqueta: e, valor: t, formato: n = "numero", opcionesFormato: r, 
 					gap: "4px 8px",
 					marginTop: m ? 6 : 8
 				},
-				children: [i !== void 0 && !v && /* @__PURE__ */ g(lr, {
+				children: [i !== void 0 && !v && /* @__PURE__ */ g(cr, {
 					valor: i,
 					sentido: a,
 					contra: o,
@@ -5776,7 +5776,7 @@ function Cr({ onClick: e, href: t, estilo: n, entrada: r, relleno: i, ...a }) {
 }
 // src/primitivas/FilaKpis.jsx
 function wr({ indicadores: e = [], cargando: t = !1, estilo: n, entrada: r }) {
-	let i = U(), a = Math.max(1, e.length), o = i ? Math.min(2, a) : a;
+	let i = W(), a = Math.max(1, e.length), o = i ? Math.min(2, a) : a;
 	return /* @__PURE__ */ g(M, {
 		relleno: "0",
 		entrada: r,
@@ -5822,7 +5822,7 @@ var Tr = {
 	riesgo: "Rebasa el tope"
 };
 function Dr({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFormato: i, diaActual: a, diasPeriodo: o, invertida: s = !1, forma: c = "barra", nota: l, cargando: u = !1, estilo: d, entrada: f }) {
-	let p = (e) => J(e, r, i), m = Number.isFinite(Number(t)) && Number(n) > 0, v = m ? Number(t) / Number(n) : null, y = m && Number(a) > 0 && Number(o) > 0, b = y ? Number(t) / Number(a) * Number(o) : null, x = y ? b / Number(n) : v, S = "acento";
+	let p = (e) => Y(e, r, i), m = Number.isFinite(Number(t)) && Number(n) > 0, v = m ? Number(t) / Number(n) : null, y = m && Number(a) > 0 && Number(o) > 0, b = y ? Number(t) / Number(a) * Number(o) : null, x = y ? b / Number(n) : v, S = "acento";
 	x !== null && (S = s ? x <= .9 ? "ok" : x <= 1 ? "aviso" : "riesgo" : x >= 1 ? "ok" : x >= .9 ? "aviso" : "riesgo");
 	let C = s ? Er : Tr, w = {
 		ok: "var(--ds-ok)",
@@ -5910,7 +5910,7 @@ function Dr({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 								fontWeight: 800,
 								letterSpacing: "-0.03em"
 							},
-							children: K(v, { decimales: 0 })
+							children: q(v, { decimales: 0 })
 						})
 					}), /* @__PURE__ */ _("div", {
 						style: { minWidth: 0 },
@@ -5974,7 +5974,7 @@ function Dr({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 						total: Number(n),
 						tono: S,
 						alto: 8,
-						etiqueta: `${e}: ${K(v)} de la meta`
+						etiqueta: `${e}: ${q(v)} de la meta`
 					}),
 					/* @__PURE__ */ _("div", {
 						className: "ds-num",
@@ -5983,7 +5983,7 @@ function Dr({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 							fontWeight: 700,
 							color: "var(--ds-ink-2)"
 						},
-						children: [K(v), " de la meta"]
+						children: [q(v), " de la meta"]
 					})
 				] }) : /* @__PURE__ */ g("div", {
 					style: {
@@ -6010,7 +6010,7 @@ function Dr({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 						"(",
 						/* @__PURE__ */ g("span", {
 							className: "ds-num",
-							children: K(b / Number(n))
+							children: q(b / Number(n))
 						}),
 						" ",
 						s ? "del tope" : "de la meta",
@@ -6040,7 +6040,7 @@ function Dr({ titulo: e, logrado: t, meta: n, formato: r = "numero", opcionesFor
 }
 // src/primitivas/TarjetaComparativa.jsx
 function Or({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato: r, sentido: i = "sube", nota: a, cargando: o = !1, estilo: s, entrada: c }) {
-	let l = U(520), u = t.slice(0, 3), d = u[0];
+	let l = W(520), u = t.slice(0, 3), d = u[0];
 	return /* @__PURE__ */ _(M, {
 		entrada: c,
 		estilo: {
@@ -6066,7 +6066,7 @@ function Or({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato
 					gridTemplateColumns: l ? "1fr" : `repeat(${Math.max(1, u.length)}, minmax(0, 1fr))`
 				},
 				children: u.map((e, t) => {
-					let a = t > 0 && d ? cr(d.valor, e.valor) : void 0;
+					let a = t > 0 && d ? sr(d.valor, e.valor) : void 0;
 					return /* @__PURE__ */ _("div", {
 						style: {
 							minWidth: 0,
@@ -6091,11 +6091,11 @@ function Or({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato
 								radio: 8,
 								estilo: { marginTop: 6 }
 							}) : /* @__PURE__ */ g("div", {
-								style: ft,
+								style: dt,
 								children: /* @__PURE__ */ g("div", {
 									className: "ds-num",
 									style: {
-										fontSize: pt(t === 0 ? "var(--ds-num-m)" : "var(--ds-num-s)", J(e.valor, n, r)),
+										fontSize: ft(t === 0 ? "var(--ds-num-m)" : "var(--ds-num-s)", Y(e.valor, n, r)),
 										fontWeight: 800,
 										letterSpacing: "-0.03em",
 										lineHeight: 1.15,
@@ -6103,12 +6103,12 @@ function Or({ titulo: e, valores: t = [], formato: n = "numero", opcionesFormato
 										color: e.valor === null || e.valor === void 0 ? "var(--ds-ink-3)" : t === 0 ? "var(--ds-ink)" : "var(--ds-ink-2)",
 										whiteSpace: "nowrap"
 									},
-									children: J(e.valor, n, r)
+									children: Y(e.valor, n, r)
 								})
 							}),
 							t > 0 && !o && /* @__PURE__ */ g("div", {
 								style: { marginTop: 6 },
-								children: /* @__PURE__ */ g(lr, {
+								children: /* @__PURE__ */ g(cr, {
 									valor: a,
 									sentido: i,
 									contra: a === null ? void 0 : `${d.etiqueta || "Base"} vs ${(e.etiqueta || "referencia").toLowerCase()}`
@@ -6138,7 +6138,7 @@ function kr({ titulo: e, nota: t, elementos: n = [], formato: r = "numero", opci
 			height: "100%",
 			...f
 		},
-		children: /* @__PURE__ */ g(ut, {
+		children: /* @__PURE__ */ g(lt, {
 			titulo: e,
 			nota: t,
 			accion: c,
@@ -6258,7 +6258,7 @@ function kr({ titulo: e, nota: t, elementos: n = [], formato: r = "numero", opci
 										fontWeight: 800,
 										color: "var(--ds-ink)"
 									},
-									children: J(e.valor, r, i)
+									children: Y(e.valor, r, i)
 								}), o && v > 0 && /* @__PURE__ */ _("div", {
 									className: "ds-num",
 									style: {
@@ -6266,7 +6266,7 @@ function kr({ titulo: e, nota: t, elementos: n = [], formato: r = "numero", opci
 										fontWeight: 700,
 										color: "var(--ds-ink-3)"
 									},
-									children: [K(n / v), " del total"]
+									children: [q(n / v), " del total"]
 								})]
 							}),
 							/* @__PURE__ */ g("div", {
@@ -6325,7 +6325,7 @@ function jr({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 					s ? /* @__PURE__ */ g(z, {
 						circulo: !0,
 						alto: 48
-					}) : /* @__PURE__ */ g(lt, {
+					}) : /* @__PURE__ */ g(ct, {
 						src: n,
 						nombre: e || "",
 						tamano: 48
@@ -6414,7 +6414,7 @@ function jr({ nombre: e, subtitulo: t, imagen: n, estado: r, metricas: i = [], a
 							marginTop: 2,
 							overflowWrap: "anywhere"
 						},
-						children: J(e.valor, e.formato || "texto", e.opciones)
+						children: Y(e.valor, e.formato || "texto", e.opciones)
 					})]
 				}, e.etiqueta ?? t))
 			}),
@@ -6462,7 +6462,7 @@ function Nr({ texto: e, etiqueta: t }) {
 	});
 }
 function Pr({ elementos: e = [], columnas: t = 2, estilo: n }) {
-	let r = U(560) ? 1 : Math.max(1, Math.min(3, t));
+	let r = W(560) ? 1 : Math.max(1, Math.min(3, t));
 	return /* @__PURE__ */ g("dl", {
 		style: {
 			margin: 0,
@@ -6473,7 +6473,7 @@ function Pr({ elementos: e = [], columnas: t = 2, estilo: n }) {
 			...n
 		},
 		children: e.map((e, t) => {
-			let n = Mr(e.valor), i = n ? null : a.isValidElement(e.valor) ? e.valor : J(e.valor, e.formato || "texto", e.opciones);
+			let n = Mr(e.valor), i = n ? null : a.isValidElement(e.valor) ? e.valor : Y(e.valor, e.formato || "texto", e.opciones);
 			return /* @__PURE__ */ _("div", {
 				style: {
 					minWidth: 0,
@@ -6699,7 +6699,7 @@ function Rr({ personas: e = [], maximo: t = 4, tamano: n = 32, generico: r = !1,
 				position: "relative",
 				zIndex: t - a
 			},
-			children: /* @__PURE__ */ g(lt, {
+			children: /* @__PURE__ */ g(ct, {
 				src: e.imagen,
 				nombre: e.nombre || "",
 				tamano: n,
@@ -6785,7 +6785,7 @@ function Hr({ eventos: e = [], actual: t, agrupar: n = !1, relativa: r = !1, vac
 		children: e.map((t, i) => {
 			let o = i === c, [s, u, d] = zr[t.tono] || (o ? zr.acento : zr.neutro), f = Br(t.fecha), p = n && f !== l;
 			l = f;
-			let m = i === e.length - 1, h = t.fecha ? r ? sr(t.fecha) : n ? Vr(t.fecha) ? q(t.fecha, "hora") : null : q(t.fecha, Vr(t.fecha) ? "fechaHora" : "media") : "Sin fecha";
+			let m = i === e.length - 1, h = t.fecha ? r ? or(t.fecha) : n ? Vr(t.fecha) ? J(t.fecha, "hora") : null : J(t.fecha, Vr(t.fecha) ? "fechaHora" : "media") : "Sin fecha";
 			return /* @__PURE__ */ _(a.Fragment, { children: [p && /* @__PURE__ */ g("li", {
 				"aria-hidden": !1,
 				style: {
@@ -6796,7 +6796,7 @@ function Hr({ eventos: e = [], actual: t, agrupar: n = !1, relativa: r = !1, vac
 					color: "var(--ds-ink-3)",
 					padding: i === 0 ? "0 0 var(--ds-2)" : "var(--ds-3) 0 var(--ds-2)"
 				},
-				children: f === "sin-fecha" ? "Sin fecha" : q(t.fecha, "larga")
+				children: f === "sin-fecha" ? "Sin fecha" : J(t.fecha, "larga")
 			}), /* @__PURE__ */ _("li", {
 				"aria-current": o ? "step" : void 0,
 				style: {
@@ -6989,7 +6989,7 @@ function Kr({ onPaso: e, paso: t, i: n, children: r, estilo: i }) {
 	});
 }
 function qr({ pasos: e = [], orientacion: t = "horizontal", onPaso: n, estilo: r }) {
-	let i = U(), a = t === "vertical" || i, o = (e) => [e.fecha ? q(e.fecha, "media") : null, e.responsable].filter(Boolean).join(" · ");
+	let i = W(), a = t === "vertical" || i, o = (e) => [e.fecha ? J(e.fecha, "media") : null, e.responsable].filter(Boolean).join(" · ");
 	return a ? /* @__PURE__ */ g("ol", {
 		style: {
 			listStyle: "none",
@@ -7178,7 +7178,7 @@ function Jr({ tarjeta: e, columna: t, columnas: n, onMover: r }) {
 			flexShrink: 0
 		},
 		children: "Mover a…"
-	}), /* @__PURE__ */ _(At, {
+	}), /* @__PURE__ */ _(kt, {
 		ancla: i,
 		abierto: a,
 		onCerrar: () => o(!1),
@@ -7194,7 +7194,7 @@ function Jr({ tarjeta: e, columna: t, columnas: n, onMover: r }) {
 				padding: "4px 10px 7px"
 			},
 			children: "Mover a"
-		}), n.filter((e) => e.id !== t.id).map((n) => /* @__PURE__ */ g(jt, {
+		}), n.filter((e) => e.id !== t.id).map((n) => /* @__PURE__ */ g(At, {
 			rol: "menuitem",
 			onClick: () => {
 				o(!1), r(e, n.id, t.id);
@@ -7239,7 +7239,7 @@ function Yr({ tarjeta: e, formatoValor: t }) {
 					fontSize: "var(--ds-t-small)",
 					marginRight: "auto"
 				},
-				children: J(e.valor, t)
+				children: Y(e.valor, t)
 			}), e.etiquetas?.map((e, t) => /* @__PURE__ */ g(se, {
 				tono: e.tono,
 				children: e.texto
@@ -7248,7 +7248,7 @@ function Yr({ tarjeta: e, formatoValor: t }) {
 	] });
 }
 function Xr({ columnas: e = [], onMover: t, onTarjeta: n, renderTarjeta: r, formatoValor: i = "moneda", anchoColumna: a = 280, vacioColumna: o = "Sin elementos en esta etapa.", estilo: s }) {
-	let c = U(), [l, u] = m(null), [d, f] = m(null), p = typeof t == "function", h = c ? `min(${a}px, 82vw)` : a;
+	let c = W(), [l, u] = m(null), [d, f] = m(null), p = typeof t == "function", h = c ? `min(${a}px, 82vw)` : a;
 	return /* @__PURE__ */ g("div", {
 		role: "list",
 		"aria-label": "Tablero",
@@ -7334,7 +7334,7 @@ function Xr({ columnas: e = [], onMover: t, onTarjeta: n, renderTarjeta: r, form
 								color: "var(--ds-ink-2)",
 								whiteSpace: "nowrap"
 							},
-							children: J(m, i === "moneda" ? "monedaCompacta" : i)
+							children: Y(m, i === "moneda" ? "monedaCompacta" : i)
 						})
 					]
 				}), /* @__PURE__ */ _("div", {
@@ -7425,7 +7425,7 @@ function $r(e, t) {
 	if (Number.isNaN(e.getTime())) return "Sin fecha";
 	if (Qr(e, t)) return "Hoy";
 	let n = new Date(t);
-	return n.setDate(t.getDate() - 1), Qr(e, n) ? "Ayer" : q(e, "larga");
+	return n.setDate(t.getDate() - 1), Qr(e, n) ? "Ayer" : J(e, "larga");
 }
 function ei({ eventos: e = [], ahora: t, agrupar: n = !0, vacio: r = "Sin actividad reciente.", estilo: i }) {
 	let o = t ? Zr(t) : /* @__PURE__ */ new Date();
@@ -7450,7 +7450,7 @@ function ei({ eventos: e = [], ahora: t, agrupar: n = !0, vacio: r = "Sin activi
 		children: e.map((e, t) => {
 			let r = Zr(e.fecha), i = n ? $r(r, o) : null, c = n && i !== s;
 			s = i;
-			let l = !Number.isNaN(r.getTime()), u = l && Qr(r, o), d = l ? u ? sr(r, o) : n ? q(r, "hora") : q(r, "fechaHora") : "";
+			let l = !Number.isNaN(r.getTime()), u = l && Qr(r, o), d = l ? u ? or(r, o) : n ? J(r, "hora") : J(r, "fechaHora") : "";
 			return /* @__PURE__ */ _(a.Fragment, { children: [c && /* @__PURE__ */ g("li", {
 				style: {
 					fontSize: "var(--ds-t-micro)",
@@ -7473,7 +7473,7 @@ function ei({ eventos: e = [], ahora: t, agrupar: n = !0, vacio: r = "Sin activi
 						tono: e.tono || "neutro",
 						tamano: 34,
 						children: e.icono
-					}) : /* @__PURE__ */ g(lt, {
+					}) : /* @__PURE__ */ g(ct, {
 						nombre: e.actor || "",
 						src: e.retrato,
 						tamano: 34,
@@ -7632,12 +7632,12 @@ function ci({ resto: e, dia: t, onEvento: n }) {
 			e.length,
 			" más"
 		]
-	}), /* @__PURE__ */ _(At, {
+	}), /* @__PURE__ */ _(kt, {
 		ancla: r,
 		abierto: i,
 		onCerrar: () => a(!1),
 		rol: "dialog",
-		etiqueta: `Eventos del ${q(t, "larga")}`,
+		etiqueta: `Eventos del ${J(t, "larga")}`,
 		minAncho: 240,
 		children: [/* @__PURE__ */ g("div", {
 			style: {
@@ -7648,7 +7648,7 @@ function ci({ resto: e, dia: t, onEvento: n }) {
 				color: "var(--ds-ink-3)",
 				padding: "4px 6px 8px"
 			},
-			children: q(t, "larga")
+			children: J(t, "larga")
 		}), /* @__PURE__ */ g("div", {
 			style: {
 				display: "grid",
@@ -7678,7 +7678,7 @@ var li = {
 	placeItems: "center"
 };
 function ui({ eventos: e = [], mes: t, mesInicial: n, onCambioMes: r, onDia: i, onEvento: a, maxPorDia: o = 3, hoy: s, vacio: c = "No hay eventos este mes.", estilo: l }) {
-	let u = U(700), d = s ? ai(s) : /* @__PURE__ */ new Date(), [p, h] = m(n || oi(d)), v = ai(`${t || p}-01`), y = (e) => {
+	let u = W(700), d = s ? ai(s) : /* @__PURE__ */ new Date(), [p, h] = m(n || oi(d)), v = ai(`${t || p}-01`), y = (e) => {
 		let n = oi(e);
 		t || h(n), r?.(n);
 	}, b = f(() => {
@@ -7693,7 +7693,7 @@ function ui({ eventos: e = [], mes: t, mesInicial: n, onCambioMes: r, onDia: i, 
 	let C = new Date(v.getFullYear(), v.getMonth() + 1, 0), w = Math.ceil((x + C.getDate()) / 7), T = Array.from({ length: w * 7 }, (e, t) => {
 		let n = new Date(S);
 		return n.setDate(S.getDate() + t), n;
-	}), E = q(v, "mes"), D = /* @__PURE__ */ _("div", {
+	}), E = J(v, "mes"), D = /* @__PURE__ */ _("div", {
 		style: {
 			display: "flex",
 			alignItems: "center",
@@ -7772,7 +7772,7 @@ function ui({ eventos: e = [], mes: t, mesInicial: n, onCambioMes: r, onDia: i, 
 								type: "button",
 								onClick: i ? () => i(t, b.get(t)) : void 0,
 								disabled: !i,
-								"aria-label": q(t, "larga"),
+								"aria-label": J(t, "larga"),
 								style: {
 									border: "none",
 									background: "transparent",
@@ -7861,7 +7861,7 @@ function ui({ eventos: e = [], mes: t, mesInicial: n, onCambioMes: r, onDia: i, 
 							className: "ds-num",
 							disabled: !i,
 							onClick: i ? () => i(n, c) : void 0,
-							"aria-label": `${q(n, "larga")}${c.length ? `, ${c.length} eventos` : ", sin eventos"}`,
+							"aria-label": `${J(n, "larga")}${c.length ? `, ${c.length} eventos` : ", sin eventos"}`,
 							style: {
 								alignSelf: "flex-start",
 								fontSize: "var(--ds-t-small)",
@@ -7898,13 +7898,13 @@ function ui({ eventos: e = [], mes: t, mesInicial: n, onCambioMes: r, onDia: i, 
 }
 // src/primitivas/EncabezadoPagina.jsx
 function di({ titulo: e, descripcion: t, migas: n, meta: r, acciones: i, estilo: a }) {
-	let o = U();
+	let o = W();
 	return /* @__PURE__ */ _("header", {
 		style: {
 			marginBottom: "var(--ds-6)",
 			...a
 		},
-		children: [n?.length > 0 && /* @__PURE__ */ g(_t, { ruta: n }), /* @__PURE__ */ _("div", {
+		children: [n?.length > 0 && /* @__PURE__ */ g(gt, { ruta: n }), /* @__PURE__ */ _("div", {
 			style: {
 				display: "flex",
 				gap: "var(--ds-4)",
@@ -8174,14 +8174,14 @@ function _i({ etiqueta: e, children: t }) {
 	});
 }
 function vi({ abierto: e, onCerrar: t }) {
-	let { tema: n, fijar: r, paletas: i } = A(), { preferencia: a, fijarModo: o, movil: s } = Lt(), c = a !== void 0 && !s;
-	return /* @__PURE__ */ g(Et, {
+	let { tema: n, fijar: r, paletas: i } = A(), { preferencia: a, fijarModo: o, movil: s } = It(), c = a !== void 0 && !s;
+	return /* @__PURE__ */ g(Tt, {
 		abierto: e,
 		onCerrar: t,
 		titulo: "Apariencia",
 		nota: "Se aplica al momento y se recuerda en este navegador.",
 		ancho: 480,
-		acciones: /* @__PURE__ */ g(V, {
+		acciones: /* @__PURE__ */ g(H, {
 			variante: "solido",
 			onClick: t,
 			children: "Listo"
@@ -8222,7 +8222,7 @@ function vi({ abierto: e, onCerrar: t }) {
 }
 function yi({ texto: e }) {
 	let [t, n] = m(!1);
-	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(V, {
+	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(H, {
 		variante: "fantasma",
 		icono: gi,
 		onClick: () => n(!0),
@@ -8331,14 +8331,14 @@ function Ci({ nombre: e = "", correo: t, foto: n, opciones: r = [], onSalir: i, 
 				boxShadow: s ? "0 0 0 2px var(--ds-accent-trazo)" : "none",
 				transition: "box-shadow var(--ds-t-state) var(--ds-ease)"
 			},
-			children: /* @__PURE__ */ g(lt, {
+			children: /* @__PURE__ */ g(ct, {
 				src: n,
 				nombre: e,
 				tamano: 34,
 				figura: o
 			})
 		}),
-		/* @__PURE__ */ _(At, {
+		/* @__PURE__ */ _(kt, {
 			ancla: d,
 			abierto: s,
 			onCerrar: () => c(!1),
@@ -8352,7 +8352,7 @@ function Ci({ nombre: e = "", correo: t, foto: n, opciones: r = [], onSalir: i, 
 						gap: "var(--ds-3)",
 						padding: "6px 10px 10px"
 					},
-					children: [/* @__PURE__ */ g(lt, {
+					children: [/* @__PURE__ */ g(ct, {
 						src: n,
 						nombre: e,
 						tamano: 40,
@@ -8393,7 +8393,7 @@ function Ci({ nombre: e = "", correo: t, foto: n, opciones: r = [], onSalir: i, 
 					children: "Apariencia"
 				}),
 				i && /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(Si, {}), /* @__PURE__ */ g(xi, {
-					icono: a ? /* @__PURE__ */ g(fe, {}) : bi,
+					icono: a ? /* @__PURE__ */ g(V, {}) : bi,
 					esperando: a,
 					onClick: () => i(),
 					children: a ? "Cerrando sesión…" : "Cerrar sesión"
@@ -8499,7 +8499,7 @@ function Ei({ a: e, onAbrir: t }) {
 						color: "var(--ds-ink-2)",
 						marginTop: 4
 					},
-					children: sr(e.fecha)
+					children: or(e.fecha)
 				})
 			]
 		})]
@@ -8562,7 +8562,7 @@ function Oi({ children: e, onClick: t }) {
 	});
 }
 function ki({ avisos: e = [], onAbrir: t, onMarcarTodas: n, onVerTodas: r }) {
-	let [i, a] = m(!1), o = p(null), s = U(), c = e.filter((e) => !e.leido).length, l = () => a(!1), u = /* @__PURE__ */ g(Di, {
+	let [i, a] = m(!1), o = p(null), s = W(), c = e.filter((e) => !e.leido).length, l = () => a(!1), u = /* @__PURE__ */ g(Di, {
 		avisos: e,
 		sinLeer: c,
 		onAbrir: t && ((e) => {
@@ -8615,12 +8615,12 @@ function ki({ avisos: e = [], onAbrir: t, onMarcarTodas: n, onVerTodas: r }) {
 			},
 			children: c > 99 ? "99+" : c
 		})]
-	}), s ? /* @__PURE__ */ g(Et, {
+	}), s ? /* @__PURE__ */ g(Tt, {
 		abierto: i,
 		onCerrar: l,
 		titulo: "Notificaciones",
 		children: u
-	}) : /* @__PURE__ */ _(At, {
+	}) : /* @__PURE__ */ _(kt, {
 		ancla: o,
 		abierto: i,
 		onCerrar: l,
@@ -8678,18 +8678,18 @@ function ji({ tamano: e = 28 }) {
 	});
 }
 // src/PantallaAcceso.jsx
-var Mi = "\n/* La Z. Las rutas llevan pathLength=\"100\": el guion se mide en por ciento del\n   trazo. La luz (14 de largo) va justo en la punta de la línea central porque\n   comparten duración, curva y retraso; las demás líneas salen un poco después\n   según qué tan lejos están del centro. */\n@keyframes ds-z-traza { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }\n@keyframes ds-z-luz {\n  0%   { stroke-dashoffset: 14; opacity: 1; }\n  80%  { opacity: 1; }\n  100% { stroke-dashoffset: -86; opacity: 0; }\n}\n@keyframes ds-z-punto { from { transform: scale(0); } 60% { transform: scale(1.35); } to { transform: scale(1); } }\n@keyframes ds-z-onda { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4.5); opacity: 0; } }\n.ds-z-traza { stroke-dasharray: 100; animation: ds-z-traza 1500ms var(--ds-ease) 250ms both; }\n.ds-z-luz { stroke-dasharray: 14 200; animation: ds-z-luz 1500ms var(--ds-ease) 250ms both; }\n.ds-z-punto, .ds-z-onda { transform-box: fill-box; transform-origin: center; }\n.ds-z-punto { animation: ds-z-punto 460ms var(--ds-ease-out) 1450ms both; }\n.ds-z-onda { animation: ds-z-onda 820ms var(--ds-ease-out) 1520ms both; }\n.ds-z-capa { transition: transform 900ms var(--ds-ease); }\n@media (prefers-reduced-motion: reduce) {\n  /* La regla global ya las lleva a su final; sin retraso, la Z aparece dibujada de una vez. */\n  .ds-z-traza, .ds-z-luz, .ds-z-punto, .ds-z-onda { animation-delay: 0ms !important; }\n}\n@keyframes ds-flota {\n  from { opacity: 0; transform: translate3d(0, 28px, 0) rotate(-3deg) scale(0.96); }\n  to   { opacity: 1; transform: none; }\n}\n@keyframes ds-sacude-a { 0%, 100% { translate: 0 0; } 20% { translate: -8px 0; } 40% { translate: 7px 0; } 60% { translate: -5px 0; } 80% { translate: 3px 0; } }\n@keyframes ds-sacude-b { 0%, 100% { translate: 0 0; } 20% { translate: -8px 0; } 40% { translate: 7px 0; } 60% { translate: -5px 0; } 80% { translate: 3px 0; } }\n.ds-acceso-vitrina > * { animation: ds-flota var(--ds-t-scene) var(--ds-ease) both; }\n.ds-acceso-vitrina > *:nth-child(1) { animation-delay: 360ms; }\n.ds-acceso-vitrina > *:nth-child(2) { animation-delay: 520ms; margin-left: 18%; }\n.ds-acceso-vitrina > *:nth-child(3) { animation-delay: 680ms; margin-left: 6%; }\n.ds-acceso-vitrina > *:nth-child(4) { animation-delay: 840ms; margin-left: 24%; }\n.ds-acceso-form > * { animation: ds-rise var(--ds-t-scene) var(--ds-ease) both; }\n.ds-acceso-form > *:nth-child(1) { animation-delay: 80ms; }\n.ds-acceso-form > *:nth-child(2) { animation-delay: 140ms; }\n.ds-acceso-form > *:nth-child(3) { animation-delay: 200ms; }\n.ds-acceso-form > *:nth-child(n+4) { animation-delay: 260ms; }\n", Ni = [
+var Mi = "\n/* La Z. Las rutas llevan pathLength=\"100\": el guion se mide en por ciento del\n   trazo. La luz (14 de largo) va justo en la punta de la línea central porque\n   comparten duración, curva y retraso; las demás líneas salen un poco después\n   según qué tan lejos están del centro. */\n@keyframes ds-z-traza { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }\n@keyframes ds-z-luz {\n  0%   { stroke-dashoffset: 14; opacity: 1; }\n  80%  { opacity: 1; }\n  100% { stroke-dashoffset: -86; opacity: 0; }\n}\n@keyframes ds-z-punto { from { transform: scale(0); } 60% { transform: scale(1.35); } to { transform: scale(1); } }\n@keyframes ds-z-onda { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4.5); opacity: 0; } }\n.ds-z-traza { stroke-dasharray: 100; animation: ds-z-traza 1500ms var(--ds-ease) 250ms both; }\n.ds-z-luz { stroke-dasharray: 14 200; animation: ds-z-luz 1500ms var(--ds-ease) 250ms both; }\n.ds-z-punto, .ds-z-onda { transform-box: fill-box; transform-origin: center; }\n.ds-z-punto { animation: ds-z-punto 460ms var(--ds-ease-out) 1450ms both; }\n.ds-z-onda { animation: ds-z-onda 820ms var(--ds-ease-out) 1520ms both; }\n.ds-z-capa { transition: transform 900ms var(--ds-ease); }\n@keyframes ds-sacude-a { 0%, 100% { translate: 0 0; } 20% { translate: -8px 0; } 40% { translate: 7px 0; } 60% { translate: -5px 0; } 80% { translate: 3px 0; } }\n@keyframes ds-sacude-b { 0%, 100% { translate: 0 0; } 20% { translate: -8px 0; } 40% { translate: 7px 0; } 60% { translate: -5px 0; } 80% { translate: 3px 0; } }\n.ds-acceso-columna > * { animation: ds-rise var(--ds-t-scene) var(--ds-ease) both; }\n.ds-acceso-columna > *:nth-child(2) { animation-delay: 90ms; }\n.ds-acceso-columna > *:nth-child(3) { animation-delay: 160ms; }\n.ds-acceso-columna > *:nth-child(n+4) { animation-delay: 230ms; }\n@media (prefers-reduced-motion: reduce) {\n  /* La regla global ya las lleva a su final; sin retraso, la Z aparece dibujada de una vez. */\n  .ds-z-traza, .ds-z-luz, .ds-z-punto, .ds-z-onda, .ds-acceso-columna > * { animation-delay: 0ms !important; }\n}\n", Ni = "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Segoe UI\", Roboto, var(--ds-font)", Pi = [
 	[42, 68],
 	[78, 68],
 	[42, 96],
 	[78, 96]
-], Pi = "39.5 65.5 41 33";
-function Fi(e) {
+], Fi = "39.5 65.5 41 33";
+function Ii(e) {
 	let t = ([e, t]) => {
 		let n = t[0] - e[0], r = t[1] - e[1], i = Math.hypot(n, r);
 		return [-r / i, n / i];
-	}, n = Ni.slice(1).map((n, r) => {
-		let i = Ni[r], [a, o] = t([i, n]);
+	}, n = Pi.slice(1).map((n, r) => {
+		let i = Pi[r], [a, o] = t([i, n]);
 		return [[i[0] + a * e, i[1] + o * e], [n[0] + a * e, n[1] + o * e]];
 	}), r = ([e, t], [n, r]) => {
 		let i = (e[0] - t[0]) * (n[1] - r[1]) - (e[1] - t[1]) * (n[0] - r[0]), a = ((e[0] - n[0]) * (n[1] - r[1]) - (e[1] - n[1]) * (n[0] - r[0])) / i;
@@ -8701,7 +8701,7 @@ function Fi(e) {
 		n[n.length - 1][1]
 	].map(([e, t]) => `${e.toFixed(2)} ${t.toFixed(2)}`).join(" L ");
 }
-var Ii = [
+var Li = [
 	-2.25,
 	-1.5,
 	-.75,
@@ -8711,13 +8711,13 @@ var Ii = [
 	2.25
 ].map((e) => ({
 	d: e,
-	ruta: Fi(e)
+	ruta: Ii(e)
 }));
-function Li() {
+function Ri({ color: e }) {
 	return /* @__PURE__ */ _("svg", {
 		"aria-hidden": !0,
 		focusable: "false",
-		viewBox: Pi,
+		viewBox: Fi,
 		preserveAspectRatio: "xMaxYMax meet",
 		style: {
 			display: "block",
@@ -8726,23 +8726,23 @@ function Li() {
 			overflow: "visible"
 		},
 		children: [
-			Ii.map(({ d: e, ruta: t }) => /* @__PURE__ */ g("path", {
+			Li.map(({ d: t, ruta: n }) => /* @__PURE__ */ g("path", {
 				className: "ds-z-traza",
-				d: t,
+				d: n,
 				pathLength: "100",
 				fill: "none",
-				stroke: "var(--ds-ink-on-hero)",
-				strokeOpacity: e === 0 ? .55 : .3,
+				stroke: e,
+				strokeOpacity: t === 0 ? .55 : .3,
 				strokeWidth: "0.08",
 				strokeLinejoin: "miter",
-				style: { animationDelay: `${250 + Math.abs(e) * 80}ms` }
-			}, e)),
+				style: { animationDelay: `${250 + Math.abs(t) * 80}ms` }
+			}, t)),
 			/* @__PURE__ */ g("path", {
 				className: "ds-z-luz",
-				d: Ii[3].ruta,
+				d: Li[3].ruta,
 				pathLength: "100",
 				fill: "none",
-				stroke: "var(--ds-ink-on-hero)",
+				stroke: e,
 				strokeWidth: "0.2",
 				strokeLinecap: "round"
 			}),
@@ -8766,24 +8766,33 @@ function Li() {
 		]
 	});
 }
-function Ri({ estilo: e }) {
-	let t = "M " + Ni.map((e) => e.join(" ")).join(" L ");
+function zi({ tamano: e }) {
+	let t = "M " + Pi.map((e) => e.join(" ")).join(" L ");
 	return /* @__PURE__ */ _("svg", {
 		"aria-hidden": !0,
 		focusable: "false",
-		viewBox: Pi,
+		width: e,
+		height: e,
+		viewBox: "20 40 80 80",
 		style: {
 			display: "block",
-			overflow: "visible",
-			...e
+			overflow: "visible"
 		},
 		children: [
+			/* @__PURE__ */ g("rect", {
+				x: "20",
+				y: "40",
+				width: "80",
+				height: "80",
+				rx: "18",
+				fill: "var(--ds-ink)"
+			}),
 			/* @__PURE__ */ g("path", {
 				className: "ds-z-traza",
 				d: t,
 				pathLength: "100",
 				fill: "none",
-				stroke: "var(--ds-ink-on-hero)",
+				stroke: "var(--ds-surface-solid)",
 				strokeWidth: "5",
 				strokeLinecap: "square",
 				strokeLinejoin: "miter"
@@ -8795,7 +8804,7 @@ function Ri({ estilo: e }) {
 				r: "3",
 				fill: "none",
 				stroke: Ai,
-				strokeWidth: "1.2",
+				strokeWidth: "1.5",
 				vectorEffect: "non-scaling-stroke"
 			}),
 			/* @__PURE__ */ g("circle", {
@@ -8808,7 +8817,7 @@ function Ri({ estilo: e }) {
 		]
 	});
 }
-function zi({ titulo: e, cifra: t, detalle: n, children: r, ancho: i = 260 }) {
+function Bi({ titulo: e, cifra: t, detalle: n, children: r, ancho: i = 260 }) {
 	return /* @__PURE__ */ _(F, {
 		estilo: {
 			width: i,
@@ -8849,170 +8858,288 @@ function zi({ titulo: e, cifra: t, detalle: n, children: r, ancho: i = 260 }) {
 		]
 	});
 }
-function Bi({ marca: e, lema: t, vitrina: n, titulo: r, nota: i, error: a, children: o, pie: s }) {
-	let c = U(), u = p(null), d = p(null), [f, h] = m(0);
+function Vi({ marca: e, lema: t, titulo: n, nota: r, error: i, children: a, pie: o }) {
+	let s = W(), c = p(null), [u, d] = m(0);
 	return l(() => {
-		a && h((e) => e + 1);
-	}, [a]), /* @__PURE__ */ _("main", {
+		i && d((e) => e + 1);
+	}, [i]), /* @__PURE__ */ _("main", {
+		onPointerMove: s ? void 0 : (e) => {
+			if (!c.current || e.pointerType !== "mouse" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+			let t = e.clientX / window.innerWidth - .5, n = e.clientY / window.innerHeight - .5;
+			c.current.style.transform = `translate3d(${(-t * 22).toFixed(1)}px, ${(-n * 16).toFixed(1)}px, 0)`;
+		},
 		style: {
+			position: "relative",
+			isolation: "isolate",
+			overflow: "hidden",
 			minHeight: "100dvh",
 			boxSizing: "border-box",
 			display: "grid",
-			gridTemplateColumns: c ? "1fr" : "minmax(0, 1.15fr) minmax(380px, 0.85fr)",
-			gridTemplateRows: c ? "auto 1fr" : "1fr",
-			gap: c ? "var(--ds-4)" : "var(--ds-6)",
-			padding: c ? "var(--ds-3)" : "var(--ds-4)"
+			gridTemplateRows: "auto 1fr auto",
+			fontFamily: Ni,
+			color: "var(--ds-ink)"
 		},
 		children: [
 			/* @__PURE__ */ g("style", { children: Mi }),
-			/* @__PURE__ */ _("section", {
-				className: "ds-heroe",
-				onPointerMove: c ? void 0 : (e) => {
-					if (e.pointerType !== "mouse" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-					let t = e.currentTarget.getBoundingClientRect(), n = (e.clientX - t.left) / t.width - .5, r = (e.clientY - t.top) / t.height - .5, i = u.current;
-					i && (i.style.transform = `perspective(900px) rotateY(${(n * 8).toFixed(2)}deg) rotateX(${(-r * 8).toFixed(2)}deg)`), d.current && (d.current.style.transform = `translate3d(${(-n * 18).toFixed(1)}px, ${(-r * 14).toFixed(1)}px, 0)`);
-				},
-				onPointerLeave: c ? void 0 : () => {
-					u.current && (u.current.style.transform = "none"), d.current && (d.current.style.transform = "none");
-				},
+			!s && /* @__PURE__ */ g("div", {
+				ref: c,
+				"aria-hidden": !0,
+				className: "ds-z-capa",
 				style: {
-					position: "relative",
-					overflow: "hidden",
-					isolation: "isolate",
-					background: "var(--ds-hero)",
-					color: "var(--ds-ink-on-hero)",
-					borderRadius: "var(--ds-r-frame)",
-					boxShadow: "var(--ds-lift-accent), var(--ds-lift-2)",
-					padding: c ? "var(--ds-5)" : "var(--ds-10) var(--ds-8)",
-					display: "flex",
-					flexDirection: "column",
-					gap: "var(--ds-6)",
-					animation: "ds-rise var(--ds-t-scene) var(--ds-ease) both"
+					position: "absolute",
+					zIndex: -1,
+					pointerEvents: "none",
+					top: "16%",
+					bottom: "9%",
+					left: "-6%",
+					right: "calc(50% + 256px)"
 				},
-				children: [
-					!c && /* @__PURE__ */ g("div", {
-						ref: d,
-						"aria-hidden": !0,
-						className: "ds-z-capa",
-						style: {
-							position: "absolute",
-							inset: "34% 8% 8% -24%",
-							zIndex: -1,
-							pointerEvents: "none"
-						},
-						children: /* @__PURE__ */ g(Li, {})
-					}),
-					/* @__PURE__ */ _("div", {
-						style: c ? {
-							display: "flex",
-							alignItems: "flex-start",
-							gap: "var(--ds-4)"
-						} : void 0,
-						children: [/* @__PURE__ */ _("div", {
-							style: {
-								flex: 1,
-								minWidth: 0
-							},
-							children: [/* @__PURE__ */ g("div", {
-								style: {
-									fontSize: c ? "var(--ds-t-title)" : "var(--ds-t-display)",
-									fontWeight: 800,
-									letterSpacing: "-0.03em",
-									lineHeight: 1.02
-								},
-								children: e
-							}), t && /* @__PURE__ */ g("p", {
-								style: {
-									margin: "var(--ds-3) 0 0",
-									fontSize: "var(--ds-t-body)",
-									maxWidth: 440
-								},
-								children: t
-							})]
-						}), c && /* @__PURE__ */ g(Ri, { estilo: {
-							width: 46,
-							height: 37,
-							flexShrink: 0,
-							marginTop: 4
-						} })]
-					}),
-					n && !c && /* @__PURE__ */ g("div", {
-						ref: u,
-						"aria-hidden": !0,
-						className: "ds-acceso-vitrina",
-						style: {
-							display: "flex",
-							flexDirection: "column",
-							gap: "var(--ds-4)",
-							marginTop: "auto",
-							transition: "transform var(--ds-t-move) var(--ds-ease)",
-							transformOrigin: "center"
-						},
-						children: n
-					})
-				]
+				children: /* @__PURE__ */ g(Ri, { color: "var(--ds-accent-trazo)" })
+			}),
+			/* @__PURE__ */ g("header", {
+				style: {
+					display: "flex",
+					alignItems: "center",
+					gap: 10,
+					padding: s ? "18px 20px" : "24px 32px",
+					fontSize: 15,
+					fontWeight: 600,
+					letterSpacing: "-0.01em"
+				},
+				children: e
 			}),
 			/* @__PURE__ */ g("div", {
 				style: {
 					display: "grid",
-					alignItems: c ? "start" : "center",
-					justifyItems: "center",
-					padding: c ? "var(--ds-2) 0 0" : "var(--ds-4)"
+					placeItems: s ? "start center" : "center",
+					padding: s ? "12px 20px 32px" : "24px 32px 48px"
 				},
 				children: /* @__PURE__ */ _("div", {
-					className: "ds-acceso-form",
+					className: "ds-acceso-columna",
 					style: {
 						width: "100%",
-						maxWidth: 420,
+						maxWidth: 380,
 						display: "grid",
-						gap: "var(--ds-5)",
-						animation: f ? `${f % 2 ? "ds-sacude-a" : "ds-sacude-b"} 420ms var(--ds-ease-out)` : void 0
+						justifyItems: "center",
+						textAlign: "center"
 					},
 					children: [
-						/* @__PURE__ */ _("header", { children: [/* @__PURE__ */ g("h1", {
+						/* @__PURE__ */ g(zi, { tamano: s ? 56 : 64 }),
+						/* @__PURE__ */ g("h1", {
 							style: {
-								margin: 0,
-								fontSize: "var(--ds-t-title)",
-								fontWeight: 800,
-								letterSpacing: "-0.02em"
+								margin: s ? "22px 0 0" : "28px 0 0",
+								fontSize: s ? 28 : 34,
+								lineHeight: 1.12,
+								fontWeight: 600,
+								letterSpacing: "-0.015em",
+								textWrap: "balance"
 							},
-							children: r
-						}), i && /* @__PURE__ */ g("p", {
+							children: n
+						}),
+						(r || t) && /* @__PURE__ */ g("p", {
 							style: {
-								margin: "var(--ds-2) 0 0",
-								fontSize: "var(--ds-t-small)",
-								color: "var(--ds-ink-2)"
+								margin: "10px 0 0",
+								fontSize: 17,
+								lineHeight: 1.45,
+								color: "var(--ds-ink-2)",
+								textWrap: "pretty",
+								maxWidth: 360
 							},
-							children: i
-						})] }),
+							children: r || t
+						}),
 						/* @__PURE__ */ g("div", {
 							style: {
-								background: "var(--ds-surface)",
-								border: "1px solid var(--ds-line)",
-								backdropFilter: "var(--ds-blur)",
-								WebkitBackdropFilter: "var(--ds-blur)",
-								borderRadius: "var(--ds-r-card)",
-								boxShadow: "var(--ds-lift-2)",
-								padding: "var(--ds-6)"
+								width: "100%",
+								marginTop: s ? 28 : 36,
+								textAlign: "left",
+								animation: u ? `${u % 2 ? "ds-sacude-a" : "ds-sacude-b"} 420ms var(--ds-ease-out)` : void 0
 							},
-							children: o
-						}),
-						s && /* @__PURE__ */ g("div", {
-							style: {
-								fontSize: "var(--ds-t-small)",
-								color: "var(--ds-ink-2)",
-								textAlign: "center"
-							},
-							children: s
+							children: a
 						})
 					]
 				})
+			}),
+			o && /* @__PURE__ */ g("footer", {
+				style: {
+					padding: s ? "16px 20px 24px" : "20px 32px 28px",
+					textAlign: "center",
+					fontSize: 13,
+					color: "var(--ds-ink-2)"
+				},
+				children: o
+			})
+		]
+	});
+}
+// src/EntradaCuenta.jsx
+var Hi = /^[^\s@]+@[^\s@]+\.[^\s@]+$/, Ui = "\n.ds-entrada-fila { position: relative; background: var(--ds-surface-solid);\n  border: 1px solid var(--ds-ink-3); transition: border-color var(--ds-t-state) var(--ds-ease), box-shadow var(--ds-t-state) var(--ds-ease); }\n.ds-entrada-fila:focus-within { z-index: 1; border-color: var(--ds-accent-trazo);\n  box-shadow: 0 0 0 1px var(--ds-accent-trazo), 0 0 0 5px var(--ds-accent-ring); }\n.ds-entrada-fila[data-error=\"si\"] { border-color: var(--ds-risk); }\n.ds-entrada-fila[data-error=\"si\"]:focus-within { border-color: var(--ds-risk);\n  box-shadow: 0 0 0 1px var(--ds-risk), 0 0 0 5px color-mix(in srgb, var(--ds-risk) 22%, transparent); }\n.ds-entrada-fila input { display: block; width: 100%; box-sizing: border-box; height: 56px; margin: 0;\n  padding: 22px 56px 6px 16px; border: 0; outline: 0; background: transparent;\n  font-family: inherit; font-size: 17px; font-weight: 400; line-height: 1.2; color: var(--ds-ink); letter-spacing: -0.01em; }\n.ds-entrada-fila input::placeholder { color: transparent; }\n.ds-entrada-fila label { position: absolute; left: 17px; top: 50%; transform: translateY(-50%);\n  font-size: 17px; color: var(--ds-ink-3); pointer-events: none; transform-origin: left center;\n  transition: top var(--ds-t-move) var(--ds-ease), transform var(--ds-t-move) var(--ds-ease), font-size var(--ds-t-move) var(--ds-ease); }\n.ds-entrada-fila input:focus + label, .ds-entrada-fila input:not(:placeholder-shown) + label {\n  top: 9px; transform: none; font-size: 12px; }\n.ds-entrada-flecha { position: absolute; right: 12px; top: 50%; translate: 0 -50%;\n  display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border-radius: 50%;\n  border: 1.5px solid var(--ds-ink-3); background: transparent; color: var(--ds-ink-3); cursor: pointer;\n  transition: color var(--ds-t-state) var(--ds-ease), border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease); }\n.ds-entrada-flecha[data-listo=\"si\"] { border-color: var(--ds-ink); color: var(--ds-ink); }\n.ds-entrada-flecha[data-listo=\"si\"]:hover { background: var(--ds-ink); color: var(--ds-surface-solid); }\n.ds-entrada-flecha:disabled { cursor: default; }\n.ds-entrada-pliegue { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 420ms var(--ds-ease); }\n.ds-entrada-pliegue[data-abierto=\"si\"] { grid-template-rows: 1fr; }\n/* Recorta sólo mientras se despliega: abierto, el anillo de foco y el borde de error salen del campo. */\n.ds-entrada-pliegue > div { overflow: hidden; }\n.ds-entrada-pliegue[data-listo=\"si\"] > div { overflow: visible; }\n.ds-entrada-recordar { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; color: var(--ds-ink-2); cursor: pointer; }\n.ds-entrada-recordar input { width: 18px; height: 18px; margin: 0; accent-color: var(--ds-accent); }\n", Wi = /* @__PURE__ */ g("svg", {
+	width: "15",
+	height: "15",
+	viewBox: "0 0 16 16",
+	fill: "none",
+	stroke: "currentColor",
+	strokeWidth: "1.9",
+	strokeLinecap: "round",
+	strokeLinejoin: "round",
+	"aria-hidden": !0,
+	children: /* @__PURE__ */ g("path", { d: "M2.5 8h11M9 3.5 13.5 8 9 12.5" })
+});
+function Gi({ texto: e, listo: t, esperando: n }) {
+	return /* @__PURE__ */ g("button", {
+		type: "submit",
+		className: "ds-entrada-flecha",
+		"aria-label": e,
+		"data-listo": t ? "si" : void 0,
+		disabled: n,
+		"aria-busy": n || void 0,
+		children: n ? /* @__PURE__ */ g(V, {}) : Wi
+	});
+}
+function Ki({ onEntrar: e, esperando: t = !1, error: n, recordar: r = !1, enlaces: i, correoInicial: a = "", etiquetaCorreo: o = "Correo", etiquetaClave: s = "Contraseña" }) {
+	let c = u(), [d, f] = m(a ? 2 : 1), [h, v] = m(a), [y, b] = m(""), [x, S] = m(!1), [C, w] = m(null), [T, E] = m(!!a), D = p(null), O = p(null);
+	l(() => {
+		if (d !== 2 || T) return;
+		let e = setTimeout(() => E(!0), 480);
+		return () => clearTimeout(e);
+	}, [d, T]);
+	let k = p(t);
+	l(() => {
+		let e = k.current && !t;
+		k.current = t, !(!n || !e && t) && (b(""), O.current?.focus());
+	}, [n, t]);
+	let A = () => {
+		Hi.test(h.trim()) ? (w(null), f(2), requestAnimationFrame(() => O.current?.focus())) : (w("Escribe un correo válido, por ejemplo nombre@empresa.com."), D.current?.focus());
+	}, j = (n) => {
+		if (n.preventDefault(), !t) {
+			if (d === 1 || !Hi.test(h.trim())) return A();
+			y ? (w(null), e?.({
+				correo: h.trim(),
+				clave: y,
+				recordar: x
+			})) : (w("Escribe tu contraseña."), O.current?.focus());
+		}
+	}, M = C || n, ee = `${c}-mensaje`, N = d === 2;
+	return /* @__PURE__ */ _("form", {
+		noValidate: !0,
+		onSubmit: j,
+		style: {
+			display: "grid",
+			gap: 20
+		},
+		children: [
+			/* @__PURE__ */ g("style", { children: Ui }),
+			/* @__PURE__ */ _("div", { children: [
+				/* @__PURE__ */ _("div", {
+					className: "ds-entrada-fila",
+					"data-error": M && !N ? "si" : void 0,
+					style: { borderRadius: N ? "12px 12px 0 0" : 12 },
+					children: [
+						/* @__PURE__ */ g("input", {
+							ref: D,
+							id: `${c}-correo`,
+							type: "email",
+							name: "email",
+							autoComplete: "username",
+							inputMode: "email",
+							autoCapitalize: "none",
+							spellCheck: !1,
+							placeholder: " ",
+							value: h,
+							"aria-invalid": C && !N ? !0 : void 0,
+							"aria-describedby": M ? ee : void 0,
+							onChange: (e) => {
+								v(e.target.value), C && w(null);
+							}
+						}),
+						/* @__PURE__ */ g("label", {
+							htmlFor: `${c}-correo`,
+							children: o
+						}),
+						!N && /* @__PURE__ */ g(Gi, {
+							texto: "Continuar",
+							listo: Hi.test(h.trim())
+						})
+					]
+				}),
+				/* @__PURE__ */ g("div", {
+					className: "ds-entrada-pliegue",
+					"data-abierto": N ? "si" : void 0,
+					"data-listo": N && T ? "si" : void 0,
+					onTransitionEnd: (e) => {
+						e.target === e.currentTarget && N && E(!0);
+					},
+					children: /* @__PURE__ */ g("div", {
+						inert: !N || void 0,
+						children: /* @__PURE__ */ _("div", {
+							className: "ds-entrada-fila",
+							"data-error": M && N ? "si" : void 0,
+							style: {
+								borderRadius: "0 0 12px 12px",
+								marginTop: -1
+							},
+							children: [
+								/* @__PURE__ */ g("input", {
+									ref: O,
+									id: `${c}-clave`,
+									type: "password",
+									name: "password",
+									autoComplete: "current-password",
+									placeholder: " ",
+									value: y,
+									"aria-invalid": M && N ? !0 : void 0,
+									"aria-describedby": M ? ee : void 0,
+									onChange: (e) => {
+										b(e.target.value), C && w(null), !N && e.target.value && f(2);
+									}
+								}),
+								/* @__PURE__ */ g("label", {
+									htmlFor: `${c}-clave`,
+									children: s
+								}),
+								N && /* @__PURE__ */ g(Gi, {
+									texto: "Entrar",
+									listo: !!y,
+									esperando: t
+								})
+							]
+						})
+					})
+				}),
+				M && /* @__PURE__ */ g("p", {
+					id: ee,
+					role: "alert",
+					style: {
+						margin: "12px 2px 0",
+						fontSize: 14,
+						lineHeight: 1.4,
+						color: "var(--ds-risk)"
+					},
+					children: M
+				})
+			] }),
+			r && /* @__PURE__ */ _("label", {
+				className: "ds-entrada-recordar",
+				style: { justifySelf: "center" },
+				children: [/* @__PURE__ */ g("input", {
+					type: "checkbox",
+					checked: x,
+					onChange: (e) => S(e.target.checked)
+				}), "Mantener la sesión iniciada"]
+			}),
+			i && /* @__PURE__ */ g("div", {
+				style: {
+					display: "grid",
+					justifyItems: "center",
+					gap: 8,
+					fontSize: 15
+				},
+				children: i
 			})
 		]
 	});
 }
 // src/primitivas/CampoClave.jsx
-var Vi = /* @__PURE__ */ _("svg", {
+var qi = /* @__PURE__ */ _("svg", {
 	width: "18",
 	height: "18",
 	viewBox: "0 0 24 24",
@@ -9027,7 +9154,7 @@ var Vi = /* @__PURE__ */ _("svg", {
 		cy: "12",
 		r: "3"
 	})]
-}), Hi = /* @__PURE__ */ _("svg", {
+}), Ji = /* @__PURE__ */ _("svg", {
 	width: "18",
 	height: "18",
 	viewBox: "0 0 24 24",
@@ -9039,7 +9166,7 @@ var Vi = /* @__PURE__ */ _("svg", {
 	"aria-hidden": !0,
 	children: [/* @__PURE__ */ g("path", { d: "M10.6 5.1A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-2.6 3.5M6.1 6.1A17.4 17.4 0 0 0 2 12s3.6 7 10 7a10 10 0 0 0 5.9-1.9" }), /* @__PURE__ */ g("path", { d: "M9.9 9.9a3 3 0 0 0 4.2 4.2M3 3l18 18" })]
 });
-function Ui({ ayuda: e, ...t }) {
+function Yi({ ayuda: e, ...t }) {
 	let n = u(), [i, a] = m(!1), [o, s] = m(!1), c = (e) => s(!!e.getModifierState?.("CapsLock"));
 	return /* @__PURE__ */ g(r, {
 		...t,
@@ -9071,12 +9198,12 @@ function Ui({ ayuda: e, ...t }) {
 				cursor: "pointer",
 				color: "var(--ds-ink-3)"
 			},
-			children: i ? Hi : Vi
+			children: i ? Ji : qi
 		})
 	});
 }
 // src/Cuenta/PantallaCuenta.jsx
-function Wi({ usuario: e, accion: t, angosto: n, figura: r }) {
+function Xi({ usuario: e, accion: t, angosto: n, figura: r }) {
 	let i = n ? 72 : 96;
 	return /* @__PURE__ */ _("div", {
 		style: {
@@ -9111,7 +9238,7 @@ function Wi({ usuario: e, accion: t, angosto: n, figura: r }) {
 						lineHeight: 0,
 						boxShadow: "0 0 0 4px var(--ds-surface-solid), var(--ds-lift-2)"
 					},
-					children: /* @__PURE__ */ g(lt, {
+					children: /* @__PURE__ */ g(ct, {
 						src: e.foto,
 						nombre: e.nombre,
 						tamano: i,
@@ -9158,7 +9285,7 @@ function Wi({ usuario: e, accion: t, angosto: n, figura: r }) {
 		})]
 	});
 }
-function Gi({ s: e, esta: t, onIr: n, angosto: r }) {
+function Zi({ s: e, esta: t, onIr: n, angosto: r }) {
 	let i = e.peligro;
 	return /* @__PURE__ */ _("button", {
 		type: "button",
@@ -9193,14 +9320,14 @@ function Gi({ s: e, esta: t, onIr: n, angosto: r }) {
 		}), e.texto]
 	});
 }
-function Ki({ usuario: e, accion: t, secciones: n = [], activa: r, onIr: i, figura: a = !1, children: o }) {
-	let s = U();
+function Qi({ usuario: e, accion: t, secciones: n = [], activa: r, onIr: i, figura: a = !1, children: o }) {
+	let s = W();
 	return /* @__PURE__ */ _("div", {
 		style: {
 			display: "grid",
 			gap: "var(--ds-5)"
 		},
-		children: [/* @__PURE__ */ g(Wi, {
+		children: [/* @__PURE__ */ g(Xi, {
 			usuario: e,
 			accion: t,
 			angosto: s,
@@ -9221,7 +9348,7 @@ function Ki({ usuario: e, accion: t, secciones: n = [], activa: r, onIr: i, figu
 					overflowX: s ? "auto" : "visible",
 					paddingBottom: s ? 4 : 0
 				},
-				children: n.map((e) => /* @__PURE__ */ g(Gi, {
+				children: n.map((e) => /* @__PURE__ */ g(Zi, {
 					s: e,
 					esta: e.id === r,
 					onIr: i,
@@ -9239,7 +9366,7 @@ function Ki({ usuario: e, accion: t, secciones: n = [], activa: r, onIr: i, figu
 	});
 }
 // src/Cuenta/Ajustes.jsx
-function qi({ id: e, titulo: t, descripcion: n, estado: r, children: i, pie: a }) {
+function $i({ id: e, titulo: t, descripcion: n, estado: r, children: i, pie: a }) {
 	return /* @__PURE__ */ _("section", {
 		id: e,
 		"aria-labelledby": e ? `${e}-titulo` : void 0,
@@ -9300,8 +9427,8 @@ function qi({ id: e, titulo: t, descripcion: n, estado: r, children: i, pie: a }
 		]
 	});
 }
-function Ji({ titulo: e, descripcion: t, children: n, primera: r = !1 }) {
-	let i = U();
+function ea({ titulo: e, descripcion: t, children: n, primera: r = !1 }) {
+	let i = W();
 	return /* @__PURE__ */ _("div", {
 		style: {
 			display: "grid",
@@ -9338,7 +9465,7 @@ function Ji({ titulo: e, descripcion: t, children: n, primera: r = !1 }) {
 		})]
 	});
 }
-var Yi = /* @__PURE__ */ g("svg", {
+var ta = /* @__PURE__ */ g("svg", {
 	width: "14",
 	height: "14",
 	viewBox: "0 0 24 24",
@@ -9350,7 +9477,7 @@ var Yi = /* @__PURE__ */ g("svg", {
 	"aria-hidden": !0,
 	children: /* @__PURE__ */ g("path", { d: "M20 6L9 17l-5-5" })
 });
-function Xi({ estado: e }) {
+function na({ estado: e }) {
 	return /* @__PURE__ */ _("span", {
 		role: "status",
 		"aria-live": "polite",
@@ -9364,7 +9491,7 @@ function Xi({ estado: e }) {
 			fontWeight: 700,
 			color: e === "error" ? "var(--ds-risk)" : e === "guardado" ? "var(--ds-ok)" : "var(--ds-ink-2)"
 		},
-		children: [e === "guardado" && Yi, e ? {
+		children: [e === "guardado" && ta, e ? {
 			guardando: "Guardando…",
 			guardado: "Guardado",
 			error: "No se pudo guardar"
@@ -9372,19 +9499,19 @@ function Xi({ estado: e }) {
 	});
 }
 // src/Cuenta/CargaFoto.jsx
-var Zi = 512;
-function Qi(e) {
+var ra = 512;
+function ia(e) {
 	return new Promise((t, n) => {
 		let r = URL.createObjectURL(e), i = new Image();
 		i.onload = () => {
 			let e = Math.min(i.naturalWidth, i.naturalHeight), a = document.createElement("canvas");
-			a.width = Zi, a.height = Zi, a.getContext("2d").drawImage(i, (i.naturalWidth - e) / 2, (i.naturalHeight - e) / 2, e, e, 0, 0, Zi, Zi), URL.revokeObjectURL(r), a.toBlob((e) => e ? t(new File([e], "foto.jpg", { type: "image/jpeg" })) : n(/* @__PURE__ */ Error("recorte")), "image/jpeg", .88);
+			a.width = ra, a.height = ra, a.getContext("2d").drawImage(i, (i.naturalWidth - e) / 2, (i.naturalHeight - e) / 2, e, e, 0, 0, ra, ra), URL.revokeObjectURL(r), a.toBlob((e) => e ? t(new File([e], "foto.jpg", { type: "image/jpeg" })) : n(/* @__PURE__ */ Error("recorte")), "image/jpeg", .88);
 		}, i.onerror = () => {
 			URL.revokeObjectURL(r), n(/* @__PURE__ */ Error("imagen"));
 		}, i.src = r;
 	});
 }
-function $i({ nombre: e, foto: t, onElegir: n, onQuitar: r, subiendo: i = !1, error: a, maxMb: o = 5, figura: s = !1 }) {
+function aa({ nombre: e, foto: t, onElegir: n, onQuitar: r, subiendo: i = !1, error: a, maxMb: o = 5, figura: s = !1 }) {
 	let c = u(), d = p(null), [f, h] = m(null), [v, y] = m(!1), [b, x] = m(null);
 	l(() => () => {
 		f && URL.revokeObjectURL(f);
@@ -9396,7 +9523,7 @@ function $i({ nombre: e, foto: t, onElegir: n, onQuitar: r, subiendo: i = !1, er
 			if (!/^image\/(png|jpeg|webp)$/.test(e.type)) x("Elige una imagen JPG, PNG o WebP.");
 			else if (e.size > o * 1024 * 1024) x(`La imagen pesa más de ${o} MB. Elige una más ligera.`);
 			else try {
-				let t = await Qi(e);
+				let t = await ia(e);
 				x(null), h(URL.createObjectURL(t)), n?.(t);
 			} catch {
 				x("No pudimos leer esa imagen. Prueba con otra.");
@@ -9428,7 +9555,7 @@ function $i({ nombre: e, foto: t, onElegir: n, onQuitar: r, subiendo: i = !1, er
 				opacity: i ? .6 : 1,
 				transition: "opacity var(--ds-t-state) var(--ds-ease)"
 			},
-			children: /* @__PURE__ */ g(lt, {
+			children: /* @__PURE__ */ g(ct, {
 				src: f || t,
 				nombre: e,
 				tamano: 64,
@@ -9457,13 +9584,13 @@ function $i({ nombre: e, foto: t, onElegir: n, onQuitar: r, subiendo: i = !1, er
 							S(e.target.files?.[0]), e.target.value = "";
 						}
 					}),
-					/* @__PURE__ */ g(V, {
+					/* @__PURE__ */ g(H, {
 						type: "button",
 						esperando: i,
 						onClick: () => d.current?.click(),
 						children: t ? "Cambiar foto" : "Subir foto"
 					}),
-					t && r && /* @__PURE__ */ g(V, {
+					t && r && /* @__PURE__ */ g(H, {
 						type: "button",
 						variante: "fantasma",
 						onClick: r,
@@ -9482,7 +9609,7 @@ function $i({ nombre: e, foto: t, onElegir: n, onQuitar: r, subiendo: i = !1, er
 	});
 }
 // src/Cuenta/ZonaPeligro.jsx
-function ea({ titulo: e, descripcion: t, boton: n, consecuencias: i, palabra: a = "BORRAR", pideClave: o = !0, onConfirmar: s, esperando: c = !1, error: l }) {
+function oa({ titulo: e, descripcion: t, boton: n, consecuencias: i, palabra: a = "BORRAR", pideClave: o = !0, onConfirmar: s, esperando: c = !1, error: l }) {
 	let [u, d] = m(!1), [f, p] = m(""), [v, y] = m(""), [b, x] = m({}), S = () => {
 		d(!1), p(""), y(""), x({});
 	};
@@ -9523,24 +9650,24 @@ function ea({ titulo: e, descripcion: t, boton: n, consecuencias: i, palabra: a 
 					},
 					children: t
 				})]
-			}), /* @__PURE__ */ g(V, {
+			}), /* @__PURE__ */ g(H, {
 				type: "button",
 				variante: "peligro",
 				onClick: () => d(!0),
 				"aria-haspopup": "dialog",
 				children: n
 			})]
-		}), /* @__PURE__ */ g(Et, {
+		}), /* @__PURE__ */ g(Tt, {
 			abierto: u,
 			onCerrar: S,
 			titulo: e,
 			ancho: 460,
-			acciones: /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(V, {
+			acciones: /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ g(H, {
 				type: "button",
 				variante: "fantasma",
 				onClick: S,
 				children: "Cancelar"
-			}), /* @__PURE__ */ g(V, {
+			}), /* @__PURE__ */ g(H, {
 				type: "button",
 				variante: "peligro",
 				esperando: c,
@@ -9572,7 +9699,7 @@ function ea({ titulo: e, descripcion: t, boton: n, consecuencias: i, palabra: a 
 						},
 						children: l
 					}),
-					o && /* @__PURE__ */ g(Ui, {
+					o && /* @__PURE__ */ g(Yi, {
 						etiqueta: "Tu contraseña",
 						valor: v,
 						onCambio: y,
@@ -9592,13 +9719,13 @@ function ea({ titulo: e, descripcion: t, boton: n, consecuencias: i, palabra: a 
 	});
 }
 // src/primitivas/SelectorPeriodo.jsx
-var ta = (e) => String(e).padStart(2, "0"), na = (e) => `${e.getFullYear()}-${ta(e.getMonth() + 1)}-${ta(e.getDate())}`, ra = (e) => {
+var sa = (e) => String(e).padStart(2, "0"), ca = (e) => `${e.getFullYear()}-${sa(e.getMonth() + 1)}-${sa(e.getDate())}`, la = (e) => {
 	let [t, n, r] = String(e).slice(0, 10).split("-").map(Number);
 	return new Date(t, n - 1, r);
-}, ia = (e, t) => {
+}, ua = (e, t) => {
 	let n = new Date(e);
 	return n.setDate(n.getDate() + t), n;
-}, aa = [
+}, da = [
 	{
 		clave: "hoy",
 		etiqueta: "Hoy"
@@ -9636,20 +9763,20 @@ var ta = (e) => String(e).padStart(2, "0"), na = (e) => `${e.getFullYear()}-${ta
 		etiqueta: "Año anterior"
 	}
 ];
-function oa(e, t = /* @__PURE__ */ new Date()) {
-	let n = t instanceof Date ? new Date(t.getFullYear(), t.getMonth(), t.getDate()) : ra(t), r = n.getFullYear(), i = n.getMonth(), a, o;
+function fa(e, t = /* @__PURE__ */ new Date()) {
+	let n = t instanceof Date ? new Date(t.getFullYear(), t.getMonth(), t.getDate()) : la(t), r = n.getFullYear(), i = n.getMonth(), a, o;
 	switch (e) {
 		case "hoy":
 			a = n, o = n;
 			break;
 		case "ayer":
-			a = ia(n, -1), o = a;
+			a = ua(n, -1), o = a;
 			break;
 		case "7d":
-			a = ia(n, -6), o = n;
+			a = ua(n, -6), o = n;
 			break;
 		case "30d":
-			a = ia(n, -29), o = n;
+			a = ua(n, -29), o = n;
 			break;
 		case "mes":
 			a = new Date(r, i, 1), o = new Date(r, i + 1, 0);
@@ -9670,19 +9797,19 @@ function oa(e, t = /* @__PURE__ */ new Date()) {
 			break;
 		default: return null;
 	}
-	let s = aa.find((t) => t.clave === e);
+	let s = da.find((t) => t.clave === e);
 	return {
 		clave: e,
-		desde: na(a),
-		hasta: na(o),
+		desde: ca(a),
+		hasta: ca(o),
 		etiqueta: s?.etiqueta ?? e
 	};
 }
-function sa(e, t) {
-	return e ? e === t ? q(e, "media") : `${q(e, "media")} – ${q(t, "media")}` : "";
+function pa(e, t) {
+	return e ? e === t ? J(e, "media") : `${J(e, "media")} – ${J(t, "media")}` : "";
 }
-function ca({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "Periodo", estilo: a }) {
-	let o = p(null), [s, c] = m(!1), l = r ?? /* @__PURE__ */ new Date(), u = aa.filter((e) => !n || n.includes(e.clave)), d = e ? oa(e, l) : null;
+function ma({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "Periodo", estilo: a }) {
+	let o = p(null), [s, c] = m(!1), l = r ?? /* @__PURE__ */ new Date(), u = da.filter((e) => !n || n.includes(e.clave)), d = e ? fa(e, l) : null;
 	return /* @__PURE__ */ _(h, { children: [/* @__PURE__ */ _("button", {
 		ref: o,
 		type: "button",
@@ -9765,17 +9892,17 @@ function ca({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "P
 				children: /* @__PURE__ */ g("path", { d: "M6 9l6 6 6-6" })
 			})
 		]
-	}), /* @__PURE__ */ g(At, {
+	}), /* @__PURE__ */ g(kt, {
 		ancla: o,
 		abierto: s,
 		onCerrar: () => c(!1),
 		etiqueta: i,
 		minAncho: 250,
 		children: u.map((n) => {
-			let r = oa(n.clave, l);
-			return /* @__PURE__ */ g(jt, {
+			let r = fa(n.clave, l);
+			return /* @__PURE__ */ g(At, {
 				elegida: n.clave === e,
-				nota: sa(r.desde, r.hasta),
+				nota: pa(r.desde, r.hasta),
 				onClick: () => {
 					c(!1), t?.(r);
 				},
@@ -9785,7 +9912,7 @@ function ca({ valor: e, onCambio: t, opciones: n, fechaBase: r, etiqueta: i = "P
 	})] });
 }
 // src/primitivas/Chip.jsx
-function la({ texto: e, valor: t, onQuitar: n, estilo: r }) {
+function ha({ texto: e, valor: t, onQuitar: n, estilo: r }) {
 	let i = t != null && t !== "" ? `${e}: ${t}` : e;
 	return /* @__PURE__ */ _("span", {
 		style: {
@@ -9860,7 +9987,7 @@ function la({ texto: e, valor: t, onQuitar: n, estilo: r }) {
 		})]
 	});
 }
-function ua({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado: i, estilo: a }) {
+function ga({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado: i, estilo: a }) {
 	return /* @__PURE__ */ _("div", {
 		role: "search",
 		style: {
@@ -9894,7 +10021,7 @@ function ua({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado
 				gap: "var(--ds-2)",
 				marginTop: "var(--ds-3)"
 			},
-			children: [t.map((e) => /* @__PURE__ */ g(la, {
+			children: [t.map((e) => /* @__PURE__ */ g(ha, {
 				texto: e.texto,
 				valor: e.valor,
 				onQuitar: n ? () => n(e.clave) : void 0
@@ -9918,15 +10045,15 @@ function ua({ children: e, activos: t = [], onQuitar: n, onLimpiar: r, resultado
 	});
 }
 // src/graficas/GraficaLinea.jsx
-var da = 6.6, fa = (e) => [...String(e ?? "")].reduce((e, t) => e + (t >= "A" && t <= "Z" ? 8 : t === " " ? 3.4 : da), 0), pa = 140, ma = (e, t) => {
+var _a = 6.6, va = (e) => [...String(e ?? "")].reduce((e, t) => e + (t >= "A" && t <= "Z" ? 8 : t === " " ? 3.4 : _a), 0), ya = 140, ba = (e, t) => {
 	let n = String(e ?? "");
-	if (fa(n) <= t) return n;
+	if (va(n) <= t) return n;
 	let r = n;
-	for (; r.length > 1 && fa(r + "…") > t;) r = r.slice(0, -1);
+	for (; r.length > 1 && va(r + "…") > t;) r = r.slice(0, -1);
 	return r.trimEnd() + "…";
 };
-function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "numero", area: i = !1, apilada: a = !1, meta: o, titulo: s, cero: c = !0, estilo: l }) {
-	let [u, d] = dr(), [p, h] = m(null), v = Math.max(t.length, ...e.map((e) => (e.valores || []).length), 0), y = a && i, b = o == null ? null : typeof o == "object" ? o.valor : o, x = o && typeof o == "object" && o.texto ? o.texto : "Meta", S = f(() => {
+function xa({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "numero", area: i = !1, apilada: a = !1, meta: o, titulo: s, cero: c = !0, estilo: l }) {
+	let [u, d] = ur(), [p, h] = m(null), v = Math.max(t.length, ...e.map((e) => (e.valores || []).length), 0), y = a && i, b = o == null ? null : typeof o == "object" ? o.valor : o, x = o && typeof o == "object" && o.texto ? o.texto : "Meta", S = f(() => {
 		let t = Array(v).fill(0);
 		return e.map((e) => {
 			let n = Array.from({ length: v }, (t, n) => {
@@ -9949,9 +10076,9 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 		y
 	]), C = S.flatMap((e) => e.arriba.filter((e) => e !== null));
 	b !== null && C.push(Number(b));
-	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = fr(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String(Q(e, A)).length)) * da + 12, ee = j ? Math.min(pa, Math.max(...e.map((e) => fa(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = pr(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * da + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), re = Math.max(1, Math.ceil(v / ne)), L = [], R = -Infinity;
+	let w = C.length > 0 && v > 0, T = w ? Math.min(...C) : 0, E = w ? Math.max(...C) : 1, { marcas: D, min: O, max: k } = dr(c ? Math.min(0, T) : T, c ? Math.max(0, E) : E, n < 200 ? 3 : 4), A = r === "moneda" ? "monedaCompacta" : r === "numero" ? "compacto" : r, j = e.length > 1 && e.length <= 4 && d >= 420 && !y, M = Math.max(...D.map((e) => String($(e, A)).length)) * _a + 12, ee = j ? Math.min(ya, Math.max(...e.map((e) => va(e.nombre))) + 14) : 10, N = Math.max(10, d - M - ee), P = n - 10 - 24, F = (e) => M + (v <= 1 ? N / 2 : e / (v - 1) * N), I = fr(O, k, 10 + P, 10), te = Math.max(3, ...Array.from({ length: v }, (e, n) => String(t[n] ?? n + 1).length)) * _a + 12, ne = Math.max(2, Math.min(d < 420 ? 4 : Infinity, Math.floor(N / te))), re = Math.max(1, Math.ceil(v / ne)), L = [], R = -Infinity;
 	for (let e = 0; e < v; e += re) {
-		let n = String(t[e] ?? e + 1).length * da, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
+		let n = String(t[e] ?? e + 1).length * _a, r = v > 1 && e === 0 ? "start" : v > 1 && e >= v - 1 ? "end" : "middle", i = r === "start" ? F(e) : r === "end" ? F(e) - n : F(e) - n / 2;
 		i >= R + 8 && (L.push({
 			i: e,
 			ancla: r
@@ -9964,7 +10091,7 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 		}), n.length && t.push(n), t;
 	}, ie = {
 		columnas: ["", ...e.map((e) => e.nombre)],
-		filas: Array.from({ length: v }, (e, n) => [t[n] ?? n + 1, ...S.map((e) => Q(e.crudo[n], r))])
+		filas: Array.from({ length: v }, (e, n) => [t[n] ?? n + 1, ...S.map((e) => $(e.crudo[n], r))])
 	}, ae = (e) => {
 		if (!w) return;
 		let t = e.currentTarget.getBoundingClientRect(), n = e.clientX - t.left, r = v <= 1 ? 0 : Math.round((n - M) / N * (v - 1));
@@ -9972,7 +10099,7 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 	}, B = (e) => {
 		e.key === "ArrowRight" && (e.preventDefault(), h((e) => Math.min(v - 1, (e ?? -1) + 1))), e.key === "ArrowLeft" && (e.preventDefault(), h((e) => Math.max(0, (e ?? v) - 1))), e.key === "Escape" && h(null);
 	}, oe = p === null ? 0 : Math.min(...S.map((e) => e.arriba[p] === null ? 10 + P : I(e.arriba[p])));
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: s,
 		series: e,
 		formaLeyenda: "linea",
@@ -10014,21 +10141,21 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 						y: I(e),
 						dy: "0.32em",
 						textAnchor: "end",
-						style: X,
-						children: Q(e, A)
+						style: Z,
+						children: $(e, A)
 					})] }, e)),
 					L.map(({ i: e, ancla: r }) => /* @__PURE__ */ g("text", {
 						x: F(e),
 						y: n - 6,
 						textAnchor: r,
-						style: X,
+						style: Z,
 						children: t[e] ?? e + 1
 					}, e)),
 					i && S.map((t, n) => z(t.arriba).map((r, i) => {
 						let a = (e) => t.abajo ? I(t.abajo[e]) : I(Math.max(O, Math.min(0, k))), o = `M${F(r[0])},${a(r[0])} ` + r.map((e) => `L${F(e)},${I(t.arriba[e])}`).join(" ") + ` ${[...r].reverse().map((e) => `L${F(e)},${a(e)}`).join(" ")} Z`;
 						return /* @__PURE__ */ g("path", {
 							d: o,
-							fill: Y(e[n], n),
+							fill: X(e[n], n),
 							fillOpacity: y ? .55 : .12,
 							stroke: "none"
 						}, `a${n}-${i}`);
@@ -10037,10 +10164,10 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 						cx: F(r[0]),
 						cy: I(t.arriba[r[0]]),
 						r: "3",
-						fill: Y(e[n], n)
+						fill: X(e[n], n)
 					}, `p${n}-${i}`) : /* @__PURE__ */ g("path", {
 						fill: "none",
-						stroke: Y(e[n], n),
+						stroke: X(e[n], n),
 						strokeWidth: "2",
 						strokeLinejoin: "round",
 						strokeLinecap: "round",
@@ -10058,14 +10185,14 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 						x: M + 6,
 						y: I(b) - 6,
 						style: {
-							...X,
+							...Z,
 							fill: "var(--ds-ink-2)",
 							fontWeight: 700
 						},
 						children: [
 							x,
 							" · ",
-							Q(b, r)
+							$(b, r)
 						]
 					})] }),
 					j && (() => {
@@ -10083,11 +10210,11 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 							y: t.yv,
 							dy: "0.32em",
 							style: {
-								...X,
+								...Z,
 								fill: "var(--ds-ink-2)",
 								fontWeight: 700
 							},
-							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), ma(e[t.si].nombre, ee - 12)]
+							children: [/* @__PURE__ */ g("title", { children: e[t.si].nombre }), ba(e[t.si].nombre, ee - 12)]
 						}, t.si));
 					})(),
 					p !== null && /* @__PURE__ */ _("g", {
@@ -10103,7 +10230,7 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 							cx: F(p),
 							cy: I(t.arriba[p]),
 							r: "4.5",
-							fill: Y(e[n], n),
+							fill: X(e[n], n),
 							stroke: "var(--ds-surface-solid)",
 							strokeWidth: "2"
 						}, n))]
@@ -10116,34 +10243,34 @@ function ha({ series: e = [], etiquetas: t = [], alto: n = 240, formato: r = "nu
 						fill: "transparent"
 					})
 				]
-			}) : /* @__PURE__ */ g($, { alto: n }), /* @__PURE__ */ g(gr, {
+			}) : /* @__PURE__ */ g(vr, { alto: n }), /* @__PURE__ */ g(hr, {
 				visible: p !== null,
 				x: p === null ? 0 : F(p),
 				y: oe,
 				ancho: d,
 				titulo: p === null ? "" : t[p],
 				renglones: p === null ? [] : e.map((e, t) => ({
-					color: Y(e, t),
+					color: X(e, t),
 					nombre: e.nombre,
-					valor: Q(S[t].crudo[p], r)
+					valor: $(S[t].crudo[p], r)
 				}))
 			})]
 		})
 	});
 }
 // src/graficas/GraficaBarras.jsx
-var ga = 6.6, _a = 4, va = 2;
-function ya(e, t, n, r, i) {
+var Sa = 6.6, Ca = 4, wa = 2;
+function Ta(e, t, n, r, i) {
 	if (n <= 0 || r <= 0) return "";
-	let a = Math.min(_a, n / 2, r / 2);
+	let a = Math.min(Ca, n / 2, r / 2);
 	return i === "arriba" ? `M${e},${t + r} L${e},${t + a} Q${e},${t} ${e + a},${t} L${e + n - a},${t} Q${e + n},${t} ${e + n},${t + a} L${e + n},${t + r} Z` : i === "abajo" ? `M${e},${t} L${e + n},${t} L${e + n},${t + r - a} Q${e + n},${t + r} ${e + n - a},${t + r} L${e + a},${t + r} Q${e},${t + r} ${e},${t + r - a} Z` : i === "derecha" ? `M${e},${t} L${e + n - a},${t} Q${e + n},${t} ${e + n},${t + a} L${e + n},${t + r - a} Q${e + n},${t + r} ${e + n - a},${t + r} L${e},${t + r} Z` : i === "izquierda" ? `M${e + n},${t} L${e + n},${t + r} L${e + a},${t + r} Q${e},${t + r} ${e},${t + r - a} L${e},${t + a} Q${e},${t} ${e + a},${t} Z` : `M${e},${t} h${n} v${r} h${-n} Z`;
 }
-var ba = (e, t) => {
-	let n = String(e ?? ""), r = Math.max(3, Math.floor(t / ga));
+var Ea = (e, t) => {
+	let n = String(e ?? ""), r = Math.max(3, Math.floor(t / Sa));
 	return n.length > r ? `${n.slice(0, r - 1)}…` : n;
 };
-function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: i = !1, etiquetas: a = !1, resaltar: o, alto: s, formato: c = "numero", titulo: l, estilo: u }) {
-	let [d, f] = dr(), [p, h] = m(null), v = e ? e.map((e) => e.etiqueta) : t || [], y = e ? [{
+function Da({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: i = !1, etiquetas: a = !1, resaltar: o, alto: s, formato: c = "numero", titulo: l, estilo: u }) {
+	let [d, f] = ur(), [p, h] = m(null), v = e ? e.map((e) => e.etiqueta) : t || [], y = e ? [{
 		clave: "valor",
 		nombre: l || "Valor",
 		valores: e.map((e) => e.valor),
@@ -10163,7 +10290,7 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		let n = S(t, e);
 		n !== null && (w = Math.max(w, n), C = Math.min(C, n));
 	}
-	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = fr(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String(Q(e, j)).length)) * ga + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), re = Math.max(10, f - P - F), L = M - I - ne, R = (r ? L : re) / Math.max(1, b), z = R * (r ? .22 : .26), ie = R - z, ae = i || x === 1 ? ie : (ie - va * (x - 1)) / x, B = r ? pr(k, A, P, P + re) : pr(k, A, I + L, I), oe = B(0), se = (e) => o == null || o === e ? 1 : .35, ce = (e) => {
+	let T = b > 0 && x > 0 && y.some((e, t) => v.some((e, n) => S(t, n) !== null)), E = r ? f - Math.min(f * .38, 170) - 10 - (a ? 64 : 12) : 0, D = r ? Math.max(2, Math.min(4, Math.floor(E / 72))) : 4, { marcas: O, min: k, max: A } = dr(C, w, D), j = c === "moneda" ? "monedaCompacta" : c === "numero" ? "compacto" : c, M = s ?? (r ? Math.max(120, b * (x > 1 && !i ? 18 * x + 14 : 34) + 34) : 240), ee = r ? Math.min(f * .38, 170) : 0, N = a ? 64 : 12, P = r ? ee + 10 : Math.max(...O.map((e) => String($(e, j)).length)) * Sa + 12, F = r ? N : 6, I = a && !r ? 18 : 8, te = y.some((e) => (e.valores || []).some((e) => Number(e) < 0)), ne = r ? 22 : 24 + (a && te ? 16 : 0), re = Math.max(10, f - P - F), L = M - I - ne, R = (r ? L : re) / Math.max(1, b), z = R * (r ? .22 : .26), ie = R - z, ae = i || x === 1 ? ie : (ie - wa * (x - 1)) / x, B = r ? fr(k, A, P, P + re) : fr(k, A, I + L, I), oe = B(0), se = (e) => o == null || o === e ? 1 : .35, ce = (e) => {
 		let t = [], n = (r ? I : P) + e * R + z / 2;
 		if (i) {
 			let r = 0, i = 0, a = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) > 0), o = [...y.keys()].reverse().find((t) => (S(t, e) ?? 0) < 0);
@@ -10183,7 +10310,7 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		} else y.forEach((r, i) => {
 			let a = S(i, e);
 			a !== null && t.push({
-				off: n + i * (ae + va),
+				off: n + i * (ae + wa),
 				grueso: ae,
 				desde: 0,
 				hasta: a,
@@ -10193,27 +10320,27 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 		});
 		return t;
 	}, le = (e) => {
-		let t = B(e.desde), n = B(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? va : 0;
+		let t = B(e.desde), n = B(e.hasta), a = e.hasta >= e.desde, o = i && !e.extremo ? wa : 0;
 		if (r) {
 			let r = Math.min(t, n), i = Math.abs(n - t), s = e.extremo ? a ? "derecha" : "izquierda" : "ninguno";
-			return ya(a ? r : r + o, e.off, i - o, e.grueso, s);
+			return Ta(a ? r : r + o, e.off, i - o, e.grueso, s);
 		}
 		let s = Math.min(t, n), c = Math.abs(n - t), l = e.extremo ? a ? "arriba" : "abajo" : "ninguno";
-		return a ? ya(e.off, s + o, e.grueso, c - o, l) : ya(e.off, s, e.grueso, c - o, l);
+		return a ? Ta(e.off, s + o, e.grueso, c - o, l) : Ta(e.off, s, e.grueso, c - o, l);
 	}, ue = (e) => y.reduce((t, n, r) => t + (S(r, e) ?? 0), 0), de = {
 		columnas: ["", ...y.map((e) => e.nombre)],
-		filas: v.map((e, t) => [e, ...y.map((e, n) => Q(S(n, t), c))])
-	}, fe = (e) => (r ? I : P) + e * R + R / 2, V = p === null ? {
+		filas: v.map((e, t) => [e, ...y.map((e, n) => $(S(n, t), c))])
+	}, V = (e) => (r ? I : P) + e * R + R / 2, H = p === null ? {
 		x: 0,
 		y: 0
 	} : r ? {
 		x: Math.min(f - 10, B(Math.max(0, i ? ue(p) : Math.max(...y.map((e, t) => S(t, p) ?? 0))))),
-		y: fe(p)
+		y: V(p)
 	} : {
-		x: fe(p),
+		x: V(p),
 		y: I + L / 3
-	}, pe = Math.max(1, Math.ceil(b * 44 / Math.max(1, re)));
-	return /* @__PURE__ */ g(Z, {
+	}, fe = Math.max(1, Math.ceil(b * 44 / Math.max(1, re)));
+	return /* @__PURE__ */ g(Q, {
 		titulo: l,
 		series: x > 1 ? y : [],
 		tabla: T ? de : null,
@@ -10245,8 +10372,8 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 						x: B(e),
 						y: M - 6,
 						textAnchor: "middle",
-						style: X,
-						children: Q(e, j)
+						style: Z,
+						children: $(e, j)
 					})] }, e) : /* @__PURE__ */ _("g", { children: [/* @__PURE__ */ g("line", {
 						x1: P,
 						x2: P + re,
@@ -10258,14 +10385,14 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 						y: B(e),
 						dy: "0.32em",
 						textAnchor: "end",
-						style: X,
-						children: Q(e, j)
+						style: Z,
+						children: $(e, j)
 					})] }, e)),
 					v.map((e, t) => /* @__PURE__ */ _("g", {
 						tabIndex: 0,
 						opacity: se(t),
 						role: "img",
-						"aria-label": `${e}: ${y.map((e, n) => `${x > 1 ? `${e.nombre} ` : ""}${Q(S(n, t), c)}`).join(", ")}`,
+						"aria-label": `${e}: ${y.map((e, n) => `${x > 1 ? `${e.nombre} ` : ""}${$(S(n, t), c)}`).join(", ")}`,
 						onMouseEnter: () => h(t),
 						onMouseLeave: () => h(null),
 						onFocus: () => h(t),
@@ -10290,39 +10417,39 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 							}),
 							ce(t).map((e, t) => /* @__PURE__ */ g("path", {
 								d: le(e),
-								fill: Y(y[e.si], e.si)
+								fill: X(y[e.si], e.si)
 							}, t)),
 							r ? /* @__PURE__ */ _("text", {
 								x: P - 10,
-								y: fe(t),
+								y: V(t),
 								dy: "0.32em",
 								textAnchor: "end",
 								style: {
-									...X,
+									...Z,
 									fontSize: 12,
 									fill: "var(--ds-ink-2)"
 								},
-								children: [/* @__PURE__ */ g("title", { children: e }), ba(e, ee)]
-							}) : t % pe === 0 && /* @__PURE__ */ _("text", {
-								x: fe(t),
+								children: [/* @__PURE__ */ g("title", { children: e }), Ea(e, ee)]
+							}) : t % fe === 0 && /* @__PURE__ */ _("text", {
+								x: V(t),
 								y: M - 6,
 								textAnchor: "middle",
-								style: X,
-								children: [/* @__PURE__ */ g("title", { children: e }), ba(e, R * pe - 4)]
+								style: Z,
+								children: [/* @__PURE__ */ g("title", { children: e }), Ea(e, R * fe - 4)]
 							}),
 							a && (() => {
 								let e = i || x === 1 ? i ? ue(t) : S(0, t) : null;
 								if (e === null) return null;
-								let n = Q(e, j);
+								let n = $(e, j);
 								if (r) {
 									let r = B(e);
 									return /* @__PURE__ */ g("text", {
 										x: e >= 0 ? r + 6 : r - 6,
-										y: fe(t),
+										y: V(t),
 										dy: "0.32em",
 										textAnchor: e >= 0 ? "start" : "end",
 										style: {
-											...X,
+											...Z,
 											fill: "var(--ds-ink)",
 											fontWeight: 800
 										},
@@ -10332,11 +10459,11 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 								if (R < 34) return null;
 								let a = B(e);
 								return /* @__PURE__ */ g("text", {
-									x: fe(t),
+									x: V(t),
 									y: e >= 0 ? a - 6 : a + 14,
 									textAnchor: "middle",
 									style: {
-										...X,
+										...Z,
 										fill: "var(--ds-ink)",
 										fontWeight: 800
 									},
@@ -10359,42 +10486,42 @@ function xa({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 						stroke: "var(--ds-eje)"
 					})
 				]
-			}) : /* @__PURE__ */ g($, { alto: M }), /* @__PURE__ */ g(gr, {
+			}) : /* @__PURE__ */ g(vr, { alto: M }), /* @__PURE__ */ g(hr, {
 				visible: p !== null,
-				x: V.x,
-				y: V.y,
+				x: H.x,
+				y: H.y,
 				ancho: f,
 				titulo: p === null ? "" : v[p],
 				renglones: p === null ? [] : [...y.map((e, t) => ({
-					color: Y(e, t),
+					color: X(e, t),
 					nombre: e.nombre,
-					valor: Q(S(t, p), c)
+					valor: $(S(t, p), c)
 				})), ...i && x > 1 ? [{
 					nombre: "Total",
-					valor: Q(ue(p), c)
+					valor: $(ue(p), c)
 				}] : []]
 			})]
 		})
 	});
 }
 // src/graficas/Dona.jsx
-var Sa = 6;
-function Ca(e, t, n, r, i, a) {
+var Oa = 6;
+function ka(e, t, n, r, i, a) {
 	let o = (n, r) => [e + n * Math.sin(r), t - n * Math.cos(r)], s = +(a - i > Math.PI), [c, l] = o(r, i), [u, d] = o(r, a), [f, p] = o(n, a), [m, h] = o(n, i);
 	return `M${c},${l} A${r},${r} 0 ${s} 1 ${u},${d} L${f},${p} A${n},${n} 0 ${s} 0 ${m},${h} Z`;
 }
-function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", tamano: r = 200, grosor: i = 26, titulo: a, estilo: o }) {
+function Aa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", tamano: r = 200, grosor: i = 26, titulo: a, estilo: o }) {
 	let [s, c] = m(null), l = e.map((e, t) => ({
 		...e,
 		propio: e.color,
-		color: e.color || Y(null, t),
+		color: e.color || X(null, t),
 		valor: Number(e.valor)
 	})).filter((e) => Number.isFinite(e.valor) && e.valor > 0), u = l;
-	if (l.length > Sa) {
+	if (l.length > Oa) {
 		let e = [...l].sort((e, t) => t.valor - e.valor), t = e.slice(5);
 		u = [...e.slice(0, 5).map((e, t) => ({
 			...e,
-			color: e.propio || Y(null, t)
+			color: e.propio || X(null, t)
 		})), {
 			etiqueta: `Otros (${t.length})`,
 			valor: t.reduce((e, t) => e + t.valor, 0),
@@ -10416,22 +10543,22 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 		],
 		filas: u.map((e) => [
 			e.etiqueta,
-			Q(e.valor, t),
-			K(e.valor / d)
+			$(e.valor, t),
+			q(e.valor / d)
 		])
 	}, C = s === null ? {
 		t: n,
-		v: Q(d, t)
+		v: $(d, t)
 	} : {
 		t: u[s].etiqueta,
-		v: Q(u[s].valor, t)
+		v: $(u[s].valor, t)
 	};
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: a,
 		tabla: d > 0 ? S : null,
 		estilo: o,
 		alto: r,
-		children: d <= 0 ? /* @__PURE__ */ g($, { alto: r }) : /* @__PURE__ */ _("div", {
+		children: d <= 0 ? /* @__PURE__ */ g(vr, { alto: r }) : /* @__PURE__ */ _("div", {
 			style: {
 				display: "flex",
 				flexWrap: "wrap",
@@ -10451,12 +10578,12 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 					height: r,
 					role: "img",
 					style: { display: "block" },
-					"aria-label": `${a ? `${a}: ` : ""}${u.map((e) => `${e.etiqueta} ${K(e.valor / d)}`).join(", ")}`,
+					"aria-label": `${a ? `${a}: ` : ""}${u.map((e) => `${e.etiqueta} ${q(e.valor / d)}`).join(", ")}`,
 					children: u.length === 1 ? /* @__PURE__ */ g("path", {
-						d: `${Ca(f, p, v, h, 0, Math.PI)} ${Ca(f, p, v, h, Math.PI, Math.PI * 2)}`,
+						d: `${ka(f, p, v, h, 0, Math.PI)} ${ka(f, p, v, h, Math.PI, Math.PI * 2)}`,
 						fill: u[0].color
 					}) : u.map((e, t) => /* @__PURE__ */ g("path", {
-						d: Ca(f, p, s === t ? v - 3 : v, s === t ? h + 2 : h, x[t].a0, x[t].a1),
+						d: ka(f, p, s === t ? v - 3 : v, s === t ? h + 2 : h, x[t].a0, x[t].a1),
 						fill: e.color,
 						opacity: s === null || s === t ? 1 : .4,
 						onMouseEnter: () => c(t),
@@ -10516,7 +10643,7 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 								fontWeight: 700,
 								color: "var(--ds-ink-2)"
 							},
-							children: K(u[s].valor / d)
+							children: q(u[s].valor / d)
 						})
 					]
 				})]
@@ -10546,7 +10673,7 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 						transition: "background var(--ds-t-state) var(--ds-ease)"
 					},
 					children: [
-						/* @__PURE__ */ g(mr, { color: e.color }),
+						/* @__PURE__ */ g(pr, { color: e.color }),
 						/* @__PURE__ */ g("span", {
 							style: {
 								flex: 1,
@@ -10568,7 +10695,7 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 								fontWeight: 800,
 								color: "var(--ds-ink)"
 							},
-							children: Q(e.valor, t)
+							children: $(e.valor, t)
 						}),
 						/* @__PURE__ */ g("span", {
 							className: "ds-num",
@@ -10579,7 +10706,7 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 								minWidth: 44,
 								textAlign: "right"
 							},
-							children: K(e.valor / d)
+							children: q(e.valor / d)
 						})
 					]
 				}, n))
@@ -10588,14 +10715,14 @@ function wa({ datos: e = [], formato: t = "numero", totalEtiqueta: n = "Total", 
 	});
 }
 // src/graficas/Embudo.jsx
-var Ta = [
+var ja = [
 	5,
 	4,
 	3,
 	2
-], Ea = (e, t) => Ta[t <= 1 ? 0 : Math.round(e / (t - 1) * (Ta.length - 1))];
-function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
-	let [i, a] = dr(), o = e.filter((e) => Number.isFinite(Number(e.valor))), s = Math.max(0, ...o.map((e) => Number(e.valor))), c = Number(o[0]?.valor), l = a > 0 && a < 460, u = {
+], Ma = (e, t) => ja[t <= 1 ? 0 : Math.round(e / (t - 1) * (ja.length - 1))];
+function Na({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
+	let [i, a] = ur(), o = e.filter((e) => Number.isFinite(Number(e.valor))), s = Math.max(0, ...o.map((e) => Number(e.valor))), c = Number(o[0]?.valor), l = a > 0 && a < 460, u = {
 		columnas: [
 			"Etapa",
 			"Valor",
@@ -10604,19 +10731,19 @@ function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 		],
 		filas: o.map((e, n) => [
 			e.etiqueta,
-			Q(e.valor, t),
-			n === 0 ? "—" : K(Number(o[n - 1].valor) ? Number(e.valor) / Number(o[n - 1].valor) : null),
-			n === 0 ? "—" : K(c ? Number(e.valor) / c : null)
+			$(e.valor, t),
+			n === 0 ? "—" : q(Number(o[n - 1].valor) ? Number(e.valor) / Number(o[n - 1].valor) : null),
+			n === 0 ? "—" : q(c ? Number(e.valor) / c : null)
 		])
 	};
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: n,
 		tabla: s > 0 ? u : null,
 		estilo: r,
 		children: /* @__PURE__ */ g("div", {
 			ref: i,
 			style: { minWidth: 0 },
-			children: s <= 0 ? /* @__PURE__ */ g($, {}) : /* @__PURE__ */ g("ol", {
+			children: s <= 0 ? /* @__PURE__ */ g(vr, {}) : /* @__PURE__ */ g("ol", {
 				style: {
 					listStyle: "none",
 					margin: 0,
@@ -10637,7 +10764,7 @@ function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 						children: /* @__PURE__ */ g("div", { style: {
 							width: `${Math.max(1.5, r / s * 100)}%`,
 							height: "100%",
-							background: `var(--ds-sec-${Ea(n, o.length)})`,
+							background: `var(--ds-sec-${Ma(n, o.length)})`,
 							borderRadius: "var(--ds-r-item)",
 							transition: "width var(--ds-t-move) var(--ds-ease)"
 						} })
@@ -10656,7 +10783,7 @@ function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 								color: "var(--ds-ink)",
 								fontSize: "var(--ds-t-body)"
 							},
-							children: Q(r, t)
+							children: $(r, t)
 						}), n > 0 && /* @__PURE__ */ _("span", {
 							className: "ds-num",
 							style: {
@@ -10666,9 +10793,9 @@ function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 								whiteSpace: "nowrap"
 							},
 							children: [
-								K(a),
+								q(a),
 								" de la anterior · ",
-								K(u),
+								q(u),
 								" del inicio"
 							]
 						})]
@@ -10685,7 +10812,7 @@ function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 						children: e.etiqueta
 					});
 					return /* @__PURE__ */ g("li", {
-						"aria-label": `${e.etiqueta}: ${Q(r, t)}${n > 0 ? `, ${K(a)} de la etapa anterior` : ""}`,
+						"aria-label": `${e.etiqueta}: ${$(r, t)}${n > 0 ? `, ${q(a)} de la etapa anterior` : ""}`,
 						children: l ? /* @__PURE__ */ _("div", {
 							style: {
 								display: "grid",
@@ -10721,9 +10848,9 @@ function Da({ etapas: e = [], formato: t = "numero", titulo: n, estilo: r }) {
 	});
 }
 // src/graficas/Cascada.jsx
-var Oa = 6.6, ka = 4;
-function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r = !0, titulo: i, estilo: a }) {
-	let [o, s] = dr(), [c, l] = m(null), u = 0, d = e.map((e) => {
+var Pa = 6.6, Fa = 4;
+function Ia({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r = !0, titulo: i, estilo: a }) {
+	let [o, s] = ur(), [c, l] = m(null), u = 0, d = e.map((e) => {
 		let t = Number(e.valor);
 		if (e.tipo === "total") {
 			let n = Number.isFinite(t) && e.valor !== null && e.valor !== void 0 ? t : u;
@@ -10743,8 +10870,8 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 			delta: n,
 			total: !1
 		};
-	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = fr(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String(Q(e, b)).length)) * Oa + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = pr(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? Q(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${Q(e.delta, t)}`, A = (e, t) => {
-		let n = Math.max(3, Math.floor(t / Oa));
+	}), f = d.length > 0, p = d.flatMap((e) => [e.desde, e.hasta]), { marcas: h, min: v, max: y } = dr(Math.min(0, ...p), Math.max(0, ...p), 4), b = n === "moneda" ? "monedaCompacta" : n === "numero" ? "compacto" : n, x = Math.max(...h.map((e) => String($(e, b)).length)) * Pa + 12, S = r ? 20 : 8, C = Math.max(10, s - x - 6), w = t - S - 24, T = C / Math.max(1, d.length), E = T * .62, D = fr(v, y, S + w, S), O = (e) => e.total ? "var(--ds-serie-1)" : e.delta >= 0 ? "var(--ds-ok)" : "var(--ds-risk)", k = (e, t = n) => e.total ? $(e.hasta, t) : `${e.delta > 0 ? "+" : ""}${$(e.delta, t)}`, A = (e, t) => {
+		let n = Math.max(3, Math.floor(t / Pa));
 		return e.length > n ? `${e.slice(0, n - 1)}…` : e;
 	}, j = {
 		columnas: [
@@ -10755,10 +10882,10 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 		filas: d.map((e) => [
 			e.etiqueta,
 			e.total ? "—" : k(e),
-			Q(e.hasta, n)
+			$(e.hasta, n)
 		])
 	};
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: i,
 		tabla: f ? j : null,
 		estilo: a,
@@ -10777,7 +10904,7 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 					display: "block",
 					overflow: "visible"
 				},
-				"aria-label": `${i ? `${i}: ` : ""}${d.length} pasos, resultado ${Q(u, n)}`,
+				"aria-label": `${i ? `${i}: ` : ""}${d.length} pasos, resultado ${$(u, n)}`,
 				children: [h.map((e) => /* @__PURE__ */ _("g", { children: [/* @__PURE__ */ g("line", {
 					x1: x,
 					x2: x + C,
@@ -10789,14 +10916,14 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 					y: D(e),
 					dy: "0.32em",
 					textAnchor: "end",
-					style: X,
-					children: Q(e, b)
+					style: Z,
+					children: $(e, b)
 				})] }, e)), d.map((e, i) => {
-					let a = x + i * T + (T - E) / 2, o = D(Math.max(e.desde, e.hasta)), s = D(Math.min(e.desde, e.hasta)), u = Math.max(1, s - o), f = e.hasta >= e.desde, p = Math.min(ka, E / 2, u / 2), m = f ? `M${a},${o + u} L${a},${o + p} Q${a},${o} ${a + p},${o} L${a + E - p},${o} Q${a + E},${o} ${a + E},${o + p} L${a + E},${o + u} Z` : `M${a},${o} L${a + E},${o} L${a + E},${o + u - p} Q${a + E},${o + u} ${a + E - p},${o + u} L${a + p},${o + u} Q${a},${o + u} ${a},${o + u - p} Z`, h = d[i + 1];
+					let a = x + i * T + (T - E) / 2, o = D(Math.max(e.desde, e.hasta)), s = D(Math.min(e.desde, e.hasta)), u = Math.max(1, s - o), f = e.hasta >= e.desde, p = Math.min(Fa, E / 2, u / 2), m = f ? `M${a},${o + u} L${a},${o + p} Q${a},${o} ${a + p},${o} L${a + E - p},${o} Q${a + E},${o} ${a + E},${o + p} L${a + E},${o + u} Z` : `M${a},${o} L${a + E},${o} L${a + E},${o + u - p} Q${a + E},${o + u} ${a + E - p},${o + u} L${a + p},${o + u} Q${a},${o + u} ${a},${o + u - p} Z`, h = d[i + 1];
 					return /* @__PURE__ */ _("g", {
 						tabIndex: 0,
 						style: { outline: "none" },
-						"aria-label": `${e.etiqueta}: ${k(e)}, acumulado ${Q(e.hasta, n)}`,
+						"aria-label": `${e.etiqueta}: ${k(e)}, acumulado ${$(e.hasta, n)}`,
 						onMouseEnter: () => l(i),
 						onMouseLeave: () => l(null),
 						onFocus: () => l(i),
@@ -10826,7 +10953,7 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 								y: o - 6,
 								textAnchor: "middle",
 								style: {
-									...X,
+									...Z,
 									fill: "var(--ds-ink)",
 									fontWeight: 800
 								},
@@ -10837,7 +10964,7 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 								y: t - 6,
 								textAnchor: "middle",
 								style: {
-									...X,
+									...Z,
 									fontWeight: e.total ? 800 : 600,
 									fill: e.total ? "var(--ds-ink-2)" : "var(--ds-ink-3)"
 								},
@@ -10846,7 +10973,7 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 						]
 					}, i);
 				})]
-			}) : /* @__PURE__ */ g($, { alto: t }), /* @__PURE__ */ g(gr, {
+			}) : /* @__PURE__ */ g(vr, { alto: t }), /* @__PURE__ */ g(hr, {
 				visible: c !== null,
 				ancho: s,
 				x: c === null ? 0 : x + c * T + T / 2,
@@ -10858,27 +10985,27 @@ function Aa({ pasos: e = [], alto: t = 260, formato: n = "numero", etiquetas: r 
 					valor: k(d[c])
 				}], {
 					nombre: d[c].total ? "Total" : "Acumulado",
-					valor: Q(d[c].hasta, n)
+					valor: $(d[c].hasta, n)
 				}]
 			})]
 		})
 	});
 }
-function ja(e) {
+function La(e) {
 	let t = e.filter((e) => e != null && Number.isFinite(Number(e))).map(Number);
 	return t.length ? {
 		min: Math.min(...t),
 		max: Math.max(...t)
 	} : null;
 }
-function Ma(e, t) {
+function Ra(e, t) {
 	if (e == null || !Number.isFinite(Number(e)) || !t) return 0;
 	if (t.max === t.min) return 3;
 	let n = (Number(e) - t.min) / (t.max - t.min);
 	return Math.min(5, 1 + Math.floor(n * 5));
 }
-var Na = (e) => `var(--ds-sec-${e})`;
-function Pa({ rango: e, formato: t }) {
+var za = (e) => `var(--ds-sec-${e})`;
+function Ba({ rango: e, formato: t }) {
 	if (!e) return null;
 	let n = (e.max - e.min) / 5;
 	return /* @__PURE__ */ _("div", {
@@ -10895,20 +11022,20 @@ function Pa({ rango: e, formato: t }) {
 		children: [
 			/* @__PURE__ */ g("span", {
 				className: "ds-num",
-				children: Q(e.min, t)
+				children: $(e.min, t)
 			}),
 			Array.from({ length: 5 }, (r, i) => /* @__PURE__ */ g("span", {
-				title: `${Q(e.min + n * i, t)} – ${Q(e.min + n * (i + 1), t)}`,
+				title: `${$(e.min + n * i, t)} – ${$(e.min + n * (i + 1), t)}`,
 				style: {
 					width: 22,
 					height: 10,
 					borderRadius: "var(--ds-r-mini)",
-					background: Na(i + 1)
+					background: za(i + 1)
 				}
 			}, i)),
 			/* @__PURE__ */ g("span", {
 				className: "ds-num",
-				children: Q(e.max, t)
+				children: $(e.max, t)
 			}),
 			/* @__PURE__ */ _("span", {
 				style: {
@@ -10921,15 +11048,15 @@ function Pa({ rango: e, formato: t }) {
 					width: 10,
 					height: 10,
 					borderRadius: "var(--ds-r-mini)",
-					background: Na(0)
+					background: za(0)
 				} }), "Sin dato"]
 			})
 		]
 	});
 }
 // src/graficas/MapaCalor.jsx
-function Fa({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "numero", celdaMinima: i = 28, altoCelda: a = 28, titulo: o, estilo: s }) {
-	let c = p(null), l = u().replace(/:/g, ""), [d, f] = m(null), v = ja(n.flat()), y = Math.min(140, Math.max(36, ...e.map((e) => String(e).length * 7 + 12))), b = (e, t) => n?.[e]?.[t], x = (e, n) => ({
+function Va({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "numero", celdaMinima: i = 28, altoCelda: a = 28, titulo: o, estilo: s }) {
+	let c = p(null), l = u().replace(/:/g, ""), [d, f] = m(null), v = La(n.flat()), y = Math.min(140, Math.max(36, ...e.map((e) => String(e).length * 7 + 12))), b = (e, t) => n?.[e]?.[t], x = (e, n) => ({
 		x: y + (n + .5) * (c.current ? (c.current.scrollWidth - y) / Math.max(1, t.length) : i),
 		y: 22 + e * (a + 3)
 	}), S = (n, r) => f((i) => {
@@ -10945,12 +11072,12 @@ function Fa({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 		t && (e.preventDefault(), S(...t)), e.key === "Escape" && f(null);
 	}, w = {
 		columnas: ["", ...t],
-		filas: e.map((e, n) => [e, ...t.map((e, t) => Q(b(n, t), r))])
+		filas: e.map((e, n) => [e, ...t.map((e, t) => $(b(n, t), r))])
 	}, T = d ? x(...d) : {
 		x: 0,
 		y: 0
 	};
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: o,
 		tabla: v ? w : null,
 		estilo: s,
@@ -11020,19 +11147,19 @@ function Fa({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 							id: `${l}-${n}-${i}`,
 							role: "gridcell",
 							"aria-selected": !!o,
-							"aria-label": `${e} · ${t}: ${s == null ? "sin dato" : Q(s, r)}`,
+							"aria-label": `${e} · ${t}: ${s == null ? "sin dato" : $(s, r)}`,
 							onMouseEnter: () => f([n, i]),
 							style: {
 								height: a,
 								borderRadius: "var(--ds-r-mini)",
-								background: Na(Ma(s, v)),
+								background: za(Ra(s, v)),
 								boxShadow: o ? "0 0 0 2px var(--ds-ink)" : "none",
 								transition: "box-shadow var(--ds-t-tap) var(--ds-ease-out)"
 							}
 						}, i);
 					})]
 				}, n))]
-			}), /* @__PURE__ */ g(gr, {
+			}), /* @__PURE__ */ g(hr, {
 				visible: !!d,
 				x: T.x,
 				y: T.y,
@@ -11040,17 +11167,17 @@ function Fa({ filas: e = [], columnas: t = [], valores: n = [], formato: r = "nu
 				titulo: d ? `${e[d[0]]} · ${t[d[1]]}` : "",
 				renglones: d ? [{
 					nombre: o || "Valor",
-					valor: Q(b(...d), r)
+					valor: $(b(...d), r)
 				}] : []
 			})]
-		}), /* @__PURE__ */ g(Pa, {
+		}), /* @__PURE__ */ g(Ba, {
 			rango: v,
 			formato: r
-		})] }) : /* @__PURE__ */ g($, {})
+		})] }) : /* @__PURE__ */ g(vr, {})
 	});
 }
 // src/graficas/CalendarioCalor.jsx
-var Ia = 13, La = [
+var Ha = 13, Ua = [
 	"L",
 	"",
 	"M",
@@ -11058,14 +11185,14 @@ var Ia = 13, La = [
 	"V",
 	"",
 	""
-], Ra = (e) => {
+], Wa = (e) => {
 	if (e instanceof Date) return new Date(e.getFullYear(), e.getMonth(), e.getDate());
 	let [t, n, r] = String(e).slice(0, 10).split("-").map(Number);
 	return new Date(t, n - 1, r);
-}, za = (e) => `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, "0")}-${String(e.getDate()).padStart(2, "0")}`;
-function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: i, estilo: a }) {
+}, Ga = (e) => `${e.getFullYear()}-${String(e.getMonth() + 1).padStart(2, "0")}-${String(e.getDate()).padStart(2, "0")}`;
+function Ka({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: i, estilo: a }) {
 	let o = p(null), [s, c] = m(null), { dias: l, semanas: u, mapa: v, rango: y } = f(() => {
-		let r = new Map(e.map((e) => [String(e.fecha).slice(0, 10), e.valor])), i = e.map((e) => Ra(e.fecha)).sort((e, t) => e - t), a = t ? Ra(t) : i[0], o = n ? Ra(n) : i[i.length - 1];
+		let r = new Map(e.map((e) => [String(e.fecha).slice(0, 10), e.valor])), i = e.map((e) => Wa(e.fecha)).sort((e, t) => e - t), a = t ? Wa(t) : i[0], o = n ? Wa(n) : i[i.length - 1];
 		if (!a || !o || o < a) return {
 			dias: [],
 			semanas: 0,
@@ -11076,7 +11203,7 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 		s.setDate(s.getDate() - (s.getDay() + 6) % 7);
 		let c = [];
 		for (let e = new Date(s); e <= o; e.setDate(e.getDate() + 1)) {
-			let t = za(e);
+			let t = Ga(e);
 			c.push({
 				fecha: new Date(e),
 				k: t,
@@ -11089,7 +11216,7 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 			dias: c,
 			semanas: Math.ceil(c.length / 7),
 			mapa: r,
-			rango: ja(l)
+			rango: La(l)
 		};
 	}, [
 		e,
@@ -11108,7 +11235,7 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 			let n = t / 7, r = l.slice(t, t + 7).find((e) => e.fecha.getDate() === 1) || (t === 0 ? e : null);
 			r && (!x.length || n - x[x.length - 1].sem >= 3) && x.push({
 				sem: n,
-				texto: q(r.fecha, "mesCorto")
+				texto: J(r.fecha, "mesCorto")
 			});
 		}
 	});
@@ -11126,12 +11253,12 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 		})), e.key === "Escape" && c(null);
 	}, C = 18 + u * 16, w = {
 		columnas: ["Fecha", "Valor"],
-		filas: l.filter((e) => !e.fuera && e.valor !== void 0).map((e) => [q(e.fecha, "media"), Q(e.valor, r)])
+		filas: l.filter((e) => !e.fuera && e.valor !== void 0).map((e) => [J(e.fecha, "media"), $(e.valor, r)])
 	}, T = s === null ? null : l[s], E = s === null ? {
 		x: 0,
 		y: 0
 	} : b(s);
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: i,
 		tabla: y ? w : null,
 		estilo: a,
@@ -11154,8 +11281,8 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 			children: [
 				/* @__PURE__ */ g("span", {
 					"aria-live": "polite",
-					style: vr,
-					children: T ? `${q(T.fecha, "larga")}: ${T.valor === void 0 ? "sin dato" : Q(T.valor, r)}` : ""
+					style: _r,
+					children: T ? `${J(T.fecha, "larga")}: ${T.valor === void 0 ? "sin dato" : $(T.valor, r)}` : ""
 				}),
 				/* @__PURE__ */ _("svg", {
 					width: C,
@@ -11174,9 +11301,9 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 							},
 							children: e.texto
 						}, e.sem)),
-						La.map((e, t) => e && /* @__PURE__ */ g("text", {
+						Ua.map((e, t) => e && /* @__PURE__ */ g("text", {
 							x: 0,
-							y: 18 + t * 16 + Ia - 2,
+							y: 18 + t * 16 + Ha - 2,
 							style: {
 								fontSize: 10,
 								fontWeight: 600,
@@ -11191,10 +11318,10 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 							return /* @__PURE__ */ g("rect", {
 								x: n,
 								y: r,
-								width: Ia,
-								height: Ia,
+								width: Ha,
+								height: Ha,
 								rx: "3",
-								fill: Na(Ma(e.valor, y)),
+								fill: za(Ra(e.valor, y)),
 								stroke: s === t ? "var(--ds-ink)" : "none",
 								strokeWidth: "2",
 								onMouseEnter: () => c(t)
@@ -11202,31 +11329,31 @@ function Ba({ datos: e = [], desde: t, hasta: n, formato: r = "numero", titulo: 
 						})
 					]
 				}),
-				/* @__PURE__ */ g(gr, {
+				/* @__PURE__ */ g(hr, {
 					visible: !!T,
-					x: E.x + Ia / 2,
+					x: E.x + Ha / 2,
 					y: E.y,
 					ancho: C,
-					titulo: T ? q(T.fecha, "larga") : "",
+					titulo: T ? J(T.fecha, "larga") : "",
 					renglones: T ? [{
 						nombre: i || "Valor",
-						valor: T.valor === void 0 ? "Sin dato" : Q(T.valor, r)
+						valor: T.valor === void 0 ? "Sin dato" : $(T.valor, r)
 					}] : []
 				})
 			]
-		}), /* @__PURE__ */ g(Pa, {
+		}), /* @__PURE__ */ g(Ba, {
 			rango: y,
 			formato: r
-		})] }) : /* @__PURE__ */ g($, {})
+		})] }) : /* @__PURE__ */ g(vr, {})
 	});
 }
 // src/graficas/Bala.jsx
-var Va = [
+var qa = [
 	"var(--ds-line-firm)",
 	"var(--ds-esqueleto-brillo)",
 	"var(--ds-surface-sunk)"
 ];
-function Ha({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
+function Ja({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 	let { etiqueta: i, valor: a, meta: o, rangos: s = [], menorEsMejor: c = !1, nota: l } = e, u = Number(a), d = Math.max(...[
 		...s,
 		u,
@@ -11235,7 +11362,7 @@ function Ha({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		0,
 		...s.slice(0, 2),
 		d
-	], m = c ? [...Va].reverse() : Va, h = !Number.isFinite(u), v = /* @__PURE__ */ _("div", {
+	], m = c ? [...qa].reverse() : qa, h = !Number.isFinite(u), v = /* @__PURE__ */ _("div", {
 		style: {
 			position: "relative",
 			height: 22,
@@ -11283,7 +11410,7 @@ function Ha({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 				fontWeight: 800,
 				color: "var(--ds-ink)"
 			},
-			children: h ? "Sin dato" : Q(u, t)
+			children: h ? "Sin dato" : $(u, t)
 		}), Number.isFinite(Number(o)) && /* @__PURE__ */ _("span", {
 			style: {
 				fontSize: "var(--ds-t-micro)",
@@ -11291,7 +11418,7 @@ function Ha({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 				color: "var(--ds-ink-3)",
 				marginLeft: 6
 			},
-			children: ["meta ", Q(o, t)]
+			children: ["meta ", $(o, t)]
 		})]
 	}), b = /* @__PURE__ */ _("div", {
 		style: { minWidth: 0 },
@@ -11315,7 +11442,7 @@ function Ha({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		})]
 	});
 	return /* @__PURE__ */ g("li", {
-		"aria-label": `${i}: ${h ? "sin dato" : Q(u, t)}${Number.isFinite(Number(o)) ? `, meta ${Q(o, t)}` : ""}`,
+		"aria-label": `${i}: ${h ? "sin dato" : $(u, t)}${Number.isFinite(Number(o)) ? `, meta ${$(o, t)}` : ""}`,
 		children: n ? /* @__PURE__ */ _("div", {
 			style: {
 				display: "grid",
@@ -11345,8 +11472,8 @@ function Ha({ item: e, formato: t, angosto: n, anchoEtiqueta: r }) {
 		})
 	});
 }
-function Ua({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) {
-	let [a, o] = dr(), s = e || (t ? [t] : []), c = o > 0 && o < 460, l = Math.min(180, Math.max(90, o * .26)), u = {
+function Ya({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) {
+	let [a, o] = ur(), s = e || (t ? [t] : []), c = o > 0 && o < 460, l = Math.min(180, Math.max(90, o * .26)), u = {
 		columnas: [
 			"",
 			"Real",
@@ -11354,11 +11481,11 @@ function Ua({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) 
 		],
 		filas: s.map((e) => [
 			e.etiqueta,
-			Q(e.valor, n),
-			Q(e.meta, n)
+			$(e.valor, n),
+			$(e.meta, n)
 		])
 	};
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: r,
 		tabla: s.length ? u : null,
 		estilo: i,
@@ -11373,29 +11500,29 @@ function Ua({ items: e, item: t, formato: n = "numero", titulo: r, estilo: i }) 
 					display: "grid",
 					gap: c ? 16 : 12
 				},
-				children: s.map((e, t) => /* @__PURE__ */ g(Ha, {
+				children: s.map((e, t) => /* @__PURE__ */ g(Ja, {
 					item: e,
 					formato: n,
 					angosto: c,
 					anchoEtiqueta: l
 				}, t))
-			}) : /* @__PURE__ */ g($, { alto: 100 })
+			}) : /* @__PURE__ */ g(vr, { alto: 100 })
 		})
 	});
 }
 // src/graficas/BarraDistribucion.jsx
-var Wa = {
+var Xa = {
 	ok: "var(--ds-ok)",
 	aviso: "var(--ds-warn)",
 	riesgo: "var(--ds-risk)",
 	neutro: "var(--ds-ink-3)",
 	acento: "var(--ds-accent-trazo)"
 };
-function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r = !0, titulo: i, estilo: a }) {
-	let [o, s] = dr(), [c, l] = m(null), u = e.map((e, t) => ({
+function Za({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r = !0, titulo: i, estilo: a }) {
+	let [o, s] = ur(), [c, l] = m(null), u = e.map((e, t) => ({
 		...e,
 		valor: Number(e.valor),
-		color: e.color || Wa[e.tono] || Y(null, t)
+		color: e.color || Xa[e.tono] || X(null, t)
 	})).filter((e) => Number.isFinite(e.valor) && e.valor > 0), d = u.reduce((e, t) => e + t.valor, 0), f = 0, p = u.map((e) => {
 		let t = f + e.valor / 2;
 		return f += e.valor, d ? t / d * s : 0;
@@ -11407,11 +11534,11 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 		],
 		filas: u.map((e) => [
 			e.etiqueta,
-			Q(e.valor, t),
-			K(e.valor / d)
+			$(e.valor, t),
+			q(e.valor / d)
 		])
 	};
-	return /* @__PURE__ */ g(Z, {
+	return /* @__PURE__ */ g(Q, {
 		titulo: i,
 		tabla: d > 0 ? v : null,
 		estilo: a,
@@ -11421,7 +11548,7 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 				position: "relative",
 				minWidth: 0
 			},
-			children: d <= 0 ? /* @__PURE__ */ g($, { alto: 60 }) : /* @__PURE__ */ _(h, { children: [
+			children: d <= 0 ? /* @__PURE__ */ g(vr, { alto: 60 }) : /* @__PURE__ */ _(h, { children: [
 				/* @__PURE__ */ g("div", {
 					role: "list",
 					style: {
@@ -11434,7 +11561,7 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 					children: u.map((e, n) => /* @__PURE__ */ g("div", {
 						role: "listitem",
 						tabIndex: 0,
-						"aria-label": `${e.etiqueta}: ${Q(e.valor, t)}, ${K(e.valor / d)}`,
+						"aria-label": `${e.etiqueta}: ${$(e.valor, t)}, ${q(e.valor / d)}`,
 						onMouseEnter: () => l(n),
 						onMouseLeave: () => l(null),
 						onFocus: () => l(n),
@@ -11449,7 +11576,7 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 						}
 					}, n))
 				}),
-				/* @__PURE__ */ g(gr, {
+				/* @__PURE__ */ g(hr, {
 					visible: c !== null,
 					ancho: s,
 					x: c === null ? 0 : p[c],
@@ -11458,10 +11585,10 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 					renglones: c === null ? [] : [{
 						color: u[c].color,
 						nombre: "Valor",
-						valor: Q(u[c].valor, t)
+						valor: $(u[c].valor, t)
 					}, {
 						nombre: "Del total",
-						valor: K(u[c].valor / d)
+						valor: q(u[c].valor / d)
 					}]
 				}),
 				r && /* @__PURE__ */ g("div", {
@@ -11480,7 +11607,7 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 						},
 						children: [/* @__PURE__ */ g("span", {
 							style: { marginTop: 4 },
-							children: /* @__PURE__ */ g(mr, { color: e.color })
+							children: /* @__PURE__ */ g(pr, { color: e.color })
 						}), /* @__PURE__ */ _("div", {
 							style: { minWidth: 0 },
 							children: [/* @__PURE__ */ g("div", {
@@ -11501,14 +11628,14 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 									fontWeight: 800,
 									color: "var(--ds-ink)"
 								},
-								children: [Q(e.valor, t), /* @__PURE__ */ g("span", {
+								children: [$(e.valor, t), /* @__PURE__ */ g("span", {
 									style: {
 										fontWeight: 700,
 										color: "var(--ds-ink-3)",
 										marginLeft: 6,
 										fontSize: "var(--ds-t-micro)"
 									},
-									children: K(e.valor / d)
+									children: q(e.valor / d)
 								})]
 							})]
 						})]
@@ -11518,4 +11645,4 @@ function Ga({ segmentos: e = [], formato: t = "numero", alto: n = 14, leyenda: r
 		})
 	});
 }
-export { Ft as ALTO_CABECERA_MOVIL, Pt as ALTO_DOCK, ei as Actividad, re as Anillo, xn as Armazon, Ot as Aviso, bt as Azulejo, Ua as Bala, vt as Barra, Ga as BarraDistribucion, ua as BarraFiltros, wn as BarraSeleccion, B as Barras, ee as Bento, V as Boton, yi as BotonApariencia, i as Buscador, n as CAJA, Ai as CIAN_ZENTRYA, ui as Calendario, Ba as CalendarioCalor, r as Campo, Ui as CampoClave, kn as Campos, $i as CargaFoto, Kn as Cargando, Aa as Cascada, Cn as Casilla, N as Celda, la as Chip, ne as Cifra, Sr as CuerpoKpi, Pr as Detalles, wa as Dona, Da as Embudo, di as EncabezadoPagina, t as Envoltura, z as Esqueleto, ie as EsqueletoFila, ae as EsqueletoLista, Xi as EstadoGuardado, Lr as EstadoVacio, ct as Fila, Ji as FilaAjuste, wr as FilaKpis, At as Flotante, On as Formulario, fe as Giro, gr as Globo, xa as GraficaBarras, ha as GraficaLinea, Rr as GrupoRetratos, P as Heroe, ce as Insignia, xt as Interruptor, Xr as Kanban, yt as Lamina, hr as Leyenda, Hr as LineaTiempo, Ir as Llamado, Fa as MapaCalor, Z as MarcoGrafica, R as Medidor, Ci as MenuUsuario, _t as Migas, Et as Modal, vi as ModalApariencia, ki as Notificaciones, jt as OpcionFlotante, C as PALETAS, aa as PERIODOS, Zn as PanelInicio, Bi as PantallaAcceso, Ki as PantallaCuenta, qr as Pasos, se as Pastilla, Gn as Pestanas, k as ProveedorTema, lt as Retrato, ur as SERIES, er as SIN_DATO, ut as Seccion, qi as SeccionAjustes, fi as Segmentado, e as Selector, Sn as SelectorArmazon, pi as SelectorPaleta, ca as SelectorPeriodo, ji as SimboloZentrya, $ as SinDatos, yr as Sparkline, M as Superficie, Tn as Tabla, Or as TarjetaComparativa, jr as TarjetaEntidad, Cr as TarjetaKpi, Dr as TarjetaMeta, kr as TarjetaRanking, zi as TarjetaVitrina, Tt as Transicion, lr as Variacion, F as Vidrio, ea as ZonaPeligro, ir as compacto, zn as condicion, $n as configurarFormato, Ln as correo, Fn as digitos, q as fecha, sr as fechaRelativa, J as formatear, Qn as formato, Mn as maximo, Nn as minimo, rr as moneda, Pn as numero, Rn as patron, K as porcentaje, oa as rangoPeriodo, jn as requerido, In as soloDigitos, sa as textoRango, U as useAngosto, Lt as useArmazon, Wn as useFiltros, Bn as useFormulario, dt as useMedia, dr as useMedida, A as useTema, cr as variacion };
+export { Pt as ALTO_CABECERA_MOVIL, Nt as ALTO_DOCK, ei as Actividad, re as Anillo, bn as Armazon, Dt as Aviso, yt as Azulejo, Ya as Bala, _t as Barra, Za as BarraDistribucion, ga as BarraFiltros, Cn as BarraSeleccion, B as Barras, ee as Bento, H as Boton, yi as BotonApariencia, i as Buscador, n as CAJA, Ai as CIAN_ZENTRYA, ui as Calendario, Ka as CalendarioCalor, r as Campo, Yi as CampoClave, On as Campos, aa as CargaFoto, Gn as Cargando, Ia as Cascada, Sn as Casilla, N as Celda, ha as Chip, ne as Cifra, Sr as CuerpoKpi, Pr as Detalles, Aa as Dona, Na as Embudo, di as EncabezadoPagina, Ki as EntradaCuenta, t as Envoltura, z as Esqueleto, ie as EsqueletoFila, ae as EsqueletoLista, na as EstadoGuardado, Lr as EstadoVacio, st as Fila, ea as FilaAjuste, wr as FilaKpis, kt as Flotante, Dn as Formulario, V as Giro, hr as Globo, Da as GraficaBarras, xa as GraficaLinea, Rr as GrupoRetratos, P as Heroe, ce as Insignia, bt as Interruptor, Xr as Kanban, Ni as LETRA_SISTEMA, vt as Lamina, mr as Leyenda, Hr as LineaTiempo, Ir as Llamado, Va as MapaCalor, Q as MarcoGrafica, R as Medidor, Ci as MenuUsuario, gt as Migas, Tt as Modal, vi as ModalApariencia, ki as Notificaciones, At as OpcionFlotante, C as PALETAS, da as PERIODOS, Xn as PanelInicio, Vi as PantallaAcceso, Qi as PantallaCuenta, qr as Pasos, se as Pastilla, Wn as Pestanas, k as ProveedorTema, ct as Retrato, lr as SERIES, $n as SIN_DATO, lt as Seccion, $i as SeccionAjustes, fi as Segmentado, e as Selector, xn as SelectorArmazon, pi as SelectorPaleta, ma as SelectorPeriodo, ji as SimboloZentrya, vr as SinDatos, yr as Sparkline, M as Superficie, wn as Tabla, Or as TarjetaComparativa, jr as TarjetaEntidad, Cr as TarjetaKpi, Dr as TarjetaMeta, kr as TarjetaRanking, Bi as TarjetaVitrina, wt as Transicion, cr as Variacion, F as Vidrio, oa as ZonaPeligro, rr as compacto, Rn as condicion, Qn as configurarFormato, In as correo, Pn as digitos, J as fecha, or as fechaRelativa, Y as formatear, Zn as formato, jn as maximo, Mn as minimo, nr as moneda, Nn as numero, Ln as patron, q as porcentaje, fa as rangoPeriodo, An as requerido, Fn as soloDigitos, pa as textoRango, W as useAngosto, It as useArmazon, Un as useFiltros, zn as useFormulario, ut as useMedia, ur as useMedida, A as useTema, sr as variacion };

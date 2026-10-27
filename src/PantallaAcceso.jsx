@@ -1,31 +1,26 @@
 /**
  * PantallaAcceso — el login (y registro, recuperar contraseña…) de todos los
- * productos: «Vitrina», elegida por Carlos el 2026-10-23.
+ * productos.
  *
- *   izquierda  el héroe de la paleta con la Z de Zentrya en grande, la marca,
- *              el lema y, si la app la trae, la `vitrina`: tarjetas que entran
- *              flotando
- *   derecha    el formulario sobre vidrio, con entrada escalonada
+ * v2.8 (Carlos, 2026-10-27: «se sigue viendo demasiado sencillo y genérico…
+ * implementa un login tipo Apple»): una sola columna centrada, sin panel de
+ * color ni tarjeta alrededor del formulario. Arriba a la izquierda la marca
+ * del producto; al centro el símbolo de Zentrya dibujándose, el título y el
+ * formulario (lo natural es `EntradaCuenta`: correo y luego contraseña en un
+ * mismo grupo, como Apple). Detrás, en pantallas anchas, la Z grande grabada
+ * en líneas finas, tenue, a la izquierda de la columna. La letra es la del
+ * sistema (SF en Apple), como en sus pantallas de cuenta.
  *
- * En el teléfono el héroe se vuelve una franja arriba (sin vitrina, con la Z
- * chica junto a la marca) y el formulario queda al alcance del pulgar.
- *
- * La Z (v2.7, Carlos 2026-10-26: «se ve muy de IA genérico»): sustituye a la
- * aurora. Es la geometría exacta del símbolo, monumental y grabada en siete
- * líneas finas que llenan su grueso: una luz recorre la central dibujándola,
- * las demás la siguen y al llegar al final aparece el punto cian con una sola
- * onda. Sigue a cualquier paleta: el trazo es
- * `--ds-ink-on-hero`; el cian es de la marca y no cambia.
+ * `vitrina` ya no se pinta (v2.7 la dejó opcional y los productos la
+ * quitaron: las tarjetas se veían genéricas). `TarjetaVitrina` se sigue
+ * exportando para no romper a quien la importe.
  *
  * Movimiento con propósito y accesible. Todo lo que se mueve solo TERMINA en
- * menos de 5 s (la Z, ~2.3 s; la vitrina, ~1.6 s) y después queda quieto:
- * una animación en bucle exigiría un botón de pausa (WCAG 2.2.2), y respetar
- * «reducir movimiento» no basta. La vitrina se inclina un poco con el puntero,
- * y la Z se desplaza unos pixeles (profundidad), sólo mientras la persona lo
- * mueve. `error` sacude el formulario una vez
- * cada que cambia, para que el fallo se sienta además de leerse.
- *
- * La vitrina es decorativa (`aria-hidden`): ilustra el producto, no informa.
+ * menos de 5 s (el símbolo y la Z, ~2.3 s) y después queda quieto: una
+ * animación en bucle exigiría un botón de pausa (WCAG 2.2.2). La Z de fondo
+ * se desplaza unos pixeles con el ratón, sólo mientras se mueve. Con
+ * «reducir movimiento» todo aparece ya dibujado. `error` sacude el formulario
+ * una vez cada que cambia, para que el fallo se sienta además de leerse.
  */
 import React, { useEffect, useRef, useState } from "react";
 import { useAngosto } from "./ancho";
@@ -51,27 +46,21 @@ const CSS = `
 .ds-z-punto { animation: ds-z-punto 460ms var(--ds-ease-out) 1450ms both; }
 .ds-z-onda { animation: ds-z-onda 820ms var(--ds-ease-out) 1520ms both; }
 .ds-z-capa { transition: transform 900ms var(--ds-ease); }
-@media (prefers-reduced-motion: reduce) {
-  /* La regla global ya las lleva a su final; sin retraso, la Z aparece dibujada de una vez. */
-  .ds-z-traza, .ds-z-luz, .ds-z-punto, .ds-z-onda { animation-delay: 0ms !important; }
-}
-@keyframes ds-flota {
-  from { opacity: 0; transform: translate3d(0, 28px, 0) rotate(-3deg) scale(0.96); }
-  to   { opacity: 1; transform: none; }
-}
 @keyframes ds-sacude-a { 0%, 100% { translate: 0 0; } 20% { translate: -8px 0; } 40% { translate: 7px 0; } 60% { translate: -5px 0; } 80% { translate: 3px 0; } }
 @keyframes ds-sacude-b { 0%, 100% { translate: 0 0; } 20% { translate: -8px 0; } 40% { translate: 7px 0; } 60% { translate: -5px 0; } 80% { translate: 3px 0; } }
-.ds-acceso-vitrina > * { animation: ds-flota var(--ds-t-scene) var(--ds-ease) both; }
-.ds-acceso-vitrina > *:nth-child(1) { animation-delay: 360ms; }
-.ds-acceso-vitrina > *:nth-child(2) { animation-delay: 520ms; margin-left: 18%; }
-.ds-acceso-vitrina > *:nth-child(3) { animation-delay: 680ms; margin-left: 6%; }
-.ds-acceso-vitrina > *:nth-child(4) { animation-delay: 840ms; margin-left: 24%; }
-.ds-acceso-form > * { animation: ds-rise var(--ds-t-scene) var(--ds-ease) both; }
-.ds-acceso-form > *:nth-child(1) { animation-delay: 80ms; }
-.ds-acceso-form > *:nth-child(2) { animation-delay: 140ms; }
-.ds-acceso-form > *:nth-child(3) { animation-delay: 200ms; }
-.ds-acceso-form > *:nth-child(n+4) { animation-delay: 260ms; }
+.ds-acceso-columna > * { animation: ds-rise var(--ds-t-scene) var(--ds-ease) both; }
+.ds-acceso-columna > *:nth-child(2) { animation-delay: 90ms; }
+.ds-acceso-columna > *:nth-child(3) { animation-delay: 160ms; }
+.ds-acceso-columna > *:nth-child(n+4) { animation-delay: 230ms; }
+@media (prefers-reduced-motion: reduce) {
+  /* La regla global ya las lleva a su final; sin retraso, la Z aparece dibujada de una vez. */
+  .ds-z-traza, .ds-z-luz, .ds-z-punto, .ds-z-onda, .ds-acceso-columna > * { animation-delay: 0ms !important; }
+}
 `;
+
+/* La letra de las pantallas de cuenta de Apple: la del sistema. En una Mac o
+   un iPhone es SF; en Windows y Android, la suya. Manrope queda de respaldo. */
+export const LETRA_SISTEMA = '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, var(--ds-font)';
 
 /* La Z del símbolo (M 42 68 → 78 96, trazo 5): viewBox recortado a su trazo,
    con el medio grueso de margen. El punto cian va al final, como en el logo. */
@@ -97,17 +86,18 @@ function corrida(d) {
 }
 const LINEAS_Z = [-2.25, -1.5, -0.75, 0, 0.75, 1.5, 2.25].map((d) => ({ d, ruta: corrida(d) }));
 
-/** La Z grande del héroe: líneas finas, una luz por la central y el punto. Los gruesos van en unidades del
-    dibujo y no con `non-scaling-stroke`: con él, Chrome mide los guiones en pixeles y el trazo se rompía. */
-function GrabadoZ() {
+/** La Z grande: líneas finas, una luz por la central y el punto. Los gruesos van en unidades del dibujo y no con
+    `non-scaling-stroke`: con él, Chrome mide los guiones en pixeles y el trazo se rompía. */
+function GrabadoZ({ color }) {
   return (
     <svg aria-hidden focusable="false" viewBox={VISTA_Z} preserveAspectRatio="xMaxYMax meet"
       style={{ display: "block", width: "100%", height: "100%", overflow: "visible" }}>
       {LINEAS_Z.map(({ d, ruta }) => (
-        <path key={d} className="ds-z-traza" d={ruta} pathLength="100" fill="none" stroke="var(--ds-ink-on-hero)"
-          strokeOpacity={d === 0 ? 0.55 : 0.3} strokeWidth="0.08" strokeLinejoin="miter" style={{ animationDelay: `${250 + Math.abs(d) * 80}ms` }} />
+        <path key={d} className="ds-z-traza" d={ruta} pathLength="100" fill="none" stroke={color}
+          strokeOpacity={d === 0 ? 0.55 : 0.3} strokeWidth="0.08" strokeLinejoin="miter"
+          style={{ animationDelay: `${250 + Math.abs(d) * 80}ms` }} />
       ))}
-      <path className="ds-z-luz" d={LINEAS_Z[3].ruta} pathLength="100" fill="none" stroke="var(--ds-ink-on-hero)"
+      <path className="ds-z-luz" d={LINEAS_Z[3].ruta} pathLength="100" fill="none" stroke={color}
         strokeWidth="0.2" strokeLinecap="round" />
       <circle className="ds-z-onda" cx="78" cy="96" r="1.1" fill="none" stroke={CIAN_ZENTRYA} strokeWidth="1.5"
         vectorEffect="non-scaling-stroke" />
@@ -116,21 +106,23 @@ function GrabadoZ() {
   );
 }
 
-/** La Z chica del teléfono: el símbolo tal cual (trazo sólido), dibujándose igual. */
-function TrazoZ({ estilo }) {
+/** El símbolo de Zentrya dibujándose: el cuadro aparece y la Z se traza encima, con el punto al final. */
+function SimboloQueSeDibuja({ tamano }) {
   const ruta = "M " + Z.map((p) => p.join(" ")).join(" L ");
   return (
-    <svg aria-hidden focusable="false" viewBox={VISTA_Z} style={{ display: "block", overflow: "visible", ...estilo }}>
-      <path className="ds-z-traza" d={ruta} pathLength="100" fill="none" stroke="var(--ds-ink-on-hero)"
+    <svg aria-hidden focusable="false" width={tamano} height={tamano} viewBox="20 40 80 80"
+      style={{ display: "block", overflow: "visible" }}>
+      <rect x="20" y="40" width="80" height="80" rx="18" fill="var(--ds-ink)" />
+      <path className="ds-z-traza" d={ruta} pathLength="100" fill="none" stroke="var(--ds-surface-solid)"
         strokeWidth="5" strokeLinecap="square" strokeLinejoin="miter" />
-      <circle className="ds-z-onda" cx="78" cy="96" r="3" fill="none" stroke={CIAN_ZENTRYA} strokeWidth="1.2"
+      <circle className="ds-z-onda" cx="78" cy="96" r="3" fill="none" stroke={CIAN_ZENTRYA} strokeWidth="1.5"
         vectorEffect="non-scaling-stroke" />
       <circle className="ds-z-punto" cx="78" cy="96" r="3" fill={CIAN_ZENTRYA} />
     </svg>
   );
 }
 
-/** Una tarjeta de la vitrina: vidrio sobre el héroe, con un dato de ejemplo. */
+/** Una tarjeta de vitrina. Ya no la pinta PantallaAcceso (v2.8); se exporta para no romper importaciones. */
 export function TarjetaVitrina({ titulo, cifra, detalle, children, ancho = 260 }) {
   return (
     <Vidrio estilo={{ width: ancho, maxWidth: "100%", boxSizing: "border-box", padding: "var(--ds-4)",
@@ -145,9 +137,8 @@ export function TarjetaVitrina({ titulo, cifra, detalle, children, ancho = 260 }
   );
 }
 
-export default function PantallaAcceso({ marca, lema, vitrina, titulo, nota, error, children, pie }) {
+export default function PantallaAcceso({ marca, lema, titulo, nota, error, children, pie }) {
   const angosto = useAngosto();
-  const vitrinaRef = useRef(null);
   const zRef = useRef(null);
   const [golpe, setGolpe] = useState(0);
 
@@ -155,91 +146,65 @@ export default function PantallaAcceso({ marca, lema, vitrina, titulo, nota, err
      para reiniciarla sin desmontar el formulario (perdería el foco y lo escrito). */
   useEffect(() => { if (error) setGolpe((g) => g + 1); }, [error]);
 
-  /* La vitrina sigue al puntero apenas (±4°), sólo con un ratón y sin «reducir
+  /* La Z de fondo va al revés del puntero, apenas: sólo con ratón y sin «reducir
      movimiento». Se escribe directo en el estilo: no re-renderiza nada. */
-  const inclinar = (e) => {
-    if (e.pointerType !== "mouse") return;
+  const mover = (e) => {
+    if (!zRef.current || e.pointerType !== "mouse") return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    const el = vitrinaRef.current;
-    if (el) el.style.transform = `perspective(900px) rotateY(${(x * 8).toFixed(2)}deg) rotateX(${(-y * 8).toFixed(2)}deg)`;
-    /* La Z va al revés del puntero: queda «detrás» de la vitrina y del texto. */
-    if (zRef.current) zRef.current.style.transform = `translate3d(${(-x * 18).toFixed(1)}px, ${(-y * 14).toFixed(1)}px, 0)`;
-  };
-  const soltar = () => {
-    if (vitrinaRef.current) vitrinaRef.current.style.transform = "none";
-    if (zRef.current) zRef.current.style.transform = "none";
+    const x = e.clientX / window.innerWidth - 0.5, y = e.clientY / window.innerHeight - 0.5;
+    zRef.current.style.transform = `translate3d(${(-x * 22).toFixed(1)}px, ${(-y * 16).toFixed(1)}px, 0)`;
   };
 
   return (
-    <main style={{
-      minHeight: "100dvh", boxSizing: "border-box", display: "grid",
-      gridTemplateColumns: angosto ? "1fr" : "minmax(0, 1.15fr) minmax(380px, 0.85fr)",
-      gridTemplateRows: angosto ? "auto 1fr" : "1fr",
-      gap: angosto ? "var(--ds-4)" : "var(--ds-6)", padding: angosto ? "var(--ds-3)" : "var(--ds-4)",
-    }}>
+    <main onPointerMove={angosto ? undefined : mover}
+      style={{
+        position: "relative", isolation: "isolate", overflow: "hidden",
+        minHeight: "100dvh", boxSizing: "border-box", display: "grid", gridTemplateRows: "auto 1fr auto",
+        fontFamily: LETRA_SISTEMA, color: "var(--ds-ink)",
+      }}>
       <style>{CSS}</style>
 
-      <section className="ds-heroe" onPointerMove={angosto ? undefined : inclinar}
-        onPointerLeave={angosto ? undefined : soltar}
-        style={{
-          position: "relative", overflow: "hidden", isolation: "isolate",
-          background: "var(--ds-hero)", color: "var(--ds-ink-on-hero)",
-          borderRadius: "var(--ds-r-frame)", boxShadow: "var(--ds-lift-accent), var(--ds-lift-2)",
-          padding: angosto ? "var(--ds-5)" : "var(--ds-10) var(--ds-8)",
-          display: "flex", flexDirection: "column", gap: "var(--ds-6)",
-          animation: "ds-rise var(--ds-t-scene) var(--ds-ease) both",
+      {/* La Z grande, tenue, a la izquierda de la columna (termina 56 px antes de ella).
+          Sólo donde cabe: en una pantalla angosta quedaría debajo del formulario. */}
+      {!angosto && (
+        <div ref={zRef} aria-hidden className="ds-z-capa" style={{
+          position: "absolute", zIndex: -1, pointerEvents: "none",
+          top: "16%", bottom: "9%", left: "-6%", right: "calc(50% + 256px)",
         }}>
-        {/* La Z grande, debajo del texto: anclada abajo a la derecha, y si el héroe es
-            angosto sale por la izquierda (el punto, que es el final, siempre se ve). */}
-        {!angosto && (
-          <div ref={zRef} aria-hidden className="ds-z-capa"
-            style={{ position: "absolute", inset: "34% 8% 8% -24%", zIndex: -1, pointerEvents: "none" }}>
-            <GrabadoZ />
-          </div>
-        )}
-
-        <div style={angosto ? { display: "flex", alignItems: "flex-start", gap: "var(--ds-4)" } : undefined}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: angosto ? "var(--ds-t-title)" : "var(--ds-t-display)", fontWeight: 800,
-              letterSpacing: "-0.03em", lineHeight: 1.02 }}>{marca}</div>
-            {lema && <p style={{ margin: "var(--ds-3) 0 0", fontSize: "var(--ds-t-body)", maxWidth: 440 }}>{lema}</p>}
-          </div>
-          {angosto && <TrazoZ estilo={{ width: 46, height: 37, flexShrink: 0, marginTop: 4 }} />}
+          <GrabadoZ color="var(--ds-accent-trazo)" />
         </div>
+      )}
 
-        {vitrina && !angosto && (
-          <div ref={vitrinaRef} aria-hidden className="ds-acceso-vitrina"
-            style={{ display: "flex", flexDirection: "column", gap: "var(--ds-4)", marginTop: "auto",
-              transition: "transform var(--ds-t-move) var(--ds-ease)", transformOrigin: "center" }}>
-            {vitrina}
-          </div>
-        )}
-      </section>
+      <header style={{ display: "flex", alignItems: "center", gap: 10,
+        padding: angosto ? "18px 20px" : "24px 32px", fontSize: 15, fontWeight: 600, letterSpacing: "-0.01em" }}>
+        {marca}
+      </header>
 
-      {/* En el teléfono va pegado a la franja: centrado dejaba un hueco y empujaba el botón lejos del pulgar. */}
-      <div style={{ display: "grid", alignItems: angosto ? "start" : "center", justifyItems: "center",
-        padding: angosto ? "var(--ds-2) 0 0" : "var(--ds-4)" }}>
-        <div className="ds-acceso-form" style={{
-          width: "100%", maxWidth: 420, display: "grid", gap: "var(--ds-5)",
-          animation: golpe ? `${golpe % 2 ? "ds-sacude-a" : "ds-sacude-b"} 420ms var(--ds-ease-out)` : undefined,
+      <div style={{ display: "grid", placeItems: angosto ? "start center" : "center",
+        padding: angosto ? "12px 20px 32px" : "24px 32px 48px" }}>
+        <div className="ds-acceso-columna" style={{
+          width: "100%", maxWidth: 380, display: "grid", justifyItems: "center", textAlign: "center",
         }}>
-          <header>
-            <h1 style={{ margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 800, letterSpacing: "-0.02em" }}>{titulo}</h1>
-            {nota && <p style={{ margin: "var(--ds-2) 0 0", fontSize: "var(--ds-t-small)", color: "var(--ds-ink-2)" }}>{nota}</p>}
-          </header>
+          <SimboloQueSeDibuja tamano={angosto ? 56 : 64} />
+          <h1 style={{ margin: angosto ? "22px 0 0" : "28px 0 0", fontSize: angosto ? 28 : 34, lineHeight: 1.12,
+            fontWeight: 600, letterSpacing: "-0.015em", textWrap: "balance" }}>{titulo}</h1>
+          {(nota || lema) && (
+            <p style={{ margin: "10px 0 0", fontSize: 17, lineHeight: 1.45, color: "var(--ds-ink-2)",
+              textWrap: "pretty", maxWidth: 360 }}>{nota || lema}</p>
+          )}
           <div style={{
-            background: "var(--ds-surface)", border: "1px solid var(--ds-line)",
-            backdropFilter: "var(--ds-blur)", WebkitBackdropFilter: "var(--ds-blur)",
-            borderRadius: "var(--ds-r-card)", boxShadow: "var(--ds-lift-2)", padding: "var(--ds-6)",
+            width: "100%", marginTop: angosto ? 28 : 36, textAlign: "left",
+            animation: golpe ? `${golpe % 2 ? "ds-sacude-a" : "ds-sacude-b"} 420ms var(--ds-ease-out)` : undefined,
           }}>
             {children}
           </div>
-          {pie && <div style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-2)", textAlign: "center" }}>{pie}</div>}
         </div>
       </div>
+
+      {pie && (
+        <footer style={{ padding: angosto ? "16px 20px 24px" : "20px 32px 28px", textAlign: "center",
+          fontSize: 13, color: "var(--ds-ink-2)" }}>{pie}</footer>
+      )}
     </main>
   );
 }
