@@ -1,5 +1,5 @@
 /**
- * Demo de PantallaAcceso (`?acceso` en el catálogo). Las cifras de la vitrina son
+ * Demo de PantallaAcceso (`?acceso` en el catálogo; `?acceso&vitrina` con las tarjetas). Las cifras de la vitrina son
  * de EJEMPLO. Cualquier contraseña distinta de «demo» falla, para ver el error.
  */
 import React, { useState } from "react";
@@ -32,7 +32,7 @@ export default function DemoAcceso() {
   };
   return (
     <PantallaAcceso marca="Zentrya Capital" lema="Tus finanzas, claras: cuentas, gastos e inversiones en un solo lugar."
-      vitrina={VITRINA} titulo="Inicia sesión" nota="Usa el correo con el que te registraste." error={error}
+      vitrina={new URLSearchParams(location.search).has("vitrina") ? VITRINA : null} titulo="Inicia sesión" nota="Usa el correo con el que te registraste." error={error}
       pie={<><a href="./" style={{ color: "var(--ds-accent-tinta)", fontWeight: 700 }}>Volver al catálogo</a> · <BotonApariencia texto="Apariencia" /></>}>
       <form ref={cuerpo} noValidate onSubmit={(e) => { e.preventDefault(); f.intentar(enviar); }}
         style={{ display: "grid", gap: "var(--ds-4)" }}>

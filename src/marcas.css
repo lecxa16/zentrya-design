@@ -201,3 +201,111 @@
 
   --ds-info:  #7DAEFF;  --ds-info-soft:  #13233F;
 }
+
+/* ---------- Fucsia ---------- */
+/* Magenta (Carlos, 2026-10-26): paleta para elegir, como Océano. Sale del «Pop Pink» de los colores clave de
+   WGSN/Coloro para 2027; está a ~35° del rojo de riesgo y no se lee como pérdida. Sólo identidad.
+   Medido: blanco sobre el acento 5.95:1 · tinta teñida 6.3 sobre el lienzo, 6.7 sobre la tarjeta, 5.6 sobre
+   accent-soft · el blanco del héroe 6.1:1 en su tono más claro. */
+[data-ds-marca="fucsia"] {
+  --ds-canvas:        #FCF5F9;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #F8DDEC 0%, rgba(248,221,236,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #F6E6EF 0%, rgba(246,230,239,0) 54%),
+      linear-gradient(160deg, #FDF8FB 0%, #FBF3F8 52%, #FCF6FA 100%);
+  --ds-frame:         rgba(255,251,253,0.62);
+  --ds-panel:         rgba(252,244,249,0.94);
+
+  --ds-ink-on-accent: #FFFFFF;
+  --ds-accent:        #B5257E;
+  --ds-accent-press:  #941D67;
+  --ds-accent-soft:   #FBE3F1;
+  --ds-accent-ring:   rgba(181,37,126,0.28);
+  --ds-accent-tinta:  #A8226F;
+  --ds-accent-trazo:  #B5257E;
+
+  --ds-hero: linear-gradient(135deg, #5A0E3E 0%, #8E1B63 55%, #B02A7D 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(181,37,126,0.45);
+
+  --ds-info:  #A8226F;  --ds-info-soft:  #FBE3F1;
+}
+
+/* Oscuro, medido contra la tarjeta (#11161A): acento 8.2:1 · la tinta oscura encima 7.5:1 · sobre accent-soft 7.1. */
+[data-ds-theme="dark"][data-ds-marca="fucsia"] {
+  --ds-canvas:        #0A0609;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #3A1030 0%, rgba(58,16,48,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #22091D 0%, rgba(34,9,29,0) 54%),
+      linear-gradient(160deg, #0B070A 0%, #090508 52%, #0B070A 100%);
+  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-panel:         rgba(30,14,26,0.95);
+
+  --ds-ink-on-accent: #3A0A26;
+  --ds-accent:        #F58BC8;
+  --ds-accent-press:  #F9AED9;
+  --ds-accent-soft:   #3A1530;
+  --ds-accent-ring:   rgba(245,139,200,0.32);
+  --ds-accent-tinta:  #F58BC8;
+  --ds-accent-trazo:  #F58BC8;
+
+  --ds-hero: linear-gradient(135deg, #5A0E3E 0%, #8E1B63 55%, #B02A7D 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(245,139,200,0.40);
+
+  --ds-info:  #F58BC8;  --ds-info-soft:  #3A1530;
+}
+
+/* ---------- Pizarra ---------- */
+/* Azul grisáceo (Carlos, 2026-10-26): la paleta sobria, en la línea de las apps neutras tipo zinc. Se distingue de
+   Océano (saturado) y de Grafito (sin temperatura). Sólo identidad.
+   Medido: blanco sobre el acento 7.4:1 · tinta teñida 7.2 sobre el lienzo, 7.8 sobre la tarjeta, 6.5 sobre
+   accent-soft · el blanco del héroe 5.0:1 en su tono más claro. */
+[data-ds-marca="pizarra"] {
+  --ds-canvas:        #F4F6F9;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #DFE5EE 0%, rgba(223,229,238,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #E6EAF0 0%, rgba(230,234,240,0) 54%),
+      linear-gradient(160deg, #F7F8FA 0%, #F2F4F8 52%, #F6F7FA 100%);
+  --ds-frame:         rgba(250,251,253,0.62);
+  --ds-panel:         rgba(243,246,250,0.94);
+
+  --ds-ink-on-accent: #FFFFFF;
+  --ds-accent:        #3D5875;
+  --ds-accent-press:  #2F465E;
+  --ds-accent-soft:   #E3EAF2;
+  --ds-accent-ring:   rgba(61,88,117,0.28);
+  --ds-accent-tinta:  #3A5470;
+  --ds-accent-trazo:  #3D5875;
+
+  --ds-hero: linear-gradient(135deg, #1B2838 0%, #34495F 55%, #557192 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(61,88,117,0.42);
+
+  --ds-info:  #3A5470;  --ds-info-soft:  #E3EAF2;
+}
+
+/* Oscuro, medido contra la tarjeta (#11161A): acento 9.0:1 · la tinta oscura encima 8.6:1 · sobre accent-soft 7.4. */
+[data-ds-theme="dark"][data-ds-marca="pizarra"] {
+  --ds-canvas:        #06080A;
+  --ds-canvas-grad:
+      radial-gradient(1200px 760px at 76% -12%, #1A2330 0%, rgba(26,35,48,0) 58%),
+      radial-gradient(760px 520px at 4% 6%, #10161F 0%, rgba(16,22,31,0) 54%),
+      linear-gradient(160deg, #07090C 0%, #05070A 52%, #07090C 100%);
+  --ds-frame:         rgba(255,255,255,0.05);
+  --ds-panel:         rgba(18,23,30,0.95);
+
+  --ds-ink-on-accent: #0E1A2A;
+  --ds-accent:        #A3B8D2;
+  --ds-accent-press:  #C0D0E3;
+  --ds-accent-soft:   #1C2735;
+  --ds-accent-ring:   rgba(163,184,210,0.32);
+  --ds-accent-tinta:  #A3B8D2;
+  --ds-accent-trazo:  #A3B8D2;
+
+  --ds-hero: linear-gradient(135deg, #1B2838 0%, #34495F 55%, #557192 100%);
+  --ds-ink-on-hero:   #FFFFFF;
+  --ds-lift-accent: 0 8px 22px -8px rgba(163,184,210,0.35);
+
+  --ds-info:  #A3B8D2;  --ds-info-soft:  #1C2735;
+}

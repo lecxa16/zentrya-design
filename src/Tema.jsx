@@ -28,6 +28,8 @@ export const PALETAS = [
   { id: "oceano", nombre: "Océano", muestra: { light: "#1F5BD1", dark: "#7DAEFF" } },
   { id: "workos", nombre: "Violeta", muestra: { light: "#6D3FD9", dark: "#B79CFF" } },
   { id: "nykza", nombre: "Grafito", muestra: { light: "#111111", dark: "#F2F2F2" } },
+  { id: "fucsia", nombre: "Fucsia", muestra: { light: "#B5257E", dark: "#F58BC8" } },
+  { id: "pizarra", nombre: "Pizarra", muestra: { light: "#3D5875", dark: "#A3B8D2" } },
 ];
 
 const TemaCtx = createContext({

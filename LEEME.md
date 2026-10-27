@@ -484,13 +484,20 @@ de adentro bajaba de 4.5:1 (lo cachó axe en las etiquetas del modal de borrar).
 
 `<PantallaAcceso marca lema vitrina titulo nota error pie>{formulario}</PantallaAcceso>`: el login, el registro y
 recuperar contraseña de todos los productos (dirección elegida por Carlos, 2026-10-23, tras revisar tendencias).
-A la izquierda el héroe de la paleta con una aurora, la marca, el lema y la **vitrina** (`TarjetaVitrina`:
-tarjetas de vidrio con datos de ejemplo del producto, decorativas); a la derecha el formulario. En el teléfono el
-héroe se vuelve una franja arriba, sin vitrina. Demo: `?acceso` en el catálogo.
+A la izquierda el héroe de la paleta con **la Z de Zentrya** (v2.7), la marca, el lema y, opcional, la **vitrina**
+(`TarjetaVitrina`: tarjetas de vidrio con datos de ejemplo del producto, decorativas); a la derecha el formulario. En
+el teléfono el héroe se vuelve una franja arriba, sin vitrina y con la Z chica junto a la marca. Demo: `?acceso` en el
+catálogo (`?acceso&vitrina` con las tarjetas).
 
-- **Movimiento que termina.** La aurora (4.2 s) y la entrada de la vitrina (~1.6 s) acaban y se quedan quietas: un
-  fondo en bucle exigiría botón de pausa (WCAG 2.2.2; «reducir movimiento» no basta). La vitrina se inclina con el
-  puntero sólo mientras la persona lo mueve, y nunca con «reducir movimiento».
+**La Z (v2.7, Carlos 2026-10-26: la aurora con tarjetas «se veía muy de IA genérico»):** la geometría exacta del
+símbolo, monumental y grabada en siete líneas finas que llenan su grueso. Una luz recorre la central dibujándola, las
+demás la siguen y al final aparece el punto cian con una sola onda. El trazo es `--ds-ink-on-hero` (sigue a las seis
+paletas); el cian es de la marca. Sin vitrina se luce más: es la recomendación para productos nuevos.
+
+- **Movimiento que termina.** La Z (~2.3 s) y la entrada de la vitrina (~1.6 s) acaban y se quedan quietas: un
+  fondo en bucle exigiría botón de pausa (WCAG 2.2.2; «reducir movimiento» no basta). La vitrina se inclina y la Z se
+  desplaza unos pixeles con el puntero sólo mientras la persona lo mueve. Con «reducir movimiento» la Z aparece ya
+  dibujada y nada sigue al puntero.
 - **`error`**: cada vez que cambia, el formulario se sacude una vez (sin desmontarse: no pierde lo escrito).
 - **`CampoClave`**: contraseña con mostrar/ocultar (`aria-pressed`) y aviso de **Bloq Mayús**. `Campo` gana
   `adorno` (un control dentro de la caja, a la derecha).
@@ -512,7 +519,7 @@ Lo que lleva toda app en la esquina: `<Notificaciones />` y `<MenuUsuario />`, e
 
 Las marcas también se pueden ofrecer como **paletas**: `<ProveedorTema paletas>` deja elegir entre `PALETAS`
 (o `paletas={["zentrya", "oceano"]}` para ofrecer sólo algunas) y `<SelectorPaleta />` pinta el control —una
-rejilla 2×2 con la muestra del acento en el tema activo—.
+rejilla de dos columnas con la muestra del acento en el tema activo—.
 
 **`<BotonApariencia />` (v2.0.2) es lo que va en la barra**: un solo engrane que abre un modal con tema, paleta
 y navegación (este último solo dentro de un `Armazon` y fuera del teléfono). No se ponen selectores de apariencia
@@ -527,6 +534,11 @@ se aplica al momento; no hay «guardar». La elección se guarda en `localStorag
 | Océano (v2.0) | `oceano` | `#1F5BD1` / `#7DAEFF` |
 | Violeta | `workos` | `#6D3FD9` / `#B79CFF` |
 | Grafito | `nykza` | negro / blanco |
+| Fucsia (v2.7) | `fucsia` | `#B5257E` / `#F58BC8` |
+| Pizarra (v2.7) | `pizarra` | `#3D5875` / `#A3B8D2` |
+
+Fucsia sale del «Pop Pink» de los colores clave 2027 de WGSN/Coloro (a ~35° del rojo de riesgo, no se lee como
+pérdida). Pizarra es la sobria: azul grisáceo tipo zinc, distinta de Océano (saturado) y de Grafito (neutro).
 
 **Sin rojo, verde ni ámbar**, a propósito: ya significan riesgo, bien y aviso (pérdida, ganancia y alerta en
 finanzas), y un acento de esos colores se confundiría con un estado. Una paleta nueva cambia sólo identidad
