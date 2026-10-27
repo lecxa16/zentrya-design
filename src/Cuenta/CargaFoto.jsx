@@ -35,7 +35,7 @@ function recortar(archivo) {
   });
 }
 
-export default function CargaFoto({ nombre, foto, onElegir, onQuitar, subiendo = false, error, maxMb = 5 }) {
+export default function CargaFoto({ nombre, foto, onElegir, onQuitar, subiendo = false, error, maxMb = 5, figura = false }) {
   const id = useId();
   const entrada = useRef(null);
   const [previa, setPrevia] = useState(null);
@@ -71,7 +71,7 @@ export default function CargaFoto({ nombre, foto, onElegir, onQuitar, subiendo =
         transition: "background var(--ds-t-state) var(--ds-ease), border-color var(--ds-t-state) var(--ds-ease)",
       }}>
       <div style={{ opacity: subiendo ? 0.6 : 1, transition: "opacity var(--ds-t-state) var(--ds-ease)" }}>
-        <Retrato src={previa || foto} nombre={nombre} tamano={64} />
+        <Retrato src={previa || foto} nombre={nombre} tamano={64} figura={figura} />
       </div>
       <div style={{ display: "grid", gap: 6, flex: "1 1 180px" }}>
         <div style={{ display: "flex", gap: "var(--ds-2)", flexWrap: "wrap" }}>

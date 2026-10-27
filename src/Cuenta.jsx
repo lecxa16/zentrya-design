@@ -9,7 +9,8 @@
  *
  * `opciones`: lo propio de cada app (`{ texto, icono, onClick }`), p. ej. «Mi
  * cuenta». Apariencia y Cerrar sesión las pone el sistema, siempre en el mismo
- * sitio. `saliendo` muestra que la sesión se está cerrando.
+ * sitio. `saliendo` muestra que la sesión se está cerrando. `figura`: sin
+ * foto, el avatar es la figura del nombre en vez de las iniciales.
  */
 import React, { useRef, useState } from "react";
 import Flotante from "./primitivas/Flotante";
@@ -45,12 +46,14 @@ function Opcion({ icono, children, onClick, esperando }) {
 
 const Separador = () => <div role="separator" style={{ height: 1, background: "var(--ds-line)", margin: "4px 6px" }} />;
 
-export default function MenuUsuario({ nombre = "", correo, foto, opciones = [], onSalir, saliendo = false }) {
+export default function MenuUsuario({ nombre = "", correo, foto, opciones = [], onSalir, saliendo = false, figura = false }) {
   const [abierto, setAbierto] = useState(false);
   const [apariencia, setApariencia] = useState(false);
   const boton = useRef(null);
   const elegir = (fn) => () => { setAbierto(false); fn?.(); };
-  const iniciales = nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
+  /* Con figura (y sin foto) las iniciales no se ven: no van en la etiqueta. */
+  const verIniciales = !(figura && !foto && nombre.trim());
+  const iniciales = !verIniciales ? "" : nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
 
   return (
     <>
@@ -64,13 +67,13 @@ export default function MenuUsuario({ nombre = "", correo, foto, opciones = [], 
           boxShadow: abierto ? "0 0 0 2px var(--ds-accent-trazo)" : "none",
           transition: "box-shadow var(--ds-t-state) var(--ds-ease)",
         }}>
-        <Retrato src={foto} nombre={nombre} tamano={34} />
+        <Retrato src={foto} nombre={nombre} tamano={34} figura={figura} />
       </button>
 
       <Flotante ancla={boton} abierto={abierto} onCerrar={() => setAbierto(false)}
         etiqueta={`Cuenta de ${nombre}`} minAncho={250}>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--ds-3)", padding: "6px 10px 10px" }}>
-          <Retrato src={foto} nombre={nombre} tamano={40} />
+          <Retrato src={foto} nombre={nombre} tamano={40} figura={figura} />
           <div style={{ minWidth: 0 }}>
             <div style={{ fontWeight: 800, fontSize: "var(--ds-t-small)", color: "var(--ds-ink)",
               overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nombre}</div>

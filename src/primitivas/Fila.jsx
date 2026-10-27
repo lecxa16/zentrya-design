@@ -6,6 +6,7 @@
  * Para matrices de números sigue siendo mejor una tabla.
  */
 import React from "react";
+import { blobatar } from "blobatar/blob";
 
 export default function Fila({
   izquierda, titulo, subtitulo, derecha, extremo, onClick, estilo, entrada, ...resto
@@ -57,18 +58,33 @@ export default function Fila({
  * `generico`: sin foto (o si la foto no carga) dibuja la silueta de una
  * persona en lugar de iniciales. Para productos donde casi nadie tiene foto y
  * un muro de iniciales se lee como una lista de siglas.
+ *
+ * `figura`: sin foto dibuja la figura (blobatar) que sale del nombre: la misma
+ * persona es la misma figura en todas partes, sin guardar nada. Si también
+ * viene `generico`, gana la figura. Sin nombre no hay figura: iniciales.
  */
-export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generico = false }) {
+export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generico = false, figura = false }) {
   const [roto, setRoto] = React.useState(false);
   React.useEffect(() => { setRoto(false); }, [src]);
   const iniciales = nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
   const conFoto = src && !roto;
+  const conFigura = figura && !conFoto && !!nombre.trim();
+  /* Como <img> con data URI: un nodo por retrato aunque la lista traiga
+     cientos. alt vacío porque el nombre siempre va al lado (o en la etiqueta
+     del botón), igual que la foto. */
+  const srcFigura = React.useMemo(
+    () => (conFigura ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(blobatar(nombre))}` : null),
+    [conFigura, nombre],
+  );
+  const silueta = generico && !conFigura;
   /* Opaco a propósito: `--ds-surface-sunk` es translúcido, y en un grupo
      encimado (GrupoRetratos) el retrato de abajo se transparentaba y sobre
      una tarjeta blanca el círculo desaparecía. */
-  const fondo = generico && !conFoto ? "var(--ds-retrato-neutro)"
+  const fondo = silueta && !conFoto ? "var(--ds-retrato-neutro)"
     : tono === "acento" ? "var(--ds-accent-soft)" : "var(--ds-retrato-neutro)";
-  const tinta = tono === "acento" && !generico ? "var(--ds-accent-tinta)" : "var(--ds-ink-3)";
+  /* La silueta es dibujo (ink-3); las iniciales en neutro son texto y en
+     ink-3 daban 3.93:1 en claro (lo cachó axe): ink-2. */
+  const tinta = silueta ? "var(--ds-ink-3)" : tono === "acento" ? "var(--ds-accent-tinta)" : "var(--ds-ink-2)";
   return (
     <div style={{
       width: tamano, height: tamano, flexShrink: 0, borderRadius: "var(--ds-r-pill)",
@@ -79,7 +95,12 @@ export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generi
       {conFoto
         ? <img src={src} alt="" onError={() => setRoto(true)}
             style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        : generico ? (
+        : conFigura
+          /* blobatar ya trae margen en su lienzo: al 90 % llena el círculo sin que
+             lo toque la figura más ancha (la cápsula). */
+          ? <img src={srcFigura} alt="" draggable={false}
+              style={{ width: "90%", height: "90%", display: "block" }} />
+        : silueta ? (
           /* La silueta llena el círculo hasta abajo, como un retrato de verdad:
              cabeza arriba, hombros cortados por el borde. */
           <svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden style={{ display: "block" }}>

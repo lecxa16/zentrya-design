@@ -15,7 +15,7 @@ import React from "react";
 import { useAngosto } from "../ancho";
 import { Retrato } from "../primitivas/Fila";
 
-function Cabecera({ usuario, accion, angosto }) {
+function Cabecera({ usuario, accion, angosto, figura }) {
   const tam = angosto ? 72 : 96;
   return (
     <div style={{
@@ -29,7 +29,7 @@ function Cabecera({ usuario, accion, angosto }) {
         gap: "var(--ds-4)", padding: angosto ? "0 var(--ds-4) var(--ds-4)" : "0 var(--ds-6) var(--ds-5)" }}>
         <div style={{ marginTop: -tam / 2, borderRadius: "var(--ds-r-pill)", lineHeight: 0,
           boxShadow: "0 0 0 4px var(--ds-surface-solid), var(--ds-lift-2)" }}>
-          <Retrato src={usuario.foto} nombre={usuario.nombre} tamano={tam} />
+          <Retrato src={usuario.foto} nombre={usuario.nombre} tamano={tam} figura={figura} />
         </div>
         <div style={{ flex: "1 1 220px", minWidth: 0, paddingTop: angosto ? 0 : "var(--ds-3)" }}>
           <h1 style={{ margin: 0, fontSize: "var(--ds-t-title)", fontWeight: 800, letterSpacing: "-0.02em",
@@ -67,11 +67,11 @@ function Opcion({ s, esta, onIr, angosto }) {
   );
 }
 
-export default function PantallaCuenta({ usuario, accion, secciones = [], activa, onIr, children }) {
+export default function PantallaCuenta({ usuario, accion, secciones = [], activa, onIr, figura = false, children }) {
   const angosto = useAngosto();
   return (
     <div style={{ display: "grid", gap: "var(--ds-5)" }}>
-      <Cabecera usuario={usuario} accion={accion} angosto={angosto} />
+      <Cabecera usuario={usuario} accion={accion} angosto={angosto} figura={figura} />
       <div style={{ display: "grid", gap: "var(--ds-5)", alignItems: "start",
         gridTemplateColumns: angosto ? "minmax(0, 1fr)" : "220px minmax(0, 1fr)" }}>
         <nav aria-label="Secciones de la cuenta" style={{

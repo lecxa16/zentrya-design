@@ -96,6 +96,16 @@ escribir pegada abajo— se mide con eso, en cualquier modo:
 dibuja la silueta de una persona en lugar de las iniciales. Opcional: quien no lo pide sigue
 viendo iniciales.
 
+### Avatar con figura (v2.6)
+
+`<Retrato figura />` (y `figura` en `GrupoRetratos`, `MenuUsuario`, `PantallaCuenta` y `CargaFoto`):
+sin foto, o si la foto no carga, dibuja la figura que sale del nombre con
+[blobatar](https://blobatar.dev): la misma persona es la misma figura en todas partes, sin
+guardar nada ni pedir nada a la red (va empaquetado; el proyecto no instala nada). Los ojos
+cumplen 4.5:1 contra el cuerpo en todos los tonos. Sin nombre, iniciales. Si viene con
+`generico`, gana la figura. Opcional: quien no lo pide sigue viendo iniciales. Sale de `nombre`
+(sin distinguir mayúsculas): si la persona cambia su nombre, cambia su figura.
+
 ### Modal en el teléfono (v1.4)
 
 En angosto `Modal` sube como **hoja desde abajo**, a todo lo ancho y con su asa. Los campos
@@ -489,7 +499,7 @@ héroe se vuelve una franja arriba, sin vitrina. Demo: `?acceso` en el catálogo
 
 Lo que lleva toda app en la esquina: `<Notificaciones />` y `<MenuUsuario />`, en `derecha` del Armazón.
 
-- **`MenuUsuario`** (`nombre`, `correo`, `foto`, `opciones`, `onSalir`, `saliendo`): el avatar es un `Retrato`
+- **`MenuUsuario`** (`nombre`, `correo`, `foto`, `opciones`, `onSalir`, `saliendo`, `figura`): el avatar es un `Retrato`
   —la foto si carga, si no las iniciales— y abre un menú con quién es, las `opciones` de la app (`{ texto, icono,
   onClick }`, p. ej. «Mi cuenta»), **Apariencia** (el mismo modal de `BotonApariencia`) y **Cerrar sesión**. Con
   él ya no hace falta `BotonApariencia` suelto.

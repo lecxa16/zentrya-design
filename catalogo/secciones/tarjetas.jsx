@@ -14,6 +14,7 @@ import Detalles from "../../src/primitivas/Detalles.jsx";
 import Llamado from "../../src/primitivas/Llamado.jsx";
 import EstadoVacio from "../../src/primitivas/EstadoVacio.jsx";
 import GrupoRetratos from "../../src/primitivas/GrupoRetratos.jsx";
+import { Retrato } from "../../src/primitivas/Fila.jsx";
 
 export const meta = { id: "tarjetas", titulo: "Tarjetas y datos", orden: 10 };
 
@@ -268,6 +269,37 @@ export default function Tarjetas() {
             </Superficie>
           </Celda>
         </Bento>
+      </Seccion>
+
+      <Seccion titulo="Retrato con figura">
+        <Superficie estilo={{ display: "flex", flexDirection: "column", gap: "var(--ds-5)" }}>
+          <div>
+            <Giro>Sin foto: la figura sale del nombre, siempre la misma</Giro>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--ds-4)" }}>
+              {["Ana Torres", "Luis Méndez", "Sofía Ramírez", "Jorge Castillo", "Paola Núñez", "Raúl Ortega",
+                "Carlos Ordóñez", "Mariana Ruiz"].map((n) => (
+                <div key={n} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: 84 }}>
+                  <Retrato nombre={n} tamano={48} figura />
+                  <span style={{ fontSize: "var(--ds-t-micro)", color: "var(--ds-ink-2)", textAlign: "center" }}>{n}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <Giro>Tamaños: 24 · 32 · 40 · 64 · 96, y neutro</Giro>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--ds-4)" }}>
+              {[24, 32, 40, 64, 96].map((t) => <Retrato key={t} nombre="Ana López" tamano={t} figura />)}
+              <Retrato nombre="Ana López" tamano={64} tono="neutro" figura />
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <GrupoRetratos figura personas={[
+              { nombre: "Ana Torres" }, { nombre: "Luis Méndez" }, { nombre: "Sofía Ramírez" },
+              { nombre: "Jorge Castillo" }, { nombre: "Paola Núñez" }, { nombre: "Raúl Ortega" },
+            ]} />
+            <span style={{ fontSize: "var(--ds-t-small)", color: "var(--ds-ink-3)" }}>GrupoRetratos con figura</span>
+          </div>
+        </Superficie>
       </Seccion>
     </div>
   );

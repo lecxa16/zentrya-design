@@ -68,7 +68,7 @@ function Barra() {
     <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
       <Notificaciones avisos={avisos} onAbrir={leer}
         onMarcarTodas={() => setAvisos((l) => l.map((x) => ({ ...x, leido: true })))} onVerTodas={() => {}} />
-      <MenuUsuario nombre="Ana López" correo="ana@ejemplo.com"
+      <MenuUsuario nombre="Ana López" correo="ana@ejemplo.com" figura
         opciones={[{ texto: "Mi cuenta", onClick: () => {} }]} onSalir={() => {}} />
     </div>
   );
