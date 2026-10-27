@@ -53,7 +53,7 @@ function Perfil() {
     <SeccionAjustes id="perfil" titulo="Datos personales" descripcion="Cómo te ven en la app."
       pie={<Boton variante="solido" esperando={guardando} onClick={async () => { setGuardando(true); await espera(600); setGuardando(false); }}>Guardar cambios</Boton>}>
       <FilaAjuste primera titulo="Foto" descripcion="Se ve en tu avatar y en lo que registras.">
-        <CargaFoto nombre={nombre} foto={foto} subiendo={subiendo} onQuitar={() => setFoto(null)}
+        <CargaFoto figura nombre={nombre} foto={foto} subiendo={subiendo} onQuitar={() => setFoto(null)}
           onElegir={async (archivo) => { setSubiendo(true); await espera(800); setFoto(URL.createObjectURL(archivo)); setSubiendo(false); }} />
       </FilaAjuste>
       <FilaAjuste titulo="Nombre" descripcion="Tu nombre completo.">
@@ -142,7 +142,7 @@ export default function Cuenta() {
   const [activa, setActiva] = useState("perfil");
   const Vista = VISTAS[activa];
   return (
-    <PantallaCuenta usuario={{ nombre: "Ana López", correo: "ana@ejemplo.com", detalle: "Administradora · desde octubre de 2026" }}
+    <PantallaCuenta figura usuario={{ nombre: "Ana López", correo: "ana@ejemplo.com", detalle: "Administradora · desde octubre de 2026" }}
       secciones={SECCIONES} activa={activa} onIr={(s) => setActiva(s.id)}>
       <Vista />
     </PantallaCuenta>
