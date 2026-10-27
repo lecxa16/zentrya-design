@@ -9635,7 +9635,7 @@ function yi({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 			children: [T ? f > 0 && /* @__PURE__ */ _("svg", {
 				width: f,
 				height: M,
-				role: "img",
+				role: "group",
 				style: {
 					display: "block",
 					overflow: "visible"
@@ -9671,6 +9671,7 @@ function yi({ datos: e, categorias: t, series: n, horizontal: r = !1, apiladas: 
 					v.map((e, t) => /* @__PURE__ */ _("g", {
 						tabIndex: 0,
 						opacity: se(t),
+						role: "img",
 						"aria-label": `${e}: ${y.map((e, n) => `${x > 1 ? `${e.nombre} ` : ""}${Q(S(n, t), c)}`).join(", ")}`,
 						onMouseEnter: () => h(t),
 						onMouseLeave: () => h(null),

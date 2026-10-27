@@ -185,7 +185,10 @@ export default function GraficaBarras({
       estilo={estilo} alto={alto}>
       <div ref={ref} style={{ position: "relative", minWidth: 0 }}>
         {!hayDatos ? <SinDatos alto={alto} /> : ancho > 0 && (
-          <svg width={ancho} height={alto} role="img" style={{ display: "block", overflow: "visible" }}
+          // v2.5.4: la gráfica es un grupo y cada barra una imagen con su nombre. Antes el svg era role="img" y las
+          // barras <g aria-label> sin rol: axe lo marca (aria-prohibited-attr) y el lector no anunciaba la barra
+          // enfocada (lo cachó el panel de Apple Connect, 2026-10-26).
+          <svg width={ancho} height={alto} role="group" style={{ display: "block", overflow: "visible" }}
             aria-label={`${titulo ? `${titulo}: ` : ""}${nCat} categorías`}>
             {marcas.map((m) => (horizontal ? (
               <g key={m}>
@@ -202,7 +205,7 @@ export default function GraficaBarras({
             )))}
 
             {categorias.map((cat, ci) => (
-              <g key={ci} tabIndex={0} opacity={opacidad(ci)}
+              <g key={ci} tabIndex={0} opacity={opacidad(ci)} role="img"
                 aria-label={`${cat}: ${series.map((s, si) => `${nSer > 1 ? `${s.nombre} ` : ""}${fmt(val(si, ci), formato)}`).join(", ")}`}
                 onMouseEnter={() => setActivo(ci)} onMouseLeave={() => setActivo(null)}
                 onFocus={() => setActivo(ci)} onBlur={() => setActivo(null)}
