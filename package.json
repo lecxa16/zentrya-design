@@ -1,6 +1,6 @@
 {
   "name": "@zentrya/design",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "Sistema de diseño de Zentrya para proyectos React: tokens claro/oscuro, primitivas, armazón de navegación y formularios.",
   "private": true,
   "type": "module",
@@ -26,11 +26,6 @@
     "contraste": "node scripts/contraste.mjs"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^9.0.0",
-    "@mui/x-date-pickers": "^9.0.0",
-    "dayjs": "^1.11.0",
     "react": ">=18",
     "react-dom": ">=18"
   },

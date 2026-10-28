@@ -135,6 +135,14 @@ cumplen 4.5:1 contra el cuerpo en todos los tonos. Sin nombre, iniciales. Si vie
 `generico`, gana la figura. Opcional: quien no lo pide sigue viendo iniciales. Sale de `nombre`
 (sin distinguir mayúsculas): si la persona cambia su nombre, cambia su figura.
 
+### Figura animada (v2.10)
+
+`<Retrato figura animada="hover" />` (también en `GrupoRetratos`): la figura respira, flota,
+parpadea y mira de reojo, con tiempos que salen del nombre. `"hover"` anima sólo la que tiene
+el puntero encima —la indicada en listas— y `"siempre"` es para un retrato solo (la cuenta, el
+dueño de algo). Con movimiento reducido se queda quieta y en táctil no se dispara. Sin
+`animada` la figura sigue siendo la imagen fija de la v2.6: quien no lo pide no cambia.
+
 ### Modal en el teléfono (v1.4)
 
 En angosto `Modal` sube como **hoja desde abajo**, a todo lo ancho y con su asa. Los campos
@@ -731,7 +739,13 @@ acompaña de un halo (`--ds-accent-ring`); el anillo global de `:focus-visible` 
 `input`, `textarea`, `select` y `combobox`, porque encima del borde eran dos. En botones y
 enlaces se queda: ésos no tienen borde que cambiar.
 
-⚠️ **MUI trae el tema de la aplicación anfitriona.** Dentro de Camper, ese tema pinta el
+**Aislada desde la v2.10.** MUI 9, MUI X 9, emotion y dayjs van DENTRO de `mui.js`: el proyecto
+que instala el paquete no los instala ni necesita esas versiones. Camper corre MUI 5 en el resto
+de su app y la capa `/mui` corre MUI 9 a su lado, sin cruzarse: cada una trae su propio emotion,
+así que tampoco se comparte el tema. Sólo React queda fuera, porque tiene que haber uno solo.
+El costo es peso: `mui.js` ronda 190 KB comprimido, y sólo lo carga la pantalla que lo importa.
+
+⚠️ **MUI trae el tema de la aplicación anfitriona** (hasta la v2.9). Dentro de Camper, ese tema pinta el
 texto del `Select` en su gris casi negro y el elemento elegido en su azul — ilegible sobre
 un fondo oscuro, y fuera de la familia. `design/mui/estilo.js` lo sobrescribe, y es el
 único sitio del sistema donde hay `!important`: los estados que MUI pinta desde su tema no
@@ -768,9 +782,9 @@ Tokens nuevos: `--ds-serie-1…6` (series, por tema), `--ds-sec-0…5` (rampa de
 ## Para llevarlo a otro proyecto
 
 1. Instalar el paquete con la versión fija (el tag):
-   `npm install github:lecxa16/zentrya-design#v2.5.3`
-2. Instalar lo que el paquete pide y no trae:
-   `npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/x-date-pickers dayjs`
+   `npm install github:lecxa16/zentrya-design#v2.10.0`
+2. Tener React 18 o más nuevo. Nada más: desde la v2.10 MUI, emotion y dayjs vienen dentro
+   del paquete (ver «La capa de MUI»).
 3. Envolver la app en `<ProveedorTema>`.
 4. Importar el núcleo desde `@zentrya/design` y el selector y la fecha desde
    `@zentrya/design/mui`. No hay paso 5.

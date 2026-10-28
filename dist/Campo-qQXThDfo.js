@@ -1,7 +1,23 @@
 import { useId as e } from "react";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
-// src/primitivas/Campo.jsx
-var r = {
+// \0rolldown/runtime.js
+var r = Object.create, i = Object.defineProperty, a = Object.getOwnPropertyDescriptor, o = Object.getOwnPropertyNames, s = Object.getPrototypeOf, c = Object.prototype.hasOwnProperty, l = (e, t) => () => (t || (e((t = { exports: {} }).exports, t, t.exports), e = null), t.exports), u = (e, t) => {
+	let n = {};
+	for (var r in e) i(n, r, {
+		get: e[r],
+		enumerable: !0
+	});
+	return t || i(n, Symbol.toStringTag, { value: "Module" }), n;
+}, d = (e, t, n, r) => {
+	if (t && typeof t == "object" || typeof t == "function") for (var s = o(t), l = 0, u = s.length, d; l < u; l++) d = s[l], !c.call(e, d) && d !== n && i(e, d, {
+		get: ((e) => t[e]).bind(null, d),
+		enumerable: !(r = a(t, d)) || r.enumerable
+	});
+	return e;
+}, f = (e, t, n) => (n = e == null ? {} : r(s(e)), d(t || !e || !e.__esModule || !c.call(e, "default") ? i(n, "default", {
+	value: e,
+	enumerable: !0
+}) : n, e)), p = {
 	width: "100%",
 	boxSizing: "border-box",
 	fontFamily: "var(--ds-font)",
@@ -16,7 +32,7 @@ var r = {
 	lineHeight: 1.35,
 	outline: "none",
 	transition: "border-color var(--ds-t-state) var(--ds-ease), background var(--ds-t-state) var(--ds-ease)"
-}, i = {
+}, m = {
 	position: "absolute",
 	width: 1,
 	height: 1,
@@ -27,75 +43,75 @@ var r = {
 	whiteSpace: "nowrap",
 	border: 0
 };
-function a({ id: e, etiqueta: r, requerido: a, error: o, ayuda: s, children: c, estilo: l, etiquetaOculta: u = !1 }) {
+function h({ id: e, etiqueta: r, requerido: i, error: a, ayuda: o, children: s, estilo: c, etiquetaOculta: l = !1 }) {
 	return /* @__PURE__ */ n("div", {
-		"data-error": o ? "si" : void 0,
+		"data-error": a ? "si" : void 0,
 		style: {
 			display: "flex",
 			flexDirection: "column",
 			gap: 6,
 			minWidth: 0,
-			...l
+			...c
 		},
 		children: [
 			r && /* @__PURE__ */ n("label", {
 				htmlFor: e,
 				id: e ? `${e}-etiqueta` : void 0,
-				style: u ? i : {
+				style: l ? m : {
 					fontSize: "var(--ds-t-small)",
 					fontWeight: 500,
 					color: "var(--ds-ink-2)",
 					paddingLeft: 2
 				},
-				children: [r, a && /* @__PURE__ */ t("span", {
+				children: [r, i && /* @__PURE__ */ t("span", {
 					style: { color: "var(--ds-risk)" },
 					children: " *"
 				})]
 			}),
-			c,
-			(o || s) && /* @__PURE__ */ t("div", {
+			s,
+			(a || o) && /* @__PURE__ */ t("div", {
 				style: {
 					fontSize: "var(--ds-t-small)",
-					color: o ? "var(--ds-risk)" : "var(--ds-ink-3)"
+					color: a ? "var(--ds-risk)" : "var(--ds-ink-3)"
 				},
-				children: o || s
+				children: a || o
 			})
 		]
 	});
 }
-function o({ etiqueta: i, valor: o, onCambio: s, onSalir: c, tipo: l = "text", marcador: u, requerido: d, error: f, ayuda: p, deshabilitado: m, multilinea: h = !1, filas: g = 3, estilo: _, adorno: v, id: y, etiquetaOculta: b, ...x }) {
-	let S = e(), C = y || S, w = /* @__PURE__ */ t(h ? "textarea" : "input", {
+function g({ etiqueta: r, valor: i, onCambio: a, onSalir: o, tipo: s = "text", marcador: c, requerido: l, error: u, ayuda: d, deshabilitado: f, multilinea: m = !1, filas: g = 3, estilo: _, adorno: v, id: y, etiquetaOculta: b, ...x }) {
+	let S = e(), C = y || S, w = /* @__PURE__ */ t(m ? "textarea" : "input", {
 		id: C,
-		type: h ? void 0 : l,
-		rows: h ? g : void 0,
-		value: o ?? "",
-		onChange: (e) => s?.(e.target.value),
-		placeholder: u,
-		disabled: m,
-		"aria-invalid": f ? "true" : void 0,
+		type: m ? void 0 : s,
+		rows: m ? g : void 0,
+		value: i ?? "",
+		onChange: (e) => a?.(e.target.value),
+		placeholder: c,
+		disabled: f,
+		"aria-invalid": u ? "true" : void 0,
 		style: {
-			...r,
-			borderColor: f ? "var(--ds-risk)" : "var(--ds-line-firm)",
-			opacity: m ? .55 : 1,
-			cursor: m ? "not-allowed" : void 0,
-			resize: h ? "vertical" : void 0,
+			...p,
+			borderColor: u ? "var(--ds-risk)" : "var(--ds-line-firm)",
+			opacity: f ? .55 : 1,
+			cursor: f ? "not-allowed" : void 0,
+			resize: m ? "vertical" : void 0,
 			fontFamily: "var(--ds-font)",
 			paddingRight: v ? 46 : void 0
 		},
 		onFocus: (e) => {
-			f || (e.target.style.borderColor = "var(--ds-accent-trazo)"), e.target.style.boxShadow = f ? "0 0 0 4px color-mix(in srgb, var(--ds-risk) 22%, transparent)" : "0 0 0 4px var(--ds-accent-ring)";
+			u || (e.target.style.borderColor = "var(--ds-accent-trazo)"), e.target.style.boxShadow = u ? "0 0 0 4px color-mix(in srgb, var(--ds-risk) 22%, transparent)" : "0 0 0 4px var(--ds-accent-ring)";
 		},
 		onBlur: (e) => {
-			e.target.style.borderColor = f ? "var(--ds-risk)" : "var(--ds-line-firm)", e.target.style.boxShadow = "none", c?.();
+			e.target.style.borderColor = u ? "var(--ds-risk)" : "var(--ds-line-firm)", e.target.style.boxShadow = "none", o?.();
 		},
 		...x
 	});
-	return /* @__PURE__ */ t(a, {
+	return /* @__PURE__ */ t(h, {
 		id: C,
-		etiqueta: i,
-		requerido: d,
-		error: f,
-		ayuda: p,
+		etiqueta: r,
+		requerido: l,
+		error: u,
+		ayuda: d,
 		estilo: _,
 		etiquetaOculta: b,
 		children: v ? /* @__PURE__ */ n("div", {
@@ -114,29 +130,29 @@ function o({ etiqueta: i, valor: o, onCambio: s, onSalir: c, tipo: l = "text", m
 		}) : w
 	});
 }
-function s({ etiqueta: i, valor: o, onCambio: s, onSalir: c, opciones: l = [], vacio: u, requerido: d, error: f, ayuda: p, deshabilitado: m, estilo: h, ...g }) {
+function _({ etiqueta: r, valor: i, onCambio: a, onSalir: o, opciones: s = [], vacio: c, requerido: l, error: u, ayuda: d, deshabilitado: f, estilo: m, ...g }) {
 	let _ = e();
-	return /* @__PURE__ */ t(a, {
+	return /* @__PURE__ */ t(h, {
 		id: _,
-		etiqueta: i,
-		requerido: d,
-		error: f,
-		ayuda: p,
-		estilo: h,
+		etiqueta: r,
+		requerido: l,
+		error: u,
+		ayuda: d,
+		estilo: m,
 		children: /* @__PURE__ */ n("select", {
 			id: _,
-			value: o ?? "",
-			disabled: m,
+			value: i ?? "",
+			disabled: f,
 			onChange: (e) => {
-				s?.(e.target.value), c?.();
+				a?.(e.target.value), o?.();
 			},
-			"aria-invalid": f ? "true" : void 0,
+			"aria-invalid": u ? "true" : void 0,
 			...g,
 			style: {
-				...r,
-				borderColor: f ? "var(--ds-risk)" : "var(--ds-line-firm)",
-				opacity: m ? .55 : 1,
-				cursor: m ? "not-allowed" : "pointer",
+				...p,
+				borderColor: u ? "var(--ds-risk)" : "var(--ds-line-firm)",
+				opacity: f ? .55 : 1,
+				cursor: f ? "not-allowed" : "pointer",
 				appearance: "none",
 				WebkitAppearance: "none",
 				paddingRight: 34,
@@ -145,22 +161,22 @@ function s({ etiqueta: i, valor: o, onCambio: s, onSalir: c, opciones: l = [], v
 				backgroundSize: "5px 5px, 5px 5px",
 				backgroundRepeat: "no-repeat"
 			},
-			children: [u !== void 0 && /* @__PURE__ */ t("option", {
+			children: [c !== void 0 && /* @__PURE__ */ t("option", {
 				value: "",
-				children: u
-			}), l.map((e) => /* @__PURE__ */ t("option", {
+				children: c
+			}), s.map((e) => /* @__PURE__ */ t("option", {
 				value: e.valor,
 				children: e.texto
 			}, e.valor))]
 		})
 	});
 }
-function c({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
+function v({ valor: e, onCambio: r, marcador: i = "Buscar…", estilo: a }) {
 	return /* @__PURE__ */ n("div", {
 		style: {
 			position: "relative",
 			minWidth: 0,
-			...o
+			...a
 		},
 		children: [/* @__PURE__ */ t("span", {
 			"aria-hidden": !0,
@@ -188,11 +204,11 @@ function c({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
 			})
 		}), /* @__PURE__ */ t("input", {
 			value: e ?? "",
-			onChange: (e) => i?.(e.target.value),
-			placeholder: a,
-			"aria-label": a,
+			onChange: (e) => r?.(e.target.value),
+			placeholder: i,
+			"aria-label": i,
 			style: {
-				...r,
+				...p,
 				paddingLeft: 36,
 				borderRadius: "var(--ds-r-pill)"
 			},
@@ -205,4 +221,4 @@ function c({ valor: e, onCambio: i, marcador: a = "Buscar…", estilo: o }) {
 		})]
 	});
 }
-export { s as a, a as i, r as n, o as r, c as t };
+export { _ as a, f as c, h as i, p as n, l as o, g as r, u as s, v as t };

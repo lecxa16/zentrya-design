@@ -7,6 +7,9 @@
  */
 import React from "react";
 import { blobatar } from "blobatar/blob";
+import { Blobatar } from "blobatar/react";
+// Sin esta hoja la figura animada se queda quieta. Va al estilos.css del paquete.
+import "blobatar/motion.css";
 
 export default function Fila({
   izquierda, titulo, subtitulo, derecha, extremo, onClick, estilo, entrada, ...resto
@@ -62,8 +65,17 @@ export default function Fila({
  * `figura`: sin foto dibuja la figura (blobatar) que sale del nombre: la misma
  * persona es la misma figura en todas partes, sin guardar nada. Si también
  * viene `generico`, gana la figura. Sin nombre no hay figura: iniciales.
+ *
+ * `animada` (con `figura`, v2.10): la figura cobra vida — respira, flota,
+ * parpadea y mira de reojo, con tiempos que salen del nombre para que una
+ * lista se lea como gente y no como coreografía. `"hover"` anima sólo la que
+ * tiene el puntero encima (la indicada en listas: cien figuras moviéndose a
+ * la vez son ruido); `"siempre"`, para un retrato solo (la cuenta, el dueño de
+ * algo). Con «movimiento reducido» se queda quieta, y en táctil no se dispara.
  */
-export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generico = false, figura = false }) {
+export function Retrato({
+  src, nombre = "", tamano = 40, tono = "acento", generico = false, figura = false, animada = false,
+}) {
   const [roto, setRoto] = React.useState(false);
   React.useEffect(() => { setRoto(false); }, [src]);
   const iniciales = nombre.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase();
@@ -72,9 +84,10 @@ export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generi
   /* Como <img> con data URI: un nodo por retrato aunque la lista traiga
      cientos. alt vacío porque el nombre siempre va al lado (o en la etiqueta
      del botón), igual que la foto. */
+  const viva = conFigura && (animada === "hover" || animada === "siempre");
   const srcFigura = React.useMemo(
-    () => (conFigura ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(blobatar(nombre))}` : null),
-    [conFigura, nombre],
+    () => (conFigura && !viva ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(blobatar(nombre))}` : null),
+    [conFigura, viva, nombre],
   );
   const silueta = generico && !conFigura;
   /* Opaco a propósito: `--ds-surface-sunk` es translúcido, y en un grupo
@@ -95,6 +108,12 @@ export function Retrato({ src, nombre = "", tamano = 40, tono = "acento", generi
       {conFoto
         ? <img src={src} alt="" onError={() => setRoto(true)}
             style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        : viva
+          /* La animada es un <svg> vivo (la fija, un <img>): mismo 90 % y sin
+             nombre accesible propio, porque el nombre siempre va al lado. */
+          ? <Blobatar name={nombre} animate={animada === "siempre" ? "always" : "hover"}
+              aria-hidden="true" focusable="false"
+              style={{ width: "90%", height: "90%", display: "block" }} />
         : conFigura
           /* blobatar ya trae margen en su lienzo: al 90 % llena el círculo sin que
              lo toque la figura más ancha (la cápsula). */

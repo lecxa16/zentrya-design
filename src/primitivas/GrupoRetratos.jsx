@@ -11,7 +11,7 @@
 import React from "react";
 import { Retrato } from "./Fila";
 
-export default function GrupoRetratos({ personas = [], maximo = 4, tamano = 32, generico = false, figura = false, estilo }) {
+export default function GrupoRetratos({ personas = [], maximo = 4, tamano = 32, generico = false, figura = false, animada = false, estilo }) {
   const visibles = personas.slice(0, maximo);
   const resto = personas.length - visibles.length;
   const nombres = personas.map((p) => p.nombre).filter(Boolean).join(", ");
@@ -24,7 +24,7 @@ export default function GrupoRetratos({ personas = [], maximo = 4, tamano = 32, 
           marginLeft: i ? -tamano * 0.28 : 0, borderRadius: 99,
           boxShadow: "0 0 0 2px var(--ds-surface-solid)", position: "relative", zIndex: maximo - i,
         }}>
-          <Retrato src={p.imagen} nombre={p.nombre || ""} tamano={tamano} tono={i % 2 ? "neutro" : "acento"} generico={generico} figura={figura} />
+          <Retrato src={p.imagen} nombre={p.nombre || ""} tamano={tamano} tono={i % 2 ? "neutro" : "acento"} generico={generico} figura={figura} animada={animada} />
         </div>
       ))}
       {resto > 0 && (
